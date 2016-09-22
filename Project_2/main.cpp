@@ -51,7 +51,7 @@ int main(){
 
     int kmax; int lmax;
     //Calling the function that finds the largest off-diag element a_kl
-    //largest_akl_func(A, &kmax, &lmax);
+    largest_akl_func(A, &kmax, &lmax);
 
     return 0;
 }
