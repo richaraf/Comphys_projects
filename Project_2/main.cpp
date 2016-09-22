@@ -6,6 +6,7 @@ using namespace std;
 
 int main(){
 
+    int N = 2;
 
     //Lager rho-arrayen
     double* rho = new double[N+1];
@@ -20,7 +21,28 @@ int main(){
         rho[i] = rho[0] + i*h;
     }
 
-    //Setter opp matri
+    //Setter opp A, poensialmatrisen
+    //A har dimensjonene (N-1)x(N-1), siden vi ikke skal lose problemet for endepunktene
+    mat A = zeros<mat>(N-1, N-1);
+
+    for(int i=0; i<n; i++)
+    {
+        A(i,i) = 2.0/pow(h,2) + pow(rho[i+1],2);
+
+        if(i < (n-1))
+        {
+            A(i,i+1) = -1/pow(h,2);
+        }
+
+        if (i < (n-1))
+        {
+            A(i+1,i) = -1/pow(h,2);
+        }
+    }
+
+    //Setter opp egenvektor-matrisen R, denne starter som I
+
+
 
     return 0;
 }
