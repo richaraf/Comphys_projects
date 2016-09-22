@@ -25,23 +25,28 @@ int main(){
     //A har dimensjonene (N-1)x(N-1), siden vi ikke skal lose problemet for endepunktene
     mat A = zeros<mat>(N-1, N-1);
 
-    for(int i=0; i<n; i++)
+    for(int i=0; i<N; i++)
     {
         A(i,i) = 2.0/pow(h,2) + pow(rho[i+1],2);
 
-        if(i < (n-1))
+        if(i < (N-1))
         {
             A(i,i+1) = -1/pow(h,2);
         }
 
-        if (i < (n-1))
+        if (i < (N-1))
         {
             A(i+1,i) = -1/pow(h,2);
         }
     }
 
     //Setter opp egenvektor-matrisen R, denne starter som I
+    mat R = zeros<mat>(N-1, N-1);
 
+    for(int i=0; i<N; i++)
+    {
+        R(i,i) = 1.0;
+    }
 
 
     return 0;
