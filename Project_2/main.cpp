@@ -1,6 +1,7 @@
 #include <armadillo>
 #include <iostream>
-#include <jacobian_rotation.cpp>
+#include <jacobian_rotation.h>
+#include <largest_akl.h>
 
 using namespace arma;
 using namespace std;
@@ -31,7 +32,7 @@ int main(){
     {
         A(i,i) = 2.0/pow(h,2) + pow(rho[i+1],2);
 
-        if(i < (N-1))
+        if(i < (N-2))
         {
             A(i,i+1) = -1/pow(h,2);
             A(i+1,i) = -1/pow(h,2);
@@ -47,6 +48,10 @@ int main(){
     {
         R(i,i) = 1.0;
     }
+
+    int kmax; int lmax;
+    //Calling the function that finds the largest off-diag element a_kl
+    //largest_akl_func(A, &kmax, &lmax);
 
     return 0;
 }
