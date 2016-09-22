@@ -1,3 +1,4 @@
+#include <armadillo>
 using namespace arma;
 using namespace std;
 // Jacobi rotation function which takes matrix A, eigenvector matrix R, row k, coloumn l, number of iterations N.
