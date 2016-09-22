@@ -42,18 +42,28 @@ int main(){
 
     //Setter opp egenvektor-matrisen R, denne starter som I, hei
     mat R = zeros<mat>(N-1, N-1);
-
-    //Looper til N-2
     for(int i=0; i<N-1; i++)
     {
         R(i,i) = 1.0;
     }
 
     int kmax; int lmax;
-    //Calling the function that finds the largest off-diag element a_kl
+    double eps = pow(10,-8); //toleranse
+    int max_iteration = 100;
+    int iteration = 0;
+
     largest_akl_func(A, &kmax, &lmax);
-    cout << kmax << endl;
-    cout << lmax << endl;
+
+    while ( abs(A(kmax, lmax)) > eps && iteration < max_iteration)
+    {
+        iteration += 1;
+        //Calling the function that finds the largest off-diag element a_kl
+        largest_akl_func(A, &kmax, &lmax);
+        Jacobi_rotate(A, R, kmax, lmax, N-1);
+        cout << abs(A(kmax, lmax)) << endl;
+    }
+
+
 
     return 0;
 }
