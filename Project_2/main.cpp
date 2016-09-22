@@ -12,9 +12,9 @@ int main(){
     //Lager rho-arrayen
     double* rho = new double[N+1];
     rho[0] = 0.0;
-    rho[N] = 1000.0; //Approx infinity
+    rho[N] = 10.0; //Approx infinity
 
-    double h; h = (rho[N] - rho[0])/(N+1); //N+1 eller N?
+    double h = (rho[N] - rho[0])/N;
 
     //Lager rho, looper til N-1
     for(int i = 1; i < N; i++)
@@ -34,15 +34,10 @@ int main(){
         if(i < (N-1))
         {
             A(i,i+1) = -1/pow(h,2);
-        }
-
-        if (i < (N-1))
-        {
             A(i+1,i) = -1/pow(h,2);
         }
-    }
 
-    cout << A;
+    }
 
     //Setter opp egenvektor-matrisen R, denne starter som I, hei
     mat R = zeros<mat>(N-1, N-1);
