@@ -4,4 +4,7 @@ CONFIG -= app_bundle
 CONFIG -= qt
 LIBS += -larmadillo -llapack -lblas
 
-SOURCES += main.cpp
+SOURCES += main.cpp \
+    jacobian_rotation.cpp
+
+DISTFILES +=
