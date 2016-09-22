@@ -21,6 +21,5 @@ int main(){
     }
 
     //Setter opp matri
-
     return 0;
 }
