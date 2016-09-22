@@ -8,7 +8,7 @@ using namespace std;
 
 int main(){
 
-    int N = 2;
+    int N = 3;
 
     //Lager rho-arrayen
     double* rho = new double[N+1];
@@ -52,6 +52,8 @@ int main(){
     int kmax; int lmax;
     //Calling the function that finds the largest off-diag element a_kl
     largest_akl_func(A, &kmax, &lmax);
+    cout << kmax << endl;
+    cout << lmax << endl;
 
     return 0;
 }

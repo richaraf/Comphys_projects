@@ -11,10 +11,10 @@ void largest_akl_func(mat A,int* kmax, int* lmax){
     for(int k = 0; k < N; k++){
         for(int l = 0; l < N; l++){
             if(k != l){
-                if(A(k,l) >= max){
+                if(abs(A(k,l)) >= max){
                     *kmax = k;
                     *lmax = l;
-                    max = A(k,l);
+                    max = abs(A(k,l));
                 }
             }
         }
