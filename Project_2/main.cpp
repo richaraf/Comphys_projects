@@ -57,9 +57,8 @@ int main(){
     while ( abs(A(kmax, lmax)) > eps && iteration < max_iteration)
     {
         iteration += 1;
-        Jacobi_rotate(A, R, kmax, lmax, N-1);
+        Jacobi_rotate(A, R, kmax, lmax, N);
         largest_akl_func(A, &kmax, &lmax);
     }
-    cout << iteration << endl;
     return 0;
 }
