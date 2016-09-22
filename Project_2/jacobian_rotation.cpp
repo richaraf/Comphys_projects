@@ -1,3 +1,5 @@
+using namespace arma;
+using namespace std;
 // Jacobi rotation function which takes matrix A, eigenvector matrix R, row k, coloumn l, number of iterations N.
 void Jacobi_rotation(mat A, mat R, int k, int l, int N)
 {
