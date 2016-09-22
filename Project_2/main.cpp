@@ -1,5 +1,6 @@
 #include <armadillo>
 #include <iostream>
+#include <jacobian_rotation.cpp>
 
 using namespace arma;
 using namespace std;
