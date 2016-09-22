@@ -8,12 +8,12 @@ using namespace std;
 
 int main(){
 
-    int N = 10;
+    int N = 50;
 
     //Lager rho-arrayen
     double* rho = new double[N+1];
     rho[0] = 0.0;
-    rho[N] = 10.0; //Approx infinity
+    rho[N] = 5.0; //Approx infinity
 
     double h = (rho[N] - rho[0])/N;
 
@@ -48,8 +48,8 @@ int main(){
     }
 
     int kmax; int lmax;
-    double eps = pow(10,-8); //toleranse
-    int max_iteration = 10000;
+    double eps = pow(10,-13); //toleranse
+    int max_iteration = 100000;
     int iteration = 0;
     //Calling the function that finds the largest off-diag element a_kl
     largest_akl_func(A, &kmax, &lmax);
@@ -60,5 +60,16 @@ int main(){
         Jacobi_rotate(A, R, kmax, lmax, N);
         largest_akl_func(A, &kmax, &lmax);
     }
+<<<<<<< HEAD
+=======
+
+
+    //Henter ut egenverdiene
+    vec lambda = diagvec(A);
+    lambda = sort(lambda);
+    cout << lambda << endl;
+    cout << iteration << endl;
+
+>>>>>>> 80cd664e48741c63475768721deb2eadd8463cad
     return 0;
 }

@@ -1,5 +1,7 @@
 #include <armadillo>
 #include <jacobian_rotation.h>
+#include <iomanip>
+
 using namespace arma;
 using namespace std;
 // Jacobi rotation function which takes matrix A, eigenvector matrix R, row k, coloumn l, number of iterations N.
@@ -27,14 +29,18 @@ void Jacobi_rotate(mat &A, mat &R, int k, int l, int N)
         c = 1.0;
         s = 0.0;
     }
+
     // Perform the rotation
+    double akk = A(k,k);
     A(k,k) = A(k,k)*c*c - 2*A(k,l)*c*s + A(l,l)*s*s;
-    A(l,l) = A(l,l)*c*c + 2*A(k,l)*c*s + A(k,k)*s*s;
+    A(l,l) = A(l,l)*c*c + 2*A(k,l)*c*s + akk*s*s;
     A(k,l) = A(l,k) = 0; // Set the previously biggest elements to 0
     for (int i = 0; i < N-1; i++){
         if (i != k && i != l) {
+            double aik = A(i,k);
             A(i,k) = A(i,k)*c - A(i,l)*s;
-            A(i,l) = A(i,l)*c + A(i,k)*s;
+            A(i,l) = A(i,l)*c + aik*s;
+
             A(k,i) = A(i,k);
             A(l,i) = A(i,l);
         }
