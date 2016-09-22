@@ -8,7 +8,7 @@ using namespace std;
 
 int main(){
 
-    int N = 3;
+    int N = 10;
 
     //Lager rho-arrayen
     double* rho = new double[N+1];
@@ -49,21 +49,17 @@ int main(){
 
     int kmax; int lmax;
     double eps = pow(10,-8); //toleranse
-    int max_iteration = 100;
+    int max_iteration = 10000;
     int iteration = 0;
-
+    //Calling the function that finds the largest off-diag element a_kl
     largest_akl_func(A, &kmax, &lmax);
 
     while ( abs(A(kmax, lmax)) > eps && iteration < max_iteration)
     {
         iteration += 1;
-        //Calling the function that finds the largest off-diag element a_kl
-        largest_akl_func(A, &kmax, &lmax);
         Jacobi_rotate(A, R, kmax, lmax, N-1);
-        cout << abs(A(kmax, lmax)) << endl;
+        largest_akl_func(A, &kmax, &lmax);
     }
-
-
-
+    cout << iteration << endl;
     return 0;
 }
