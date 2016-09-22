@@ -40,7 +40,7 @@ int main(){
         }
     }
 
-    //Setter opp egenvektor-matrisen R, denne starter som I
+    //Setter opp egenvektor-matrisen R, denne starter som I, hei
     mat R = zeros<mat>(N-1, N-1);
 
     for(int i=0; i<N; i++)
