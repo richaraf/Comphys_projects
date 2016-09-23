@@ -3,9 +3,11 @@
 #include <jacobian_rotation.h>
 #include <largest_akl.h>
 #include <orthogonality_check.h>
+#include <potential_functions.h>
 
 using namespace arma;
 using namespace std;
+
 
 int main(){
 
@@ -31,7 +33,7 @@ int main(){
     //Looper til N-2
     for(int i=0; i<N-1; i++)
     {
-        A(i,i) = 2.0/pow(h,2) + pow(rho[i+1],2);
+        A(i,i) = 2.0/pow(h,2) + potential_one_e(rho[i+1]); //Change this to solve for two electrons
 
         if(i < (N-2))
         {
@@ -66,7 +68,6 @@ int main(){
     vec lambda = diagvec(A);
     lambda = sort(lambda);
     cout << lambda << endl;
-    cout << iteration << endl;
 
     // Check orthogonality
     orthogonality_check_func(R, eps);
