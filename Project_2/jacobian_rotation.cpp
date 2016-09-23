@@ -4,7 +4,7 @@
 
 using namespace arma;
 using namespace std;
-// Jacobi rotation function which takes matrix A, eigenvector matrix R, row k, coloumn l, number of iterations N.
+// Jacobi rotation function which takes matrix A, eigenvector matrix R, row k, column l, number of iterations N.
 void Jacobi_rotate(mat &A, mat &R, int k, int l, int N)
 {
     double s, c; // s = sin theta, c = cos theta
