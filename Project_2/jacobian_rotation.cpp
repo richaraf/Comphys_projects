@@ -44,6 +44,7 @@ void Jacobi_rotate(mat &A, mat &R, int k, int l, int N)
             A(k,i) = A(i,k);
             A(l,i) = A(i,l);
         }
+        // Change of the column i row k and l for the eigenvector matrix
         double r_il = R(i,l);
         double r_ik = R(i,k);
         R(i,l) = c*r_il + s*r_ik;
