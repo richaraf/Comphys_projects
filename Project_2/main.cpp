@@ -11,7 +11,7 @@ using namespace std;
 
 int main(){
 
-    int N = 20;
+    int N = 6;
 
     //Lager rho-arrayen
     double* rho = new double[N+1];
@@ -67,9 +67,33 @@ int main(){
     //Henter ut egenverdiene
     vec lambda = diagvec(A);
     lambda = sort(lambda);
-    cout << lambda << endl;
 
     // Check orthogonality
     orthogonality_check_func(R, eps);
+
+    //Fix the boundary cond, u0 = uN = 0 Vil dere heller gjore dette i filen?
+    mat U = zeros<mat>(N+1, N-1);
+
+    for(int i = 0; i < N-1; i++)
+    {
+        for(int j=0; j < N-1; j++)
+        {
+            U(i+1,j) = R(i,j);
+        }
+    }
+
+    //Find which eigvec/-val belong together
+
+
+//Write eigenvectors to file
+//    ofstream myfile;
+//    myfile.open("../u_file.txt");
+
+//    for(int i=0; i<N+2; i++)
+//    {
+//        cout << "hey"<< endl;
+//    }
+//    myfile.close();
+
     return 0;
 }
