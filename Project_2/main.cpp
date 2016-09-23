@@ -8,7 +8,7 @@ using namespace std;
 
 int main(){
 
-    int N = 50;
+    int N = 20;
 
     //Lager rho-arrayen
     double* rho = new double[N+1];
@@ -60,8 +60,6 @@ int main(){
         Jacobi_rotate(A, R, kmax, lmax, N);
         largest_akl_func(A, &kmax, &lmax);
     }
-<<<<<<< HEAD
-=======
 
 
     //Henter ut egenverdiene
@@ -70,6 +68,5 @@ int main(){
     cout << lambda << endl;
     cout << iteration << endl;
 
->>>>>>> 80cd664e48741c63475768721deb2eadd8463cad
     return 0;
 }

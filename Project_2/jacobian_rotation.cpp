@@ -45,7 +45,7 @@ void Jacobi_rotate(mat &A, mat &R, int k, int l, int N)
             A(l,i) = A(i,l);
         }
     }
-
+/*
     mat S = zeros<mat>(N-1,N-1);
     for( int i=0; i<N-1; i++){
         S(i,i)=1.0;
@@ -59,4 +59,5 @@ void Jacobi_rotate(mat &A, mat &R, int k, int l, int N)
 //            w[i]=
 //        }
 //    }
+*/
 }
