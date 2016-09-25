@@ -7,9 +7,11 @@ using namespace arma;
 
 void test_largest_akl(int k, int l){
     int N;
+    //Check if the element is located on the diagonal
     if(k == l){
         throw  invalid_argument("Value Error: k and l cannot have the same value");
     }
+    //Making a matrix big enough to include element (k,l)
     else if(k >= l){
         N = k;
     }
@@ -21,15 +23,15 @@ void test_largest_akl(int k, int l){
     //Place the largest element at index (k,l)
     A(k,l) = 1;
 
-    //Store the previous k and l
-    int k_prev = k;
-    int l_prev = l;
+    //Store the old k and l
+    int k_old = k;
+    int l_old = l;
 
     largest_akl_func(A, &k, &l);
 
     /* Test if largest_akl_func found the
-     * largest element at index (k_prev, l_prev) */
-    if(k != k_prev && l != l_prev){
+     * largest element at index (k_old, l_old) */
+    if(k != k_old && l != l_old){
         throw invalid_argument("Error: largest_akl_func failed");
     }
 }
