@@ -4,6 +4,7 @@
 #include <largest_akl.h>
 #include <orthogonality_check.h>
 #include <potential_functions.h>
+#include <largest_akl_test.h>
 
 using namespace arma;
 using namespace std;
@@ -54,7 +55,11 @@ int main(){
     double eps = pow(10,-13); //toleranse
     int max_iteration = 100000;
     int iteration = 0;
-    //Calling the function that finds the largest off-diag element a_kl
+
+    //Test largest_akl_func
+    test_largest_akl(3,4);
+
+    //Calling the function which finds the largest off-diag element a_kl
     largest_akl_func(A, &kmax, &lmax);
 
     while ( abs(A(kmax, lmax)) > eps && iteration < max_iteration)
