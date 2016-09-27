@@ -13,7 +13,7 @@ using namespace std;
 
 int main(){
 
-    int N = 50;
+    int N = 350;
     clock_t start1, finish1, start2, finish2;
     start1 = clock();
 
@@ -47,7 +47,6 @@ int main(){
 
     }
 
-
     //Setter opp egenvektor-matrisen R, denne starter som I
     mat R = zeros<mat>(N-1, N-1);
     for(int i=0; i<N-1; i++)
@@ -66,8 +65,8 @@ int main(){
     finish2 = clock();
 
     int kmax; int lmax;
-    double eps = pow(10,-13); //toleranse
-    int max_iteration = 100000;
+    double eps = pow(10,-8); //toleranse
+    int max_iteration = 1000000;
     int iteration = 0;
 
     //Calling the function which finds the largest off-diag element a_kl
@@ -80,9 +79,10 @@ int main(){
         largest_akl_func(A, &kmax, &lmax);
     }
 
+    cout << iteration<< endl;
+
     //Henter ut egenverdiene
     vec lambda = diagvec(A);
-
 
     cout << "Run time program: " << (finish1-start1)/float(CLOCKS_PER_SEC) << "s" << endl;
     cout << "Run time armadillo: " << (finish2-start2)/float(CLOCKS_PER_SEC) << "s" << endl;
@@ -93,8 +93,7 @@ int main(){
     //Test largest_akl_func
     test_largest_akl(3,4);
 
-
-    //Fix the boundary cond, u0 = uN = 0
+     //Fix the boundary cond, u0 = uN = 0
     mat U = zeros<mat>(N+1, N-1);
 
     for(int i = 0; i < N-1; i++)
@@ -105,20 +104,43 @@ int main(){
         }
     }
 
-    //Indentify gound state
+    //Indentify the tree lowest states
     int k_min = 0;
-    double lambda_min = 100.0;
+    int k_2_min = 0;
+    int k_3_min = 0;
+
+    double lambda_min = 1000.0;
+    double lambda_2_min = 1000.0;
+    double lambda_3_min = 1000.0;
+
     for(int k=0; k < N-1; k++)
     {
         if(lambda[k] < lambda_min)
         {
+            lambda_3_min = lambda_2_min;
+            lambda_2_min = lambda_min;
             lambda_min = lambda[k];
+            k_3_min = k_2_min;
+            k_2_min = k_min;
             k_min = k;
         }
+        if(lambda[k] < lambda_2_min && lambda[k] > lambda_min)
+        {
+            lambda_3_min = lambda_2_min;
+            lambda_2_min = lambda[k];
+            k_3_min = k_2_min;
+            k_2_min = k;
+        }
+        if(lambda[k] < lambda_3_min && lambda[k] > lambda_2_min)
+        {
+            lambda_3_min = lambda[k];
+            k_3_min = k;
+        }
+
     }
 
-    cout << k_min << endl;
-    cout << lambda << endl;
+    cout << k_min << "  " << k_2_min << "  " << k_3_min << endl;
+    cout << lambda[k_min] << "  " << lambda[k_2_min] << "  " << lambda[k_3_min] << endl;
 
     ofstream myfile_1;
     myfile_1.open("../lambda_file.txt");
@@ -128,22 +150,16 @@ int main(){
     }
     myfile_1.close();
 
-//    ofstream myfile_2;
-//    myfile_2.open("../u_file.txt");
-//    for(int i=0; i < U.n_rows; i++)
-//    {
-//        myfile_2 << U.row(i);
-//    }
-
-//    myfile_2.close();
-
     vec eigvec_1 = U.col(k_min);
+    vec eigvec_2 = U.col(k_2_min);
+    vec eigvec_3 = U.col(k_3_min);
+
 
     ofstream myfile_2;
     myfile_2.open("../u_file.txt");
     for(int i=0; i < N+1; i++)
     {
-        myfile_2 << eigvec_1[i] << endl;
+        myfile_2 << eigvec_1[i] << " " << eigvec_2[i] << " " << eigvec_3[i] << endl;
     }
 
     myfile_2.close();
