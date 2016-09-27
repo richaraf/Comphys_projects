@@ -22,7 +22,7 @@
 
 
 \title{FYS-3150: Project 2}
-\author{}
+\author{Richard Fauli\\ Dorthea Gjestvang\\ Even Nordhagen}
 \date{\today}
 \begin{document}
 
@@ -34,11 +34,23 @@
 \item Github repository containing programs and results are in: \url{https://github.com/richaraf/Comphys_projects/tree/master/Project_2}
 \end{itemize}
 \section{Introduction}
+The purpose of this project is.. 
+
 \section{Theory}
+<<<<<<< HEAD
 
 If we consider a set of vectors $\{\textbf{v}_i\}$, an orthogonal matrix U and the transformation $\textbf{w}_i = U\textbf{v}_i$. The dot product for our set of vectors an be expressed as $$\textbf{v}_j^T\textbf{v}_i,$$ which in the case of $\{\textbf{v}_i\}$ being an orthonormal basis means that $\textbf{v}_j^T\textbf{v}_i = \delta_{ij},$ where $\delta_{ij}$ is the Kronecker delta. The dot product of an orthogonal transformation is preserved
 $$\textbf{w}_j^T \textbf{w}_i = (U\textbf{v}_j)^TU\textbf{v}_i = \textbf{v}_j^TU^TU\textbf{v}_i = \textbf{v}_j^T\textbf{v}_i,$$ which also means that orthogonality is preserved in the case where $\{\textbf{v}_i\}$ is an orthogonal basis.
+=======
+If we consider a set of vectors $\textbf{v}_i$ and an orthogonal matrix U. 
+
+>>>>>>> 5f18e82850d0f3b9ff84cabf4bf4ff8e47cd4cbf
 \section{Method}
+In this project we are using Jacobi's method, which transforms a matrix A into a diagonal matrix D with the eigenvalues of A on the diagonal. This is done by repeat setting the largest non-diagonal element to zero until all the non-diagonal elements are smaller than a tolerance $\varepsilon$. From linear algebra we know that a symmetric matrix always can be transformed into a diagonal matrix, so this should be possible for our specific matrix. For doing this we need a matrix S which sets the largest non-diagonal element to zero:
+\begin{equation}
+S^T A S=B
+\end{equation}
+Where B is the matrix 
 \section{Results}
 \section{Discussion}
 \section{References}
