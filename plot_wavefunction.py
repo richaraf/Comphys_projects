@@ -21,7 +21,7 @@ eigenvec3 = np.array(eigenvec3)
 N = len(eigenvec1) - 1;
 rho = np.zeros(N+1)
 rho[0] = 0.0
-rho[-1] = 10.0
+rho[-1] = 5.0
 
 h = (rho[-1] - rho[0])/(N)
 
@@ -31,13 +31,13 @@ for i in range(N):
 
 
 #Plot
-SZ={'size':'16'}
+SZ={'size':'18'}
 plt.plot(rho,eigenvec1**2)
 plt.plot(rho,eigenvec2**2)
 plt.plot(rho,eigenvec3**2)
-plt.title(r'The three lowest wave functions',**SZ)
-plt.xlabel(r'$\psi(\rho)$',**SZ)
-plt.ylabel(r'$\rho$',**SZ)
-plt.legend([r'u_0', 'u_1', 'u_3'],loc='best')
+plt.title(r'The three lowest wave functions, two electrons, $\omega$ = 0.01 ',**SZ)
+plt.xlabel(r'$\rho$',**SZ)
+plt.ylabel(r' $|\psi(\rho)|\cdot|\psi(\rho)|$',**SZ)
+plt.legend([r'|u_0|**2', '|u_1|**2', '|u_3|**2'],loc='best')
 plt.grid()
 plt.show()
