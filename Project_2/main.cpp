@@ -13,7 +13,7 @@ using namespace std;
 
 int main(){
 
-    int N = 6;
+    int N = 10;
     clock_t start1, finish1, start2, finish2;
     start1 = clock();
 
@@ -63,7 +63,7 @@ int main(){
     eig_gen(eigval, eigvec, A);
     finish2 = clock();
 
-    cout << eigval << endl;
+    cout << eigvec << endl;
 
     int kmax; int lmax;
     double eps = pow(10,-13); //toleranse
@@ -82,7 +82,6 @@ int main(){
 
     //Henter ut egenverdiene
     vec lambda = diagvec(A);
-    cout << lambda << endl;
 
 
     cout << "Run time program: " << (finish1-start1)/float(CLOCKS_PER_SEC) << "s" << endl;
@@ -105,6 +104,8 @@ int main(){
             U(i+1,j) = R(i,j);
         }
     }
+
+    cout << U << endl;
 
     ofstream myfile_1;
     myfile_1.open("../lambda_file.txt");
