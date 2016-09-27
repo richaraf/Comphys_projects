@@ -12,7 +12,7 @@ using namespace std;
 
 int main(){
 
-    int N = 6;
+    int N = 400;
 
     //Lager rho-arrayen
     double* rho = new double[N+1];
@@ -21,7 +21,7 @@ int main(){
 
     double h = (rho[N] - rho[0])/N;
 
-    //Lager rho, looper til N-1
+    //Lager rho
     for(int i = 1; i < N; i++)
     {
         rho[i] = rho[0] + i*h;
@@ -44,7 +44,7 @@ int main(){
 
     }
 
-    //Setter opp egenvektor-matrisen R, denne starter som I, hei
+    //Setter opp egenvektor-matrisen R, denne starter som I
     mat R = zeros<mat>(N-1, N-1);
     for(int i=0; i<N-1; i++)
     {
@@ -71,10 +71,6 @@ int main(){
 
     //Henter ut egenverdiene
     vec lambda = diagvec(A);
-    //lambda = sort(lambda);
-    //cout << lambda << endl;
-
-    //lambda = sort(lambda);
 
     // Check orthogonality
     orthogonality_check_func(R, eps);
@@ -90,20 +86,23 @@ int main(){
         }
     }
 
-    //
+    ofstream myfile_1;
+    myfile_1.open("../lambda_file.txt");
+    for(int i= 0; i < lambda.n_rows; i++)
+    {
+        myfile_1 << lambda[i] << "  ";
+    }
+    myfile_1.close();
 
+    ofstream myfile_2;
+    myfile_2.open("../u_file.txt");
+    for(int i=0; i < U.n_rows; i++)
+    {
+        myfile_2 << U.row(i);
+    }
 
+    myfile_2.close();
 
+return 0;
 
-//Write eigenvectors and -values to file
-//    ofstream myfile;
-//    myfile.open("../u_file.txt");
-
-//    for(int i=0; i<N+2; i++)
-//    {
-//        cout << "hey" << endl;
-//    }
-//    myfile.close();
-
-    return 0;
 }
