@@ -10,15 +10,26 @@ for line in infile:
 	numbers=line.split()
         if len(numbers) > 0:
                 eigenvec1.append(float(numbers[0]))
-                eigenvec2.append(float(numbers[1]))
-                eigenvec3.append(float(numbers[2]))
+                #eigenvec2.append(float(numbers[1]))
+                #eigenvec3.append(float(numbers[2]))
 infile.close()
 
 eigenvec1 = np.array(eigenvec1)
-eigenvec2 = np.array(eigenvec2)
-eigenvec3 = np.array(eigenvec3)
+#eigenvec2 = np.array(eigenvec2)
+#eigenvec3 = np.array(eigenvec3)
 
-rho=np.linspace(0,1,len(eigenvec1))
+N = len(eigenvec1) -1;
+rho = np.zeros(N+1)
+rho[0] = 0.0
+rho[-1] = 10.0
+
+h = (rho[-1] - rho[0])/(N)
+
+#Lager rho
+for i in range(N):
+        rho[i] = rho[0] + i*h;
+
+#rho = np.linspace(0,1,len(eigenvec1))
 
 #Plot
 SZ={'size':'16'}
