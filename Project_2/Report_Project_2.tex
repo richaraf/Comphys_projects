@@ -110,7 +110,7 @@ The eigenvalue-problem in equation (\ref{eq:SEdimlessinteraction}) can then be w
 If we consider a set of vectors $\{\textbf{v}_i\}$, an orthogonal matrix U and the transformation $\textbf{w}_i = U\textbf{v}_i$. The dot product for our set of vectors an be expressed as $$\textbf{v}_j^T\textbf{v}_i,$$ which in the case of $\{\textbf{v}_i\}$ being an orthonormal basis means that $\textbf{v}_j^T\textbf{v}_i = \delta_{ij},$ where $\delta_{ij}$ is the Kronecker delta. The dot product of an orthogonal transformation is preserved
 $$\textbf{w}_j^T \textbf{w}_i = (U\textbf{v}_j)^TU\textbf{v}_i = \textbf{v}_j^TU^TU\textbf{v}_i = \textbf{v}_j^T\textbf{v}_i,$$ which also means that orthogonality is preserved in the case where $\{\textbf{v}_i\}$ is an orthogonal basis.
 \section{Method}
-\subsection*{Jacobi's method}
+\subsection{Jacobi's method}
 In this project we are using Jacobi's method, which transforms a matrix A into a diagonal matrix D with the eigenvalues of A on the diagonal. This is done by repeat setting the largest non-diagonal element equal to zero until all the non-diagonal elements are smaller than a tolerance $\varepsilon$. From linear algebra we know that a symmetric matrix always can be transformed into a diagonal matrix, so this should be valid for our specific symmetric matrix described in the theory. For doing this we need a transformation matrix S which sets the largest non-diagonal element to zero:
 \begin{equation}
 S^T A S=B
@@ -156,7 +156,7 @@ where \textbf{v} is a basis of eigenvectors, S is the transformation matrix and 
 \item $R_{ik}=-sin\theta r_{il}+cos\theta r_{ik}$
 \end{itemize}
 
-\subsection*{Armadillo}
+\subsection{Armadillo}
 We are also finding the eigenvectors and eigenvalues with Armadillo, just to compare them with the eigenvalues and eigenvectors found by Jacobi's method. For a symmetric matrix, this is done by this script:
 \begin{lstlisting}
 vec eigval;
@@ -165,12 +165,12 @@ eig_sym(eigval, eigvec, A);
 \end{lstlisting}
 where we assume that armadillo is included. 
 
-\subsection*{Tests}
-\subsubsection*{Largest element test}
+\subsection{Tests}
+\subsubsection{Largest element test}
 To ensure that the indexes of the non-diagonal largest element are found correctly, we have implemented a test for this. The test is a function which takes $k$ and $l$ as arguments (the indexes of the largest non-diagonal element) and placing the number 1 at this index while the remaining elements are zero. It will not allow us to place the element on the diagonal. Then we have a matrix where we know the exact location of the largest (non-diagonal) element. The next step is to send this matrix into the function which finds the largest element and returns the indexes of this. If this function returns the same indexes as where we placed the largest element, the largest element function passes the test.\par\vspace{3mm}
 The reason why we want the test function to take the indexes as arguments, is to be able to vary the test matrix to ensure that the solver is not giving the right result accidentally. 
 
-\subsubsection*{Check of orthogonality}
+\subsubsection{Check of orthogonality}
 
 
 \section{Results}
