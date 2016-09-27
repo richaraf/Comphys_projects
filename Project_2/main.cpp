@@ -17,7 +17,7 @@ int main(){
     //Lager rho-arrayen
     double* rho = new double[N+1];
     rho[0] = 0.0;
-    rho[N] = 5.0; //Approx infinity
+    rho[N] = 10.0; //Approx infinity
 
     double h = (rho[N] - rho[0])/N;
 
@@ -71,12 +71,15 @@ int main(){
 
     //Henter ut egenverdiene
     vec lambda = diagvec(A);
-    lambda = sort(lambda);
+    //lambda = sort(lambda);
+    //cout << lambda << endl;
+
+    //lambda = sort(lambda);
 
     // Check orthogonality
     orthogonality_check_func(R, eps);
 
-    //Fix the boundary cond, u0 = uN = 0 Vil dere heller gjore dette i filen?
+    //Fix the boundary cond, u0 = uN = 0
     mat U = zeros<mat>(N+1, N-1);
 
     for(int i = 0; i < N-1; i++)
@@ -87,10 +90,12 @@ int main(){
         }
     }
 
-    //Find which eigvec/-val belong together
+    //
 
 
-//Write eigenvectors to file
+
+
+//Write eigenvectors and -values to file
 //    ofstream myfile;
 //    myfile.open("../u_file.txt");
 
