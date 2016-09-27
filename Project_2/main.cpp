@@ -82,10 +82,10 @@ int main(){
         }
     }
 
-    //Find which eigvec/-val belong together
+    //Find which eigvec/-vals belong together
 
 
-//Write eigenvectors to file
+//Write eigenvectors and -values to file
 //    ofstream myfile;
 //    myfile.open("../u_file.txt");
 
