@@ -35,7 +35,9 @@
 \end{itemize}
 \section{Introduction}
 \section{Theory}
-If we consider a set of vectors $\textbf{v}_i$ and an orthogonal matrix U. 
+
+If we consider a set of vectors $\{\textbf{v}_i\}$, an orthogonal matrix U and the transformation $\textbf{w}_i = U\textbf{v}_i$. The dot product for our set of vectors an be expressed as $$\textbf{v}_j^T\textbf{v}_i,$$ which in the case of $\{\textbf{v}_i\}$ being an orthonormal basis means that $\textbf{v}_j^T\textbf{v}_i = \delta_{ij},$ where $\delta_{ij}$ is the Kronecker delta. The dot product of an orthogonal transformation is preserved
+$$\textbf{w}_j^T \textbf{w}_i = (U\textbf{v}_j)^TU\textbf{v}_i = \textbf{v}_j^TU^TU\textbf{v}_i = \textbf{v}_j^T\textbf{v}_i,$$ which also means that orthogonality is preserved in the case where $\{\textbf{v}_i\}$ is an orthogonal basis.
 \section{Method}
 \section{Results}
 \section{Discussion}
