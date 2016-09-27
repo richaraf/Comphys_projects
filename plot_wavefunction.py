@@ -18,16 +18,26 @@ eigenvec1 = np.array(eigenvec1)
 eigenvec2 = np.array(eigenvec2)
 eigenvec3 = np.array(eigenvec3)
 
-rho=np.linspace(0,1,len(eigenvec1))
+N = len(eigenvec1) - 1;
+rho = np.zeros(N+1)
+rho[0] = 0.0
+rho[-1] = 10.0
+
+h = (rho[-1] - rho[0])/(N)
+
+#Lager rho
+for i in range(N):
+        rho[i] = rho[0] + i*h;
+
 
 #Plot
 SZ={'size':'16'}
-plt.plot(rho,eigenvec1)
-#plt.plot(rho,eigenvec2**2)
-#plt.plot(rho,eigenvec3**2)
-plt.title(r'The wavefunction plotted with three different $\omega_r$s',**SZ)
+plt.plot(rho,eigenvec1**2)
+plt.plot(rho,eigenvec2**2)
+plt.plot(rho,eigenvec3**2)
+plt.title(r'The three lowest wave functions',**SZ)
 plt.xlabel(r'$\psi(\rho)$',**SZ)
 plt.ylabel(r'$\rho$',**SZ)
-plt.legend([r'$\omega_r=0.5$', '$\omega_r=1.0$'],loc='best')
+plt.legend([r'u_0', 'u_1', 'u_3'],loc='best')
 plt.grid()
 plt.show()
