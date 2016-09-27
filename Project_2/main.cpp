@@ -45,6 +45,9 @@ int main(){
         }
 
     }
+    mat B = zeros<mat>(2,2);
+    B(0,1)=1;
+    cout << B << endl;
 
     //Setter opp egenvektor-matrisen R, denne starter som I
     mat R = zeros<mat>(N-1, N-1);
