@@ -5,6 +5,7 @@
 #include <orthogonality_check.h>
 #include <potential_functions.h>
 #include <largest_akl_test.h>
+#include <ctime>
 
 using namespace arma;
 using namespace std;
@@ -12,7 +13,9 @@ using namespace std;
 
 int main(){
 
-    int N = 6;
+    int N = 10;
+    clock_t start1, finish1, start2, finish2;
+    start1 = clock();
 
     //Lager rho-arrayen
     double* rho = new double[N+1];
@@ -56,9 +59,6 @@ int main(){
     int max_iteration = 100000;
     int iteration = 0;
 
-    //Test largest_akl_func
-    test_largest_akl(3,4);
-
     //Calling the function which finds the largest off-diag element a_kl
     largest_akl_func(A, &kmax, &lmax);
 
@@ -73,8 +73,23 @@ int main(){
     vec lambda = diagvec(A);
     lambda = sort(lambda);
 
+    finish1 = clock();
+
+    start2 = clock();
+    cx_vec eigval;
+    cx_mat eigvec;
+
+    eig_gen(eigval, eigvec, A);
+    finish2 = clock();
+
+    cout << "Run time program: " << (finish1-start1)/float(CLOCKS_PER_SEC) << "s" << endl;
+    cout << "Run time armadillo: " << (finish2-start2)/float(CLOCKS_PER_SEC) << "s" << endl;
+
     // Check orthogonality
     orthogonality_check_func(R, eps);
+
+    //Test largest_akl_func
+    test_largest_akl(3,4);
 
     //Fix the boundary cond, u0 = uN = 0 Vil dere heller gjore dette i filen?
     mat U = zeros<mat>(N+1, N-1);
