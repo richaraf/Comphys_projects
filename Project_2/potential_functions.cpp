@@ -8,5 +8,5 @@ double potential_one_e(double rho)
 
 double potential_two_e(double rho, double omega)
 {
-    return pow(omega,2)*rho + 1.0/pow(rho,2);
+    return pow(omega,2)*pow(rho,2) + 1.0/rho;
 }
