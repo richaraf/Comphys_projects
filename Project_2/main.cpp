@@ -13,7 +13,7 @@ using namespace std;
 
 int main(){
 
-    int N = 10;
+    int N = 6;
     clock_t start1, finish1, start2, finish2;
     start1 = clock();
 
@@ -54,6 +54,17 @@ int main(){
         R(i,i) = 1.0;
     }
 
+    finish1 = clock();
+
+    start2 = clock();
+    cx_vec eigval;
+    cx_mat eigvec;
+
+    eig_gen(eigval, eigvec, A);
+    finish2 = clock();
+
+    cout << eigval << endl;
+
     int kmax; int lmax;
     double eps = pow(10,-13); //toleranse
     int max_iteration = 100000;
@@ -71,15 +82,8 @@ int main(){
 
     //Henter ut egenverdiene
     vec lambda = diagvec(A);
+    cout << lambda << endl;
 
-    finish1 = clock();
-
-    start2 = clock();
-    cx_vec eigval;
-    cx_mat eigvec;
-
-    eig_gen(eigval, eigvec, A);
-    finish2 = clock();
 
     cout << "Run time program: " << (finish1-start1)/float(CLOCKS_PER_SEC) << "s" << endl;
     cout << "Run time armadillo: " << (finish2-start2)/float(CLOCKS_PER_SEC) << "s" << endl;
