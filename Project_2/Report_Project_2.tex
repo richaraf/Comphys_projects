@@ -37,14 +37,79 @@
 The purpose of this project is.. 
 
 \section{Theory}
-<<<<<<< HEAD
+\subsection{Without repulsive Coulomb interaction}
+To solve the Schroedinger's equation (SE) for two electrons in a three-dimensional harmic oscillator well, we first assume spherical symmetry, which means we only need to solve the radial part of SE
+\begin{equation}
+-\frac{\hbar ^2}{2m}\left(\frac{1}{r^2}\frac{d}{dr}r^2\frac{d}{dr} - \frac{l(l+1)}{r^2}\right)R(r) + V(r)R(r) = ER(r),
+\label{eq:SEradialgeneral}
+\end{equation}
+where $\hbar = 6.582 \cdot 10^{-16}$ eV$\cdot$s, $m$ is the electron mass, $r \in [0,\infty)$ the radial distance, $V(r)$ is the potential, $E$ is the energy and $l$ is the orbital quantum number. For our harmonic oscillator the potential is $V(r) = (1/2)kr^2$, with $k=m\omega ^2$. If we look at the case where $l=0$, we get the energies to be $$E_n = \hbar \omega \left(2n + \frac{3}{2}\right).$$ If we also substitute $R(r) = (1/r)u(r)$ in equation (\ref{eq:SEradialgeneral}), the SE we want to solve becomes 
+\begin{equation}
+-\frac{\hbar ^2}{2m}\frac{d^2}{dr^2} u(r) + V(r) u(r) = Eu(r).
+\label{eq:SEradial}
+\end{equation}
+We introduce the dimensionless variable $\rho = r/\alpha$, which means our potential becomes $V(\rho)= k\alpha ^2 \rho ^2 / 2$. Inserting $\rho$ and $V(\rho)$ into equation (\ref{eq:SEradial}) we get
+$$-\frac{d^2}{d\rho ^2}u(\rho) + \frac{mk}{\hbar ^2}\alpha ^4 \rho^2 u(\rho) = \frac{2m\alpha ^2}{\hbar^2}Eu(\rho).$$
+We can set $mk\alpha^4/\hbar^2 = 1$ and $2m\alpha^2E/\hbar^2 = \lambda$ which allows us the write the Schroedinger's equation as \begin{equation}
+-\frac{d^2}{d\rho ^2}u(\rho) + \rho ^2 u(\rho) = \lambda u(\rho).
+\label{eq:SEdimless}
+\end{equation}
+The second derivative can be expressed as $$u'' \approx \frac{u(\rho + h) - 2u(\rho) + u(\rho -h)}{h^2},$$ where $h$ is the step length. We use $N$ mesh points with $\rho_{min} = \rho_0$ and $\rho_{max} = \rho_N$ which means the step length is $h = (\rho_N - \rho_0)/N$. $\rho$ is discretized by 
+\begin{align*}
+\rho_i  = \rho _0 + ih && \text{with }i = 1,2,...,N,
+\end{align*}
+which means we can write our discretized SE as 
+\begin{equation}
+-\frac{u_{i+1}-2u_i + u_{i-1}}{h^2} + V_i^2u_i = \lambda u_i,
+\label{eq:SEdiscretized}
+\end{equation}
+where $V_i=\rho_i^2$.
+The discretized case in eq (\ref{eq:SEdiscretized}) can be written as a linear set of equations 
+\begin{equation}
+A\textbf{u} = \lambda \textbf{u},
+\label{eq:Aulambdau}
+\end{equation}
+where A is the tridiagonal matrix
+\setcounter{MaxMatrixCols}{20}
+\begin{equation}
+A=\begin{pmatrix}
+\frac{2}{h^2} + V_1 && -\frac{1}{h^2} && 0 && ... && 0 && 0 \\
+-\frac{1}{h^2} && \frac{2}{h^2} + V_2 && -\frac{1}{h^2} && ... && 0 && 0 \\
+0 && -\frac{1}{h^2} && \frac{2}{h^2} + V_3 && ... && 0 && 0 \\
+: && : && : && ^{\textbf{.}}. && : && : \\
+0 && 0 && 0 && -\frac{1}{h^2} && \frac{2}{h^2} + V_{N-2} && -\frac{1}{h^2} \\
+0 && 0 && 0 && 0 && -\frac{1}{h^2} && \frac{2}{h^2} + V_{N-1}
+\end{pmatrix}
+\label{eq:A}
+\end{equation}
+\subsection{With repulsive Coulomb interaction}
+In the case of two electron without repulsive Coulomb interaction our SE is 
+$$\left(-\frac{\hbar ^2}{2m}\frac{d^2}{dr_1^2} - \frac{\hbar ^2}{2m}\frac{d^2}{dr_2^2} + \frac{kr_1^2}{2} + \frac{kr_2^2}{2}\right)u(r_1,r_2) = E^{(2)}u(r_1,r_2),$$
+where $E^{(2)}$ is the two-electron energy. Introducing a relative coordinate $\textbf{r} = \textbf{r}_1-\textbf{r}_2$ and the center-of-mass coordinate $\textbf{R} = (\textbf{r}_1 + \textbf{r}_2)/2$, we can write SE as
+$$\left(-\frac{\hbar ^2}{m}\frac{d^2}{dr^2} - \frac{\hbar ^2}{4m}\frac{d^2}{dR^2} + \frac{kr^2}{4} + kR^2\right)u(r,R) = E^{(2)}u(r,R).$$
 
+
+The energy can be split into relative energy $E_r$ and the center-of-mass energy $E_R$ as well as $u(r,R) = \psi(r) \phi(R)$. We can then separate the SE into an $r$-dependent part and an $R$-dependent part. The repulsive Coulomb interaction potential between the two electrons is expressed $$V(r_1,r_2) = \frac{\beta e^2}{|\textbf{r}_1-\textbf{r}_2|} = \frac{\beta e^2}{r},$$ where $\beta e^2 = 1.44$ eVnm. 
+
+We are interested in solving the equation with $E_r$, because the $R$-dependent equation is very similar to the case of no repulsive Coulomb interaction. Adding the repulsive Coulomb potential the to $r$-dependent part of SE gives
+$$\left(-\frac{\hbar ^2}{m}\frac{d^2}{dr^2} + \frac{kr^2}{4} + \frac{\beta e^2}{r}\right)\psi(r) = E_r\psi(r).$$ 
+We again use the dimensionless variable $\rho = r/\alpha$ which gives us 
+$$\left(-\frac{d^2}{d\rho ^2} + \frac{mk\alpha ^4 \rho ^2}{4\hbar ^2} + \frac{m\alpha \beta e^2}{\rho \hbar^2}\right)\psi(\rho) = \frac{m\alpha ^2}{\hbar^2}E_r\psi(\rho),
+$$
+which we can simplify and make look like equation (\ref{eq:SEdimless}) by fixing $\alpha$, defining a ''frequency'' $\omega _r$ and ''energy'' $\lambda_r$
+\begin{align*}
+\frac{m\alpha\beta e^2}{\hbar^2} = 1 && \omega_r^2 = \frac{mk\alpha^4}{4\hbar^2} && \lambda = \frac{m\alpha^2E}{\hbar^2}.
+\end{align*}
+The equation to solve then becomes \begin{equation}
+-\frac{d^2}{d\rho ^2}\psi (\rho) + \omega_r^2\rho^2\psi(\rho) + \frac{1}{\rho}\psi(\rho) = \lambda \psi (\rho),
+\label{eq:SEdimlessinteraction}
+\end{equation}
+which means we can write the potential as $$V_r(\rho) = \omega_r^2\rho^2 + \frac{1}{\rho}$$
+and in discretized form $$V_{ir} = \omega_r^2\rho_i^2 + \frac{1}{\rho_i}.$$
+The eigenvalue-problem in equation (\ref{eq:SEdimlessinteraction}) can then be written as equation (\ref{eq:Aulambdau}), a set of linear equations, where $A$ is as defined in expression (\ref{eq:A}), with the potential $V_{ir}$.
+\subsection{Conservation of dot product}
 If we consider a set of vectors $\{\textbf{v}_i\}$, an orthogonal matrix U and the transformation $\textbf{w}_i = U\textbf{v}_i$. The dot product for our set of vectors an be expressed as $$\textbf{v}_j^T\textbf{v}_i,$$ which in the case of $\{\textbf{v}_i\}$ being an orthonormal basis means that $\textbf{v}_j^T\textbf{v}_i = \delta_{ij},$ where $\delta_{ij}$ is the Kronecker delta. The dot product of an orthogonal transformation is preserved
 $$\textbf{w}_j^T \textbf{w}_i = (U\textbf{v}_j)^TU\textbf{v}_i = \textbf{v}_j^TU^TU\textbf{v}_i = \textbf{v}_j^T\textbf{v}_i,$$ which also means that orthogonality is preserved in the case where $\{\textbf{v}_i\}$ is an orthogonal basis.
-=======
-If we consider a set of vectors $\textbf{v}_i$ and an orthogonal matrix U. 
-
->>>>>>> 5f18e82850d0f3b9ff84cabf4bf4ff8e47cd4cbf
 \section{Method}
 In this project we are using Jacobi's method, which transforms a matrix A into a diagonal matrix D with the eigenvalues of A on the diagonal. This is done by repeat setting the largest non-diagonal element to zero until all the non-diagonal elements are smaller than a tolerance $\varepsilon$. From linear algebra we know that a symmetric matrix always can be transformed into a diagonal matrix, so this should be possible for our specific matrix. For doing this we need a matrix S which sets the largest non-diagonal element to zero:
 \begin{equation}
