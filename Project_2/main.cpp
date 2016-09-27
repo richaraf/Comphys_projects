@@ -57,10 +57,10 @@ int main(){
     finish1 = clock();
 
     start2 = clock();
-    cx_vec eigval;
-    cx_mat eigvec;
+    vec eigval;
+    mat eigvec;
 
-    eig_gen(eigval, eigvec, A);
+    eig_sym(eigval, eigvec, A);
     finish2 = clock();
 
     cout << eigval << endl;
