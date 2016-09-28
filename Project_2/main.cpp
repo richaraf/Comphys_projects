@@ -13,9 +13,8 @@ using namespace std;
 
 int main(){
 
-    int N = 350;
+    int N = 400;
     clock_t start1, finish1, start2, finish2;
-    start1 = clock();
 
     //Lager rho-arrayen
     double* rho = new double[N+1];
@@ -36,7 +35,7 @@ int main(){
 
     for(int i=0; i<N-1; i++)
     {
-        A(i,i) = 2.0/pow(h,2) + potential_two_e(rho[i+1], 0.01); //Change this to solve for two electrons
+        A(i,i) = 2.0/pow(h,2) + potential_one_e(rho[i+1]); //Change this to solve for two electrons
 
         if(i < (N-2))
         {
@@ -45,9 +44,6 @@ int main(){
         }
 
     }
-    mat B = zeros<mat>(2,2);
-    B(0,1)=1;
-    cout << B << endl;
 
     //Setter opp egenvektor-matrisen R, denne starter som I
     mat R = zeros<mat>(N-1, N-1);
@@ -57,8 +53,6 @@ int main(){
     }
 
     //Eigvec/-vals from Armadillo
-    finish1 = clock();
-
     start2 = clock();
     vec eigval;
     mat eigvec;
@@ -71,6 +65,7 @@ int main(){
     int max_iteration = 1000000;
     int iteration = 0;
 
+    start1 = clock();
     //Calling the function which finds the largest off-diag element a_kl
     largest_akl_func(A, &kmax, &lmax);
 
@@ -80,8 +75,9 @@ int main(){
         Jacobi_rotate(A, R, kmax, lmax, N);
         largest_akl_func(A, &kmax, &lmax);
     }
+    finish1 = clock();
 
-    cout << iteration<< endl;
+    cout << iteration << endl;
 
     //Henter ut egenverdiene
     vec lambda = diagvec(A);
@@ -141,8 +137,8 @@ int main(){
 
     }
 
-    cout << k_min << "  " << k_2_min << "  " << k_3_min << endl;
-    cout << lambda[k_min] << "  " << lambda[k_2_min] << "  " << lambda[k_3_min] << endl;
+    //cout << k_min << "  " << k_2_min << "  " << k_3_min << endl;
+    //cout << lambda[k_min] << "  " << lambda[k_2_min] << "  " << lambda[k_3_min] << endl;
 
     ofstream myfile_1;
     myfile_1.open("../lambda_file.txt");

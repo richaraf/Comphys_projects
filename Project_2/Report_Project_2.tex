@@ -34,6 +34,17 @@
 \item Github repository containing programs and results are in: \url{https://github.com/richaraf/Comphys_projects/tree/master/Project_2}
 \end{itemize}
 \section{Introduction}
+In this project, we study the theory behind quantum dots, a highly relevant subject in modern physics. A quantum dot is one or two electrons trapped in an quantum well. These are often referred to as arificial atoms, as they, like natural atoms, have discrete energy levels. (Reference: http://www.nature.com/nature/journal/v379/n6564/pdf/379413a0.pdf)\par
+\vspace{3mm}
+
+Our goal in this project is to simulate a quantum dot, modelled as one or two electrons bound in an three-dimensional harmonic oscillator well. Quantum Mechanics tells us that we find the behaviour of these electrons by solving the radial equation with the harmonic oscillator potential, $V(r) = \frac{1}{2}m^2\omega^2r^2$:
+
+\begin{equation}
+    - \frac{\hbar^2}{2m}(\frac{1}{r^2}\frac{d^2}{dr^2}r^2\frac{d}{dr} - \frac{l(l+1)}{r^2})R(r) + \frac{1}{2}m\omega^2r^2R(r) = ER(r)
+\end{equation}
+\vspace{3mm}
+
+We do so by rewriting equation (1) with dimensionless variables, and reduce the equation to a single eigenvalue problem, which we solve by implementing Jacobi's rotation method. Thereafter, we compare the obtained wave functions for one and two electrons, and interpret the results physically. We also examine what effect the strength of the harmonic potential has on the wave function in the two-electron case.
 
 \section{Theory}
 \subsection{Without repulsive Coulomb interaction}
@@ -194,6 +205,111 @@ where $c$ is a constant. We are not interested in $c$, but we want to check if t
 >>>>>>> de5ab43f4b3f1396588f8aa77f6949e6d04529df
 
 \section{Results}
+
+\subsection{Run time}
+\par
+\vspace{3mm}
+
+Table 1: Run time of our Jacobi-algorithm vs the Armadillo solver\par
+\vspace{3mm}
+
+\begin{tabular}{|c|c|c|}\hline
+     \toprule
+     {\bf N, number of grid points} & {\bf Jacobi runtime [s]} & {\bf Armadillo runtime [s]}\\ \hline
+     5 & 4e-06 & 9.7e-05\\
+     100 & 0.301168 & 0.003286 \\
+     350 & 63.5475& 0.064743  \\ \hline
+  
+\end{tabular}\par
+
+\subsection{One electron system}\par
+\vspace{3mm}
+
+\subsubsection{Plot of the wave functions}
+
+\includegraphics[scale=0.6]{wavefunc_one}\par
+Figure 1: Plot of the wave functions of the three lowest states for the single electron system
+\par
+\vspace{5mm}
+
+\subsubsection{Accuracy of the lowest eigenvalue vs N and $\rho_{max}$}\par
+\vspace{3mm}
+
+Table 2: Calculated value of the lowest eigenvalue $\lambda_0$, compared with number of grid points N and chosen value of $\rho_{max}$
+\par
+\vspace{2mm}
+
+\begin{tabular}{|c|c|c|}\hline
+     \toprule
+     {\bf N, number of grid points} & {\bf Calculated value of $\lambda_0$ } & {\bf Value of $\rho_{max}$ \\ \hline
+     5 & 9.82996 & 1\\
+     100 & 10.1504 & 1\\
+     350 & 10.1511 & 1\\ \hline
+     5 & 2.68672 & 5\\
+     100 & 2.99922 & 5\\
+     350 & 2.99994 & 5\\ \hline
+     5 &  4.49479 & 10\\
+     100 & 2.99687  & 10\\
+     350 & 2.99974 & 10 \\ \hline
+  
+\end{tabular}\par
+\par
+\vspace{3mm}
+
+\subsubsection{Number of similarity transforms needed}
+\par
+\vspace{2mm}
+
+Table 3: Number of iterations needed to transform A into a diagonal matrix D, our tolerance is $\epsilon = 10^{-8}$
+\par
+\vspace{3mm}
+\begin{tabular}{|c|c|c|}\hline
+     \toprule
+     {\bf N, number of grid points} & {\bf Number of iterations}\\ \hline
+     5 & 14\\
+     50 & 3862\\
+     100 & 16182\\
+     200 & 65920\\
+     350 & 204523 \\ 
+     400 & 268235\\\hline
+\end{tabular}\par
+  
+
+\par
+\vspace{5mm}
+
+\subsection{Two electron system}
+\par
+\vspace{3mm}
+
+\subsubsection{Plot of the wave functions}
+\par
+\vspace{3mm}
+
+\includegraphics[scale=0.5]{wavefunc_two_omega=0_01}\par
+\vspace{1mm}
+Figure 2: Plot of the wave functions of the three lowest states for the two electron  system, with the "frequency" $\omega$ = 0.01
+\par
+\vspace{7mm}
+
+\includegraphics[scale=0.55]{wavefunc_two_omega=0_5}\par
+\vspace{1mm}
+Figure 3: Plot of the wave functions of the three lowest states for the two electron  system, with the "frequency" $\omega$ = 0.5
+\par
+\vspace{7mm}
+
+\includegraphics[scale=0.65]{wavefunc_two_omega=1}\par
+\vspace{1mm}
+Figure 4: Plot of the wave functions of the three lowest states for the two electron  system, with the "frequency" $\omega$ = 1
+\par
+\vspace{7mm}
+
+\includegraphics[scale=0.6]{wavefunc_two_omega=5}\par
+\vspace{1mm}
+Figure 5: Plot of the wave functions of the three lowest states for the two electron  system, with the "frequency" $\omega$ = 5
+\par
+\vspace{7mm}
+
 \section{Discussion}
 \section{References}
 \begingroup
