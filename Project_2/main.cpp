@@ -13,7 +13,7 @@ using namespace std;
 
 int main(){
 
-    int N = 400;
+    int N = 100;
     clock_t start1, finish1, start2, finish2;
 
     //Lager rho-arrayen
