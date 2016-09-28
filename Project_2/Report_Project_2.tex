@@ -167,11 +167,7 @@ where \textbf{v} is a basis of eigenvectors, S is the transformation matrix and 
 \item $R_{ik}=-sin\theta r_{il}+cos\theta r_{ik}$
 \end{itemize}
 
-<<<<<<< HEAD
-\subsection{Armadillo}
-=======
 \subsection{Solve the eigenproblem using Armadillo}
->>>>>>> de5ab43f4b3f1396588f8aa77f6949e6d04529df
 We are also finding the eigenvectors and eigenvalues with Armadillo, just to compare them with the eigenvalues and eigenvectors found by Jacobi's method. For a symmetric matrix, this is done by this script:
 \begin{lstlisting}
 vec eigval;
@@ -183,13 +179,7 @@ where we assume that armadillo is included.
 \subsection{Tests}
 \subsubsection{Largest element test}
 To ensure that the indexes of the non-diagonal largest element are found correctly, we have implemented a test for this. The test is a function which takes $k$ and $l$ as arguments (the indexes of the largest non-diagonal element) and placing the number 1 at this index while the remaining elements are zero. It will not allow us to place the element on the diagonal. Then we have a matrix where we know the exact location of the largest (non-diagonal) element. The next step is to send this matrix into the function which finds the largest element and returns the indexes of this. If this function returns the same indexes as where we placed the largest element, the largest element function passes the test.\par\vspace{3mm}
-<<<<<<< HEAD
-The reason why we want the test function to take the indexes as arguments, is to be able to vary the test matrix to ensure that the solver is not giving the right result accidentally. 
-
-\subsubsection{Check of orthogonality}
-
-=======
-The reason why we want the test function to take the indexes as arguments, is to be able to vary the test matrix to ensure that the solver is not giving the right result accidentally.\par\vspace{3mm}
+The reason why we want the test function to take the indexes as arguments, is to be able to vary the test matrix to ensure that the solver is not giving the right result accidentally.\par\vspace{3mm} 
 We are also testing if the matrix sent into the largest element finder is quadratic. This is simply done by comparing the number of rows and the number of columns. The test raises an error if the matrix is not quadratic.
 
 \subsubsection{Check of orthogonality}
@@ -202,7 +192,6 @@ The eigenvectors should be orthogonal since they cannot be linear combination of
     \end{cases}
 \end{equation}
 where $c$ is a constant. We are not interested in $c$, but we want to check if the inner product between two \textit{different} vectors are zero. The test loops over all the different combinations of eigenvectors (but not equal eigenvectors), and takes the inner product between them. Thereafter it compares the inner product with a given tolerance, and the test passes as long as the inner product is smaller than the tolerance.
->>>>>>> de5ab43f4b3f1396588f8aa77f6949e6d04529df
 
 \section{Results}
 
@@ -214,7 +203,7 @@ Table 1: Run time of our Jacobi-algorithm vs the Armadillo solver\par
 \vspace{3mm}
 
 \begin{tabular}{|c|c|c|}\hline
-     \toprule
+     %\toprule
      {\bf N, number of grid points} & {\bf Jacobi runtime [s]} & {\bf Armadillo runtime [s]}\\ \hline
      5 & 4e-06 & 9.7e-05\\
      100 & 0.301168 & 0.003286 \\
@@ -240,8 +229,7 @@ Table 2: Calculated value of the lowest eigenvalue $\lambda_0$, compared with nu
 \vspace{2mm}
 
 \begin{tabular}{|c|c|c|}\hline
-     \toprule
-     {\bf N, number of grid points} & {\bf Calculated value of $\lambda_0$ } & {\bf Value of $\rho_{max}$ \\ \hline
+     {\bf N, number of grid points} & {\bf Calculated value of $\lambda_0$ } & {\bf Value of $\rho_{max}$} \\ \hline
      5 & 9.82996 & 1\\
      100 & 10.1504 & 1\\
      350 & 10.1511 & 1\\ \hline
@@ -264,7 +252,6 @@ Table 3: Number of iterations needed to transform A into a diagonal matrix D, ou
 \par
 \vspace{3mm}
 \begin{tabular}{|c|c|c|}\hline
-     \toprule
      {\bf N, number of grid points} & {\bf Number of iterations}\\ \hline
      5 & 14\\
      50 & 3862\\
