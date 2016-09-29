@@ -9,9 +9,9 @@ infile=open('u_file.txt','r')
 for line in infile:
 	numbers=line.split()
         if len(numbers) > 0:
-                eigenvec1.append(float(numbers[0]))
-                eigenvec2.append(float(numbers[1]))
-                eigenvec3.append(float(numbers[2]))
+            eigenvec1.append(float(numbers[0]))
+            eigenvec2.append(float(numbers[1]))
+            eigenvec3.append(float(numbers[2]))
 infile.close()
 
 eigenvec1 = np.array(eigenvec1)
