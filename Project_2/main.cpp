@@ -13,13 +13,14 @@ using namespace std;
 
 int main(){
 
-    int N = 100;
+    int N = 350;
     clock_t start1, finish1, start2, finish2;
 
     //Lager rho-arrayen
     double* rho = new double[N+1];
     rho[0] = 0.0;
-    rho[N] = 5.0; //Approx infinity
+    rho[N] = 50.0; //Approx infinity
+    double omega = 0.01;
 
     double h = (rho[N] - rho[0])/N;
 
@@ -35,7 +36,7 @@ int main(){
 
     for(int i=0; i<N-1; i++)
     {
-        A(i,i) = 2.0/pow(h,2) + potential_one_e(rho[i+1]); //Change this to solve for two electrons
+        A(i,i) = 2.0/pow(h,2) + potential_two_e_interact(rho[i+1], omega); //Change this to solve for two electrons
 
         if(i < (N-2))
         {
@@ -76,8 +77,6 @@ int main(){
         largest_akl_func(A, &kmax, &lmax);
     }
     finish1 = clock();
-
-    cout << iteration << endl;
 
     //Henter ut egenverdiene
     vec lambda = diagvec(A);
@@ -138,7 +137,7 @@ int main(){
     }
 
     //cout << k_min << "  " << k_2_min << "  " << k_3_min << endl;
-    //cout << lambda[k_min] << "  " << lambda[k_2_min] << "  " << lambda[k_3_min] << endl;
+    cout << lambda[k_min] << "  " << lambda[k_2_min] << "  " << lambda[k_3_min] << endl;
 
     ofstream myfile_1;
     myfile_1.open("../lambda_file.txt");
@@ -152,16 +151,30 @@ int main(){
     vec eigvec_2 = U.col(k_2_min);
     vec eigvec_3 = U.col(k_3_min);
 
+//Write to file when plotting three lowest wavefunc
+//    ofstream myfile_2;
+//    myfile_2.open("../u_file_.txt");
+//    for(int i=0; i < N+1; i++)
+//    {
+//        myfile_2 << eigvec_1[i] << " " << eigvec_2[i] << " " << eigvec_3[i] << endl;
+//    }
 
-    ofstream myfile_2;
-    myfile_2.open("../u_file.txt");
+//    myfile_2.close();
+
+//    return 0;
+
+    //Write to file the value of rho_max and omega, and the ground state of the system
+    ofstream myfile_variables;
+    myfile_variables.open("../variable_file.txt");
+    myfile_variables << rho[N] << endl;
+    myfile_variables << omega << endl;
+    myfile_variables.close();
+
+    ofstream myfile_groundstate;
+    myfile_groundstate.open("../u_interact.txt");
     for(int i=0; i < N+1; i++)
     {
-        myfile_2 << eigvec_1[i] << " " << eigvec_2[i] << " " << eigvec_3[i] << endl;
+        myfile_groundstate << eigvec_1[i] << endl;
     }
-
-    myfile_2.close();
-
-    return 0;
-
+    myfile_groundstate.close();
 }
