@@ -29,6 +29,7 @@
 \maketitle
 
 \begin{abstract}
+In Project 2 we are studying how electrons behave in a harmonic oscillator well when they are interacting and when we do not. We observed that the interaction had
 \end{abstract}
 \begin{itemize}
 \item Github repository containing programs and results are in: \url{https://github.com/richaraf/Comphys_projects/tree/master/Project_2}
@@ -37,7 +38,7 @@
 In this project, we study the theory behind quantum dots, a highly relevant subject in modern physics. A quantum dot is one or two electrons trapped in an quantum well. These are often referred to as arificial atoms, as they, like natural atoms, have discrete energy levels. (Reference: http://www.nature.com/nature/journal/v379/n6564/pdf/379413a0.pdf)\par
 \vspace{3mm}
 
-Our goal in this project is to simulate a quantum dot, modelled as one or two electrons bound in a three-dimensional harmonic oscillator well. Quantum Mechanics tells us that we find the behaviour of these electrons by solving the radial equation with the harmonic oscillator potential, $V(r) = \frac{1}{2}m^2\omega^2r^2$:
+Our goal in this project is to simulate a quantum dot, modelled as one or two electrons bound in an three-dimensional harmonic oscillator well. Quantum Mechanics tells us that we find the behaviour of these electrons by solving the radial equation with the harmonic oscillator potential, $V(r) = \frac{1}{2}m^2\omega^2r^2$:
 
 \begin{equation}
     - \frac{\hbar^2}{2m}(\frac{1}{r^2}\frac{d^2}{dr^2}r^2\frac{d}{dr} - \frac{l(l+1)}{r^2})R(r) + \frac{1}{2}m\omega^2r^2R(r) = ER(r)
@@ -47,8 +48,8 @@ Our goal in this project is to simulate a quantum dot, modelled as one or two el
 We do so by rewriting equation (1) with dimensionless variables, and reduce the equation to a single eigenvalue problem, which we solve by implementing Jacobi's rotation method. Thereafter, we compare the obtained wave functions for one and two electrons, and interpret the results physically. We also examine what effect the strength of the harmonic potential has on the wave function in the two-electron case.
 
 \section{Theory}
-\subsection{One electron}
-To solve the Schroedinger's equation (SE) for one electron in a three-dimensional harmic oscillator well, we first assume spherical symmetry, which means we only need to solve the radial part of SE
+\subsection{Without repulsive Coulomb interaction}
+To solve the Schroedinger's equation (SE) for two electrons in a three-dimensional harmic oscillator well, we first assume spherical symmetry, which means we only need to solve the radial part of SE
 \begin{equation}
 -\frac{\hbar ^2}{2m}\left(\frac{1}{r^2}\frac{d}{dr}r^2\frac{d}{dr} - \frac{l(l+1)}{r^2}\right)R(r) + V(r)R(r) = ER(r),
 \label{eq:SEradialgeneral}
@@ -92,7 +93,7 @@ A=\begin{pmatrix}
 \end{pmatrix}
 \label{eq:A}
 \end{equation}
-\subsection{Two electrons}
+\subsection{With repulsive Coulomb interaction}
 In the case of two electron without repulsive Coulomb interaction our SE is 
 $$\left(-\frac{\hbar ^2}{2m}\frac{d^2}{dr_1^2} - \frac{\hbar ^2}{2m}\frac{d^2}{dr_2^2} + \frac{kr_1^2}{2} + \frac{kr_2^2}{2}\right)u(r_1,r_2) = E^{(2)}u(r_1,r_2),$$
 where $E^{(2)}$ is the two-electron energy. Introducing a relative coordinate $\textbf{r} = \textbf{r}_1-\textbf{r}_2$ and the center-of-mass coordinate $\textbf{R} = (\textbf{r}_1 + \textbf{r}_2)/2$, we can write SE as
@@ -104,11 +105,8 @@ The energy can be split into relative energy $E_r$ and the center-of-mass energy
 We are interested in solving the equation with $E_r$, because the $R$-dependent equation is very similar to the case of no repulsive Coulomb interaction. Adding the repulsive Coulomb potential the to $r$-dependent part of SE gives
 $$\left(-\frac{\hbar ^2}{m}\frac{d^2}{dr^2} + \frac{kr^2}{4} + \frac{\beta e^2}{r}\right)\psi(r) = E_r\psi(r).$$ 
 We again use the dimensionless variable $\rho = r/\alpha$ which gives us 
-\begin{equation}
-\left(-\frac{d^2}{d\rho ^2} + \frac{mk\alpha ^4 \rho ^2}{4\hbar ^2} + \frac{m\alpha \beta e^2}{\rho \hbar^2}\right)\psi(\rho) = \frac{m\alpha ^2}{\hbar^2}E_r\psi(\rho),
-\label{eq:SEdimlessvars}
-\end{equation}
-
+$$\left(-\frac{d^2}{d\rho ^2} + \frac{mk\alpha ^4 \rho ^2}{4\hbar ^2} + \frac{m\alpha \beta e^2}{\rho \hbar^2}\right)\psi(\rho) = \frac{m\alpha ^2}{\hbar^2}E_r\psi(\rho),
+$$
 which we can simplify and make look like equation (\ref{eq:SEdimless}) by fixing $\alpha$, defining a ''frequency'' $\omega _r$ and ''energy'' $\lambda_r$
 \begin{align*}
 \frac{m\alpha\beta e^2}{\hbar^2} = 1 && \omega_r^2 = \frac{mk\alpha^4}{4\hbar^2} && \lambda = \frac{m\alpha^2E}{\hbar^2}.
@@ -117,10 +115,9 @@ The equation to solve then becomes \begin{equation}
 -\frac{d^2}{d\rho ^2}\psi (\rho) + \omega_r^2\rho^2\psi(\rho) + \frac{1}{\rho}\psi(\rho) = \lambda \psi (\rho),
 \label{eq:SEdimlessinteraction}
 \end{equation}
-which means we can write the potential for the interacting case as $$V_r(\rho) = \omega_r^2\rho^2 + \frac{1}{\rho}$$
-and in discretized form $$V_{ir} = \omega_r^2\rho_i^2 + \frac{1}{\rho_i}.$$ The potential for the case where there is no interaction between the two electrons, we simply set $\beta$ to $0$, which means the potential becomes $$V_{nr}(\rho) = \omega_r^2 \rho^2,$$ which for discrete points can be expressed
-$$V_{inr} = \omega_r^2\rho_i^2.$$
-The eigenvalue-problem in equation (\ref{eq:SEdimlessinteraction}) can then be written as equation (\ref{eq:Aulambdau}), a set of linear equations, where $A$ is as defined in expression (\ref{eq:A}), with the potential $V_{ir}$ for the interacting case and $V_{inr}$ for the case without interaction.
+which means we can write the potential as $$V_r(\rho) = \omega_r^2\rho^2 + \frac{1}{\rho}$$
+and in discretized form $$V_{ir} = \omega_r^2\rho_i^2 + \frac{1}{\rho_i}.$$
+The eigenvalue-problem in equation (\ref{eq:SEdimlessinteraction}) can then be written as equation (\ref{eq:Aulambdau}), a set of linear equations, where $A$ is as defined in expression (\ref{eq:A}), with the potential $V_{ir}$.
 \subsection{Conservation of dot product}
 If we consider a set of vectors $\{\textbf{v}_i\}$, an orthogonal matrix U and the transformation $\textbf{w}_i = U\textbf{v}_i$. The dot product for our set of vectors an be expressed as $$\textbf{v}_j^T\textbf{v}_i,$$ which in the case of $\{\textbf{v}_i\}$ being an orthonormal basis means that $\textbf{v}_j^T\textbf{v}_i = \delta_{ij},$ where $\delta_{ij}$ is the Kronecker delta. The dot product of an orthogonal transformation is preserved
 $$\textbf{w}_j^T \textbf{w}_i = (U\textbf{v}_j)^TU\textbf{v}_i = \textbf{v}_j^TU^TU\textbf{v}_i = \textbf{v}_j^T\textbf{v}_i,$$ which also means that orthogonality is preserved in the case where $\{\textbf{v}_i\}$ is an orthogonal basis.
@@ -202,10 +199,6 @@ where $c$ is a constant. We are not interested in $c$, but we want to check if t
 \subsection{Run time}
 \par
 \vspace{3mm}
-We ran our program for different numbers of grid points N, and noted the run times of our Jacobi rotation algorithm and the armadillo solver. The run times are presented in Table 1. 
-\par
-\vspace{3mm}
-
 
 Table 1: Run time of our Jacobi-algorithm vs the Armadillo solver\par
 \vspace{3mm}
@@ -223,10 +216,6 @@ Table 1: Run time of our Jacobi-algorithm vs the Armadillo solver\par
 \vspace{3mm}
 
 \subsubsection{Plot of the wave functions}
-\vspace{3mm}
-We found the ground states of the single electron system, and plotted the square of the wave functions. The resulting plot is shown in Figure 1.
-\par
-\vspace{3mm}
 
 \includegraphics[scale=0.6]{wavefunc_one}\par
 Figure 1: Plot of the wave functions of the three lowest states for the single electron system
@@ -235,10 +224,6 @@ Figure 1: Plot of the wave functions of the three lowest states for the single e
 
 \subsubsection{Accuracy of the lowest eigenvalue vs N and $\rho_{max}$}\par
 \vspace{3mm}
-We experimented with how the precision of the lowest eigenvalue $\lambda_0$ changed with number of grid point used and the chosen value og $\rho_{max}$. The results are presented in Table 2.
-\par
-\vspace{3mm}
-
 
 Table 2: Calculated value of the lowest eigenvalue $\lambda_0$, compared with number of grid points N and chosen value of $\rho_{max}$
 \par
@@ -264,11 +249,6 @@ Table 2: Calculated value of the lowest eigenvalue $\lambda_0$, compared with nu
 \par
 \vspace{2mm}
 
-We experimented with how the number of iterations needed to transform the matrix A into a diagonal matrix D changed with the number of grid points we used. The results are presented in Table 3.
-\par
-\vspace{3mm}
-
-
 Table 3: Number of iterations needed to transform A into a diagonal matrix D, our tolerance is $\epsilon = 10^{-8}$
 \par
 \vspace{3mm}
@@ -291,10 +271,6 @@ Table 3: Number of iterations needed to transform A into a diagonal matrix D, ou
 \vspace{3mm}
 
 \subsubsection{Plot of the wave functions}
-\par
-\vspace{3mm}
-
-We plotted the wave functions of the three lowest states for the two-electron system, and varied the "frequency" of the potential. For $\omega = [0.01, 0.5, 1, 5]$, the resulting plots are shown in Figure 2-5. 
 \par
 \vspace{3mm}
 
