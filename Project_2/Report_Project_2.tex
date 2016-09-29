@@ -29,12 +29,15 @@
 \maketitle
 
 \begin{abstract}
+This project aims to simulate so-called quantum dots, electrons trapped in harmonic oscillator potentials. By rewriting the Schroedinger equation to an eigenvalue problem which we solved with Jacobi's rotational method. 
+
+We found that our calculations of the eigenvalues and eigenvectors matched analytical expectations, but that Jacobi's method was much slower than Armadillo's inbuilt eigenvalue solver.
 \end{abstract}
 \begin{itemize}
 \item Github repository containing programs and results are in: \url{https://github.com/richaraf/Comphys_projects/tree/master/Project_2}
 \end{itemize}
 \section{Introduction}
-In this project, we study the theory behind quantum dots, a highly relevant subject in modern physics. A quantum dot is one or two electrons trapped in an quantum well. These are often referred to as arificial atoms, as they, like natural atoms, have discrete energy levels [2].  
+In this project, we study the theory behind quantum dots, a highly relevant subject in modern physics. A quantum dot is one or two electrons trapped in an quantum well. These are often referred to as arificial atoms, as they, like natural atoms, have discrete energy levels (\cite{Nature}).  
 
 Our goal in this project is to simulate a quantum dot, modelled as one or two electrons bound in a three-dimensional harmonic oscillator well. Quantum Mechanics tells us that we find the behaviour of these electrons by solving the radial equation with the harmonic oscillator potential, $V(r) = \frac{1}{2}m^2\omega^2r^2$:
 
@@ -91,9 +94,7 @@ A=\begin{pmatrix}
 \end{pmatrix}
 \label{eq:A}
 \end{equation}
-<<<<<<< HEAD
 \subsection{With repulsive Coulomb interaction}
-=======
 For the potential $V_i = \rho_i^2$, we would expect the three lowest eigenvalues to be $3, 7$ and $11$.
 \subsection{Two electrons}
 In the case of two electron without repulsive Coulomb interaction our SE is 
@@ -267,14 +268,11 @@ Table 2: Calculated value of the lowest eigenvalue $\lambda_0$, compared with nu
 \par
 \vspace{2mm}
 
-<<<<<<< HEAD
-=======
 We experimented with how the number of iterations needed to transform the matrix A into a diagonal matrix D changed with the number of grid points we used. The results are presented in Table 3. We also found from both Tables 1 and 3, that for $N=350$ there are approximately $3218$ iterations per second and for $N=100$ there are $53731$ iterations per second.
 \par
 \vspace{3mm}
 
 
->>>>>>> e9cb2a3d5602f610938677f6e8d7e54b855f151b
 Table 3: Number of iterations needed to transform A into a diagonal matrix D, our tolerance is $\epsilon = 10^{-8}$
 \par
 \vspace{3mm}
@@ -366,10 +364,15 @@ In Figure 2-5, we also compare the two electron system when we have included the
 \par
 \vspace{3mm}
 
+<<<<<<< HEAD
 Table 5 and 6 consist of different benchmarks, where the first is analytical solutions compared with numerical solutions of the one electron case and the latter is analytical solution compared with numerical solution of the two interacting electrons case. We saw that the deviations were small when we ran for $N=350$, something which indicates that our implementations are correct.
 %For the two electron case we found that for lower $\omega$ the probability distribution came wider. which is what we would expect since lower $\omega$s corresponds to a weaker potential well.
+=======
+Table 5 and 6 consists of different benchmarks, where the first is analytical solutions compared with numerical solutions of the one electron case and the latter is analytical solutions compared with numerical solutions of the two interacting electrons case. We saw that the deviations were small when we run for $N=350$, something which indicates that our implementations are correct.
+>>>>>>> 307f54f186c398dace06a4c07772dfed12a534a7
 
-%For two electrons we see from figures 2-5 that higher frequencies result in a small difference between the non-interacting and the interacting case. For lower frequencies, the difference is bigger 
+The benchmarks when we 
+We also have done some benchmarks where we are comparing our numerical results with analytical solutions. Many problems when we got interacting atoms have not analytical solutions, but actually our case with two interacting atoms has analytical energy solutions. 
 
 \section{Conclusion}
 In this project we have seen that the Armadillo algorithm was more efficient than our implemented Jacobi rotation algorithm.  We have also seen that the "frequency" $\omega$ of the harmonic oscillator potential affects the probability distribution of the position of the electrons, and that it affects the non-interacting and the interacting electron system differently. Furthermore, we have seen that when calculating the wave functions, the choice of $\rho_{max}$ is essential for obtaining the correct eigenvalues and -vectors.
