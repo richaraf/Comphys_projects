@@ -19,8 +19,8 @@ int main(){
     //Lager rho-arrayen
     double* rho = new double[N+1];
     rho[0] = 0.0;
-    rho[N] = 3.0; //Approx infinity
-    double omega = 5.0;
+    rho[N] = 8.0; //Approx infinity
+    double omega = 0.5;
 
     double h = (rho[N] - rho[0])/N;
 
