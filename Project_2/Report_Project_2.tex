@@ -254,6 +254,14 @@ Table 2: Calculated value of the lowest eigenvalue $\lambda_0$, compared with nu
 \par
 \vspace{2mm}
 
+<<<<<<< HEAD
+=======
+We experimented with how the number of iterations needed to transform the matrix A into a diagonal matrix D changed with the number of grid points we used. The results are presented in Table 3. We also found from both Tables 1 and 3, that for $N=350$ there are approximately $3218$ iterations per second and for $N=100$ there are $53731$ iterations per second.
+\par
+\vspace{3mm}
+
+
+>>>>>>> afee95d35fdc6cfbf5bb7996bd548997f5b6037b
 Table 3: Number of iterations needed to transform A into a diagonal matrix D, our tolerance is $\epsilon = 10^{-8}$
 \par
 \vspace{3mm}
@@ -304,18 +312,17 @@ Figure 5: Plot of the wave functions of the three lowest states for the two elec
 \vspace{7mm}
 
 \section{Discussion}
-<<<<<<< HEAD
 From Table 1, we saw that our Jacobi rotation method for finding the eigenvalues and eigenvector was considerably slower than the armadillo method. In fact as the size of the matrix increases the Jacobi method slows down much faster than armadillo, which would suggest that the number of floating point operations in the Jacobi method is of a higher order than that of the armadillo method. 
 
 For the one electron case shown in Figure 1, we saw that higher energies meant that the expected value of the radius grew, which is what we would expect from equation (\ref{eq:SEdimless}). Additionally, for the second and third lowest energies, the probability distributions had several local maxima. These maxima can be interpreted as possible ''orbits'' around the center of the oscillator or if we wish we can think of the as ''orbits'' around a nucleus.
 
 When calculating the eigenvalues $\lambda$, we found as shown in Table 2 that the eigenvalues both depend one the chosen number of grid points $N$ and the boundary condition $\rho_{max}$. In the one electron case we found that $N=350$ and $\rho_{max} = 5$ gave sufficient accuracy. The method was actually quite sensitive to which value of $\rho_{max}$ we chose. When choosing $N$ and $\rho_{max}$, we have to make a compromise between the number of grid points resulting in computing time, and our approximation of infinity $\rho_{max}$. If we wanted to increase our accuracy further, and time or computer memory was of no concern, we could make a better approximation of infinity and use a much larger amount of grid points, which would result in very high accuracy in the eigenvalues and eigenvectors.
 
-=======
+The number of iterations as a function of grid points shown in Table 3, appeared to follow the relation $\approx 1.6 N^2$. Interestingly, the time required per iteration increases substantially for larger $N$s. The only part of our algorithm which we would expect to take considerably longer time per iteration for different $N$ values, is the function that searches through our matrix $A$ to find the largest element. This time difference suggests that a large part of the CPU time is spent finding the largest element in our matrix. 
+\\* \\* \noindent
+For the two electron case we found that for lower $\omega$ the probability distribution came wider, which is what we would expect since lower $\omega$s corresponds to 
 
-
-\section{Conclusion}
->>>>>>> 02ca7605fce7dd339173fbf000432494ce08d423
+For two electrons we see from figures 2-5 that higher frequencies result in a small difference between the non-interacting and the interacting case. For lower frequencies, the difference is bigger 
 \section{References}
 \begingroup
 \renewcommand{\section}[2]{}
