@@ -96,7 +96,6 @@ A=\begin{pmatrix}
 =======
 For the potential $V_i = \rho_i^2$, we would expect the three lowest eigenvalues to be $3, 7$ and $11$.
 \subsection{Two electrons}
->>>>>>> e9cb2a3d5602f610938677f6e8d7e54b855f151b
 In the case of two electron without repulsive Coulomb interaction our SE is 
 $$\left(-\frac{\hbar ^2}{2m}\frac{d^2}{dr_1^2} - \frac{\hbar ^2}{2m}\frac{d^2}{dr_2^2} + \frac{kr_1^2}{2} + \frac{kr_2^2}{2}\right)u(r_1,r_2) = E^{(2)}u(r_1,r_2),$$
 where $E^{(2)}$ is the two-electron energy. Introducing a relative coordinate $\textbf{r} = \textbf{r}_1-\textbf{r}_2$ and the center-of-mass coordinate $\textbf{R} = (\textbf{r}_1 + \textbf{r}_2)/2$, we can write SE as
@@ -333,24 +332,25 @@ Figure 5:  Plot of the ground state wave functions for the two electron system w
 \subsection{Benchmarks}
 We have done some benchmarks, and for the one electron case we got the results:
 \subsubsection{Single electron}
-Table 4: The exact analytical eigenvalues for the single electron case, compared with our numerical eigenvalue solution and the deviation. Included the three lowest eigenvalues.\par
+Table 4: The exact analytical eigenvalues for the single electron case, compared with our numerical eigenvalue solution and the deviation. Included the three lowest eigenvalues. We are running the program for $N=350$.\par\vspace{5mm}
 \begin{tabular}{|c|c|c|c|}\hline
      {\bf Eigenvalue} & {\bf Analytical} & {\bf Numerical} & {\bf Deviation}\\ \hline
      1 & 3 & 2.99984 & 0.000163275\\
      2 & 7 & 6.99918 & 0.000816424\\
      3 & 11 & 10.998 & 0.0019922\\ \hline
-\end{tabular}\par
+\end{tabular}\par\vspace{5mm}
+As we can see, the numerical solutions are close to the analytical with deviation of order $\sim 10^{-4}$. 
 
 \subsubsection{Two interacting electrons}
-Table 5: The exact analytical eigenvalues for the interacting electron case, compared with our numerical eigenvalue solution and the deviation. Included the three lowest eigenvalues.
+Here we have compared the analytical solution of SE when we have two interacting electrons with our numerical solution. We are running the program with $N=350$, and the analytical solution is gotten from (\cite {M. Taut})\par
+Table 5: The exact analytical eigenvalue for the interacting electron case, compared with our numerical eigenvalue solution and the deviation for the lowest eigenvalue.\par\vspace{5mm}
+\begin{tabular}{|c|c|c|c|}\hline
+     {\bf Eigenvalue} & {\bf Analytical} & {\bf Numerical} & {\bf Deviation}\\ \hline
+     1 & 1.2500 & 1.24996 & 3.54887e-05\\ \hline
+\end{tabular}\par\vspace{5mm}
+The deviation in this case is small, in order $\sim 10{^5}$.\par
+NB: In the analytical solution source they are working with a SE where all the terms are divided by two compared with the SE we are studying. Therefore we have to correct the analytical value given by multiplying with two. 
 
-\section{Discussion}
-
-\subsection{Benchmarks}
-The benchmarks when we 
-We also have done some benchmarks where we are comparing our numerical results with analytical solutions. Many problems when we got interacting atoms have not analytical solutions, but actually our case with two interacting atoms has analytical energy solutions. 
-\section{Conclusion}
-=======
 \section{Discussion}
 From Table 1, we saw that our Jacobi rotation method for finding the eigenvalues and eigenvectors was considerably slower than the armadillo method. In fact as the size of the matrix increases the Jacobi method slows down much faster than armadillo, which would suggest that the number of floating point operations in the Jacobi method is of a higher order than that of the armadillo method. 
 
@@ -360,13 +360,14 @@ When calculating the eigenvalues $\lambda$, we found as shown in Table 2 that th
 
 The number of iterations as a function of grid points shown in Table 3, appeared to follow the relation $\approx 1.6 N^2$. Interestingly, the time required per iteration increases substantially for larger $N$s. The only part of our algorithm which we would expect to take considerably longer time per iteration for different $N$ values, is the function that searches through our matrix $A$ to find the largest element. This time difference suggests that a large part of the CPU time is spent finding the largest element in our matrix. 
 \vspace{1mm}
-In Figure 2-5 we observe that for the two electron system the probability distribution comes wider when we lower the value of $\omega$. This is what we would expect since lower $\omega$ corresponds to a weaker potential well, and thus the electrons can move more freely. The maxima of the probability distribution will therefore be found at higher values of $\rho$, which correspond to longer distances between the two electrons. When we choose larger values for $\omega$, the potential well becomes steeper. The electrons are forced toghether, and the maxima of the probability density is found at lower values of $\rho$.
+In Figure 2-5 we observe that for the two electron system the probability distribution comes wider when we lower the value of $\omega$. This is what we would expect since lower $\omega$ corresponds to a weaker potential well, and thus the electrons can move more freely. The maxima of the probability distribution will therefore be found at higher values of $\rho$, which correspond to longer distances between the two electrons. When we choose larger values for $\omega$, the potential well becomes steeper. The electrons are forced together, and the maxima of the probability density is found at lower values of $\rho$.
 \par
 \vspace{2mm}
 In Figure 2-5, we also compare the two electron system when we have included the Couloumb interaction between the electrons, and when we have neglected the interaction. The figures show that for lower "frequencies" $\omega$ the difference between the interacting and the non-interacting wave functions becomes larger. This is as expected. When the potential is weaker, the electrons have lower kinetic energy, and the Couloumb interaction is therefore more important than with higher kinetic energies.
 \par
 \vspace{3mm}
 
+Table 5 and 6 consists of different benchmarks, where the first is analytical solutions compared with numerical solutions of the one electron case and the latter is analytical solutions compared with numerical solutions of the two interacting electrons case. We saw that the deviations were small when we run for $N=350$, something which indicates that our implementations are correct.
 %For the two electron case we found that for lower $\omega$ the probability distribution came wider. which is what we would expect since lower $\omega$s corresponds to a weaker potential well.
 
 %For two electrons we see from figures 2-5 that higher frequencies result in a small difference between the non-interacting and the interacting case. For lower frequencies, the difference is bigger 
@@ -374,8 +375,6 @@ In Figure 2-5, we also compare the two electron system when we have included the
 \section{Conclusion}
 In this project we have seen that the Armadillo algorithm was more efficient than our implemented Jacobi rotation algorithm.  We have also seen that the "frequency" $\omega$ of the harmonic oscillator potential affects the probability distribution of the position of the electrons, and that it affects the non-interacting and the interacting electron system differently. Furthermore, we have seen that when calculating the wave functions, the choice of $\rho_{max}$ is essential for obtaining the correct eigenvalues and -vectors.
 
-
->>>>>>> e9cb2a3d5602f610938677f6e8d7e54b855f151b
 \section{References}
 \begingroup
 \renewcommand{\section}[2]{}
@@ -390,6 +389,12 @@ In this project we have seen that the Armadillo algorithm was more efficient tha
   Electrons in artificial atoms
   Nature Vol 379 1.February 1996
   http://www.nature.com/nature/journal/v379/n6564/pdf/379413a0.pdf
+\bibitem{M. Taut}
+  M. Taut.
+  Two electrons in an external oscillator potential: Particular analytic solutions
+  of a Coulomb correlation problem
+  VOLUME 48, NUMBER 5
+  http://journals.aps.org/pra/pdf/10.1103/PhysRevA.48.3561
     
 
 \end{thebibliography}

@@ -19,8 +19,8 @@ int main(){
     //Lager rho-arrayen
     double* rho = new double[N+1];
     rho[0] = 0.0;
-    rho[N] = 8.0; //Approx infinity
-    double omega = 0.5;
+    rho[N] = 15.0; //Approx infinity
+    double omega = 0.25;
 
     double h = (rho[N] - rho[0])/N;
 
@@ -36,7 +36,7 @@ int main(){
 
     for(int i=0; i<N-1; i++)
     {
-        A(i,i) = 2.0/pow(h,2) + potential_one_e(rho[i+1]); //Change this to solve for two electrons
+        A(i,i) = 2.0/pow(h,2) + potential_two_e_interact(rho[i+1], omega); //Change this to solve for two electrons
 
         if(i < (N-2))
         {
@@ -140,7 +140,7 @@ int main(){
 
     //cout << k_min << "  " << k_2_min << "  " << k_3_min << endl;
     cout << lambda[k_min] << "  " << lambda[k_2_min] << "  " << lambda[k_3_min] << endl;
-    cout << 3-lambda[k_min] << "  " << 7-lambda[k_2_min] << "  " << 11-lambda[k_3_min] << endl;
+    cout << 1.2500-lambda[k_min] << endl;
     ofstream myfile_1;
     myfile_1.open("../lambda_file.txt");
     for(int i= 0; i < lambda.n_rows; i++)
