@@ -29,20 +29,17 @@
 \maketitle
 
 \begin{abstract}
-This project aims to simulate so-called quantum dots, electrons trapped in harmonic oscillator potentials. By rewriting the Schroedinger equation to an eigenvalue problem which we solved with Jacobi's rotational method. 
-
-We found that our calculations of the eigenvalues and eigenvectors matched analytical expectations, but that Jacobi's method was much slower than Armadillo's inbuilt eigenvalue solver.
 \end{abstract}
 \begin{itemize}
 \item Github repository containing programs and results are in: \url{https://github.com/richaraf/Comphys_projects/tree/master/Project_2}
 \end{itemize}
 \section{Introduction}
-In this project, we study the theory behind quantum dots, a highly relevant subject in modern physics. A quantum dot is one or two electrons trapped in an quantum well. These are often referred to as arificial atoms, as they, like natural atoms, have discrete energy levels (\cite{Nature}).  
+In this project, we study the theory behind quantum dots, a highly relevant subject in modern physics. A quantum dot is one or two electrons trapped in an quantum well. These are often referred to as arificial atoms, as they, like natural atoms, have discrete energy levels [2].  
 
 Our goal in this project is to simulate a quantum dot, modelled as one or two electrons bound in a three-dimensional harmonic oscillator well. Quantum Mechanics tells us that we find the behaviour of these electrons by solving the radial equation with the harmonic oscillator potential, $V(r) = \frac{1}{2}m^2\omega^2r^2$:
 
 \begin{equation}
-    - \frac{\hbar^2}{2m}(\frac{1}{r^2}\frac{d^2}{dr^2}r^2\frac{d}{dr} - \frac{l(l+1)}{r^2})R(r) + \frac{1}{2}m\omega^2r^2R(r) = ER(r)
+    - \frac{\hbar^2}{2m}\bigg(\frac{1}{r^2}\frac{d^2}{dr^2}r^2\frac{d}{dr} - \frac{l(l+1)}{r^2}\bigg)R(r) + \frac{1}{2}m\omega^2r^2R(r) = ER(r)
 \end{equation}
 \vspace{3mm}
 
@@ -94,7 +91,9 @@ A=\begin{pmatrix}
 \end{pmatrix}
 \label{eq:A}
 \end{equation}
+<<<<<<< HEAD
 \subsection{With repulsive Coulomb interaction}
+=======
 For the potential $V_i = \rho_i^2$, we would expect the three lowest eigenvalues to be $3, 7$ and $11$.
 \subsection{Two electrons}
 In the case of two electron without repulsive Coulomb interaction our SE is 
@@ -139,9 +138,9 @@ Where B is the transformed A matrix where the largest non-diagonal element is se
 \begin{equation}
 S=\begin{pmatrix} 
 1	&&0	&&\hdots		&&0		&&0	&&\hdots	&&0 	&&0\\
-0	&&1		&&\hdots&&0&&0&&\hdots&&0&&0\\ \vdots&&\vdots&&\ddots&&\vdots&&\vdots&&\ddots&&\vdots&&\vdots\\ 0&&0&&\hdots&&cos\theta&&0&&\hdots&&0&&sin\theta\\
+0	&&1		&&\hdots&&0&&0&&\hdots&&0&&0\\ \vdots&&\vdots&&\ddots&&\vdots&&\vdots&&\ddots&&\vdots&&\vdots\\ 0&&0&&\hdots&&\cos\theta&&0&&\hdots&&0&&\sin\theta\\
 0&&0&&\hdots&&0&&1&&\hdots&&0&&0\\ \vdots&&\vdots&&\ddots&&\vdots&&\vdots&&\ddots&&\vdots&&\vdots\\ 0&&0&&\hdots&&0&&0&&\hdots&&1&&0\\
-0&&0&&\hdots&&-sin\theta&&0&&\hdots&&0&&cos\theta\\
+0&&0&&\hdots&&-\sin\theta&&0&&\hdots&&0&&\cos\theta\\
 \end{pmatrix}
 \end{equation}
 where the locations of $sin\theta$ and $-sin\theta$ are depending on the indexes of the largest element of A. Therefore we first need to find this, something we can easily do numerically:
@@ -158,11 +157,11 @@ for(k = [0,size A])
 After the indexes of the largest element are found, we can start doing the Jacobi method (also called Jacobi rotation since the matrix S is a rotation matrix). By doing the multiplication $S^T AS = B$ for an arbitrary matrix A, we will see that B is constructed by
 \begin{itemize}
 \item $b_{ii}=a_{ii}\quad\quad\quad\quad\quad\quad\quad\quad\quad\quad\quad\quad\quad\quad\quad\quad\quad\quad\,\, i\not=k,\quad i\not= l$
-\item $b_{ik}=a_{ik}cos\theta-a_{il}sin\theta\quad\quad\quad\quad\quad\quad\quad\quad\quad\quad\quad\quad i\not=k,\quad i\not= l$
-\item $b_{il}=a_{il}cos\theta+a_{ik}sin\theta\quad\quad\quad\quad\quad\quad\quad\quad\quad\quad\quad\quad\, i\not=k,\quad i\not= l$
-\item $b_{kk}=a_{kk}cos^2\theta-2a_{kl}cos\theta sin\theta +a_{ll}sin^2\theta$
-\item $b_{ll}=a_{ll}cos^2\theta+2a_{kl}cos\theta sin\theta +a_{kk}sin^2\theta$
-\item $b_{kl}=(a_{kk}-a_{ll})cos\theta sin\theta + a_{kl}(cos^2\theta sin^2\theta)$
+\item $b_{ik}=a_{ik}\cos\theta-a_{il}\sin\theta\quad\quad\quad\quad\quad\quad\quad\quad\quad\quad\quad\quad i\not=k,\quad i\not= l$
+\item $b_{il}=a_{il}\cos\theta+a_{ik}\sin\theta\quad\quad\quad\quad\quad\quad\quad\quad\quad\quad\quad\quad\, i\not=k,\quad i\not= l$
+\item $b_{kk}=a_{kk}\cos^2\theta-2a_{kl}\cos\theta \sin\theta +a_{ll}\sin^2\theta$
+\item $b_{ll}=a_{ll}\cos^2\theta+2a_{kl}\cos\theta \sin\theta +a_{kk}\sin^2\theta$
+\item $b_{kl}=(a_{kk}-a_{ll})\cos\theta \sin\theta + a_{kl}(\cos^2\theta \sin^2\theta)$
 \end{itemize}
 where $i$ is an arbitrary columns or row index, $k$ is the index of the row with the largest non-diagonal number (in A) and $l$ is the index of the column with the largest non-diagonal number. This makes it easy to find B numerically, and by doing Jacobi's method on B a multiple times, the largest non-diagonal element will constantly be smaller. In the theory these elements should be equal to zero when the diagonal elements are equal to the exact eigenvalues, but we can get a good approximation of the eigenvalues even if the largest element is a small number. We implement this by choosing a small tolerance $\varepsilon$ and continue doing Jacobi's method until the largest element is smaller than this. The smaller $\varepsilon$ is, the better approach we have.\par\vspace{3mm}
 The eigenvectors are found by
@@ -171,8 +170,8 @@ The eigenvectors are found by
 \end{equation}
 where \textbf{v} is a basis of eigenvectors, S is the transformation matrix and \textbf{w} are the eigenvectors of A. Numerically we are going to do this by updating the matrix R which is the identity matrix in the beginning. 
 \begin{itemize}
-\item $R_{il}=cos\theta r_{il}+sin\theta r_{ik}$
-\item $R_{ik}=-sin\theta r_{il}+cos\theta r_{ik}$
+\item $R_{il}=\cos\theta r_{il}+\sin\theta r_{ik}$
+\item $R_{ik}=-\sin\theta r_{il}+\cos\theta r_{ik}$
 \end{itemize}
 
 \subsection{Solve the eigenproblem using Armadillo}
@@ -327,7 +326,7 @@ Figure 5:  Plot of the ground state wave functions for the two electron system w
 \vspace{7mm}
 
 \subsection{Benchmarks}
-We have done some benchmarks, and for the one electron case we got the results:
+We have done some benchmarks for both the single electron case and case with two interacting electrons.
 \subsubsection{Single electron}
 Table 4: The exact analytical eigenvalues for the single electron case, compared with our numerical eigenvalue solution and the deviation. Included the three lowest eigenvalues. We are running the program for $N=350$.\par\vspace{5mm}
 \begin{tabular}{|c|c|c|c|}\hline
@@ -364,15 +363,10 @@ In Figure 2-5, we also compare the two electron system when we have included the
 \par
 \vspace{3mm}
 
-<<<<<<< HEAD
-Table 5 and 6 consist of different benchmarks, where the first is analytical solutions compared with numerical solutions of the one electron case and the latter is analytical solution compared with numerical solution of the two interacting electrons case. We saw that the deviations were small when we ran for $N=350$, something which indicates that our implementations are correct.
+Table 5 and 6 consist of different benchmarks, where the first contains analytical solutions compared with numerical solutions of the one electron case and the latter contains analytical solution compared with numerical solution of the two interacting electrons case. We saw that the deviations were small when we ran for $N=350$, something which indicates that our implementations are correct.
 %For the two electron case we found that for lower $\omega$ the probability distribution came wider. which is what we would expect since lower $\omega$s corresponds to a weaker potential well.
-=======
-Table 5 and 6 consists of different benchmarks, where the first is analytical solutions compared with numerical solutions of the one electron case and the latter is analytical solutions compared with numerical solutions of the two interacting electrons case. We saw that the deviations were small when we run for $N=350$, something which indicates that our implementations are correct.
->>>>>>> 307f54f186c398dace06a4c07772dfed12a534a7
 
-The benchmarks when we 
-We also have done some benchmarks where we are comparing our numerical results with analytical solutions. Many problems when we got interacting atoms have not analytical solutions, but actually our case with two interacting atoms has analytical energy solutions. 
+%For two electrons we see from figures 2-5 that higher frequencies result in a small difference between the non-interacting and the interacting case. For lower frequencies, the difference is bigger 
 
 \section{Conclusion}
 In this project we have seen that the Armadillo algorithm was more efficient than our implemented Jacobi rotation algorithm.  We have also seen that the "frequency" $\omega$ of the harmonic oscillator potential affects the probability distribution of the position of the electrons, and that it affects the non-interacting and the interacting electron system differently. Furthermore, we have seen that when calculating the wave functions, the choice of $\rho_{max}$ is essential for obtaining the correct eigenvalues and -vectors.
