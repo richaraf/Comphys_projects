@@ -22,7 +22,7 @@
 
 
 \title{FYS3150 - Computational Physics\\\vspace{2mm} \Large{Project 2}}
-\author{\large Richard Fauli\\ Dorthea Gjestvang\\ Even Nordhagen}
+\author{\large Richard Andr\'e Fauli\\ Dorthea Gjestvang\\ Even Marius Nordhagen}
 \date{\today}
 \begin{document}
 
@@ -36,14 +36,14 @@
 \section{Introduction}
 In this project, we study the theory behind quantum dots, a highly relevant subject in modern physics. A quantum dot is one or two electrons trapped in an quantum well. These are often referred to as arificial atoms, as they, like natural atoms, have discrete energy levels [2].  
 
-Our goal in this project is to simulate a quantum dot, modelled as one or two electrons bound in a three-dimensional harmonic oscillator well. Quantum Mechanics tells us that we find the behaviour of these electrons by solving the radial equation with the harmonic oscillator potential, $V(r) = \frac{1}{2}m^2\omega^2r^2$:
+Our goal in this project is to simulate a quantum dot, modelled as one or two electrons bound in a three-dimensional harmonic oscillator well. Quantum Mechanics tells us that we find the behaviour of these electrons by solving the radial equation with the harmonic oscillator potential, $V(r) = \frac{1}{2}m\omega^2r^2$:
 
 \begin{equation}
     - \frac{\hbar^2}{2m}\bigg(\frac{1}{r^2}\frac{d^2}{dr^2}r^2\frac{d}{dr} - \frac{l(l+1)}{r^2}\bigg)R(r) + \frac{1}{2}m\omega^2r^2R(r) = ER(r)
 \end{equation}
 \vspace{3mm}
 
-We do so by rewriting equation (1) with dimensionless variables, and reduce the equation to a single eigenvalue problem, which we solve by implementing Jacobi's rotation method. Thereafter, we compare the obtained wave functions for one and two electrons with and without Couloumb interaction, and interpret the results physically. We also examine what effect the strength of the harmonic potential has on the wave function in the two-electron case.
+We do so by rewriting equation (1) with dimensionless variables, and reduce the equation to a single eigenvalue problem, which we solve by implementing Jacobi's rotation method. Thereafter, we compare the obtained wave functions for one and two electrons with and without Coulomb interaction, and interpret the results physically. We also examine what effect the strength of the harmonic potential has on the wave function in the two-electron case.
 
 \section{Theory}
 \subsection{One electron}
@@ -59,11 +59,11 @@ where $\hbar = 6.582 \cdot 10^{-16}$ eV$\cdot$s, $m$ is the electron mass, $r \i
 \end{equation}
 We introduce the dimensionless variable $\rho = r/\alpha$, which means our potential becomes $V(\rho)= k\alpha ^2 \rho ^2 / 2$. Inserting $\rho$ and $V(\rho)$ into equation (\ref{eq:SEradial}) we get
 $$-\frac{d^2}{d\rho ^2}u(\rho) + \frac{mk}{\hbar ^2}\alpha ^4 \rho^2 u(\rho) = \frac{2m\alpha ^2}{\hbar^2}Eu(\rho).$$
-We can set $mk\alpha^4/\hbar^2 = 1$ and $2m\alpha^2E/\hbar^2 = \lambda$ which allows us the write the Schroedinger's equation as \begin{equation}
+We can set $mk\alpha^4/\hbar^2 = 1$ and $2m\alpha^2E/\hbar^2 = \lambda$ which allows us to write the Schroedinger's equation as \begin{equation}
 -\frac{d^2}{d\rho ^2}u(\rho) + \rho ^2 u(\rho) = \lambda u(\rho).
 \label{eq:SEdimless}
 \end{equation}
-The second derivative can be expressed as $$u'' \approx \frac{u(\rho + h) - 2u(\rho) + u(\rho -h)}{h^2},$$ where $h$ is the step length. We use $N$ mesh points with $\rho_{min} = \rho_0$ and $\rho_{max} = \rho_N$ which means the step length is $h = (\rho_N - \rho_0)/N$. $\rho$ is discretized by 
+The second derivative can be expressed as $$u'' \approx \frac{u(\rho + h) - 2u(\rho) + u(\rho -h)}{h^2},$$ where $h$ is the step length. We use $N$ mesh points with $\rho_{min} = \rho_0$ and $\rho_{max} = \rho_{N-1}$ which means the step length is $h = (\rho_{N-1} - \rho_0)/N$. $\rho$ is discretized by 
 \begin{align*}
 \rho_i  = \rho _0 + ih && \text{with }i = 1,2,...,N,
 \end{align*}
@@ -96,7 +96,7 @@ A=\begin{pmatrix}
 =======
 For the potential $V_i = \rho_i^2$, we would expect the three lowest eigenvalues to be $3, 7$ and $11$.
 \subsection{Two electrons}
-In the case of two electron without repulsive Coulomb interaction our SE is 
+In the case of two electrons without repulsive Coulomb interaction our SE is 
 $$\left(-\frac{\hbar ^2}{2m}\frac{d^2}{dr_1^2} - \frac{\hbar ^2}{2m}\frac{d^2}{dr_2^2} + \frac{kr_1^2}{2} + \frac{kr_2^2}{2}\right)u(r_1,r_2) = E^{(2)}u(r_1,r_2),$$
 where $E^{(2)}$ is the two-electron energy. Introducing a relative coordinate $\textbf{r} = \textbf{r}_1-\textbf{r}_2$ and the center-of-mass coordinate $\textbf{R} = (\textbf{r}_1 + \textbf{r}_2)/2$, we can write SE as
 $$\left(-\frac{\hbar ^2}{m}\frac{d^2}{dr^2} - \frac{\hbar ^2}{4m}\frac{d^2}{dR^2} + \frac{kr^2}{4} + kR^2\right)u(r,R) = E^{(2)}u(r,R).$$
@@ -156,14 +156,14 @@ for(k = [0,size A])
 \end{lstlisting}
 After the indexes of the largest element are found, we can start doing the Jacobi method (also called Jacobi rotation since the matrix S is a rotation matrix). By doing the multiplication $S^T AS = B$ for an arbitrary matrix A, we will see that B is constructed by
 \begin{itemize}
-\item $b_{ii}=a_{ii}\quad\quad\quad\quad\quad\quad\quad\quad\quad\quad\quad\quad\quad\quad\quad\quad\quad\quad\,\, i\not=k,\quad i\not= l$
+\item $b_{ii}=a_{ii}\,\,\,\quad\quad\quad\quad\quad\quad\quad\quad\quad\quad\quad\quad\quad\quad\quad\quad\quad\quad\,\, i\not=k,\quad i\not= l$
 \item $b_{ik}=a_{ik}\cos\theta-a_{il}\sin\theta\quad\quad\quad\quad\quad\quad\quad\quad\quad\quad\quad\quad i\not=k,\quad i\not= l$
 \item $b_{il}=a_{il}\cos\theta+a_{ik}\sin\theta\quad\quad\quad\quad\quad\quad\quad\quad\quad\quad\quad\quad\, i\not=k,\quad i\not= l$
 \item $b_{kk}=a_{kk}\cos^2\theta-2a_{kl}\cos\theta \sin\theta +a_{ll}\sin^2\theta$
 \item $b_{ll}=a_{ll}\cos^2\theta+2a_{kl}\cos\theta \sin\theta +a_{kk}\sin^2\theta$
 \item $b_{kl}=(a_{kk}-a_{ll})\cos\theta \sin\theta + a_{kl}(\cos^2\theta \sin^2\theta)$
 \end{itemize}
-where $i$ is an arbitrary columns or row index, $k$ is the index of the row with the largest non-diagonal number (in A) and $l$ is the index of the column with the largest non-diagonal number. This makes it easy to find B numerically, and by doing Jacobi's method on B a multiple times, the largest non-diagonal element will constantly be smaller. In the theory these elements should be equal to zero when the diagonal elements are equal to the exact eigenvalues, but we can get a good approximation of the eigenvalues even if the largest element is a small number. We implement this by choosing a small tolerance $\varepsilon$ and continue doing Jacobi's method until the largest element is smaller than this. The smaller $\varepsilon$ is, the better approach we have.\par\vspace{3mm}
+where $i$ is an arbitrary column or row index, $k$ is the index of the row with the largest non-diagonal number (in A) and $l$ is the index of the column with the largest non-diagonal number. This makes it easy to find B numerically, and by doing Jacobi's method on B a multiple times, the largest non-diagonal element will constantly be smaller. In the theory these elements should be equal to zero when the diagonal elements are equal to the exact eigenvalues, but we can get a good approximation of the eigenvalues even if the largest element is a small number. We implement this by choosing a small tolerance $\varepsilon$ and continue doing Jacobi's method until the largest element is smaller than this. The smaller $\varepsilon$ is, the better approach we have.\par\vspace{3mm}
 The eigenvectors are found by
 \begin{equation}
 \textbf{w}_i=S\textbf{v}_i
@@ -175,7 +175,7 @@ where \textbf{v} is a basis of eigenvectors, S is the transformation matrix and 
 \end{itemize}
 
 \subsection{Solve the eigenproblem using Armadillo}
-We are also finding the eigenvectors and eigenvalues with Armadillo, just to compare them with the eigenvalues and eigenvectors found by Jacobi's method. For a symmetric matrix, this is done by this script:
+We are also calculating the eigenvectors and eigenvalues with Armadillo, just to compare them with the eigenvalues and eigenvectors found by Jacobi's method. For a symmetric matrix, this is done by this script:
 \begin{lstlisting}
 vec eigval;
 mat eigvec;
@@ -185,7 +185,7 @@ where we assume that armadillo is included.
 
 \subsection{Tests}
 \subsubsection{Largest element test}
-To ensure that the indexes of the non-diagonal largest element are found correctly, we have implemented a test for this. The test is a function which takes $k$ and $l$ as arguments (the indexes of the largest non-diagonal element) and placing the number 1 at this index while the remaining elements are zero. It will not allow us to place the element on the diagonal. Then we have a matrix where we know the exact location of the largest (non-diagonal) element. The next step is to send this matrix into the function which finds the largest element and returns the indexes of this. If this function returns the same indexes as where we placed the largest element, the largest element function passes the test.\par\vspace{3mm}
+To ensure that the indexes of the largest non-diagonal element are found correctly, we have implemented a test for this. The test is a function which takes $k$ and $l$ as arguments (the indexes of the largest non-diagonal element) and placing the number 1 at this index while the remaining elements are zero. It will not allow us to place the element on the diagonal. Then we have a matrix where we know the exact location of the largest (non-diagonal) element. The next step is to send this matrix into the function which finds the largest element and returns the indexes of this. If this function returns the same indexes as where we placed the largest element, the largest element function passes the test.\par\vspace{3mm}
 The reason why we want the test function to take the indexes as arguments, is to be able to vary the test matrix to ensure that the solver is not giving the right result accidentally.\par\vspace{3mm} 
 We are also testing if the matrix sent into the largest element finder is quadratic. This is simply done by comparing the number of rows and the number of columns. The test raises an error if the matrix is not quadratic.
 
@@ -328,21 +328,22 @@ Figure 5:  Plot of the ground state wave functions for the two electron system w
 \subsection{Benchmarks}
 We have done some benchmarks for both the single electron case and case with two interacting electrons.
 \subsubsection{Single electron}
+In Table 4 we present the benchmark results for one electron.\par\vspace{3mm}
 Table 4: The exact analytical eigenvalues for the single electron case, compared with our numerical eigenvalue solution and the deviation. Included the three lowest eigenvalues. We are running the program for $N=350$.\par\vspace{5mm}
 \begin{tabular}{|c|c|c|c|}\hline
      {\bf Eigenvalue} & {\bf Analytical} & {\bf Numerical} & {\bf Deviation}\\ \hline
-     1 & 3 & 2.99984 & 0.000163275\\
-     2 & 7 & 6.99918 & 0.000816424\\
-     3 & 11 & 10.998 & 0.0019922\\ \hline
+     0 & 3 & 2.99984 & 0.000163275\\
+     1 & 7 & 6.99918 & 0.000816424\\
+     2 & 11 & 10.998 & 0.0019922\\ \hline
 \end{tabular}\par\vspace{5mm}
-As we can see, the numerical solutions are close to the analytical with deviation of order $\sim 10^{-4}$. The analytical solutions are gotten from the well-known energy formula for the harmonic oscillator, $E_n=\hbar\omega(n+1/2)$.[\cite [p.25]{Griffiths}] In our case, we are multiplying with $2/\hbar\omega$. 
+As we can see, the numerical solutions are close to the analytical with deviation of order $\sim 10^{-4}$. The analytical solutions are gotten from the well-known energy formula for the harmonic oscillator, $E_n=\hbar\omega(2n+3/2)$.[\cite [p.47]{Griffiths}] In our case, we are multiplying with $2/\hbar\omega$. 
 
 \subsubsection{Two interacting electrons}
-Here we have compared the analytical solution of SE when we have two interacting electrons with our numerical solution. We are running the program with $N=350$, and the analytical solution is gotten from [\cite {M. Taut}]\par
+Here we have compared the analytical solution of SE when we have two interacting electrons with our numerical solution. We are running the program with $N=350$, and the analytical solution is gotten from [\cite {M. Taut}], see Table 5.\par\vspace{3mm}
 Table 5: The exact analytical eigenvalue for the interacting electron case, compared with our numerical eigenvalue solution and the deviation for the lowest eigenvalue.\par\vspace{5mm}
 \begin{tabular}{|c|c|c|c|}\hline
      {\bf Eigenvalue} & {\bf Analytical} & {\bf Numerical} & {\bf Deviation}\\ \hline
-     1 & 1.2500 & 1.24996 & 3.54887e-05\\ \hline
+     0 & 1.2500 & 1.24996 & 3.54887e-05\\ \hline
 \end{tabular}\par\vspace{5mm}
 The deviation in this case is small, in order $\sim 10{^5}$.\par
 NB: In the analytical solution source they are working with a SE where all the terms are divided by two compared with the SE we are studying. Therefore we have to correct the analytical value given by multiplying with two. 
@@ -395,9 +396,6 @@ In this project we have seen that the Armadillo algorithm was more efficient tha
   David J. Griffiths
   Introduction to Quantum Physics
   2nd edition
-    
-
 \end{thebibliography}
 \endgroup
-\section{Code attachment}
 \end{document}
