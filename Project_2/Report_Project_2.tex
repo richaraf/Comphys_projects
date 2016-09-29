@@ -29,12 +29,15 @@
 \maketitle
 
 \begin{abstract}
+This project aims to simulate so-called quantum dots, electrons trapped in harmonic oscillator potentials. By rewriting the Schroedinger equation to an eigenvalue problem which we solved with Jacobi's rotational method. 
+
+We found that our calculations of the eigenvalues and eigenvectors matched analytical expectations, but that Jacobi's method was much slower than Armadillo's inbuilt eigenvalue solver.
 \end{abstract}
 \begin{itemize}
 \item Github repository containing programs and results are in: \url{https://github.com/richaraf/Comphys_projects/tree/master/Project_2}
 \end{itemize}
 \section{Introduction}
-In this project, we study the theory behind quantum dots, a highly relevant subject in modern physics. A quantum dot is one or two electrons trapped in an quantum well. These are often referred to as arificial atoms, as they, like natural atoms, have discrete energy levels [2].  
+In this project, we study the theory behind quantum dots, a highly relevant subject in modern physics. A quantum dot is one or two electrons trapped in an quantum well. These are often referred to as arificial atoms, as they, like natural atoms, have discrete energy levels (\cite{Nature}).  
 
 Our goal in this project is to simulate a quantum dot, modelled as one or two electrons bound in a three-dimensional harmonic oscillator well. Quantum Mechanics tells us that we find the behaviour of these electrons by solving the radial equation with the harmonic oscillator potential, $V(r) = \frac{1}{2}m^2\omega^2r^2$:
 
@@ -349,8 +352,7 @@ Table 5: The exact analytical eigenvalues for the interacting electron case, com
 \subsection{Benchmarks}
 The benchmarks when we 
 We also have done some benchmarks where we are comparing our numerical results with analytical solutions. Many problems when we got interacting atoms have not analytical solutions, but actually our case with two interacting atoms has analytical energy solutions. 
-\section{Conclusion}
-=======
+
 \section{Discussion}
 From Table 1, we saw that our Jacobi rotation method for finding the eigenvalues and eigenvectors was considerably slower than the armadillo method. In fact as the size of the matrix increases the Jacobi method slows down much faster than armadillo, which would suggest that the number of floating point operations in the Jacobi method is of a higher order than that of the armadillo method. 
 
