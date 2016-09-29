@@ -29,27 +29,25 @@
 \maketitle
 
 \begin{abstract}
-In Project 2 we are studying how electrons behave in a harmonic oscillator well when they are interacting and when we do not. We observed that the interaction had
 \end{abstract}
 \begin{itemize}
 \item Github repository containing programs and results are in: \url{https://github.com/richaraf/Comphys_projects/tree/master/Project_2}
 \end{itemize}
 \section{Introduction}
-In this project, we study the theory behind quantum dots, a highly relevant subject in modern physics. A quantum dot is one or two electrons trapped in an quantum well. These are often referred to as arificial atoms, as they, like natural atoms, have discrete energy levels. (Reference: http://www.nature.com/nature/journal/v379/n6564/pdf/379413a0.pdf)\par
-\vspace{3mm}
+In this project, we study the theory behind quantum dots, a highly relevant subject in modern physics. A quantum dot is one or two electrons trapped in an quantum well. These are often referred to as arificial atoms, as they, like natural atoms, have discrete energy levels [2].  
 
-Our goal in this project is to simulate a quantum dot, modelled as one or two electrons bound in an three-dimensional harmonic oscillator well. Quantum Mechanics tells us that we find the behaviour of these electrons by solving the radial equation with the harmonic oscillator potential, $V(r) = \frac{1}{2}m^2\omega^2r^2$:
+Our goal in this project is to simulate a quantum dot, modelled as one or two electrons bound in a three-dimensional harmonic oscillator well. Quantum Mechanics tells us that we find the behaviour of these electrons by solving the radial equation with the harmonic oscillator potential, $V(r) = \frac{1}{2}m^2\omega^2r^2$:
 
 \begin{equation}
     - \frac{\hbar^2}{2m}(\frac{1}{r^2}\frac{d^2}{dr^2}r^2\frac{d}{dr} - \frac{l(l+1)}{r^2})R(r) + \frac{1}{2}m\omega^2r^2R(r) = ER(r)
 \end{equation}
 \vspace{3mm}
 
-We do so by rewriting equation (1) with dimensionless variables, and reduce the equation to a single eigenvalue problem, which we solve by implementing Jacobi's rotation method. Thereafter, we compare the obtained wave functions for one and two electrons, and interpret the results physically. We also examine what effect the strength of the harmonic potential has on the wave function in the two-electron case.
+We do so by rewriting equation (1) with dimensionless variables, and reduce the equation to a single eigenvalue problem, which we solve by implementing Jacobi's rotation method. Thereafter, we compare the obtained wave functions for one and two electrons with and without Couloumb interaction, and interpret the results physically. We also examine what effect the strength of the harmonic potential has on the wave function in the two-electron case.
 
 \section{Theory}
-\subsection{Without repulsive Coulomb interaction}
-To solve the Schroedinger's equation (SE) for two electrons in a three-dimensional harmic oscillator well, we first assume spherical symmetry, which means we only need to solve the radial part of SE
+\subsection{One electron}
+To solve the Schroedinger's equation (SE) for one electron in a three-dimensional harmic oscillator well, we first assume spherical symmetry, which means we only need to solve the radial part of SE
 \begin{equation}
 -\frac{\hbar ^2}{2m}\left(\frac{1}{r^2}\frac{d}{dr}r^2\frac{d}{dr} - \frac{l(l+1)}{r^2}\right)R(r) + V(r)R(r) = ER(r),
 \label{eq:SEradialgeneral}
@@ -93,7 +91,12 @@ A=\begin{pmatrix}
 \end{pmatrix}
 \label{eq:A}
 \end{equation}
+<<<<<<< HEAD
 \subsection{With repulsive Coulomb interaction}
+=======
+For the potential $V_i = \rho_i^2$, we would expect the three lowest eigenvalues to be $3, 7$ and $11$.
+\subsection{Two electrons}
+>>>>>>> e9cb2a3d5602f610938677f6e8d7e54b855f151b
 In the case of two electron without repulsive Coulomb interaction our SE is 
 $$\left(-\frac{\hbar ^2}{2m}\frac{d^2}{dr_1^2} - \frac{\hbar ^2}{2m}\frac{d^2}{dr_2^2} + \frac{kr_1^2}{2} + \frac{kr_2^2}{2}\right)u(r_1,r_2) = E^{(2)}u(r_1,r_2),$$
 where $E^{(2)}$ is the two-electron energy. Introducing a relative coordinate $\textbf{r} = \textbf{r}_1-\textbf{r}_2$ and the center-of-mass coordinate $\textbf{R} = (\textbf{r}_1 + \textbf{r}_2)/2$, we can write SE as
@@ -105,8 +108,11 @@ The energy can be split into relative energy $E_r$ and the center-of-mass energy
 We are interested in solving the equation with $E_r$, because the $R$-dependent equation is very similar to the case of no repulsive Coulomb interaction. Adding the repulsive Coulomb potential the to $r$-dependent part of SE gives
 $$\left(-\frac{\hbar ^2}{m}\frac{d^2}{dr^2} + \frac{kr^2}{4} + \frac{\beta e^2}{r}\right)\psi(r) = E_r\psi(r).$$ 
 We again use the dimensionless variable $\rho = r/\alpha$ which gives us 
-$$\left(-\frac{d^2}{d\rho ^2} + \frac{mk\alpha ^4 \rho ^2}{4\hbar ^2} + \frac{m\alpha \beta e^2}{\rho \hbar^2}\right)\psi(\rho) = \frac{m\alpha ^2}{\hbar^2}E_r\psi(\rho),
-$$
+\begin{equation}
+\left(-\frac{d^2}{d\rho ^2} + \frac{mk\alpha ^4 \rho ^2}{4\hbar ^2} + \frac{m\alpha \beta e^2}{\rho \hbar^2}\right)\psi(\rho) = \frac{m\alpha ^2}{\hbar^2}E_r\psi(\rho),
+\label{eq:SEdimlessvars}
+\end{equation}
+
 which we can simplify and make look like equation (\ref{eq:SEdimless}) by fixing $\alpha$, defining a ''frequency'' $\omega _r$ and ''energy'' $\lambda_r$
 \begin{align*}
 \frac{m\alpha\beta e^2}{\hbar^2} = 1 && \omega_r^2 = \frac{mk\alpha^4}{4\hbar^2} && \lambda = \frac{m\alpha^2E}{\hbar^2}.
@@ -115,9 +121,10 @@ The equation to solve then becomes \begin{equation}
 -\frac{d^2}{d\rho ^2}\psi (\rho) + \omega_r^2\rho^2\psi(\rho) + \frac{1}{\rho}\psi(\rho) = \lambda \psi (\rho),
 \label{eq:SEdimlessinteraction}
 \end{equation}
-which means we can write the potential as $$V_r(\rho) = \omega_r^2\rho^2 + \frac{1}{\rho}$$
-and in discretized form $$V_{ir} = \omega_r^2\rho_i^2 + \frac{1}{\rho_i}.$$
-The eigenvalue-problem in equation (\ref{eq:SEdimlessinteraction}) can then be written as equation (\ref{eq:Aulambdau}), a set of linear equations, where $A$ is as defined in expression (\ref{eq:A}), with the potential $V_{ir}$.
+which means we can write the potential for the interacting case as $$V_r(\rho) = \omega_r^2\rho^2 + \frac{1}{\rho}$$
+and in discretized form $$V_{ir} = \omega_r^2\rho_i^2 + \frac{1}{\rho_i}.$$ The potential for the case where there is no interaction between the two electrons, we simply set $\beta$ to $0$, which means the potential becomes $$V_{nr}(\rho) = \omega_r^2 \rho^2,$$ which for discrete points can be expressed
+$$V_{inr} = \omega_r^2\rho_i^2.$$
+The eigenvalue-problem in equation (\ref{eq:SEdimlessinteraction}) can then be written as equation (\ref{eq:Aulambdau}), a set of linear equations, where $A$ is as defined in expression (\ref{eq:A}), with the potential $V_{ir}$ for the interacting case and $V_{inr}$ for the case without interaction.
 \subsection{Conservation of dot product}
 If we consider a set of vectors $\{\textbf{v}_i\}$, an orthogonal matrix U and the transformation $\textbf{w}_i = U\textbf{v}_i$. The dot product for our set of vectors an be expressed as $$\textbf{v}_j^T\textbf{v}_i,$$ which in the case of $\{\textbf{v}_i\}$ being an orthonormal basis means that $\textbf{v}_j^T\textbf{v}_i = \delta_{ij},$ where $\delta_{ij}$ is the Kronecker delta. The dot product of an orthogonal transformation is preserved
 $$\textbf{w}_j^T \textbf{w}_i = (U\textbf{v}_j)^TU\textbf{v}_i = \textbf{v}_j^TU^TU\textbf{v}_i = \textbf{v}_j^T\textbf{v}_i,$$ which also means that orthogonality is preserved in the case where $\{\textbf{v}_i\}$ is an orthogonal basis.
@@ -199,6 +206,10 @@ where $c$ is a constant. We are not interested in $c$, but we want to check if t
 \subsection{Run time}
 \par
 \vspace{3mm}
+We ran our program for different numbers of grid points N, and noted the run times of our Jacobi rotation algorithm and the armadillo solver. The run times are presented in Table 1. 
+\par
+\vspace{3mm}
+
 
 Table 1: Run time of our Jacobi-algorithm vs the Armadillo solver\par
 \vspace{3mm}
@@ -216,6 +227,10 @@ Table 1: Run time of our Jacobi-algorithm vs the Armadillo solver\par
 \vspace{3mm}
 
 \subsubsection{Plot of the wave functions}
+\vspace{3mm}
+We found the ground states of the single electron system, and plotted the square of the wave functions. The resulting plot is shown in Figure 1.
+\par
+\vspace{3mm}
 
 \includegraphics[scale=0.6]{wavefunc_one}\par
 Figure 1: Plot of the wave functions of the three lowest states for the single electron system
@@ -224,6 +239,10 @@ Figure 1: Plot of the wave functions of the three lowest states for the single e
 
 \subsubsection{Accuracy of the lowest eigenvalue vs N and $\rho_{max}$}\par
 \vspace{3mm}
+We experimented with how the precision of the lowest eigenvalue $\lambda_0$ changed with number of grid point used and the chosen value og $\rho_{max}$. The results are presented in Table 2.
+\par
+\vspace{3mm}
+
 
 Table 2: Calculated value of the lowest eigenvalue $\lambda_0$, compared with number of grid points N and chosen value of $\rho_{max}$
 \par
@@ -249,6 +268,14 @@ Table 2: Calculated value of the lowest eigenvalue $\lambda_0$, compared with nu
 \par
 \vspace{2mm}
 
+<<<<<<< HEAD
+=======
+We experimented with how the number of iterations needed to transform the matrix A into a diagonal matrix D changed with the number of grid points we used. The results are presented in Table 3. We also found from both Tables 1 and 3, that for $N=350$ there are approximately $3218$ iterations per second and for $N=100$ there are $53731$ iterations per second.
+\par
+\vspace{3mm}
+
+
+>>>>>>> e9cb2a3d5602f610938677f6e8d7e54b855f151b
 Table 3: Number of iterations needed to transform A into a diagonal matrix D, our tolerance is $\epsilon = 10^{-8}$
 \par
 \vspace{3mm}
@@ -274,30 +301,35 @@ Table 3: Number of iterations needed to transform A into a diagonal matrix D, ou
 \par
 \vspace{3mm}
 
+We plotted the wave functions ground states for the two-electron system both with and without interaction, and varied the "frequency" $\omega$ of the potential. For $\omega = [0.01, 0.5, 1, 5]$, the resulting plots are shown in Figure 2-5. 
+\par
+\vspace{3mm}
+
 \includegraphics[scale=0.5]{wavefunc_two_omega=0_01}\par
 \vspace{1mm}
-Figure 2: Plot of the wave functions of the three lowest states for the two electron  system, with the "frequency" $\omega$ = 0.01
+Figure 2: Plot of the ground state wave functions for two electron system with and without interaction, with the "frequency" $\omega$ = 0.01
 \par
 \vspace{7mm}
 
 \includegraphics[scale=0.55]{wavefunc_two_omega=0_5}\par
 \vspace{1mm}
-Figure 3: Plot of the wave functions of the three lowest states for the two electron  system, with the "frequency" $\omega$ = 0.5
+Figure 3: Plot of the ground state wave functionsfor the two electron system with and without interaction, with the "frequency" $\omega$ = 0.5
 \par
 \vspace{7mm}
 
 \includegraphics[scale=0.65]{wavefunc_two_omega=1}\par
 \vspace{1mm}
-Figure 4: Plot of the wave functions of the three lowest states for the two electron  system, with the "frequency" $\omega$ = 1
+Figure 4: Plot of the ground state wave functions for the two electron system with and without interaction, with the "frequency" $\omega$ = 1
 \par
 \vspace{7mm}
 
 \includegraphics[scale=0.6]{wavefunc_two_omega=5}\par
 \vspace{1mm}
-Figure 5: Plot of the wave functions of the three lowest states for the two electron  system, with the "frequency" $\omega$ = 5
+Figure 5:  Plot of the ground state wave functions for the two electron system with and without interaction, with the "frequency" $\omega$ = 5
 \par
 \vspace{7mm}
 
+<<<<<<< HEAD
 \subsection{Benchmarks}
 We have done some benchmarks, and for the one electron case we got the results:
 \subsubsection{Single electron}
@@ -318,6 +350,32 @@ Table 5: The exact analytical eigenvalues for the interacting electron case, com
 The benchmarks when we 
 We also have done some benchmarks where we are comparing our numerical results with analytical solutions. Many problems when we got interacting atoms have not analytical solutions, but actually our case with two interacting atoms has analytical energy solutions. 
 \section{Conclusion}
+=======
+\section{Discussion}
+From Table 1, we saw that our Jacobi rotation method for finding the eigenvalues and eigenvectors was considerably slower than the armadillo method. In fact as the size of the matrix increases the Jacobi method slows down much faster than armadillo, which would suggest that the number of floating point operations in the Jacobi method is of a higher order than that of the armadillo method. 
+
+For the one electron case shown in Figure 1, we saw that higher energies meant that the expected value of the radius grew, which is what we would expect from equation (\ref{eq:SEdimless}). Additionally, for the second and third lowest energies, the probability distributions had several local maxima. These maxima can be interpreted as possible ''orbits'' around the center of the oscillator or if we wish we can think of the as ''orbits'' around a nucleus.
+
+When calculating the eigenvalues $\lambda$, we found as shown in Table 2 that the eigenvalues both depend one the chosen number of grid points $N$ and the boundary condition $\rho_{max}$. In the single electron case we found that $N=350$ and $\rho_{max} = 5$ gave sufficient accuracy. The method was actually quite sensitive to which value of $\rho_{max}$ we chose. When choosing $N$ and $\rho_{max}$, we have to make a compromise between the number of grid points resulting in computing time, and our approximation of infinity $\rho_{max}$. If we wanted to increase our accuracy further, and time or computer memory was of no concern, we could make a better approximation of infinity and use a much larger amount of grid points, which would result in very high accuracy in the eigenvalues and eigenvectors.
+
+The number of iterations as a function of grid points shown in Table 3, appeared to follow the relation $\approx 1.6 N^2$. Interestingly, the time required per iteration increases substantially for larger $N$s. The only part of our algorithm which we would expect to take considerably longer time per iteration for different $N$ values, is the function that searches through our matrix $A$ to find the largest element. This time difference suggests that a large part of the CPU time is spent finding the largest element in our matrix. 
+\vspace{1mm}
+In Figure 2-5 we observe that for the two electron system the probability distribution comes wider when we lower the value of $\omega$. This is what we would expect since lower $\omega$ corresponds to a weaker potential well, and thus the electrons can move more freely. The maxima of the probability distribution will therefore be found at higher values of $\rho$, which correspond to longer distances between the two electrons. When we choose larger values for $\omega$, the potential well becomes steeper. The electrons are forced toghether, and the maxima of the probability density is found at lower values of $\rho$.
+\par
+\vspace{2mm}
+In Figure 2-5, we also compare the two electron system when we have included the Couloumb interaction between the electrons, and when we have neglected the interaction. The figures show that for lower "frequencies" $\omega$ the difference between the interacting and the non-interacting wave functions becomes larger. This is as expected. When the potential is weaker, the electrons have lower kinetic energy, and the Couloumb interaction is therefore more important than with higher kinetic energies.
+\par
+\vspace{3mm}
+
+%For the two electron case we found that for lower $\omega$ the probability distribution came wider. which is what we would expect since lower $\omega$s corresponds to a weaker potential well.
+
+%For two electrons we see from figures 2-5 that higher frequencies result in a small difference between the non-interacting and the interacting case. For lower frequencies, the difference is bigger 
+
+\section{Conclusion}
+In this project we have seen that the Armadillo algorithm was more efficient than our implemented Jacobi rotation algorithm.  We have also seen that the "frequency" $\omega$ of the harmonic oscillator potential affects the probability distribution of the position of the electrons, and that it affects the non-interacting and the interacting electron system differently. Furthermore, we have seen that when calculating the wave functions, the choice of $\rho_{max}$ is essential for obtaining the correct eigenvalues and -vectors.
+
+
+>>>>>>> e9cb2a3d5602f610938677f6e8d7e54b855f151b
 \section{References}
 \begingroup
 \renewcommand{\section}[2]{}
@@ -327,6 +385,12 @@ We also have done some benchmarks where we are comparing our numerical results w
   Computational Physics, Lecture Notes Fall 2015.
   Department of Physics, University of Oslo.
   August 2015.
+\bibitem{Nature}
+  R C Asgoori. 
+  Electrons in artificial atoms
+  Nature Vol 379 1.February 1996
+  http://www.nature.com/nature/journal/v379/n6564/pdf/379413a0.pdf
+    
 
 \end{thebibliography}
 \endgroup
