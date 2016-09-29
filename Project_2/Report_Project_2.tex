@@ -328,7 +328,6 @@ Figure 5:  Plot of the ground state wave functions for the two electron system w
 \par
 \vspace{7mm}
 
-<<<<<<< HEAD
 \subsection{Benchmarks}
 We have done some benchmarks, and for the one electron case we got the results:
 \subsubsection{Single electron}
@@ -339,10 +338,10 @@ Table 4: The exact analytical eigenvalues for the single electron case, compared
      2 & 7 & 6.99918 & 0.000816424\\
      3 & 11 & 10.998 & 0.0019922\\ \hline
 \end{tabular}\par\vspace{5mm}
-As we can see, the numerical solutions are close to the analytical with deviation of order $\sim 10^{-4}$. 
+As we can see, the numerical solutions are close to the analytical with deviation of order $\sim 10^{-4}$. The analytical solutions are gotten from the well-known energy formula for the harmonic oscillator, $E_n=\hbar\omega(n+1/2)$.[\cite [p.25]{Griffiths}] In our case, we are multiplying with $2/\hbar\omega$. 
 
 \subsubsection{Two interacting electrons}
-Here we have compared the analytical solution of SE when we have two interacting electrons with our numerical solution. We are running the program with $N=350$, and the analytical solution is gotten from (\cite {M. Taut})\par
+Here we have compared the analytical solution of SE when we have two interacting electrons with our numerical solution. We are running the program with $N=350$, and the analytical solution is gotten from [\cite {M. Taut}]\par
 Table 5: The exact analytical eigenvalue for the interacting electron case, compared with our numerical eigenvalue solution and the deviation for the lowest eigenvalue.\par\vspace{5mm}
 \begin{tabular}{|c|c|c|c|}\hline
      {\bf Eigenvalue} & {\bf Analytical} & {\bf Numerical} & {\bf Deviation}\\ \hline
@@ -367,7 +366,7 @@ In Figure 2-5, we also compare the two electron system when we have included the
 \par
 \vspace{3mm}
 
-Table 5 and 6 consists of different benchmarks, where the first is analytical solutions compared with numerical solutions of the one electron case and the latter is analytical solutions compared with numerical solutions of the two interacting electrons case. We saw that the deviations were small when we run for $N=350$, something which indicates that our implementations are correct.
+Table 5 and 6 consist of different benchmarks, where the first is analytical solutions compared with numerical solutions of the one electron case and the latter is analytical solution compared with numerical solution of the two interacting electrons case. We saw that the deviations were small when we ran for $N=350$, something which indicates that our implementations are correct.
 %For the two electron case we found that for lower $\omega$ the probability distribution came wider. which is what we would expect since lower $\omega$s corresponds to a weaker potential well.
 
 %For two electrons we see from figures 2-5 that higher frequencies result in a small difference between the non-interacting and the interacting case. For lower frequencies, the difference is bigger 
@@ -395,6 +394,10 @@ In this project we have seen that the Armadillo algorithm was more efficient tha
   of a Coulomb correlation problem
   VOLUME 48, NUMBER 5
   http://journals.aps.org/pra/pdf/10.1103/PhysRevA.48.3561
+\bibitem{Griffiths}
+  David J. Griffiths
+  Introduction to Quantum Physics
+  2nd edition
     
 
 \end{thebibliography}
