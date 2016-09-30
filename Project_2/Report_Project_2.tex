@@ -55,7 +55,12 @@ To solve the Schroedinger's equation (SE) for one electron in a three-dimensiona
 -\frac{\hbar ^2}{2m}\left(\frac{1}{r^2}\frac{d}{dr}r^2\frac{d}{dr} - \frac{l(l+1)}{r^2}\right)R(r) + V(r)R(r) = ER(r),
 \label{eq:SEradialgeneral}
 \end{equation}
-where $\hbar = 6.582 \cdot 10^{-16}$ eV$\cdot$s, $m$ is the electron mass, $r \in [0,\infty)$ the radial distance, $V(r)$ is the potential, $E$ is the energy and $l$ is the orbital quantum number. For our harmonic oscillator the potential is $V(r) = (1/2)kr^2$, with $k=m\omega ^2$. If we look at the case where $l=0$, we get the energies to be $$E_n = \hbar \omega \left(2n + \frac{3}{2}\right).$$ If we also substitute $R(r) = (1/r)u(r)$ in equation (\ref{eq:SEradialgeneral}), the SE we want to solve becomes 
+where $\hbar = 6.582 \cdot 10^{-16}$ eV$\cdot$s, $m$ is the electron mass, $r \in [0,\infty)$ the radial distance, $V(r)$ is the potential, $E$ is the energy and $l$ is the orbital quantum number. For our harmonic oscillator the potential is $V(r) = (1/2)kr^2$, with $k=m\omega ^2$. If we look at the case where $l=0$, we get the energies to be 
+\begin{equation}
+E_n = \hbar \omega \left(2n + \frac{3}{2}\right).
+\label{eq:SEenergy}
+\end{equation}
+If we also substitute $R(r) = (1/r)u(r)$ in equation (\ref{eq:SEradialgeneral}), the SE we want to solve becomes 
 \begin{equation}
 -\frac{\hbar ^2}{2m}\frac{d^2}{dr^2} u(r) + V(r) u(r) = Eu(r).
 \label{eq:SEradial}
@@ -336,7 +341,7 @@ Table 4: The exact analytical eigenvalues for the single electron case, compared
      1 & 7 & 6.99918 & 0.000816424\\
      2 & 11 & 10.998 & 0.0019922\\ \hline
 \end{tabular}\par\vspace{5mm}
-As we can see, the numerical solutions are close to the analytical with deviation of order $\sim 10^{-4}$. The analytical solutions are gotten from the well-known energy formula for the harmonic oscillator, $E_n=\hbar\omega(2n+3/2)$.[\cite [p.47]{Griffiths}] In our case, we are multiplying with $2/\hbar\omega$. 
+As we can see, the numerical solutions are close to the analytical with deviation of order $\sim 10^{-4}$. The analytical solutions are gotten from the well-known energy formula for the harmonic oscillator, $E_n=\hbar\omega(2n+3/2)$.(\ref{eq:SEenergy}) In our case, we are multiplying with $2/\hbar\omega$. 
 
 \subsubsection{Two interacting electrons}
 Here we have compared the analytical solution of SE when we have two interacting electrons with our numerical solution. We are running the program with $N=350$, and the analytical solution is gotten from [\cite {M. Taut}], see Table 5.\par\vspace{3mm}
@@ -392,10 +397,6 @@ In this project we have seen that the Armadillo algorithm was more efficient tha
   of a Coulomb correlation problem
   VOLUME 48, NUMBER 5
   http://journals.aps.org/pra/pdf/10.1103/PhysRevA.48.3561
-\bibitem{Griffiths}
-  David J. Griffiths
-  Introduction to Quantum Physics
-  2nd edition
 \end{thebibliography}
 \endgroup
 \end{document}
