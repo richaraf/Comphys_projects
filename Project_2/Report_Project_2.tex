@@ -29,7 +29,7 @@
 \maketitle
 
 \begin{abstract}
-This project aims to simulate so-called quantum dots, electrons trapped in harmonic oscillator potentials, by rewriting the Schroedinger equation to an eigenvalue problem, which we solve using Jacobi's rotational method. 
+This project aims to simulate so-called quantum dots, electrons trapped in harmonic oscillator potentials. By rewriting the Schroedinger equation to an eigenvalue problem which we solved with Jacobi's rotational method. 
 
 We found that our calculations of the eigenvalues and eigenvectors matched analytical expectations, but that Jacobi's method was much slower than Armadillo's inbuilt eigenvalue solver.
 \end{abstract}
@@ -37,7 +37,7 @@ We found that our calculations of the eigenvalues and eigenvectors matched analy
 \item Github repository containing programs and results are in: \url{https://github.com/richaraf/Comphys_projects/tree/master/Project_2}
 \end{itemize}
 \section{Introduction}
-In this project, we study the theory behind quantum dots, a highly relevant subject in modern physics. A quantum dot is one or two electrons trapped in an quantum well. These are often referred to as arificial atoms, as they, like natural atoms, have discrete energy levels [2].  
+In this project, we study the theory behind quantum dots, a highly relevant subject in modern physics. A quantum dot is one or two electrons trapped in an quantum well. These are often referred to as artificial atoms, as they, like natural atoms, have discrete energy levels [2].  
 
 Our goal in this project is to simulate a quantum dot, modelled as one or two electrons bound in a three-dimensional harmonic oscillator well. Quantum Mechanics tells us that we find the behaviour of these electrons by solving the radial equation with the harmonic oscillator potential, $V(r) = \frac{1}{2}m\omega^2r^2$:
 
@@ -50,7 +50,7 @@ We do so by rewriting equation (1) with dimensionless variables, and reduce the 
 
 \section{Theory}
 \subsection{One electron}
-To solve the Schroedinger's equation (SE) for one electron in a three-dimensional harmic oscillator well, we first assume spherical symmetry, which means we only need to solve the radial part of SE
+To solve the Schroedinger's equation (SE) for one electron in a three-dimensional harmonic oscillator well, we first assume spherical symmetry, which means we only need to solve the radial part of SE
 \begin{equation}
 -\frac{\hbar ^2}{2m}\left(\frac{1}{r^2}\frac{d}{dr}r^2\frac{d}{dr} - \frac{l(l+1)}{r^2}\right)R(r) + V(r)R(r) = ER(r),
 \label{eq:SEradialgeneral}
@@ -134,7 +134,7 @@ If we consider a set of vectors $\{\textbf{v}_i\}$, an orthogonal matrix U and t
 $$\textbf{w}_j^T \textbf{w}_i = (U\textbf{v}_j)^TU\textbf{v}_i = \textbf{v}_j^TU^TU\textbf{v}_i = \textbf{v}_j^T\textbf{v}_i,$$ which also means that orthogonality is preserved in the case where $\{\textbf{v}_i\}$ is an orthogonal basis.
 \section{Method}
 \subsection{Jacobi's method}
-In this project we are using Jacobi's method, which transforms a matrix A into a diagonal matrix D with the eigenvalues of A on the diagonal. This is done by repeatingly setting the largest non-diagonal element equal to zero until all the non-diagonal elements are smaller than a tolerance $\varepsilon$. From linear algebra we know that a symmetric matrix always can be transformed into a diagonal matrix, so this should be valid for our specific symmetric matrix described in the theory. For doing this we need a transformation matrix S which sets the largest non-diagonal element to zero:
+In this project we are using Jacobi's method, which transforms a matrix A into a diagonal matrix D with the eigenvalues of A on the diagonal. This is done by repeat setting the largest non-diagonal element equal to zero until all the non-diagonal elements are smaller than a tolerance $\varepsilon$. From linear algebra we know that a symmetric matrix always can be transformed into a diagonal matrix, so this should be valid for our specific symmetric matrix described in the theory. For doing this we need a transformation matrix S which sets the largest non-diagonal element to zero:
 \begin{equation}
 S^T A S=B
 \end{equation}
@@ -148,7 +148,7 @@ S=\begin{pmatrix}
 0&&0&&\hdots&&-\sin\theta&&0&&\hdots&&0&&\cos\theta\\
 \end{pmatrix}
 \end{equation}
-where the locations of $sin\theta$ and $-sin\theta$ depends on the indexes of the largest element of A. Therefore we first need to find this, something we can easily do numerically:
+where the locations of $sin\theta$ and $-sin\theta$ are depending on the indexes of the largest element of A. Therefore we first need to find this, something we can easily do numerically:
 \begin{lstlisting}
 max = 0;                     	//Largest element
 for(k = [0,size A])
@@ -190,7 +190,7 @@ where we assume that armadillo is included.
 
 \subsection{Tests}
 \subsubsection{Largest element test}
-To ensure that the indexes of the largest non-diagonal element are found correctly, we have implemented a test for this. The test is a function which takes $k$ and $l$ as arguments (the indexes of the largest non-diagonal element) and placing the number 1 at this index while the remaining elements are zero. It will not allow us to place the element on the diagonal. Then we have a matrix where we know the exact location of the largest (non-diagonal) element. The next step is to send this matrix into the function which finds the largest element and returns the indexes. If this function returns the same indexes as where we placed the largest element, the largest element function passes the test.\par\vspace{3mm}
+To ensure that the indexes of the largest non-diagonal element are found correctly, we have implemented a test for this. The test is a function which takes $k$ and $l$ as arguments (the indexes of the largest non-diagonal element) and placing the number 1 at this index while the remaining elements are zero. It will not allow us to place the element on the diagonal. Then we have a matrix where we know the exact location of the largest (non-diagonal) element. The next step is to send this matrix into the function which finds the largest element and returns the indexes of this. If this function returns the same indexes as where we placed the largest element, the largest element function passes the test.\par\vspace{3mm}
 The reason why we want the test function to take the indexes as arguments, is to be able to vary the test matrix to ensure that the solver is not giving the right result accidentally.\par\vspace{3mm} 
 We are also testing if the matrix sent into the largest element finder is quadratic. This is simply done by comparing the number of rows and the number of columns. The test raises an error if the matrix is not quadratic.
 
@@ -302,7 +302,7 @@ Table 3: Number of iterations needed to transform A into a diagonal matrix D, ou
 \par
 \vspace{3mm}
 
-We plotted the wave functions of the ground states for the two-electron system both with and without interaction, and varied the "frequency" $\omega$ of the potential. For $\omega = [0.01, 0.5, 1, 5]$, the resulting plots are shown in Figure 2-5. 
+We plotted the wave functions ground states for the two-electron system both with and without interaction, and varied the "frequency" $\omega$ of the potential. For $\omega = [0.01, 0.5, 1, 5]$, the resulting plots are shown in Figure 2-5. 
 \par
 \vspace{3mm}
 
@@ -362,15 +362,15 @@ When calculating the eigenvalues $\lambda$, we found as shown in Table 2 that th
 
 The number of iterations as a function of grid points shown in Table 3, appeared to follow the relation $\approx 1.6 N^2$. Interestingly, the time required per iteration increases substantially for larger $N$s. The only part of our algorithm which we would expect to take considerably longer time per iteration for different $N$ values, is the function that searches through our matrix $A$ to find the largest element. This time difference suggests that a large part of the CPU time is spent finding the largest element in our matrix. 
 \vspace{1mm}
-\par
 In Figure 2-5 we observe that for the two electron system the probability distribution comes wider when we lower the value of $\omega$. This is what we would expect since lower $\omega$ corresponds to a weaker potential well, and thus the electrons can move more freely. The maxima of the probability distribution will therefore be found at higher values of $\rho$, which correspond to longer distances between the two electrons. When we choose larger values for $\omega$, the potential well becomes steeper. The electrons are forced together, and the maxima of the probability density is found at lower values of $\rho$.
 \par
 \vspace{2mm}
-In Figure 2-5, we also compare the two electron system when we have included the Couloumb interaction between the electrons, and when we have neglected the interaction. The figures show that for lower "frequencies" $\omega$ the difference between the interacting and the non-interacting wave functions becomes larger. This is as expected. When the potential is weaker, the electrons have lower kinetic energy, and the Couloumb interaction is therefore more important than with higher kinetic energies.
+In Figure 2-5, we also compare the two electron system when we have included the Coulomb interaction between the electrons, and when we have neglected the interaction. The figures show that for lower "frequencies" $\omega$ the difference between the interacting and the non-interacting wave functions becomes larger. This is as expected. When the potential is weaker, the electrons have lower kinetic energy, and the Coulomb interaction is therefore more important than with higher kinetic energies.
 \par
 \vspace{3mm}
 
 Table 5 and 6 consist of different benchmarks, where the first contains analytical solutions compared with numerical solutions of the one electron case and the latter contains analytical solution compared with numerical solution of the two interacting electrons case. We saw that the deviations were small when we ran for $N=350$, something which indicates that our implementations are correct.
+
 
 \section{Conclusion}
 In this project we have seen that the Armadillo algorithm was more efficient than our implemented Jacobi rotation algorithm.  We have also seen that the "frequency" $\omega$ of the harmonic oscillator potential affects the probability distribution of the position of the electrons, and that it affects the non-interacting and the interacting electron system differently. Furthermore, we have seen that when calculating the wave functions, the choice of $\rho_{max}$ is essential for obtaining the correct eigenvalues and -vectors.
