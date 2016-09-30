@@ -1,31 +1,6 @@
 import matplotlib.pyplot as plt
 import numpy as np
-"""
-def read_file(myfile):
-    eigenvec1=[];eigenvec2=[];eigenvec3=[]
-    infile=open(myfile,'r')
 
-    M = 0
-    for line in infile:
-	    numbers=line.split()
-            print numbers
-            N = len(numbers)
-            M += 1
-    values = np.zeros([N,M])
-    i = 0; j = 0
-
-    infile=open(myfile,'r')
-    for line in infile:
-	    numbers=line.split()
-            print numbers
-            for number in numbers:
-                print number
-                values[j,i] = number
-                j += 1
-            i += 1
-    infile.close()
-    return values
-"""
 #--Importing rho and omega--
 infile=open('variable_file.txt','r')
 elements=[]
