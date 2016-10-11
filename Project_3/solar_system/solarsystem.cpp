@@ -30,9 +30,10 @@ void SolarSystem::calculateForcesAndEnergy()
             CelestialBody &body2 = m_bodies[j];
             vec3 deltaRVector = body1.position - body2.position;
             double dr = deltaRVector.length();
+            double dr2 = deltaRVector.lengthSquared();
             // Calculate the force and potential energy here
-        }
 
+        }
         m_kineticEnergy += 0.5*body1.mass*body1.velocity.lengthSquared();
     }
 }

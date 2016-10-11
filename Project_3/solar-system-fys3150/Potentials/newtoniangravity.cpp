@@ -27,11 +27,16 @@ void NewtonianGravity::computeForces(Particle& a, Particle& b) {
      * working two-body problem, since the calculation of the potential energy
      * is only neccessary for verification purposes later.
      */
-
-    // ...
-    //m_potentialEnergy += V;
-    //a.addForce(dFx, dFy, dFz);
-    //b.addForce(...);
+    vec3 dr = a.getPosition()-b.getPosition();
+    double drlength = dr.length();
+    double drlength2 = dr.lengthSquared();
+    double dFx = -(a.getMass()*b.getMass())/(drlength*drlength2)*b.getPosition()(0);
+    double dFy = -(a.getMass()*b.getMass())/(drlength*drlength2)*b.getPosition()(1);
+    double dFz = 0.0;
+    double V = -(a.getMass()*b.getMass())/drlength;
+    m_potentialEnergy += V;
+    a.addForce(dFx, dFy, dFz);
+    b.addForce(-dFx,-dFy,-dFz);
 }
 
 std::string NewtonianGravity::getName() {

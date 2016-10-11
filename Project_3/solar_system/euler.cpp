@@ -1,5 +1,6 @@
 #include "euler.h"
 #include "solarsystem.h"
+#include <iostream>
 
 Euler::Euler(double dt) :
     m_dt(dt)
