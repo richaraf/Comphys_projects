@@ -24,11 +24,21 @@ void SolarSystem::setupParticles(System &system) {
     Particle* Mars = new Particle(vec3(1.136999274118817E+00, -7.886673045811080E-01 ,0), vec3(8.545468568248289E-03*365, 1.267637022893171E-02*365 ,0), 3.2*pow(10,-7));
     //Jupiter
     Particle* Jupiter = new Particle(vec3(-5.430133496003112E+00, -4.320838090483172E-01, 0), vec3(5.120612945394301E-04*365, -7.165562916536973E-03*365, 0), 9.49065*pow(10,-4));
+    //Neptune
+    Particle* Neptune = new Particle(vec3(2.825787471159655E+01, -9.931234946012548E+00, 0), vec3(1.020071131634030E-03*365, 2.979877053087604E-03*365, 0), 5.1205*pow(10,-5));
+    //Saturn
+    Particle* Saturn = new Particle(vec3(-2.282432370743082E+00, -9.770968263962711E+00, 0), vec3(5.126047128541801E-03*365, -1.286363002735174E-03*365, 0), 2.841595*pow(10,-5));
+    //Uranus
+    Particle* Uranus = new Particle(vec3(1.846778022429348E+01, 7.551054732258933E+00, 0), vec3(1.846778022429348E+01*365, 7.551054732258933E+00*365, 0), 4.340515*pow(10,-5));
 
     system.addParticle(Sun);
     system.addParticle(Earth);
     system.addParticle(Mars);
     system.addParticle(Jupiter);
+    system.addParticle(Neptune);
+    system.addParticle(Saturn);
+    system.addParticle(Uranus);
+
 }
 
 std::string SolarSystem::getName() {
