@@ -7,6 +7,7 @@
 #include "Potentials/nopotential.h"
 #include "InitialConditions/twobody.h"
 #include "InitialConditions/threebody.h"
+#include "InitialConditions/solarsystem.h"
 #include <iostream>
 #include <cmath>
 #include <math.h>
@@ -35,6 +36,24 @@ void Examples::threeBodyProblem() {
     threeBodySystem->removeLinearMomentum   ();
     threeBodySystem->integrate              (5000);
 }
+
+void Examples::solarSystemProblem()
+{
+    double G = 4*pow(M_PI,2);
+
+    System* solarSystem = new System();
+    solarSystem->setIntegrator          (new EulerCromer(solarSystem));
+    solarSystem->setPotential           (new NewtonianGravity(G));
+    solarSystem->setInitialCondition    (new SolarSystem());
+    solarSystem->setFileWriting         (true);
+    solarSystem->removeLinearMomentum   ();
+    solarSystem->integrate              (5000);
+
+}
+
+
+
+
 
 
 
