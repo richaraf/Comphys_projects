@@ -1,6 +1,6 @@
 #include "newtoniangravity.h"
 #include <iostream>
-#include<cmath>
+#include <cmath>
 
 NewtonianGravity::NewtonianGravity(double G) : m_G(G) {
 
