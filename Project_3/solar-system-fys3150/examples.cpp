@@ -13,7 +13,7 @@
 
 
 void Examples::twoBodyProblem() {
-    double G = 4*3.1415;
+    double G = 4*pow(M_PI,2);
 
     System* twoBodySystem = new System();
     twoBodySystem->setIntegrator        (new EulerCromer(twoBodySystem));
