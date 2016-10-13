@@ -1,6 +1,10 @@
 #include "newtoniangravity.h"
 #include <iostream>
+<<<<<<< HEAD
 #include <cmath>
+=======
+#include<cmath>
+>>>>>>> db2312042b41882a8a34a5756f44dbaa809e00c1
 
 NewtonianGravity::NewtonianGravity(double G) : m_G(G) {
 
@@ -29,13 +33,16 @@ void NewtonianGravity::computeForces(Particle& a, Particle& b) {
      * is only neccessary for verification purposes later.
      */
     vec3 dr = a.getPosition()-b.getPosition();
+<<<<<<< HEAD
     double G = 4*pow(3.1415,2);
+=======
+>>>>>>> db2312042b41882a8a34a5756f44dbaa809e00c1
     double drlength = dr.length();
     double drlength2 = dr.lengthSquared();
-    double dFx = -G*(a.getMass()*b.getMass())/(drlength*drlength2)*b.getPosition()(0);
-    double dFy = -G*(a.getMass()*b.getMass())/(drlength*drlength2)*b.getPosition()(1);
+    double dFx = -m_G*(a.getMass()*b.getMass())/(drlength*drlength2)*b.getPosition()(0);
+    double dFy = -m_G*(a.getMass()*b.getMass())/(drlength*drlength2)*b.getPosition()(1);
     double dFz = 0.0;
-    double V = -G*(a.getMass()*b.getMass())/drlength;
+    double V = -m_G*(a.getMass()*b.getMass())/drlength;
     m_potentialEnergy += V;
     a.addForce(dFx, dFy, dFz);
     b.addForce(-dFx,-dFy,-dFz);

@@ -159,7 +159,7 @@ void System::writePositionsToFile() {
      */
     Particle *p_0 = m_particles.at(0);
     Particle *p_1 = m_particles.at(1);
-    m_outFile << p_0->getPosition() << p_1->getPosition() <<endl;
+    m_outFile << p_0->getPosition()(0) << " "<< p_0->getPosition()(1) <<" "<< p_1->getPosition()(0) <<" "<< p_1->getPosition()(1)<<endl;
 
 }
 
