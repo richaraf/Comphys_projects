@@ -35,3 +35,6 @@ void Examples::threeBodyProblem() {
     threeBodySystem->removeLinearMomentum   ();
     threeBodySystem->integrate              (5000);
 }
+
+
+
