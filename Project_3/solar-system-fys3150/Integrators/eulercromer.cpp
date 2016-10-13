@@ -23,8 +23,8 @@ void EulerCromer::integrateOneStep(std::vector<Particle*> particles) {
         y += vy*m_dt;
         //double mass = p->getMass();
         //vec3 force = p->getForce();
-        //std::cout << mass << std::endl;
-        //std::cout << force << std::endl;
+        //std::cout << "mass = " << mass << std::endl;
+        //std::cout << "force =" << force << std::endl;
         //std::cout << x << ' ';
         //std::cout << vx << std::endl;
         p->getPosition() = vec3(x,y,0);
