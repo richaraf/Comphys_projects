@@ -157,10 +157,12 @@ void System::writePositionsToFile() {
      *
      * Which format you choose for the data file is up to you.
      */
-    Particle *p_0 = m_particles.at(0);
-    Particle *p_1 = m_particles.at(1);
-    m_outFile << p_0->getPosition()(0) << " "<< p_0->getPosition()(1) <<" "<< p_1->getPosition()(0) <<" "<< p_1->getPosition()(1)<<endl;
 
+    for (int i = 0; i < m_numberOfParticles; i++){
+        Particle *p = m_particles.at(i);
+        m_outFile << p->getPosition()(0) << " " << p->getPosition()(1) << " ";
+    }
+    m_outFile << endl;
 }
 
 void System::closeOutFile() {
