@@ -17,7 +17,7 @@ void Examples::twoBodyProblem() {
     double G = 4*pow(M_PI,2);
 
     System* twoBodySystem = new System();
-    twoBodySystem->setIntegrator        (new VelocityVerlet(twoBodySystem));
+    twoBodySystem->setIntegrator        (new EulerCromer(twoBodySystem));
     twoBodySystem->setPotential         (new NewtonianGravity(G));
     twoBodySystem->setInitialCondition  (new TwoBody());
     twoBodySystem->setFileWriting       (true);
