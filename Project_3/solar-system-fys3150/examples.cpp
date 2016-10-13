@@ -9,10 +9,11 @@
 #include "InitialConditions/threebody.h"
 #include <iostream>
 #include <cmath>
+#include <math.h>
 
 
 void Examples::twoBodyProblem() {
-    double G = 1.0;
+    double G = 4*3.1415;
 
     System* twoBodySystem = new System();
     twoBodySystem->setIntegrator        (new EulerCromer(twoBodySystem));
@@ -20,7 +21,7 @@ void Examples::twoBodyProblem() {
     twoBodySystem->setInitialCondition  (new TwoBody());
     twoBodySystem->setFileWriting       (true);
     twoBodySystem->removeLinearMomentum ();
-    twoBodySystem->integrate            (5000);
+    twoBodySystem->integrate            (50000);
 }
 
 void Examples::threeBodyProblem() {

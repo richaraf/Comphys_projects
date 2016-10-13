@@ -19,8 +19,13 @@ int main(){
 
     double* rho = new double[N+1];
     rho[0] = 0.0;
+<<<<<<< HEAD
+    rho[N] = 50.0; //Approx infinity
+    double omega = 0.01;
+=======
     rho[N] = 15.0; //Approx infinity
     double omega = 0.25;
+>>>>>>> 8d0630bd6dc461712c6b0161af166b500a8f7f06
 
     double h = (rho[N] - rho[0])/N;
 
@@ -77,9 +82,13 @@ int main(){
     }
     finish1 = clock();
 
+<<<<<<< HEAD
+    //Henter ut egenverdiene
+=======
     cout << iteration << endl;
 
     //Saves the eigenvalues
+>>>>>>> 8d0630bd6dc461712c6b0161af166b500a8f7f06
     vec lambda = diagvec(A);
 
     cout << "Run time program: " << (finish1-start1)/float(CLOCKS_PER_SEC) << "s" << endl;
@@ -137,6 +146,12 @@ int main(){
 
     }
 
+<<<<<<< HEAD
+    //cout << k_min << "  " << k_2_min << "  " << k_3_min << endl;
+    cout << lambda[k_min] << "  " << lambda[k_2_min] << "  " << lambda[k_3_min] << endl;
+
+=======
+>>>>>>> 8d0630bd6dc461712c6b0161af166b500a8f7f06
     ofstream myfile_1;
     myfile_1.open("../lambda_file.txt");
     for(int i= 0; i < lambda.n_rows; i++)
@@ -150,15 +165,25 @@ int main(){
     vec eigvec_2 = U.col(k_2_min);
     vec eigvec_3 = U.col(k_3_min);
 
+<<<<<<< HEAD
+//Write to file when plotting three lowest wavefunc
+//    ofstream myfile_2;
+//    myfile_2.open("../u_file_.txt");
+=======
 //Write to file when plotting the three lowest wavefunc
 //    ofstream myfile_2;
 //    myfile_2.open("../u_file.txt");
+>>>>>>> 8d0630bd6dc461712c6b0161af166b500a8f7f06
 //    for(int i=0; i < N+1; i++)
 //    {
 //        myfile_2 << eigvec_1[i] << " " << eigvec_2[i] << " " << eigvec_3[i] << endl;
 //    }
 
 //    myfile_2.close();
+<<<<<<< HEAD
+
+//    return 0;
+=======
 
     ofstream myfile_variables;
     myfile_variables.open("../variable_file.txt");
@@ -175,7 +200,20 @@ int main(){
 
     }
     myfile_groundstate.close();
+>>>>>>> 8d0630bd6dc461712c6b0161af166b500a8f7f06
 
-    return 0;
+    //Write to file the value of rho_max and omega, and the ground state of the system
+    ofstream myfile_variables;
+    myfile_variables.open("../variable_file.txt");
+    myfile_variables << rho[N] << endl;
+    myfile_variables << omega << endl;
+    myfile_variables.close();
 
+    ofstream myfile_groundstate;
+    myfile_groundstate.open("../u_interact.txt");
+    for(int i=0; i < N+1; i++)
+    {
+        myfile_groundstate << eigvec_1[i] << endl;
+    }
+    myfile_groundstate.close();
 }

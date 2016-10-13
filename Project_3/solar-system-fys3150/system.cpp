@@ -146,7 +146,7 @@ void System::setFileWriting(bool writeToFile) {
 
 void System::writePositionsToFile() {
     if (m_outFileOpen == false) {
-        m_outFile.open("positions.dat", std::ios::out);
+        m_outFile.open("../positions.dat", std::ios::out);
         m_outFileOpen = true;
     }
     /*
@@ -157,6 +157,10 @@ void System::writePositionsToFile() {
      *
      * Which format you choose for the data file is up to you.
      */
+    Particle *p_0 = m_particles.at(0);
+    Particle *p_1 = m_particles.at(1);
+    m_outFile << p_0->getPosition() << p_1->getPosition() <<endl;
+
 }
 
 void System::closeOutFile() {

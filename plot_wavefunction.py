@@ -21,7 +21,7 @@ eigenvec3 = np.array(eigenvec3)
 N = len(eigenvec1) - 1;
 rho = np.zeros(N+1)
 rho[0] = 0.0
-rho[-1] = 5.0
+rho[-1] = 50.0
 
 h = (rho[-1] - rho[0])/(N)
 
