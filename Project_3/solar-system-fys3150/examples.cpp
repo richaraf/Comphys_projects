@@ -50,10 +50,3 @@ void Examples::solarSystemProblem()
     solarSystem->integrate              (50000);
 
 }
-
-
-
-
-
-
-
