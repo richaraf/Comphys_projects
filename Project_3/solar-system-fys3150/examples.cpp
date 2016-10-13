@@ -42,18 +42,11 @@ void Examples::solarSystemProblem()
     double G = 4*pow(M_PI,2);
 
     System* solarSystem = new System();
-    solarSystem->setIntegrator          (new EulerCromer(solarSystem));
+    solarSystem->setIntegrator          (new VelocityVerlet(solarSystem));
     solarSystem->setPotential           (new NewtonianGravity(G));
     solarSystem->setInitialCondition    (new SolarSystem());
     solarSystem->setFileWriting         (true);
     solarSystem->removeLinearMomentum   ();
-    solarSystem->integrate              (5000);
+    solarSystem->integrate              (50000);
 
 }
-
-
-
-
-
-
-

@@ -16,10 +16,10 @@ void EulerCromer::integrateOneStep(std::vector<Particle*> particles) {
         double y = p->getPosition()(1);
         double vx = p->getVelocity()(0);
         double vy = p->getVelocity()(1);
-        vx += (-m_dt*p->getForce()(0))/(p->getMass());
+        vx += (m_dt*p->getForce()(0))/(p->getMass());
         x += vx*m_dt;
 
-        vy += (-m_dt*p->getForce()(1))/(p->getMass());
+        vy += (m_dt*p->getForce()(1))/(p->getMass());
         y += vy*m_dt;
         //double mass = p->getMass();
         //vec3 force = p->getForce();

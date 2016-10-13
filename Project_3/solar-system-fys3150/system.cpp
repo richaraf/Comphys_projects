@@ -3,7 +3,7 @@
 #include "Potentials/potential.h"
 #include "InitialConditions/initialcondition.h"
 #include "particle.h"
-#include "Potentials/newtoniangravity.h" // added to use NewtonianGravity::computForces
+#include "Potentials/newtoniangravity.h" // added to use NewtonianGravity::computeForces
 
 #include <iostream>
 using std::cout;
