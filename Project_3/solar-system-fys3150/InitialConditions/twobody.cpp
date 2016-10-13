@@ -26,8 +26,7 @@ void TwoBody::setupParticles(System &system) {
 
     Particle* largeBody = new Particle(vec3(0,0,0), vec3(0,0,0), 1.0);
     //Earth initial velocity[AU/yr] and mass
-    Particle* smallBody = new Particle(vec3(1,0,0), vec3(0,6.3, 0), 0.000001);
-    //Particle* smallBody = new Particle(vec3(1,0,0), vec3(0,1, 0), 0.1);
+    Particle* smallBody = new Particle(vec3(9.479178499336547E-01, 3.261066313699268E-01,0), vec3(-5.849360690746023E-03*365, 1.621703296479702E-02*365, 0), 0.000001);
     system.addParticle(largeBody);
     system.addParticle(smallBody);
 }
