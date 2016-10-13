@@ -25,12 +25,13 @@ void Examples::twoBodyProblem() {
 }
 
 void Examples::threeBodyProblem() {
-    /*
-     * This is where you should set up a three-body problem, using the
-     * InitialCondition::ThreeBody class as System's InitialCondition.
-     *
-     * You should start by considering the two-body case in
-     * Examples::twoBodyProblem, before continuing with this more complicated
-     * case.
-     */
+    double G = 4*pow(M_PI,2);
+
+    System* threeBodySystem = new System();
+    threeBodySystem->setIntegrator          (new EulerCromer(threeBodySystem));
+    threeBodySystem->setPotential           (new NewtonianGravity(G));
+    threeBodySystem->setInitialCondition    (new ThreeBody());
+    threeBodySystem->setFileWriting         (true);
+    threeBodySystem->removeLinearMomentum   ();
+    threeBodySystem->integrate              (50000);
 }
