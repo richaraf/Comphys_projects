@@ -2,10 +2,12 @@
 #include <vector>
 #include <string>
 #include "../particle.h"
+#include <cmath>
 
 class Integrator {
 protected:
     double          m_dt        = 1e-3;
+    double          m_dt2       = pow(m_dt,2);
     class System*   m_system    = nullptr;
 
 public:
