@@ -35,7 +35,6 @@ void System::computeForces() {
 
         }
     }
-
 }
 
 void System::resetAllForces() {
