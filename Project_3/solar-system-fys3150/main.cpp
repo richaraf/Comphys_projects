@@ -2,8 +2,8 @@
 #include "examples.h"
 
 int main(int, char**) {
-    Examples::twoBodyProblem();
+    //Examples::twoBodyProblem();
     //Examples::threeBodyProblem();
-    //Examples::solarSystemProblem();
+    Examples::solarSystemProblem();
     return 0;
 }

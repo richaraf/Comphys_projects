@@ -24,7 +24,8 @@ void TwoBody::setupParticles(System &system) {
      *                               Position     Velocity      Mass
      */
 
-    Particle* largeBody = new Particle(vec3(0,0,0), vec3(0,0,0), 1.0);
+    // initial positions for oct 12
+    Particle* Sun = new Particle(vec3(3.571526865010806E-03, 3.389038138932890E-03, 0), vec3(-1.970078468466432E-06, 6.846218005095042E-06, 0)*365.25, 1.0);
     //Earth initial velocity[AU/yr] and mass
     Particle* smallBody = new Particle(vec3(9.479178499336547E-01, 3.261066313699268E-01,0), vec3(-5.849360690746023E-03*365, 1.621703296479702E-02*365, 0), 0.000001);
     system.addParticle(largeBody);

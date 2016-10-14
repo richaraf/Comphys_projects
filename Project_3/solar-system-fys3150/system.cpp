@@ -130,19 +130,20 @@ void System::removeLinearMomentum() {
      *
      *      m_particles.at(i)->getMass();
      *      m_particles.at(i)->getVelocity();
-     *
+     *.
      * Remember also that the vec3-vector class supports the += and -=
      * operators, so you can do
      *
      *      totalMomentum += p->getVelocity() * p->getMass();
      */
-
     vec3 totalMomentum = vec3(0,0,0);
+
 }
 
 void System::setFileWriting(bool writeToFile) {
     m_writeToFile = writeToFile;
 }
+
 
 void System::writePositionsToFile() {
     if (m_outFileOpen == false) {
