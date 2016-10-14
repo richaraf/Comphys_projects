@@ -161,13 +161,13 @@ void System::writePositionsToFile() {
      *
      * Which format you choose for the data file is up to you.
      */
-
+    // write positions of the system
     for (int i = 0; i < m_numberOfParticles; i++){
         Particle *p = m_particles.at(i);
         m_outFile << setprecision(20) << p->getPosition()(0) << " " << setprecision(20) << p->getPosition()(1) << " ";
     }
-    //std::cout << "Hello" << endl;
     m_outFile << endl;
+    // write total energy of system
     m_kineticEnergy     = computeKineticEnergy();
     m_potentialEnergy   = m_potential->getPotentialEnergy();
     m_totalEnergy       = m_kineticEnergy + m_potentialEnergy;
