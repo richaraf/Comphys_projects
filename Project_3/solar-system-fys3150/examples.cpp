@@ -47,7 +47,7 @@ void Examples::solarSystemProblem()
     solarSystem->setDt                  (1e-3);
     solarSystem->setPotential           (new NewtonianGravity(G));
     solarSystem->setInitialCondition    (new SolarSystem());
-    solarSystem->setFileWriting         (true);
+    //solarSystem->setFileWriting         (true);
     solarSystem->removeLinearMomentum   ();
     solarSystem->integrate              (50000);
 }

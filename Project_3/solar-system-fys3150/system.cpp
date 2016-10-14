@@ -148,6 +148,7 @@ void System::setFileWriting(bool writeToFile) {
 
 
 void System::writePositionsToFile() {
+    if (m_writeToFile == true){
     if (m_outFileOpen == false) {
         m_outFile.open("../positions.dat", std::ios::out);
         m_outFile2.open("../energies.dat", std::ios::out);
@@ -173,7 +174,7 @@ void System::writePositionsToFile() {
     m_totalEnergy       = m_kineticEnergy + m_potentialEnergy;
     m_outFile2 << setprecision(20) << m_totalEnergy << endl;
 }
-
+}
 void System::closeOutFile() {
     if (m_writeToFile == true) {
         m_outFile.close();
