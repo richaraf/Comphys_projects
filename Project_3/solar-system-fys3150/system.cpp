@@ -4,8 +4,9 @@
 #include "InitialConditions/initialcondition.h"
 #include "particle.h"
 #include "Potentials/newtoniangravity.h" // added to use NewtonianGravity::computeForces
-
+//#include <Tests/velocity_test.h>
 #include <iostream>
+#include <stdexcept>
 using std::cout;
 using std::endl;
 
@@ -162,6 +163,7 @@ void System::writePositionsToFile() {
         Particle *p = m_particles.at(i);
         m_outFile << p->getPosition()(0) << " " << p->getPosition()(1) << " ";
     }
+    //std::cout << "Hello" << endl;
     m_outFile << endl;
 }
 
@@ -172,7 +174,17 @@ void System::closeOutFile() {
     }
 }
 
-
+void System::testVelocity(bool velocitytest, double velAnalytic, double tol){
+    cout << velocitytest << endl;
+    Particle* p = m_particles.at(1);       //Earth
+    if(velocitytest == 1){
+        m_velNumerical = (p->getVelocity()).length();
+        m_velAnalytical = velAnalytic;
+        if(std::abs(m_velNumerical-m_velAnalytical) > tol){
+            throw std::invalid_argument("The calculated velocity has larger error than the tolerance");
+        }
+    }
+}
 
 
 

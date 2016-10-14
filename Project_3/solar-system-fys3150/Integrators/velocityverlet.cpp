@@ -6,7 +6,7 @@ VelocityVerlet::VelocityVerlet(System* system)
 }
 
 std::string VelocityVerlet::getName() {
-    return "Velocity verlet";
+    return "Velocity Verlet";
 }
 
 void VelocityVerlet::integrateOneStep(std::vector<Particle*> particles) {
