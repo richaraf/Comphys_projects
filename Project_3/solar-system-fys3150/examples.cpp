@@ -10,17 +10,18 @@
 #include "InitialConditions/solarsystem.h"
 #include <iostream>
 #include <cmath>
-#include <math.h>
-
 
 void Examples::twoBodyProblem() {
-    double G = 4*pow(M_PI,2);
+    double G            = 4*pow(M_PI,2);
+    double velAnalytic  = 2*M_PI;
+    double tolerance    = 1e-2;
 
     System* twoBodySystem = new System();
     twoBodySystem->setIntegrator        (new EulerCromer(twoBodySystem));
     twoBodySystem->setPotential         (new NewtonianGravity(G));
     twoBodySystem->setInitialCondition  (new TwoBody());
     twoBodySystem->setFileWriting       (true);
+    twoBodySystem->testVelocity         (true, velAnalytic, tolerance);
     twoBodySystem->removeLinearMomentum ();
     twoBodySystem->integrate            (5000);
 }

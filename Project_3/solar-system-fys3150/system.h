@@ -12,6 +12,8 @@ private:
     double                      m_kineticEnergy     = 0;
     double                      m_totalEnergy       = 0;
     double                      m_potentialEnergy   = 0;
+    double                      m_velNumerical      = 0;
+    double                      m_velAnalytical     = 0;
     class Integrator*           m_integrator        = nullptr;
     class Potential*            m_potential         = nullptr;
     class InitialCondition*     m_initialCondition  = nullptr;
@@ -30,6 +32,7 @@ public:
     void addParticle            (Particle* p);
     void printIntegrateInfo     (int stepNumber);
     void removeLinearMomentum   ();
+    void testVelocity           (bool velocitytest, double velAnalytic, double tolerance);
     void setFileWriting         (bool writeToFile);
     void writePositionsToFile   ();
     void closeOutFile           ();
