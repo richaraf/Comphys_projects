@@ -18,6 +18,7 @@ private:
     class Potential*            m_potential         = nullptr;
     class InitialCondition*     m_initialCondition  = nullptr;
     std::ofstream               m_outFile;
+    std::ofstream               m_outFile2;
     std::vector<Particle*>      m_particles;
 
 public:

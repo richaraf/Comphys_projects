@@ -7,9 +7,10 @@
 //#include <Tests/velocity_test.h>
 #include <iostream>
 #include <stdexcept>
+#include <iomanip>
 using std::cout;
 using std::endl;
-
+using std::setprecision;
 
 
 void System::computeForces() {
@@ -149,6 +150,7 @@ void System::setFileWriting(bool writeToFile) {
 void System::writePositionsToFile() {
     if (m_outFileOpen == false) {
         m_outFile.open("../positions.dat", std::ios::out);
+        m_outFile2.open("../energies.dat", std::ios::out);
         m_outFileOpen = true;
     }
     /*
@@ -162,16 +164,21 @@ void System::writePositionsToFile() {
 
     for (int i = 0; i < m_numberOfParticles; i++){
         Particle *p = m_particles.at(i);
-        m_outFile << p->getPosition()(0) << " " << p->getPosition()(1) << " ";
+        m_outFile << setprecision(20) << p->getPosition()(0) << " " << setprecision(20) << p->getPosition()(1) << " ";
     }
     //std::cout << "Hello" << endl;
     m_outFile << endl;
+    m_kineticEnergy     = computeKineticEnergy();
+    m_potentialEnergy   = m_potential->getPotentialEnergy();
+    m_totalEnergy       = m_kineticEnergy + m_potentialEnergy;
+    m_outFile2 << setprecision(20) << m_totalEnergy << endl;
 }
 
 void System::closeOutFile() {
     if (m_writeToFile == true) {
         m_outFile.close();
         m_outFileOpen = false;
+        m_outFile2.close();
     }
 }
 
