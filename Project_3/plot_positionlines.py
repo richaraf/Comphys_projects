@@ -1,14 +1,5 @@
-from scitools.std import *
 import matplotlib.pyplot as plt
-import pylab
-import numpy as np
-import sys
-'''
-pylab.ion()
-limits = (-10.0, 10.0)
-fig = plt.figure()
-ax = fig.add_subplot(111, autoscale_on = False, xlim= limits, ylim=limits)
-'''
+
 R = []
 n = 0
 with  open('positions.dat', 'r') as inFile :
@@ -21,7 +12,6 @@ for i in xrange(n) :
 
 # R = [[],[],[],..]
 
-
 infile = open('positions.dat', 'r')
 
 lineNum = 0
@@ -31,30 +21,19 @@ for line in infile:
     for i in xrange(n):
         R[i].append([float(words[2*i]), float(words[2*i+1])])
 
-'''
-colors = ['bo', 'go', 'co', 'yo', 'ro']
-colors = colors + colors
-line, = ax.plot(0,0, "ro")
-lines = [ax.plot([], [], colors[k])[0] for k in range(n)]
+planets = ['Sun', 'Earth', 'Mars', 'Jupiter']
+colors = ['oy', '.b', '.g', '.c', '.r', '.w', '.k']
+ms=[8,5,5,5,5,5,5]
 
-
-pylab.show()
-
-
-for i in xrange(0, lineNum, 50):
-    for k in xrange(n):
-        lines[k].set_data(R[k][i][0], R[k][i][1])
-    pylab.draw()
-
-raw_input()  
-'''
-
-
-plt.figure(2)
-plt.hold('on')
-for i in xrange(0, lineNum, 1000):
-    for k in xrange(n):
-        plt.plot(R[k][i][0], R[k][i][1])
-plt.axis([-2,2,-2,2])
+#plt.plot(0.0,0.0,'oy')
+p=[]
+for i in xrange(len(R)):
+    p.append(planets[i])
+    for j in xrange(1,len(R[1]),1):
+        plt.plot(R[i][j][0],R[i][j][1],colors[i], markersize=ms[i])
+plt.axis([-1.55,1.55,-1.25,1.25])
+plt.xlabel('x-direction')
+plt.ylabel('y-direction')
+plt.legend(p,loc='best')
+plt.grid()
 plt.show()
-#raw_input()  
