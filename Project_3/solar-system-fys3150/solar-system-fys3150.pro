@@ -19,7 +19,8 @@ SOURCES += main.cpp \
     InitialConditions/threebody.cpp \
     InitialConditions/solarsystem.cpp \
     Tests/velocity_test.cpp \
-    Tests/test.cpp
+    Tests/test.cpp \
+    InitialConditions/twobody_escape_vel.cpp
 
 HEADERS += \
     vec3.h \
@@ -37,4 +38,5 @@ HEADERS += \
     InitialConditions/threebody.h \
     InitialConditions/solarsystem.h \
     Tests/velocity_test.h \
-    Tests/test.h
+    Tests/test.h \
+    InitialConditions/twobody_escape_vel.h
