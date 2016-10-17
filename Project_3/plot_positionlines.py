@@ -29,8 +29,8 @@ ms=[8,5,5,5,5,5,5]
 p=[]
 for i in xrange(len(R)):
     p.append(planets[i])
-    for j in xrange(1,len(R[1]),1):
-        plt.plot(R[i][j][0],R[i][j][1],colors[i], markersize=ms[i])
+    for j in xrange(0,len(R[1]),1):
+        plt.plot(R[i][j][0],R[i][j][1],colors[i],markersize=ms[i])
 plt.axis([-1.55,1.55,-1.25,1.25])
 plt.xlabel('x-direction')
 plt.ylabel('y-direction')

@@ -37,6 +37,7 @@ public:
     void setFileWriting         (bool writeToFile);
     void writePositionsToFile   ();
     void closeOutFile           ();
+    void computeAngularMomentum ();
     double computeKineticEnergy ();
 };
 
