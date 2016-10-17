@@ -119,7 +119,7 @@ void System::printIntegrateInfo(int stepNumber) {
         m_totalEnergy       = m_kineticEnergy + m_potentialEnergy;
         printf("Step: %5d    E =%10.5f   Ek =%10.5f    Ep =%10.5f\n",
                stepNumber, m_totalEnergy, m_kineticEnergy, m_potentialEnergy);
-
+        /*
         Particle *p = m_particles.at(1);
         double velocity = p->getVelocity().length();
         if(m_totalEnergy  > - pow(10,-10)){
@@ -128,6 +128,7 @@ void System::printIntegrateInfo(int stepNumber) {
         else if(m_totalEnergy < - pow(10, -10)){
             cout << "Planet trapped " << "velocity:" << velocity <<"AU/yr" <<endl;
         }
+        */
         fflush(stdout);
     }
 }

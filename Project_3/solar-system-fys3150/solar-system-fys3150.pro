@@ -20,7 +20,8 @@ SOURCES += main.cpp \
     InitialConditions/solarsystem.cpp \
     Tests/velocity_test.cpp \
     Tests/test.cpp \
-    InitialConditions/twobody_escape_vel.cpp
+    InitialConditions/twobody_escape_vel.cpp \
+    Potentials/relativisticnewtoniangravity.cpp
 
 HEADERS += \
     vec3.h \
@@ -39,4 +40,5 @@ HEADERS += \
     InitialConditions/solarsystem.h \
     Tests/velocity_test.h \
     Tests/test.h \
-    InitialConditions/twobody_escape_vel.h
+    InitialConditions/twobody_escape_vel.h \
+    Potentials/relativisticnewtoniangravity.h
