@@ -48,7 +48,7 @@ void Examples::solarSystemProblem()
     solarSystem->setDt                  (1e-3);
     solarSystem->setPotential           (new NewtonianGravity(G));
     solarSystem->setInitialCondition    (new SolarSystem());
-    solarSystem->setFileWriting         (false);
+    solarSystem->setFileWriting         (true);
     solarSystem->removeLinearMomentum   ();
     solarSystem->integrate              (5000);
     solarSystem->computeAngularMomentum ();
@@ -63,6 +63,7 @@ void Examples::twoBody_escape_velProblem() {
     twoBodySystem->setInitialCondition  (new TwoBody_escape_vel());
     twoBodySystem->setFileWriting       (true);
     twoBodySystem->removeLinearMomentum ();
+    twoBodySystem->EscapeVelocity       ();
     twoBodySystem->integrate            (5000);
 }
 

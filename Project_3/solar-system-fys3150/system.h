@@ -39,5 +39,6 @@ public:
     void closeOutFile           ();
     void computeAngularMomentum ();
     double computeKineticEnergy ();
+    void EscapeVelocity         ();
 };
 

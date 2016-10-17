@@ -119,16 +119,6 @@ void System::printIntegrateInfo(int stepNumber) {
         m_totalEnergy       = m_kineticEnergy + m_potentialEnergy;
         printf("Step: %5d    E =%10.5f   Ek =%10.5f    Ep =%10.5f\n",
                stepNumber, m_totalEnergy, m_kineticEnergy, m_potentialEnergy);
-        /*
-        Particle *p = m_particles.at(1);
-        double velocity = p->getVelocity().length();
-        if(m_totalEnergy  > - pow(10,-10)){
-            cout << "Planet escaped" << "velocity:" << velocity <<"AU/yr" <<endl;
-        }
-        else if(m_totalEnergy < - pow(10, -10)){
-            cout << "Planet trapped " << "velocity:" << velocity <<"AU/yr" <<endl;
-        }
-        */
         fflush(stdout);
     }
 }
@@ -223,4 +213,24 @@ void System::computeAngularMomentum() {
     vec3 totalMomentum = vec3(L[0], L[1], L[2]);
     cout << "Total Angular Momentum" << " = (" << L[0] << "," << L[1] << "," << L[2] << ")" << endl;
     cout << "|Total Angular Momentum| = " << vec3(L[0], L[1], L[2]).length() << endl;
+}
+
+void System::EscapeVelocity(){
+    Particle *p_0 = m_particles.at(0);
+    Particle *p_1 = m_particles.at(1);
+    double velocity = p_1->getVelocity().length();
+
+    double kinetic_E = 0.5*p_1->getMass()*p_1->getVelocity().lengthSquared();
+
+    double potential_E = - 4*pow(M_PI, 2)*p_1->getMass()*p_0->getMass()/p_1->getPosition().length();
+
+    double total_E = kinetic_E + potential_E;
+
+    if(total_E > - pow(10,-10)){
+        cout << "Planet escaped" <<" " << "velocity:" << velocity <<"AU/yr" <<endl;
+    }
+    else if(total_E < - pow(10, -10)){
+        cout << "Planet trapped " <<" " <<"velocity:" << velocity <<"AU/yr" <<endl;
+    }
+
 }
