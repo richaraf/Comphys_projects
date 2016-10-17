@@ -36,7 +36,7 @@ void Examples::threeBodyProblem() {
     threeBodySystem->setInitialCondition    (new ThreeBody());
     threeBodySystem->setFileWriting         (true);
     threeBodySystem->removeLinearMomentum   ();
-    threeBodySystem->integrate              (50000);
+    threeBodySystem->integrate              (5000);
 }
 
 void Examples::solarSystemProblem()
@@ -50,7 +50,8 @@ void Examples::solarSystemProblem()
     solarSystem->setInitialCondition    (new SolarSystem());
     solarSystem->setFileWriting         (false);
     solarSystem->removeLinearMomentum   ();
-    solarSystem->integrate              (50000);
+    solarSystem->integrate              (5000);
+    solarSystem->computeAngularMomentum ();
 }
 
 void Examples::twoBody_escape_velProblem() {

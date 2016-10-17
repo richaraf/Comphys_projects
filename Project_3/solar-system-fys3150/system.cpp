@@ -119,6 +119,16 @@ void System::printIntegrateInfo(int stepNumber) {
         m_totalEnergy       = m_kineticEnergy + m_potentialEnergy;
         printf("Step: %5d    E =%10.5f   Ek =%10.5f    Ep =%10.5f\n",
                stepNumber, m_totalEnergy, m_kineticEnergy, m_potentialEnergy);
+        /*
+        Particle *p = m_particles.at(1);
+        double velocity = p->getVelocity().length();
+        if(m_totalEnergy  > - pow(10,-10)){
+            cout << "Planet escaped" << "velocity:" << velocity <<"AU/yr" <<endl;
+        }
+        else if(m_totalEnergy < - pow(10, -10)){
+            cout << "Planet trapped " << "velocity:" << velocity <<"AU/yr" <<endl;
+        }
+        */
         fflush(stdout);
     }
 }
@@ -183,7 +193,6 @@ void System::closeOutFile() {
 }
 
 void System::testVelocity(bool velocitytest, double velAnalytic, double tol){
-    cout << velocitytest << endl;
     Particle* p = m_particles.at(1);       //Earth
     if(velocitytest == 1){
         m_velNumerical = (p->getVelocity()).length();
@@ -194,5 +203,24 @@ void System::testVelocity(bool velocitytest, double velAnalytic, double tol){
     }
 }
 
+void System::computeAngularMomentum() {
+    double* L = new double[3];
+//    double** L = new double*[3];
+//    for(int i = 0; i < m_numberOfParticles; i++){
+//        L[i] = new double[3];
+//    }
 
-
+    for(int i = 0; i < m_numberOfParticles; i++){
+        Particle* p = m_particles.at(i);
+//        L[i][0] = p->getMass()*(p->getPosition()(1)*p->getVelocity()(2)-p->getPosition()(2)*p->getVelocity()(1));
+//        L[i][1] = p->getMass()*(p->getPosition()(0)*p->getVelocity()(2)-p->getPosition()(2)*p->getVelocity()(0));
+//        L[i][2] = p->getMass()*(p->getPosition()(0)*p->getVelocity()(1)-p->getPosition()(1)*p->getVelocity()(0));
+//        (L[i][0],L[i][1],L[i][2]);
+        L[0] += p->getMass()*(p->getPosition()(1)*p->getVelocity()(2)-p->getPosition()(2)*p->getVelocity()(1));
+        L[1] += p->getMass()*(p->getPosition()(0)*p->getVelocity()(2)-p->getPosition()(2)*p->getVelocity()(0));
+        L[2] += p->getMass()*(p->getPosition()(0)*p->getVelocity()(1)-p->getPosition()(1)*p->getVelocity()(0));
+    }
+    vec3 totalMomentum = vec3(L[0], L[1], L[2]);
+    cout << "Total Angular Momentum" << " = (" << L[0] << "," << L[1] << "," << L[2] << ")" << endl;
+    cout << "|Total Angular Momentum| = " << vec3(L[0], L[1], L[2]).length() << endl;
+}
