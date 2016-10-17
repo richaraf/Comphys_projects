@@ -8,6 +8,7 @@
 #include "InitialConditions/twobody.h"
 #include "InitialConditions/threebody.h"
 #include "InitialConditions/solarsystem.h"
+#include"InitialConditions/twobody_escape_vel.h"
 #include <iostream>
 #include <cmath>
 
@@ -52,3 +53,16 @@ void Examples::solarSystemProblem()
     solarSystem->integrate              (50000);
     solarSystem->computeAngularMomentum ();
 }
+
+void Examples::twoBody_escape_velProblem() {
+    double G            = 4*pow(M_PI,2);
+
+    System* twoBodySystem = new System();
+    twoBodySystem->setIntegrator        (new VelocityVerlet(twoBodySystem));
+    twoBodySystem->setPotential         (new NewtonianGravity(G));
+    twoBodySystem->setInitialCondition  (new TwoBody_escape_vel());
+    twoBodySystem->setFileWriting       (true);
+    twoBodySystem->removeLinearMomentum ();
+    twoBodySystem->integrate            (5000);
+}
+
