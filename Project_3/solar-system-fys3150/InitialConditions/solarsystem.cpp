@@ -29,20 +29,20 @@ void SolarSystem::setupParticles(System &system) {
     //Jupiter
     Particle* Jupiter = new Particle(vec3(-5.430133496003112E+00, -4.320838090483172E-01, 0), vec3(5.120612945394301E-04, -7.165562916536973E-03, 0)*365.25, 9.545325625*pow(10,-4));
     //Neptune
-    Particle* Neptune = new Particle(vec3(2.825787471159655E+01, -9.931234946012548E+00, 0), vec3(1.020071131634030E-03, 2.979877053087604E-03, 0)*365.25, 5.149999195*pow(10,-5));
+    //Particle* Neptune = new Particle(vec3(2.825787471159655E+01, -9.931234946012548E+00, 0), vec3(1.020071131634030E-03, 2.979877053087604E-03, 0)*365.25, 5.149999195*pow(10,-5));
     //Saturn
-    Particle* Saturn = new Particle(vec3(-2.282432370743082E+00, -9.770968263962711E+00, 0), vec3(5.126047128541801E-03, -1.286363002735174E-03, 0)*365.25, 2.857965426*pow(10,-4));
+    //Particle* Saturn = new Particle(vec3(-2.282432370743082E+00, -9.770968263962711E+00, 0), vec3(5.126047128541801E-03, -1.286363002735174E-03, 0)*365.25, 2.857965426*pow(10,-4));
     //Uranus
-    Particle* Uranus = new Particle(vec3(1.846778022429348E+01, 7.551054732258933E+00, 0), vec3(1.846778022429348E+01, 7.551054732258933E+00, 0)*365.25, 4.365510645*pow(10,-5));
+    //Particle* Uranus = new Particle(vec3(1.846778022429348E+01, 7.551054732258933E+00, 0), vec3(1.846778022429348E+01, 7.551054732258933E+00, 0)*365.25, 4.365510645*pow(10,-5));
     //Venus
     //Particle* Venus = new Particle(vec3(1.422942118656473E-01, -7.105570386923493E-01, 0), vec3(1.971755883600314E-02*365, 3.794686413925673E-03*365, 0), 2.448273712E-06);
     system.addParticle(Sun);
     system.addParticle(Earth);
     system.addParticle(Mars);
     system.addParticle(Jupiter);
-    system.addParticle(Neptune);
-    system.addParticle(Saturn);
-    system.addParticle(Uranus);
+//    system.addParticle(Neptune);
+//    system.addParticle(Saturn);
+//    system.addParticle(Uranus);
     //system.addParticle(Venus);
 
 }
