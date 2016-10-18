@@ -9,9 +9,12 @@ private:
     bool                        m_writeToFileMercury = false;
     bool                        m_outFileOpen       = false;
     bool                        m_outFileOpenMercury = false;
+    bool                        m_printEscape       = false;
     int                         m_integrateSteps    = 0;
     int                         m_numberOfParticles = 0;
+    double                      m_tol               = 0;
     double                      m_kineticEnergy     = 0;
+    double                      m_angularMomentum   = 0;
     double                      m_totalEnergy       = 0;
     double                      m_potentialEnergy   = 0;
     double                      m_velNumerical      = 0;
@@ -38,10 +41,11 @@ public:
     void removeLinearMomentum   ();
     void testVelocity           (bool velocitytest, double velAnalytic, double tolerance);
     void setFileWriting         (bool writeToFile);
+    void printEscape            (bool printEscape);
     void writePositionsToFile   ();
     void setFileWritingMercury  (bool writetoFileMercury);
     void closeOutFile           ();
-    void computeAngularMomentum ();
+    double computeAngularMomentum();
     double computeKineticEnergy ();
     void EscapeVelocity         ();
 };

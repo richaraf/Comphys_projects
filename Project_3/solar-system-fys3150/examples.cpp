@@ -21,12 +21,13 @@ void Examples::twoBodyProblem() {
 
     System* twoBodySystem = new System();
     twoBodySystem->setIntegrator        (new EulerCromer(twoBodySystem));
+    twoBodySystem->setDt                (1e-2);
     twoBodySystem->setPotential         (new NewtonianGravity(G));
     twoBodySystem->setInitialCondition  (new TwoBody());
     twoBodySystem->setFileWriting       (true);
     twoBodySystem->testVelocity         (true, velAnalytic, tolerance);
     twoBodySystem->removeLinearMomentum ();
-    twoBodySystem->integrate            (5000);
+    twoBodySystem->integrate            (500);
 }
 
 void Examples::threeBodyProblem() {
@@ -60,12 +61,12 @@ void Examples::twoBody_escape_velProblem() {
     double G            = 4*pow(M_PI,2);
 
     System* twoBodySystem = new System();
+    twoBodySystem->printEscape          (true);
     twoBodySystem->setIntegrator        (new VelocityVerlet(twoBodySystem));
     twoBodySystem->setPotential         (new NewtonianGravity(G));
     twoBodySystem->setInitialCondition  (new TwoBody_escape_vel());
     twoBodySystem->setFileWriting       (true);
     twoBodySystem->removeLinearMomentum ();
-    twoBodySystem->EscapeVelocity       ();
     twoBodySystem->integrate            (5000);
 }
 
@@ -73,7 +74,7 @@ void Examples::mercurySunProblem() {
     double G            = 4*pow(M_PI,2);
     System* mercurySunSystem = new System();
     mercurySunSystem->setIntegrator        (new VelocityVerlet(mercurySunSystem));
-    mercurySunSystem->setPotential         (new NewtonianGravity(G));
+    mercurySunSystem->setPotential         (new RelativisticNewtonianGravity(G));
     mercurySunSystem->setInitialCondition  (new MercurySun());
     mercurySunSystem->setDt                (1e-3);
     mercurySunSystem->setFileWriting       (true);
