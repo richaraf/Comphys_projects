@@ -1,11 +1,14 @@
-#ifndef RELATIVISTICNEWTONIANGRAVITY_H
-#define RELATIVISTICNEWTONIANGRAVITY_H
+#pragma once
+#include "particle.h"
+#include "potential.h"
+#include <string>
 
+class RelativisticNewtonianGravity : public Potential {
+private:
+    double m_G;
 
-class relativisticnewtoniangravity
-{
 public:
-    relativisticnewtoniangravity();
+    RelativisticNewtonianGravity(double G);
+    void computeForces(Particle& a, Particle& b);
+    std::string getName();
 };
-
-#endif // RELATIVISTICNEWTONIANGRAVITY_H

@@ -3,11 +3,13 @@
 #include "particle.h"
 #include "Integrators/eulercromer.h"
 #include "Integrators/velocityverlet.h"
+#include "Potentials/relativisticnewtoniangravity.h"
 #include "Potentials/newtoniangravity.h"
 #include "Potentials/nopotential.h"
 #include "InitialConditions/twobody.h"
 #include "InitialConditions/threebody.h"
 #include "InitialConditions/solarsystem.h"
+#include "InitialConditions/mercurysun.h"
 #include"InitialConditions/twobody_escape_vel.h"
 #include <iostream>
 #include <cmath>
@@ -50,7 +52,7 @@ void Examples::solarSystemProblem()
     solarSystem->setInitialCondition    (new SolarSystem());
     solarSystem->setFileWriting         (true);
     solarSystem->removeLinearMomentum   ();
-    solarSystem->integrate              (5000);
+    solarSystem->integrate              (50000);
     solarSystem->computeAngularMomentum ();
 }
 
@@ -67,3 +69,15 @@ void Examples::twoBody_escape_velProblem() {
     twoBodySystem->integrate            (5000);
 }
 
+void Examples::mercurySunProblem() {
+    double G            = 4*pow(M_PI,2);
+    System* mercurySunSystem = new System();
+    mercurySunSystem->setIntegrator        (new VelocityVerlet(mercurySunSystem));
+    mercurySunSystem->setPotential         (new NewtonianGravity(G));
+    mercurySunSystem->setInitialCondition  (new MercurySun());
+    mercurySunSystem->setDt                (1e-3);
+    mercurySunSystem->setFileWriting       (true);
+    mercurySunSystem->setFileWritingMercury(true);
+    mercurySunSystem->removeLinearMomentum ();
+    mercurySunSystem->integrate            (100000);
+}

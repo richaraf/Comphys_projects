@@ -147,6 +147,10 @@ void System::setFileWriting(bool writeToFile) {
     m_writeToFile = writeToFile;
 }
 
+void System::setFileWritingMercury(bool writetoFileMercury){
+    m_writeToFileMercury = writetoFileMercury;
+}
+
 
 void System::writePositionsToFile() {
     if (m_outFileOpen == false) {
@@ -173,6 +177,14 @@ void System::writePositionsToFile() {
     m_potentialEnergy   = m_potential->getPotentialEnergy();
     m_totalEnergy       = m_kineticEnergy + m_potentialEnergy;
     m_outFile2 << setprecision(20) << m_totalEnergy << endl;
+    if(m_writeToFileMercury = true){
+    if(m_outFileOpenMercury == false) {
+        m_outFilemercury.open("../mercurypositions.dat", std::ios::out);
+        m_outFileOpenMercury = true;
+    }
+    Particle *p = m_particles.at(1);
+    m_outFilemercury << setprecision(10) << p->getPosition()(0) << " " << setprecision(10) << p->getPosition()(1) << " " << p->getPosition().length() << endl;
+    }
 }
 void System::closeOutFile() {
     if (m_writeToFile == true) {

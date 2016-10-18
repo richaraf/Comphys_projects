@@ -6,6 +6,7 @@ int main(int, char**) {
     //Examples::threeBodyProblem();
     //Examples::solarSystemProblem();
     //Examples::solarSystemProblem();
-    Examples::twoBody_escape_velProblem();
+    //Examples::twoBody_escape_velProblem();
+    Examples::mercurySunProblem();
     return 0;
 }

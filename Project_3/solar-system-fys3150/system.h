@@ -6,7 +6,9 @@
 class System {
 private:
     bool                        m_writeToFile       = false;
+    bool                        m_writeToFileMercury = false;
     bool                        m_outFileOpen       = false;
+    bool                        m_outFileOpenMercury = false;
     int                         m_integrateSteps    = 0;
     int                         m_numberOfParticles = 0;
     double                      m_kineticEnergy     = 0;
@@ -19,6 +21,7 @@ private:
     class InitialCondition*     m_initialCondition  = nullptr;
     std::ofstream               m_outFile;
     std::ofstream               m_outFile2;
+    std::ofstream               m_outFilemercury;
     std::vector<Particle*>      m_particles;
 
 public:
@@ -36,6 +39,7 @@ public:
     void testVelocity           (bool velocitytest, double velAnalytic, double tolerance);
     void setFileWriting         (bool writeToFile);
     void writePositionsToFile   ();
+    void setFileWritingMercury  (bool writetoFileMercury);
     void closeOutFile           ();
     void computeAngularMomentum ();
     double computeKineticEnergy ();
