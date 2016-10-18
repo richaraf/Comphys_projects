@@ -9,7 +9,9 @@ private:
     bool                        m_outFileOpen       = false;
     int                         m_integrateSteps    = 0;
     int                         m_numberOfParticles = 0;
+    double                      m_tol               = 0;
     double                      m_kineticEnergy     = 0;
+    double                      m_angularMomentum   = 0;
     double                      m_totalEnergy       = 0;
     double                      m_potentialEnergy   = 0;
     double                      m_velNumerical      = 0;
@@ -37,7 +39,7 @@ public:
     void setFileWriting         (bool writeToFile);
     void writePositionsToFile   ();
     void closeOutFile           ();
-    void computeAngularMomentum ();
+    double computeAngularMomentum();
     double computeKineticEnergy ();
 };
 

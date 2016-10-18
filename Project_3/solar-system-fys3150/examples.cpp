@@ -51,7 +51,6 @@ void Examples::solarSystemProblem()
     solarSystem->setFileWriting         (false);
     solarSystem->removeLinearMomentum   ();
     solarSystem->integrate              (50000);
-    solarSystem->computeAngularMomentum ();
 }
 
 void Examples::twoBody_escape_velProblem() {
