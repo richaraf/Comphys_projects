@@ -7,6 +7,7 @@ class System {
 private:
     bool                        m_writeToFile       = false;
     bool                        m_outFileOpen       = false;
+    bool                        m_printEscape       = false;
     int                         m_integrateSteps    = 0;
     int                         m_numberOfParticles = 0;
     double                      m_kineticEnergy     = 0;
@@ -35,6 +36,7 @@ public:
     void removeLinearMomentum   ();
     void testVelocity           (bool velocitytest, double velAnalytic, double tolerance);
     void setFileWriting         (bool writeToFile);
+    void printEscape            (bool printEscape);
     void writePositionsToFile   ();
     void closeOutFile           ();
     void computeAngularMomentum ();
