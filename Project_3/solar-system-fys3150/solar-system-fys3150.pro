@@ -21,7 +21,8 @@ SOURCES += main.cpp \
     Tests/velocity_test.cpp \
     Tests/test.cpp \
     InitialConditions/twobody_escape_vel.cpp \
-    Potentials/relativisticnewtoniangravity.cpp
+    Potentials/relativisticnewtoniangravity.cpp \
+    InitialConditions/mercurysun.cpp
 
 HEADERS += \
     vec3.h \
@@ -41,4 +42,5 @@ HEADERS += \
     Tests/velocity_test.h \
     Tests/test.h \
     InitialConditions/twobody_escape_vel.h \
-    Potentials/relativisticnewtoniangravity.h
+    Potentials/relativisticnewtoniangravity.h \
+    InitialConditions/mercurysun.h
