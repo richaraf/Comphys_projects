@@ -188,14 +188,17 @@ void System::closeOutFile() {
 
 void System::testVelocity(bool velocitytest, double velAnalytic, double tol){
     Particle* p = m_particles.at(1);       //Earth
+    cout << velocitytest << endl;
     if(velocitytest == 1){
         m_velNumerical = (p->getVelocity()).length();
         m_velAnalytical = velAnalytic;
         if(std::abs(m_velNumerical-m_velAnalytical) > tol){
             throw std::invalid_argument("The calculated velocity has larger error than the tolerance");
         }
+        cout << "Testing Velocity..." << endl;
     }
 }
+
 
 double System::computeAngularMomentum() {
     vec3 L;

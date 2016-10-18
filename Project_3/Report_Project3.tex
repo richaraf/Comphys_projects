@@ -35,7 +35,43 @@
 \end{itemize}
 \section{Introduction}
 \section{Theory}
+In this project we are simulating the planet orbits of the solar system by using Newton's laws of motion. Newton's second law states that the total force on a object with mass $m$ is given by
+\begin{equation}
+\Sigma\vec{F}=m\vec{a}
+\label{eq:N2L}
+\end{equation}
+where $\Sigma \vec{F}$ is the sum of the forces on an object and $\vec{a}$ is the acceleration of the object. In our case we are going to use this reversed, we will find the acceleration when we already know the forces and the mass on an object. Since we are going to deal with long distances, heavy objects and high velocities, we will use astronomical units such as mean distance between Earth and Sun $AU$ ($1AU\approx1.5\cdot10^{11}m$), Solar mass $M_*$ and velocity $AU/yr$, while the time has unit years, $yr$. In space we do not have any friction, so all forces come from gravitation between planets, stars and other objects. Newton's universal law of gravitation between two objects is given by
+\begin{equation}
+\vec{F}_G=-G\frac{m_1\cdot m_2}{r^2}\hat{r}
+\label{eq:GravitationalForce}
+\end{equation}
+where $G$ is the gravitational constant, given by $G=4\pi^2[Units]$, $m_1$ and $m_2$ are the masses of the objects and $r$ is the distance between them.
+\subsection{Two-body System}
+Initially we are studying the two-body problem with the Sun fixed to origin and with Earth surrounding. We can do this because the mass of Sun is much larger than that of Earth, so the affection from Earth on Sun is negligible. The orbit of Earth around Sun is co-planar (will be two dimensional), so we are decomposing the force in two directions, and from Equation (\ref{eq:N2L}) we obtain
+\begin{equation}
+a_x=\frac{d^2x}{dt^2}=\frac{F_{G,x}}{M_{Earth}}
+\end{equation}
+and
+\begin{equation}
+a_y=\frac{d^2y}{dt^2}=\frac{F_{G,y}}{M_{Earth}}.
+\end{equation}
+Where $F_{G,x}$ and $F_{G,y}$ are the forces on Earth in respectively x-direction and y-direction. By inserting Equation (\ref{eq:GravitationalForce}) into these equations, we can compute the total acceleration of Earth:
+\begin{equation}
+a_x=\frac{d^2x}{dt^2}=-G\frac{m_*}{r^3}x
+\end{equation}
+\begin{equation}
+a_y=\frac{d^2y}{dt^2}=-G\frac{m_*}{r^3}y
+\end{equation}
+We can use the acceleration in compliance with an integration method and find the position and velocity after a time $dt$ using the discrete version of Newton's second law. Examples of such integration methods are the Euler-Cromer method and the Velocity Verlet method. By doing this $N$ times, we can compute the motion for $N\cdot dt$ years. 
+
+ In this case Earth's initial velocity is set to the analytical velocity which gives a circular orbit. 
+
+\subsection{Three-Body System}
+Furthermore we have a three-body system where the heaviest planet in the solar system, Jupiter, is set to a circular orbit around the Sun while Earth is still surrounding the Sun by a distance $1AU$ and Sun kept fixed to the origin. For the two-body system we found an analytical solution of the motion, but in this case this is hard, if not even impossible because of the interaction between the planets. Nevertheless we can solve it numerically by using the same equations as for the two-body system. For each "time-step" $dt$ we now need to update the position and velocity for both planets where we also compute the interaction force between them. 
+
 \section{Method}
+
+
 \section{Results}
 \section{Discussion}
 \section{Conclusion}

@@ -14,7 +14,7 @@
 
 void Examples::twoBodyProblem() {
     double G            = 4*pow(M_PI,2);
-    double velAnalytic  = 2*M_PI;
+    double velAnalytic  = 3*M_PI;
     double tolerance    = 1e-2;
 
     System* twoBodySystem = new System();

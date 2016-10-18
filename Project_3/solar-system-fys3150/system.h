@@ -10,13 +10,13 @@ private:
     bool                        m_printEscape       = false;
     int                         m_integrateSteps    = 0;
     int                         m_numberOfParticles = 0;
-    double                      m_tol               = 0;
     double                      m_kineticEnergy     = 0;
     double                      m_angularMomentum   = 0;
     double                      m_totalEnergy       = 0;
     double                      m_potentialEnergy   = 0;
-    double                      m_velNumerical      = 0;
+    double                      m_tol               = 0;
     double                      m_velAnalytical     = 0;
+    double                      m_velNumerical      = 0;
     class Integrator*           m_integrator        = nullptr;
     class Potential*            m_potential         = nullptr;
     class InitialCondition*     m_initialCondition  = nullptr;
