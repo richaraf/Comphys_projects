@@ -69,7 +69,73 @@ Where $F_{G,x}$ and $F_{G,y}$ are the forces on Earth in respectively x-directio
 \end{equation}
 We can use the acceleration in compliance with an integration method and find the position and velocity after a time $dt$ using the discrete version of Newton's second law. Examples of such integration methods are the Euler-Cromer method and the Velocity Verlet method. By doing this $N$ times, we can compute the motion for $N\cdot dt$ years. 
 
+<<<<<<< HEAD
 In the two-body case the velocity of Earth is set to the analytical velocity which gives a circular orbit. 
+=======
+In this case Earth's initial velocity is set to the analytical velocity which gives a circular orbit.
+ 
+\subsection{Gravitational theory}
+\subsubsection{Circular Orbit}
+In the Solar system the orbits of the planets are eliptical, with the Sun in one of the foci[$https://en.wikipedia.org/wiki/Kepler\%27s_laws_of_planetary_motion$]. In the twobody- and threebody parts of this system, we assume circular orbits for the planets we study. To get circular orbits, we have to assume that $M_{\odot} >> M_{planet}$, and that the Sun stands still in the center of mass of the system. \par
+\vspace{3mm}
+
+For setting the initial velocity of the planets, we need the orbital velocity of a circular orbit. The centripetal force is the force that makes an object follow a curved path, and its magnitude is given by equation \ref{eq:CentripetalForce}, where $m$ is the mass of object, $v$ is the tangential velocity and $r$ is the radius of the circular path. 
+
+\begin{equation}
+     F_c = m \frac{v^2}{r}
+     \label{eq:CentripetalForce}
+\end{equation}
+
+For a circular orbit, the centripetal force $F_c$ must be equal to the gravitational force, given by \ref{eq:GravitationalForce}, where we use $m = m_1$ and $M =m_2$. We can now calculate the orbital velocity $v_{orb}$ of a circular orbit with radius r:
+
+\begin{equation}
+    F_c = F_G \quad \quad m \frac{v_{orb}^2}{r} = \frac{GmM}{r^2} \quad \Rightarrow \quad v_{orb} = \sqrt{\frac{GM}{r}}
+    \label{eq:OrbitalVelocity}
+\end{equation}
+
+The average distance between the Earth and the Sun is $1 AU$, so the orbital velocity of the Earth in a circular orbit is
+
+\begin{equation*}
+    v_{orb} = \sqrt{\frac{GM}{r}} = \sqrt{\frac{ 4\pi^2 M_{\odot} ^{-1} AU^3 yr^{-2} M_{\odot}}{1 AU}} = 2\pi AU/yr 
+\end{equation*}
+
+We also need the orbital velocity of Jupiter in a circular orbit. By using equation \ref{eq:OrbitalVelocity} and the average distance between the Sun and Jupiter, $r = 5.2 AU$ [$http://www.universetoday.com/44615/distance-from-the-sun-to-jupiter/$], we find that the velocity of Jupiter in our circular orbit approximation is $\approx 2.755 AU/yr$.
+
+\subsubsection{Escape velocity}
+A two body system consists of two objects, object 1 with mass $m_1$ and object 2 with mass $m_2$. The kinetic energy of the object 1 is given by equation \ref{eq:kineticE}, where $v$ is object 1's velocity with respect to the center of mass. The potential energy of object 1 in the gravitational field between the two objects, is given by equation \ref{eq:potE}, where G is the gravitational constant and $|\vec{r}|$ is the distance between the two objects. 
+
+\begin{equation}
+    E_k = \frac{1}{2} m_1 v^2
+    \label{eq:kineticE}
+\end{equation}
+
+\begin{equation}
+    E_p = - \frac{G m_1 m_2}{|\vec{r}|}
+    \label{eq:potE}
+\end{equation}
+\par 
+\vspace{3mm}
+
+Per definition, the escape velocity of an object is at the point when the object's total energy $E_k + E_p$ is equal to zero [ $https://en.wikipedia.org/wiki/Escape_velocity\#cite_note-1$]. This gives us a way to compute the escape velocity, $v_{esc}$:
+
+\begin{equation*}
+    E_k + E_p = 0 \qquad \rightarrow \qquad \frac{1}{2} m v_{esc}^2 - \frac{G m M}{|\vec{r}|} = 0
+\end{equation*}
+
+\begin{equation}
+     v_{esc}^2 = \frac{2 G M}{|\vec{r}|} \quad \Rightarrow \quad v_{esc} = \sqrt{\frac{2 G M}{|\vec{r}|}}
+     \label{esc_v}
+\end{equation}
+
+For an object in a distance $|\vec{r}| = 1AU$ from the Sun (as is the case for the Earth), the escape velocity $v_{esc}$ is 
+
+\begin{equation*}
+    v_{esc} = \sqrt{\frac{2 G M}{|\vec{r}|}} = \sqrt{\frac{2 * 4\pi^2 M_{\odot} ^{-1} AU^3 yr^{-2} * M_{\odot}}{1 AU}} = \sqrt{8}\pi AU/yr \approx 8.886 AU/yr
+\end{equation*}
+
+If we want to check numerically whether a planet is trappet in a gravitational field or escapes, we can implement a test that checks if the total energy of the planet $E = E_k + E_p$ is smaller or bigger than a given tolerance. If the total energy is bigger that the tolerance, the planet is not bound in the gravitational field, and will escape.
+
+>>>>>>> da336694510af236c0720f7342db9fec6ec92521
 
 \subsection{Three-Body System}
 Furthermore we have a three-body system where the heaviest planet in the solar system, Jupiter, is set to a circular orbit around the Sun while Earth is still orbiting the sun by a distance 1AU with the sun kept fixed to the origin. For the two-body system we found an analytical solution of the motion, but in this case this is hard, if not even impossible because of the interaction between the planets. Nevertheless we can solve it numerically by using the same equations as for the two-body system. For each "time-step" $dt$ we now need to update the position and velocity for both planets where we also compute the interaction force between them. 
