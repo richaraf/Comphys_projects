@@ -119,8 +119,43 @@ These are the actual data downloaded from NASA (\emph{\color{red} Source?}) Octo
 
 
 \section{Method}
+\subsection{Ordinary differential equation solvers}
+In this project we use two different ODE solvers, the Euler-Cromer method and the velocity Verlet method. Both are derived using Taylor expansions to respectfully second and third order. 
+\subsubsection{Euler-Cromer}
+\subsubsection{Velocity Verlet}
+We are looking at a system with position $x_i$ and velocity $v_i$ at step number $i$. By using third order Taylor expansions we get that the position at step number $i+1$ becomes \begin{equation}
+x_{i+1} = x_i + h v_i + \frac{h^2}{2}v_i^{(1)} + {\cal O}(h^3),
+\label{eq:velVerx}
+\end{equation}
+where we have used that $x_i^{(1)} = v_i$ and $h$ is the step length. Similarly we can express the velocity as
+\begin{equation}
+v_{i+1} = v_i + h v_i^{(1)} + \frac{h^2}{2}v_i^{(2)} + {\cal O}(h^3).
+\label{eq:vel2ndorder}
+\end{equation}
+Since the first derivative of the velocity, acceleration is often known analytically we can use a second order Taylor expansion to find an estimate for the acceleration at time step $i+1$
+$$v_{i+1}^{(1)} = v_i^{(1)} + hv_i^{(2)} + {\cal O}(h^2), $$
+which can for small $h$ be written as 
+\begin{equation}
+hv_i^{(2)} \approx v_{i+1}^{(1)}- v_i^{(1)}.
+\label{eq:hv1approx}
+\end{equation}
+We can then insert equation (\ref{eq:hv1approx}) into equation (\ref{eq:vel2ndorder}) to get the approximation which we will use for velocity
+\begin{equation}
+v_{i+1} = v_i + \frac{h}{2}\left(v_{i+1}^{(1)} + v_i^{(1)}\right) + {\cal O}(h^3),
+\label{eq:velVerv}
+\end{equation}
+alongside equation (\ref{eq:velVerx}) for the position. 
 
-
+When we have an analytical expression for the force, we can use Newton's second law of motion (\ref{n2l}) to find accelerations $v_{i+1}^{(1)}$ and $v_{i}^{(1)}$. Numerically this can be implemented by:
+\begin{lstlisting}
+for(i, i++):
+	a(i) = computeForce/mass
+	v(i+1/2) = v(i) + h/2 * a(i)
+	x(i+1) = x(i) + h * v(i+1/2)
+	// calculate force at the new time step i+1
+	a(i+1) = computeForce/mass
+	v(i+1) = v(i+1/2) + h/2 * a(i+1)
+\end{lstlisting}
 \section{Results}
 \section{Discussion}
 \section{Conclusion}
