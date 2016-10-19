@@ -2,6 +2,7 @@
 \usepackage[utf8]{inputenc}
 \usepackage{graphicx} %for å inkludere grafikk
 \usepackage{verbatim} %for å inkludere filer med tegn LaTeX ikke liker
+\usepackage{tabularx}
 \usepackage{amsmath}
 \usepackage{float}
 \usepackage{color}
@@ -40,12 +41,16 @@ In this project we are simulating the planet orbits of the solar system by using
 \Sigma\vec{F}=m\vec{a}
 \label{eq:N2L}
 \end{equation}
-where $\Sigma \vec{F}$ is the sum of the forces on the object and $\vec{a}$ is the acceleration. In our case we are going to use this reversed, with finding the acceleration when we already know the force on an object and the mass of an object. Since we are going to deal with long distances, heavy objects and high velocities, we will use astronomical units such as average distance between Earth and the sun, AU, (1AU$\approx1.5\cdot10^{11}m$), Solar mass $M_*$ ($1M_*\approx2\cdot10^{24} kg$) and velocity $AU/yr$, while the time has unit years, $yr$ (\emph{\color{red} Source?}). In space we do not have any friction, so all forces come from gravitation between planets, stars and other objects. Newton's universal law of gravitation between two objects is given by
+where $\Sigma \vec{F}$ is the sum of the forces on the object and $\vec{a}$ is the acceleration. In our case we are going to use this reversed, with finding the acceleration when we already know the force on an object and the mass of an object. Since we are going to deal with long distances, heavy objects and high velocities, we will use astronomical units such as average distance between Earth and the sun, AU, (1AU $\approx1.5\cdot10^{11}$m), Solar mass $M_\odot$ ($1M_{\odot}\approx2\cdot10^{30}$ kg) and velocity AU/$yr$, while the time has unit years, $yr$. The constants are taken from the Project intructions (reference \cite {Project_text}). In space we do not have any friction, so all forces come from gravitation between planets, stars and other objects. Newton's universal law of gravitation between two objects is given by
 \begin{equation}
 \vec{F}_G=-G\frac{m_1\cdot m_2}{r^2}\hat{r}
 \label{eq:GravitationalForce}
 \end{equation}
-where $G$ is the gravitational constant, given by $G=4\pi^2[Units]$ (\emph{\color{red} Source?}), $m_1$ and $m_2$ are the masses of the objects and $r$ is the distance between them.
+where $G$ is the gravitational constant, $m_1$ and $m_2$ are the masses of the objects and $r$ is the distance between them. Since we are using astronomical units, this gives the value $G = 4\pi^2 M_{\odot} ^{-1} AU^3 yr^{-2}$ \cite{Project_text} for the gravitational constant. The absolute gravitational force between two objects is therefore
+\begin{equation}
+F_G=-G\frac{m_1\cdot m_2}{r^2}
+\label{eq:absGravitationalForce}
+\end{equation}
 \subsection{Two-body System}
 Initially we are studying the two-body problem with the sun fixed to origin and with Earth orbiting the sun. This is not fully correct, since the size of the force on the sun is the same as the size of the force on Earth (Newton's third law). Anyway this is still a good assumption because the mass of Sun is much larger than that of Earth, so the affection from Earth on the sun is negligible. The Earth's orbit around the sun is co-planar (will be two dimensional), so we are decomposing the force in two directions, and from Equation (\ref{eq:N2L}) we obtain
 \begin{equation}
@@ -64,39 +69,39 @@ a_y=\frac{d^2y}{dt^2}=-G\frac{m_*}{r^3}y
 \end{equation}
 We can use the acceleration in compliance with an integration method and find the position and velocity after a time $dt$ using the discrete version of Newton's second law. Examples of such integration methods are the Euler-Cromer method and the Velocity Verlet method. By doing this $N$ times, we can compute the motion for $N\cdot dt$ years. 
 
- In this case Earth's initial velocity is set to the analytical velocity which gives a circular orbit. 
+In the two-body case the velocity of Earth is set to the analytical velocity which gives a circular orbit. 
 
 \subsection{Three-Body System}
 Furthermore we have a three-body system where the heaviest planet in the solar system, Jupiter, is set to a circular orbit around the Sun while Earth is still orbiting the sun by a distance 1AU with the sun kept fixed to the origin. For the two-body system we found an analytical solution of the motion, but in this case this is hard, if not even impossible because of the interaction between the planets. Nevertheless we can solve it numerically by using the same equations as for the two-body system. For each "time-step" $dt$ we now need to update the position and velocity for both planets where we also compute the interaction force between them. 
 
 \subsection{Solar System (Many-body System)}
-The implementation of the many-body system is very similar to the three-body system, the main difference is that we will have many more forces. The number of forces in a N-body system is given by $P(N)=N(N-1)/2$ (\emph{\color{red} Source?}), so we will need 42 equations (21 equations in each direction) to implement a model for our solar system with 7 planets. We will also look at the real case when all the objects in the solar system are orbiting a barycenter (center of mass). For this we need the masses, distances to Sun, initial positions and initial velocities. The masses and distances to Sun are found in Table (\ref{table:Masses}).
+The implementation of the many-body system is very similar to the three-body system, the main difference is that we will have many more forces. Every time we add a object, we will have 
+
+The number of forces in a N-body system is given by $P(N)=N(N-1)/2$ (\emph{\color{red} Source?}), so we will need 42 equations (21 equations in each direction) to implement a model for our solar system with 7 planets. We will also look at the real case when all the objects in the solar system are orbiting a barycenter (center of mass). For this we need the masses, distances to Sun, initial positions and initial velocities for all the planets and the sun. The masses and distances to Sun are found in Table (\ref{tab:Masses}).
 \begin{table}[H]
 \centering
-\label{table:Masses}
 \caption{Masses and distances to sun for all planets in the solar system, given in respectively solar masses and AU}
-%\resizebox{14cm}{!}{
-\begin{tabular}{lcr}
+\label{tab:Masses}
+\begin{tabular}{lcccr}
 \hline
-Planet           & Mass [$M_*$]           & Distances from Sun [AU] \\
+Planet  &   & Mass [$M_*$] &    & Distances from Sun [AU] \\
 \hline
-Mercury 		& 1.660511409E-07      & 0.39    \\
-Venus       & 2.448273712E-06      & 0.72    \\
-Earth       & 3.003297890E-06      & 1.00    \\
-Mars        & 3.227738486E-05      & 1.52    \\
-Jupiter     & 9.545325625E-04      & 5.20    \\
-Saturn 		& 2.857965426E-04      & 9.54    \\
-Uranus 		& 4.365520703E-05      & 19.19   \\
-Neptun 		& 5.149999195E-05      & 30.06   \\
+Mercury 	&	& 1.66051E-07  &    & 0.39    \\
+Venus   &   & 2.44827E-06  &    & 0.72    \\
+Earth   &   & 3.00329E-06  &    & 1.00    \\
+Mars    &   & 3.22774E-05  &    & 1.52    \\
+Jupiter &   & 9.54533E-04  &    & 5.20    \\
+Saturn 	&	& 2.85797E-04  &    & 9.54    \\
+Uranus 	&	& 4.36552E-05  &    & 19.19   \\
+Neptun  &	& 5.15000E-05  &    & 30.06   \\
 \hline
 \end{tabular}
 \end{table}
-(\emph{\color{red} Source?}) The initial velocities and positions are found in Table {\ref{table:Positions}).
+The masses and distances in Table (\ref{tab:Masses}) are taken from the Project instructions \cite{Project_text}, and we have reduced the number of decimals to 5, although we include 10 decimals in the program. The initial velocities and positions are found in Table ({\ref{tab:Positions}).
 \begin{table}[H]
 \centering
-\label{table:Positions}
-\caption{Initial positions and velocities for all the planets in the solar system given in respectively AU and AU/yr. These data are actual, and downloaded from NASA October 12. 2016}
-%\resizebox{14cm}{!}{
+\caption{Initial positions and velocities for all the planets in the solar system +sun given in respectively AU and AU/yr. These data are actual, and downloaded from NASA October 12. 2016}
+\label{tab:Positions}
 \begin{tabular}{lrrrrr}
 \hline
 \multicolumn{3}{r}{Positions [AU]} & \multicolumn{3}{r}{Velocities [AU/yr]} \\
@@ -104,19 +109,19 @@ Neptun 		& 5.149999195E-05      & 30.06   \\
 \cline{5-6}
 Planet           & x & y &  & x & y \\
 \hline
-Mercury      & 9.479178499336547E-01 & 3.261066313699268E-01 & & -5.849360690746023E-03 &1.621703296479702E-02\\
-Venus        & 2        & 0.01       \\
-Earth        & 3     & 92.50      \\
-Mars         & 1.136999274118817E+00     & -7.886673045811080E-01 & & 8.545468568248289E-03 & 1.267637022893171E-02      \\
-Jupiter      & -5.430133496003112E+00    & -4.320838090483172E-01 & & 5.120612945394301E-04 & -7.165562916536973E-03    \\
-Saturn       & 6      & 8.99       \\
-Uranus 		 & 7      & 8.99       \\
-Neptun 		 & 2.825787471159655E+01      & -9.931234946012548E+00 & & 1.020071131634030E-03 & 2.979877053087604E-03       \\
+Sun          & 3.57153E-03  & 3.38904E-03  & & -1.97008E-06 & 6.84622E-06  \\
+Mercury      & -3.13025E-01 & 1.56078E-01  & & -1.80109E-02 & -2.41438E-02 \\
+Venus        & 1.42294E-01  & -7.10557E-01 & & 1.97176E-02  & 3.79469E-03  \\
+Earth        & 9.47918E-01  & 3.26107E-01  & & -5.84936E-03 & 1.62170E-02  \\
+Mars         & 1.13700E+00  & -7.88667E-01 & & 8.54547E-03  & 1.26763E-02  \\
+Jupiter      & -5.43013E+00 & -4.32084E-01 & & 5.12061E-04  & -7.16556E-03 \\
+Saturn       & -2.28243E+00 & -9.77097E+00 & & 5.12605E-03  & -1.28636E-03 \\
+Uranus 		 & 1.84678E+01  & 7.55105E+00  & & -1.51730E-03 & 3.45720E-03  \\
+Neptun 		 & 2.82579E+01  & -9.93123E+00 & & 1.02007E-03  & 2.97988E-03  \\
 \hline
 \end{tabular}
 \end{table}
 These are the actual data downloaded from NASA (\emph{\color{red} Source?}) October 12. 2016. NB: The data from NASA was given in three dimensions (x, y, z) but we are studying the solar system in two dimensions (x, y), and therefore we have only included the data in x- and y-direction.\par\vspace{3mm}
-
 
 \section{Method}
 
@@ -133,6 +138,8 @@ These are the actual data downloaded from NASA (\emph{\color{red} Source?}) Octo
   Computational Physics, Lecture Notes Fall 2015.
   Department of Physics, University of Oslo.
   August 2015.
+\bibitem{Project_text}
+  https://github.com/CompPhysics/ComputationalPhysics/blob/gh-pages/doc/Projects/2016/Project3/pdf/Project3.pdf
 \end{thebibliography}
 \endgroup
 \end{document}
