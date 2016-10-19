@@ -16,18 +16,16 @@
 
 void Examples::twoBodyProblem() {
     double G            = 4*pow(M_PI,2);
-    double velAnalytic  = 3*M_PI;
-    double tolerance    = 1e-2;
 
     System* twoBodySystem = new System();
-    twoBodySystem->setIntegrator        (new EulerCromer(twoBodySystem));
+    twoBodySystem->setIntegrator        (new VelocityVerlet(twoBodySystem));
     twoBodySystem->setDt                (1e-2);
     twoBodySystem->setPotential         (new NewtonianGravity(G));
     twoBodySystem->setInitialCondition  (new TwoBody());
     twoBodySystem->setFileWriting       (true);
-    twoBodySystem->testVelocity         (true, velAnalytic, tolerance);
+    twoBodySystem->setTestVelocity      (true);
     twoBodySystem->removeLinearMomentum ();
-    twoBodySystem->integrate            (500);
+    twoBodySystem->integrate            (5000);
 }
 
 void Examples::threeBodyProblem() {

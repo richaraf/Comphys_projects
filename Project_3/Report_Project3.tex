@@ -41,18 +41,18 @@ In this project we are simulating the planet orbits of the solar system by using
 \Sigma\vec{F}=m\vec{a}
 \label{eq:N2L}
 \end{equation}
-where $\Sigma \vec{F}$ is the sum of the forces on the object and $\vec{a}$ is the acceleration. In our case we are going to use this reversed, with finding the acceleration when we already know the force on an object and the mass of an object. Since we are going to deal with long distances, heavy objects and high velocities, we will use astronomical units such as average distance between Earth and the sun, AU, (1AU $\approx1.5\cdot10^{11}$m), Solar mass $M_\odot$ ($1M_{\odot}\approx2\cdot10^{30}$ kg) and velocity AU/$yr$, while the time has unit years, $yr$. The constants are taken from the Project intructions (reference \cite {Project_text}). In space we do not have any friction, so all forces come from gravitation between planets, stars and other objects. Newton's universal law of gravitation between two objects is given by
+where $\Sigma \vec{F}$ is the sum of the forces acting on the object and $\vec{a}$ is the acceleration. In our case we are going to use this reversed, with finding the acceleration when we already know the force on an object and the mass of the object. Since we are going to deal with long distances, heavy objects and high velocities, we will use astronomical units such as average distance between Earth and the sun, AU, (1AU $\approx1.5\cdot10^{11}$m), Solar mass $M_\odot$ ($1M_{\odot}\approx2\cdot10^{30}$ kg) and velocity in AU/$yr$, while the time has unit years, $yr$. The constants are taken from the Project instructions (reference \cite {Project_text}). In space we do not have any friction, so all forces come from gravitation between planets, stars and other objects. Newton's universal law of gravitation between two objects is given by
 \begin{equation}
 \vec{F}_G=-G\frac{m_1\cdot m_2}{r^2}\hat{r}
 \label{eq:GravitationalForce}
 \end{equation}
-where $G$ is the gravitational constant, $m_1$ and $m_2$ are the masses of the objects and $r$ is the distance between them. Since we are using astronomical units, this gives the value $G = 4\pi^2 M_{\odot} ^{-1} AU^3 yr^{-2}$ \cite{Project_text} for the gravitational constant. The absolute gravitational force between two objects is therefore
+where $G$ is the gravitational constant, $m_1$ and $m_2$ are the masses of the objects, $r$ is the distance between them and $\hat{r}$ is an unit vector in radial direction. Since we are using astronomical units, this gives the value $G = 4\pi^2 M_{\odot} ^{-1} AU^3 yr^{-2}$ \cite{Project_text} for the gravitational constant. The absolute gravitational force between two objects is therefore
 \begin{equation}
 F_G=-G\frac{m_1\cdot m_2}{r^2}
 \label{eq:absGravitationalForce}
 \end{equation}
 \subsection{Two-body System}
-Initially we are studying the two-body problem with the sun fixed to origin and with Earth orbiting the sun. This is not fully correct, since the size of the force on the sun is the same as the size of the force on Earth (Newton's third law). Anyway this is still a good assumption because the mass of Sun is much larger than that of Earth, so the affection from Earth on the sun is negligible. The Earth's orbit around the sun is co-planar (will be two dimensional), so we are decomposing the force in two directions, and from Equation (\ref{eq:N2L}) we obtain
+Initially we are studying the two-body problem with the sun fixed to origin and with Earth orbiting the sun. This is not fully correct, since the size of the force on the sun is the same as the size of the force on Earth (Newton's third law). Anyway this is still a good approximation because the mass of Sun is much larger than that of Earth, so the affection from Earth on the sun is negligible. The Earth's orbit around the sun is co-planar (two-dimensional), so we are decomposing the force in two directions, and from Equation (\ref{eq:N2L}) we obtain
 \begin{equation}
 a_x=\frac{d^2x}{dt^2}=\frac{F_{G,x}}{M_{Earth}}
 \end{equation}
@@ -69,14 +69,11 @@ Where $F_{G,x}$ and $F_{G,y}$ are the forces on Earth in respectively x-directio
 \end{equation}
 We can use the acceleration in compliance with an integration method and find the position and velocity after a time $dt$ using the discrete version of Newton's second law. Examples of such integration methods are the Euler-Cromer method and the Velocity Verlet method. By doing this $N$ times, we can compute the motion for $N\cdot dt$ years. 
 
-<<<<<<< HEAD
 In the two-body case the velocity of Earth is set to the analytical velocity which gives a circular orbit. 
-=======
-In this case Earth's initial velocity is set to the analytical velocity which gives a circular orbit.
  
 \subsection{Gravitational theory}
 \subsubsection{Circular Orbit}
-In the Solar system the orbits of the planets are eliptical, with the Sun in one of the foci[$https://en.wikipedia.org/wiki/Kepler\%27s_laws_of_planetary_motion$]. In the twobody- and threebody parts of this system, we assume circular orbits for the planets we study. To get circular orbits, we have to assume that $M_{\odot} >> M_{planet}$, and that the Sun stands still in the center of mass of the system. \par
+In the Solar system the orbits of the planets are elliptical, with the Sun in one of the \cite{kepler}. In the two-body- and three-body parts of this system, we assume circular orbits for the planets we study. To get circular orbits, we have to assume that $M_{\odot} >> M_{planet}$, and that the Sun stands still in the center of mass of the system. \par
 \vspace{3mm}
 
 For setting the initial velocity of the planets, we need the orbital velocity of a circular orbit. The centripetal force is the force that makes an object follow a curved path, and its magnitude is given by equation \ref{eq:CentripetalForce}, where $m$ is the mass of object, $v$ is the tangential velocity and $r$ is the radius of the circular path. 
@@ -99,7 +96,7 @@ The average distance between the Earth and the Sun is $1 AU$, so the orbital vel
     v_{orb} = \sqrt{\frac{GM}{r}} = \sqrt{\frac{ 4\pi^2 M_{\odot} ^{-1} AU^3 yr^{-2} M_{\odot}}{1 AU}} = 2\pi AU/yr 
 \end{equation*}
 
-We also need the orbital velocity of Jupiter in a circular orbit. By using equation \ref{eq:OrbitalVelocity} and the average distance between the Sun and Jupiter, $r = 5.2 AU$ [$http://www.universetoday.com/44615/distance-from-the-sun-to-jupiter/$], we find that the velocity of Jupiter in our circular orbit approximation is $\approx 2.755 AU/yr$.
+We also need the orbital velocity of Jupiter in a circular orbit. By using equation \ref{eq:OrbitalVelocity} and the average distance between the Sun and Jupiter, $r = 5.20 AU$ \cite{Project_text}, we find that the velocity of Jupiter in our circular orbit approximation is $\approx 2.755 AU/yr$.
 
 \subsubsection{Escape velocity}
 A two body system consists of two objects, object 1 with mass $m_1$ and object 2 with mass $m_2$. The kinetic energy of the object 1 is given by equation \ref{eq:kineticE}, where $v$ is object 1's velocity with respect to the center of mass. The potential energy of object 1 in the gravitational field between the two objects, is given by equation \ref{eq:potE}, where G is the gravitational constant and $|\vec{r}|$ is the distance between the two objects. 
@@ -135,13 +132,11 @@ For an object in a distance $|\vec{r}| = 1AU$ from the Sun (as is the case for t
 
 If we want to check numerically whether a planet is trappet in a gravitational field or escapes, we can implement a test that checks if the total energy of the planet $E = E_k + E_p$ is smaller or bigger than a given tolerance. If the total energy is bigger that the tolerance, the planet is not bound in the gravitational field, and will escape.
 
->>>>>>> da336694510af236c0720f7342db9fec6ec92521
-
 \subsection{Three-Body System}
 Furthermore we have a three-body system where the heaviest planet in the solar system, Jupiter, is set to a circular orbit around the Sun while Earth is still orbiting the sun by a distance 1AU with the sun kept fixed to the origin. For the two-body system we found an analytical solution of the motion, but in this case this is hard, if not even impossible because of the interaction between the planets. Nevertheless we can solve it numerically by using the same equations as for the two-body system. For each "time-step" $dt$ we now need to update the position and velocity for both planets where we also compute the interaction force between them. 
 
 \subsection{Solar System (Many-body System)}
-The implementation of the many-body system is very similar to the three-body system, the main difference is that we will have many more forces. Every time we add a new object, we will have $N-1$ new forces act on the system where $N$ is the total number of objects. The total number of forces acting on a many-body system is therefore given by
+The implementation of the many-body system is very similar to the three-body system, the main difference is that we will have many more forces. Every time we add a new object, we will have $N-1$ new forces acting on the system where $N$ is the total number of objects. The total number of forces acting on a many-body system is therefore given by
 \begin{equation}
 P(N)=\sum_{i=1}^N(i-1)=\sum_{i=0}^{N-1}i=\frac{N(N-1)}{2}.
 \end{equation}
@@ -189,11 +184,60 @@ Neptun 		 & 2.82579E+01  & -9.93123E+00 & & 1.02007E-03  & 2.97988E-03  \\
 \hline
 \end{tabular}
 \end{table}
-These are the actual data downloaded from NASA \cite{NASA} October 12. 2016. NB: The data from NASA was given in three dimensions (x, y, z) but we are studying the solar system in two dimensions (x, y), and therefore we have only included the data in x- and y-direction.\par\vspace{3mm}
+These are the actual data downloaded from NASA \cite{NASA} October 12. 2016. NB: The data from NASA was given in three dimensions (x, y, z) but since we are studying the solar system in two dimensions (x, y), we have only included the data in x- and y-direction. This \par\vspace{3mm}
 
 \section{Method}
+\subsection{Ordinary differential equation solvers}
+In this project we use two different ODE solvers, the Euler-Cromer method and the velocity Verlet method. Both are derived using Taylor expansions to respectfully second and third order. For sufficiently small timesteps $h$, both these methods should conserve energy for conservative forces such as the gravitational force. In both methods we are looking at a system with position $x_i$ and velocity $v_i$ at step number $i$, where $x_0$ and $v_0$ are known initial conditions.
+\subsubsection{Euler-Cromer}
+To find an algorithm for Euler-Cromer we first estimate the velocity at step $i+1$, $v_{i+1}$, by doing a second order Taylor expansion of the velocity 
+\begin{equation}
+v_{i+1} = v_i + hv_i^{(1)} + {\cal O}(h^2). 
+\label{eq:EulCrov}
+\end{equation}
+We can then use $v_{i+1}$ to find the position at step $i+1$
+\begin{equation}
+x_{i+1} = x_i + hv_{i+1} + {\cal O}(h^2).
+\label{eq:EulCrox}
+\end{equation}
+\subsubsection{Velocity Verlet}
+By using third order Taylor expansions we get that the position at step number $i+1$ becomes \begin{equation}
+x_{i+1} = x_i + h v_i + \frac{h^2}{2}v_i^{(1)} + {\cal O}(h^3),
+\label{eq:velVerx}
+\end{equation}
+where we have used that $x_i^{(1)} = v_i$ and $h$ is the step length. Similarly we can express the velocity as
+\begin{equation}
+v_{i+1} = v_i + h v_i^{(1)} + \frac{h^2}{2}v_i^{(2)} + {\cal O}(h^3).
+\label{eq:vel2ndorder}
+\end{equation}
+Since the first derivative of the velocity, acceleration is often known analytically we can use a second order Taylor expansion to find an estimate for the acceleration at time step $i+1$
+$$v_{i+1}^{(1)} = v_i^{(1)} + hv_i^{(2)} + {\cal O}(h^2), $$
+which can for small $h$ be written as 
+\begin{equation}
+hv_i^{(2)} \approx v_{i+1}^{(1)}- v_i^{(1)}.
+\label{eq:hv1approx}
+\end{equation}
+We can then insert equation (\ref{eq:hv1approx}) into equation (\ref{eq:vel2ndorder}) to get the approximation which we will use for velocity
+\begin{equation}
+v_{i+1} = v_i + \frac{h}{2}\left(v_{i+1}^{(1)} + v_i^{(1)}\right) + {\cal O}(h^3),
+\label{eq:velVerv}
+\end{equation}
+alongside equation (\ref{eq:velVerx}) for the position. 
 
+When we have an analytical expression for the force, we can use Newton's second law of motion (\ref{eq:N2L} and \ref{eq:GravitationalForce}) to find accelerations $v_{i+1}^{(1)}$ and $v_{i}^{(1)}$. Numerically this can be implemented by:
+\begin{lstlisting}
+for(i, i++):
+	a(i) = computeForce/mass
+	v(i+1/2) = v(i) + h/2 * a(i)
+	x(i+1) = x(i) + h * v(i+1/2)
+	// calculate force at the new time step i+1
+	a(i+1) = computeForce/mass
+	v(i+1) = v(i+1/2) + h/2 * a(i+1)
+\end{lstlisting}
+\subsection{Structure}
+In this project we have opted for an object oriented approach. There are several reasons for why we have chosen to do so. We save some time and effort programming because the different experimental scenarios can share a lot of the same code. Since the scenarios share code, it is easier to change aspects of our numerical experiments for example the planets, the ODE solver or the force acting on the planets, without introducing new errors. 
 
+The object oriented approach makes it so that in order to perform an experiment, we simply have to decide which planets and initial conditions we want, which ODE solver we want and 
 \section{Results}
 \section{Discussion}
 \section{Conclusion}
@@ -210,6 +254,8 @@ These are the actual data downloaded from NASA \cite{NASA} October 12. 2016. NB:
   \url{https://github.com/CompPhysics/ComputationalPhysics/blob/gh-pages/doc/Projects/2016/Project3/pdf/Project3.pdf}
 \bibitem{NASA}
   \url{http://ssd.jpl.nasa.gov/horizons.cgi}
+\bibitem{kepler}
+  \url{https://en.wikipedia.org/wiki/Kepler\%27s_laws_of_planetary_motion}
 \end{thebibliography}
 \endgroup
 \end{document}
