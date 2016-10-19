@@ -18,7 +18,7 @@ void SolarSystem::setupParticles(System &system) {
 
     // sun mass 1.988544E30 kg
 
-    // initial positions for oct 12
+    // initial positions for oct 12   -----------Positions--------------                        --------Velocity--------                        ----Mass----
     Particle* Sun = new Particle(vec3(3.571526865010806E-03, 3.389038138932890E-03, 0), vec3(-1.970078468466432E-06, 6.846218005095042E-06, 0)*365.25, 1.0);
     //Particle* Sun = new Particle(vec3(0,0,0), vec3(0,0,0), 1.0);
 

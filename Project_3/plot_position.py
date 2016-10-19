@@ -33,7 +33,7 @@ ax = fig.add_subplot(111, autoscale_on = False, xlim= limits, ylim=limits)
 colors = ['yo', 'bo', 'co', 'go', 'ro', 'wo', 'ko']
 colors = colors + colors
 ms=[8,5,5,5,5,5,5,5,5]
-planets = ['Sun', 'Earth', 'Mars', 'Jupiter']
+planets = ['Sun', 'Earth', 'Mars', 'Jupiter','a','b','c','d','e']
 
 #line, = ax.plot(0,0, "ro")
 lines = [ax.plot([], [], colors[k],markersize=ms[k],label=planets[k])[0] for k in range(n)]
@@ -42,7 +42,7 @@ pylab.xlabel('x-direction')
 pylab.ylabel('y-direction')
 pylab.show()
 
-for i in xrange(0, lineNum, 50):
+for i in xrange(0, lineNum, 10):
     for k in xrange(n):
         lines[k].set_data(R[k][i][0], R[k][i][1])
     pylab.draw()
