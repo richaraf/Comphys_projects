@@ -25,6 +25,7 @@ planets = ['Sun', 'Earth', 'Mars', 'Jupiter']
 colors = ['oy', '.b', '.g', '.c', '.r', '.w', '.k']
 ms=[8,5,5,5,5,5,5]
 
+axis_size = {'size': '18'}
 #plt.plot(0.0,0.0,'oy')
 p=[]
 for i in xrange(len(R)):
@@ -32,8 +33,7 @@ for i in xrange(len(R)):
     for j in xrange(0,len(R[1]),1):
         plt.plot(R[i][j][0],R[i][j][1],colors[i],markersize=ms[i])
 plt.axis([-1.55,1.55,-1.25,1.25])
-plt.xlabel('x-direction')
-plt.ylabel('y-direction')
-plt.legend(p,loc='best')
+plt.xlabel('x-direction', **axis_size)
+plt.ylabel('y-direction', **axis_size)
 plt.grid()
 plt.show()

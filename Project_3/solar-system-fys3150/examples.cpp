@@ -13,19 +13,26 @@
 #include"InitialConditions/twobody_escape_vel.h"
 #include <iostream>
 #include <cmath>
+#include <time.h>
+
 
 void Examples::twoBodyProblem() {
     double G            = 4*pow(M_PI,2);
+    clock_t start, finish;
 
     System* twoBodySystem = new System();
     twoBodySystem->setIntegrator        (new VelocityVerlet(twoBodySystem));
-    twoBodySystem->setDt                (1e-2);
+    twoBodySystem->setDt                (1e-3);
     twoBodySystem->setPotential         (new NewtonianGravity(G));
     twoBodySystem->setInitialCondition  (new TwoBody());
-    twoBodySystem->setFileWriting       (true);
-    twoBodySystem->setTestVelocity      (true);
+    twoBodySystem->setFileWriting       (false);
+    twoBodySystem->setTestVelocity      (false);
     twoBodySystem->removeLinearMomentum ();
-    twoBodySystem->integrate            (5000);
+    start = clock();
+    twoBodySystem->integrate            (100000);
+    finish = clock();
+    double t = (double) (finish - start)/CLOCKS_PER_SEC;
+    std::cout << t << std::endl;
 }
 
 void Examples::threeBodyProblem() {
@@ -63,7 +70,7 @@ void Examples::twoBody_escape_velProblem() {
     twoBodySystem->setIntegrator        (new VelocityVerlet(twoBodySystem));
     twoBodySystem->setPotential         (new NewtonianGravity(G));
     twoBodySystem->setInitialCondition  (new TwoBody_escape_vel());
-    twoBodySystem->setFileWriting       (true);
+    twoBodySystem->setFileWriting       (false);
     twoBodySystem->removeLinearMomentum ();
     twoBodySystem->integrate            (5000);
 }

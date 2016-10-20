@@ -113,12 +113,12 @@ void System::printIntegrateInfo(int stepNumber) {
              << "  o Potential in use:    " << m_potential->getName() << endl
              << "  o Integrator in use:   " << m_integrator->getName() << endl
              << endl;
-    } else if (stepNumber % 1000 == 0) {
+    } else if (stepNumber % 10 == 0) {
         m_kineticEnergy     = computeKineticEnergy();
         m_angularMomentum   = computeAngularMomentum();
         m_potentialEnergy   = m_potential->getPotentialEnergy();
         m_totalEnergy       = m_kineticEnergy + m_potentialEnergy;
-        printf("Step: %5d    E =%10.5f   Ek =%10.5f    Ep =%10.5f   L =%10.5f\n",
+        printf("Step: %5d    E =%10.7f   Ek =%10.7f    Ep =%10.7f   L =%10.7f\n",
                stepNumber, m_totalEnergy, m_kineticEnergy, m_potentialEnergy, m_angularMomentum);
         if (m_printEscape == true){
             EscapeVelocity();
