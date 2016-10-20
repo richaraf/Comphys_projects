@@ -123,6 +123,10 @@ void System::printIntegrateInfo(int stepNumber) {
         if (m_printEscape == true){
             EscapeVelocity();
         }
+        cout << m_testvelocity << endl;
+        if (m_testvelocity == true){
+            testVelocity();
+        }
         fflush(stdout);
     }
 }
@@ -198,19 +202,19 @@ void System::closeOutFile() {
     }
 }
 
-void System::testVelocity(bool velocitytest, double velAnalytic, double tol){
-    Particle* p = m_particles.at(1);       //Earth
-    cout << velocitytest << endl;
-    if(velocitytest == 1){
-        m_velNumerical = (p->getVelocity()).length();
-        m_velAnalytical = velAnalytic;
-        if(std::abs(m_velNumerical-m_velAnalytical) > tol){
-            throw std::invalid_argument("The calculated velocity has larger error than the tolerance");
-        }
-        cout << "Testing Velocity..." << endl;
-    }
+void System::setTestVelocity(bool velocitytest){
+    m_testvelocity = velocitytest;
 }
 
+void System::testVelocity(){
+    cout << "Running Velocity Test..." << endl;
+    Particle* p = m_particles.at(1);       //Earth
+    m_velNumerical = (p->getVelocity()).length();
+    cout << m_velNumerical << endl;
+    if(std::abs(m_velNumerical-m_velAnalytical) > m_tol){
+        throw std::invalid_argument("The calculated velocity has larger error than the tolerance");
+    }
+}
 
 double System::computeAngularMomentum() {
     vec3 L;
