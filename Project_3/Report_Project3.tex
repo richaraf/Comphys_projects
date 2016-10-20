@@ -3,6 +3,7 @@
 \usepackage{graphicx} %for å inkludere grafikk
 \usepackage{verbatim} %for å inkludere filer med tegn LaTeX ikke liker
 \usepackage{tabularx}
+\usepackage{booktabs}
 \usepackage{amsmath}
 \usepackage{float}
 \usepackage{color}
@@ -78,8 +79,13 @@ We are also going to deal with the Barycenter (the center of mass for a system w
 \begin{equation}
 \vec{R}=\sum_{i=1}^N \frac{m_i}{M}\vec{r}
 \end{equation}
-where $N$ is the number of objects, $m_i$ is the mass of object $i$, $\vec{r}_i$ is the position of the mass center of object $i$ and $M$ is the total mass of the system \cite{Barycenter}.
+where $N$ is the number of objects, $m_i$ is the mass of object $i$, $\vec{r}_i$ is the position of the mass center of object $i$ and $M$ is the total mass of the system \cite{Barycenter}.\par\vspace{5mm}
 
+Another physical concept which we are going to use to check the stability of the solar system is the angular momentum. Angular momentum is defined as the cross product between the position vector $\vec{r}$ and the momentum vector $\vec{p}$:
+\begin{equation}
+L=\vec{r}\times\vec{p}.
+\end{equation}
+where we assume that the centre of rotation is set to the origin. The solar system is a global system (not affected by other systems), and the globally conservation laws will always hold. This means that we do not have any external torque, so the angular momentum must be conserved. 
 \subsection{Two-body System}
 Initially we are studying the two-body problem with the sun fixed to origin and with Earth orbiting the sun. This is not fully correct, since the size of the force on the sun is the same as the size of the force on Earth (Newton's third law). Anyway this is still a good approximation because the mass of Sun is much larger than that of Earth, so the affection from Earth on the sun is negligible. The Earth's orbit around the sun is co-planar (two-dimensional), so we are decomposing the force in two directions, and from Equation (\ref{eq:N2L}) we obtain
 \begin{equation}
@@ -163,22 +169,22 @@ For an object in a distance $|\vec{r}| = 1AU$ from the Sun (as is the case for t
 If we want to check numerically whether a planet is trappet in a gravitational field or escapes, we can implement a test that checks if the total energy of the planet $E = E_k + E_p$ is smaller or bigger than a given tolerance. If the total energy is bigger that the tolerance, the planet is not bound in the gravitational field, and will escape.
 
 \subsection{Three-Body System}
-Furthermore we have a three-body system where the heaviest planet in the solar system, Jupiter, is set to a circular orbit around the Sun while Earth is still orbiting the sun by a distance 1AU with the sun kept fixed to the origin. For the two-body system we found an analytical solution of the motion, but in this case this is hard, if not even impossible because of the interaction between the planets. Nevertheless we can solve it numerically by using the same equations as for the two-body system. For each "time-step" $dt$ we now need to update the position and velocity for both planets where we also compute the interaction forces between them. 
+Furthermore we have a three-body system where the heaviest planet in the solar system, Jupiter, is set to a circular orbit around the Sun while Earth is still orbiting the sun by a distance 1AU with the sun kept fixed to the origin. For the two-body system we found an analytical solution of the motion, but in this case this is hard, or maybe not even possible, because of the interaction between the planets. Nevertheless we can solve it numerically by using the same equations as for the two-body system. For each "time-step" $dt$ we now need to update the position and velocity for both planets where we also compute the interaction forces between them. 
 
 \subsection{Solar System (Many-body System)}
 The implementation of the many-body system is very similar to the three-body system, the main difference is that we will have many more forces. Every time we add a new object, the new object will have forces acting on all other objects, so we will have $N-1$ new forces where $N$ is the total number of objects. The total number of forces acting on a many-body system is therefore given by
 \begin{equation}
 P(N)=\sum_{i=1}^N(i-1)=\sum_{i=0}^{N-1}i=\frac{N(N-1)}{2}.
 \end{equation}
-where the last transition from an arithmetic to a geometric sequence can be found in a collection of mathematical formulae.  We will also look at the real case when all the objects in the solar system are orbiting a barycenter (center of mass). When we implement the model, we do not need equations for all the forces, but we need one equation for the position and velocity in each direction for all the objects. We will therefore need $2\cdot2\cdot8=32$ equations to implement a model for our solar system with 7 planets and the sun in two dimensions. For this we need the masses, distances to Sun, initial positions and initial velocities for all the planets and the sun. The masses and distances to Sun are found in Table (\ref{tab:Masses}).
+where the last transition can be found in a collection of mathematical formulae.  We will also look at the real case when all the objects in the solar system are orbiting a barycenter (center of mass). When we implement the model, we do not need equations for all the forces, but we need one equation for the position and velocity in each direction for all the objects. We will therefore need $2\cdot2\cdot8=32$ equations to implement a model for our solar system with 7 planets and the sun in two dimensions. For this we need the masses, distances to Sun, initial positions and initial velocities for all the planets and the sun. The masses and distances to Sun are found in Table (\ref{tab:Masses}).
 \begin{table}[H]
 \centering
 \caption{Masses and distances to sun for all planets in the solar system, given in respectively solar masses and AU.}
-\label{tab:Masses}
-\begin{tabular}{lcccr}
-\hline
+\label{tab:Masses} 
+\begin{tabularx}{\textwidth}{lXcccXr}
+\toprule
 Planet  &   & Mass [$M_\odot$] &    & Distances from Sun [AU] \\
-\hline
+\midrule
 Mercury 	&	& 1.66051E-07  &    & 0.39    \\
 Venus   &   & 2.44827E-06  &    & 0.72    \\
 Earth   &   & 3.00329E-06  &    & 1.00    \\
@@ -187,21 +193,21 @@ Jupiter &   & 9.54533E-04  &    & 5.20    \\
 Saturn 	&	& 2.85797E-04  &    & 9.54    \\
 Uranus 	&	& 4.36552E-05  &    & 19.19   \\
 Neptun  &	& 5.15000E-05  &    & 30.06   \\
-\hline
-\end{tabular}
+\bottomrule
+\end{tabularx}
 \end{table}
 The masses and distances in Table (\ref{tab:Masses}) are taken from the Project instructions \cite{Project_text}, and where we have reduced the number of decimals to 5, although we include 10 decimals in the program. The initial velocities and positions are found in Table ({\ref{tab:Positions}).
 \begin{table}[H]
 \centering
 \caption{Initial positions and velocities for all the planets in the solar system and the sun, given in respectively AU and AU/yr. These data are actual, and downloaded from NASA October 12. 2016.}
 \label{tab:Positions}
-\begin{tabular}{lrrrrr}
-\hline
+\begin{tabularx}{\textwidth}{lrrrrr}
+\toprule
 \multicolumn{3}{r}{Positions [AU]} & \multicolumn{3}{r}{Velocities [AU/yr]} \\
 \cline{2-3}
 \cline{5-6}
 Planet           & x & y &  & x & y \\
-\hline
+\midrule
 Sun          & 3.57153E-03  & 3.38904E-03  & & -1.97008E-06 & 6.84622E-06  \\
 Mercury      & -3.13025E-01 & 1.56078E-01  & & -1.80109E-02 & -2.41438E-02 \\
 Venus        & 1.42294E-01  & -7.10557E-01 & & 1.97176E-02  & 3.79469E-03  \\
@@ -211,8 +217,8 @@ Jupiter      & -5.43013E+00 & -4.32084E-01 & & 5.12061E-04  & -7.16556E-03 \\
 Saturn       & -2.28243E+00 & -9.77097E+00 & & 5.12605E-03  & -1.28636E-03 \\
 Uranus 		 & 1.84678E+01  & 7.55105E+00  & & -1.51730E-03 & 3.45720E-03  \\
 Neptun 		 & 2.82579E+01  & -9.93123E+00 & & 1.02007E-03  & 2.97988E-03  \\
-\hline
-\end{tabular}
+\bottomrule
+\end{tabularx}
 \end{table}
 These are the actual data downloaded from NASA \cite{NASA} October 12. 2016. NB: The data from NASA was given in three dimensions (x, y, z) but since we are studying the solar system in two dimensions (x, y), we have only included the data in x- and y-direction. This \par\vspace{3mm}
 
@@ -289,10 +295,10 @@ The object oriented approach makes it so that in order to perform an experiment,
 \subsubsection{Velocity Test}
 We are comparing the analytical velocity found in Equation ({\ref{eq:AnalyticVel}}) with the numerical velocity for the Earth-Sun system (two-body system). We are finding the absolute error of the velocity with calculating the absolute difference between the analytical and numerical velocity. The test can be implemented with a tolerance, and the test kicks in when the difference is larger than the tolerance:
 \begin{lstlisting}
-Analytical_velocity =  2*pi
-tol                 =  1e-5
-Numerical_velocity  =  length(velocity.earth)
-if(abs(m_velNumerical-m_velAnalytical) > tol){
+tol            =  1e-5
+Analytical_vel =  2*pi
+Numerical_vel  =  length(velocity.earth)
+if(abs(Analytical_vel-Numerical_vel) > tol)
     throw invalid_argument("The calculated velocity has larger error than the tolerance")
 \end{lstlisting}
 
@@ -333,44 +339,47 @@ We checked the conservation of total energy and angular momentum for EulerCromer
 \vspace{3mm}
 
 \begin{table} [H]
+\centering
 \caption{Conservation of energy and angular momentum, using EulerCromer with $dt=10^{-3}$, for a 5 year period}
-\begin{tabular}{ccc} \hline
+\begin{tabularx}{\textwidth}{cXcXc} \toprule
     {\bf Number of Timesteps} & {\bf Total Energy }& {\bf Angular Momentum} \\
     &[$M_\odot AU^2/yr^2$]&[$M_\odot AU^2/yr$]\\ \hline
     1000 & -0.0000197 & 0.0000063\\ \hline
     2000 & -0.0000197 & 0.0000063\\ \hline
     3000 & -0.0000197 & 0.0000063\\ \hline
     4000 & -0.0000197 & 0.0000063\\ \hline
-    5000 & -0.0000197 & 0.0000063\\ \hline 
-\end{tabular}
+    5000 & -0.0000197 & 0.0000063\\ \bottomrule 
+\end{tabularx}
 \label{euler_dt=10(-3)}
 \end{table}
 
 \begin{table} [H]
+\centering
 \caption{Conservation of energy and angular momentum, using EulerCromer with $dt=10^{-1}$, for a 5 year period}
-\begin{tabular}{ccc} \hline
+\begin{tabularx}{\textwidth}{cXcXc} \toprule
     {\bf Number of Timesteps} & {\bf Total Energy }& {\bf Angular Momentum} \\
     &[$M_\odot AU^2/yr^2$]&[$M_\odot AU^2/yr$]\\ \hline
     10 & -0.0000161 & 0.0000063\\ \hline
     20 & -0.0000172 & 0.0000063\\ \hline
     30 & -0.0000183 & 0.0000063\\ \hline
     40 & -0.0000197 & 0.0000063\\ \hline
-    50 & -0.0000123 & 0.0000063\\ \hline 
-\end{tabular}
+    50 & -0.0000123 & 0.0000063\\ \bottomrule 
+\end{tabularx}
 \label{euler_dt=10(-1)}
 \end{table}
 
 \begin{table} [H]
+\centering
 \caption{Conservation of energy and angular momentum, using VelocityVerlet with $dt=10^{-1}$, for a 5 year period}
-\begin{tabular}{ccc} \hline
+\begin{tabularx}{\textwidth}{cXcXc} \toprule
     {\bf Number of Timesteps} & {\bf Total Energy }& {\bf Angular Momentum} \\
     &[$M_\odot AU^2/yr^2$]&[$M_\odot AU^2/yr$]\\ \hline
     10 & -0.0000197 & 0.0000063\\ \hline
     20 & -0.0000196 & 0.0000063\\ \hline
     30 & -0.0000196 & 0.0000063\\ \hline
     40 & -0.0000195 & 0.0000063\\ \hline
-    50 & -0.0000194 & 0.0000063\\ \hline 
-\end{tabular}
+    50 & -0.0000194 & 0.0000063\\ \bottomrule 
+\end{tabularx}
 \label{verlet_dt=10(-1)}
 \end{table}
 
@@ -378,8 +387,9 @@ We checked the conservation of total energy and angular momentum for EulerCromer
 We ran our program with $dt = 10^{-3}$ and $100000$ grid points several times, comparing the running time of EulerCromer and VelocityVerlet. The result is presented in table \ref{timeTable}
 
 \begin{table} [H]
+\centering
 \caption{Running time for $dt=10^{-3}$ and $100000$ grid points for EulerCromer and VelocityVerlet, given in seconds}
-\begin{tabular}{cc} \hline
+\begin{tabularx}{\textwidth}{cXc} \toprule
     \bf EulerCromer & \bf VelocityVerlet \\ \hline
     0.096678 & 0.149523\\ \hline
     0.094968 & 0.156597\\ \hline
@@ -387,9 +397,9 @@ We ran our program with $dt = 10^{-3}$ and $100000$ grid points several times, c
     0.092571 & 0.143399\\ \hline
     0.095489 & 0.135062\\ \hline
     0.099472 & 0.146875\\ \hline
-    0.102891 & 0.13598\\ \hline
-    0.092515 & 0.146285\\ \hline
-\end{tabular}
+    0.102891 & 0.135980\\ \hline
+    0.092515 & 0.146285\\ \bottomrule
+\end{tabularx}
 \label{timeTable}
 \end{table}
 
@@ -399,15 +409,16 @@ Table \ref{timeTable} gives that the average running time for EulerCromer is $0.
 In section 2.2.2 we calculated the analytical escape velocity for a planet in a distance $1 AU$ from the Sun, where we got $v_{esc} = 8.886 AU/yr$. Using VelocityVerlet, we tested which velocities gave the planet a total energy greater than 0. The results are presented in in table \ref{trappedTable}
 
 \begin{table} [H]
+\centering
 \caption{Different initial velocities in the y-direction, and the result of the test if the planet escapes or is trapped}
-\begin{tabular}{cc} \hline
+\begin{tabularx}{\textwidth}{cXc} \toprule
     (0,$v_y$, 0) [AU/yr] & \bf Is the planet trapped or does it escape \\ \hline
     8.883 & trapped \\ \hline
     8.884 & trapped \\ \hline
     8.885 & trapped \\ \hline
     8.886 & escaped \\ \hline
-    8.887 & escaped \\ \hline
-\end{tabular}
+    8.887 & escaped \\ \bottomrule
+\end{tabularx}
 \label{trappedTable}
 \end{table}
 \subsection{Solar System (many-body System)}
@@ -440,30 +451,32 @@ If we plot this with a larger time step, for example $dt = 10^{-1}$, we get the 
 The conservation of energy and angular momentum  for $dt= 10^{-3}$ and $dt = 10^{-1}$ is shown in table \ref{threebody_energy_dt=10(-3)} and \ref{threebody_energy_dt=10(-1)}
 
 \begin{table} [H]
+\centering
 \caption{Conservation of energy and angular momentum for the three body system, using VelocityVerlet with $dt=10^{-3}$, over a 5 year period}
-\begin{tabular}{ccc} \hline
+\begin{tabularx}{\textwidth}{cXcXc} \toprule
     {\bf Number of Timesteps} & {\bf Total Energy }& {\bf Angular Momentum} \\
     &[$M_\odot AU^2/yr^2$]&[$M_\odot AU^2/yr$]\\ \hline
     1000 & -0.0038167 & 0.0143197\\ \hline
     2000 & -0.0038167 & 0.0143197\\ \hline
     3000 & -0.0038167 & 0.0143197\\ \hline
     4000 & -0.0038167 & 0.0143197\\ \hline
-    5000 & -0.0038167 & 0.0143197\\ \hline 
-\end{tabular}
+    5000 & -0.0038167 & 0.0143197\\ \bottomrule 
+\end{tabularx}
 \label{threebody_energy_dt=10(-3)}
 \end{table}
 
 \begin{table} [H]
+\centering
 \caption{Conservation of energy and angular momentum for the three body system, using VelocityVerlet with $dt=10^{-1}$, over a 5 year period}
-\begin{tabular}{ccc} \hline
+\begin{tabularx}{\textwidth}{cXcXc} \toprule
     {\bf Number of Timesteps} & {\bf Total Energy }& {\bf Angular Momentum} \\
     &[$M_\odot AU^2/yr^2$]&[$M_\odot AU^2/yr$]\\ \hline
     10 & -0.0038167 & 0.0143197\\ \hline
     20 & -0.0038166 & 0.0143197\\ \hline
     30 & -0.0038166 & 0.0143197\\ \hline
     40 & -0.0038165 & 0.0143197\\ \hline
-    50 & -0.0038164 & 0.0143197\\ \hline 
-\end{tabular}
+    50 & -0.0038164 & 0.0143197\\ \bottomrule 
+\end{tabularx}
 \label{threebody_energy_dt=10(-1)}
 \end{table}
 
@@ -504,18 +517,18 @@ We did some benchmarks for the two-body system to check how the numerical veloci
 \centering
 \caption{The absolute error for the Earth-Sun system where $dt=[10^{-1}s,10^{-2}s,10^{-3}s]$ calculated after 1 $yr$, 5 $yr$, 20 $yr$ and 50 $yr$.}
 \label{tab:Benchmark}
-\begin{tabular}{lrrrr}
-\hline
+\begin{tabularx}{\textwidth}{lXrXrXrXr}
+\toprule
 \multicolumn{5}{c}{Absolute error}\\
-\hline
+\midrule
 $\log_{10}(dt)$ [s]        & -1 & -2 & -3 & -4 \\
-\hline
+\midrule
 1 $yr$      & 0.02573  & 1.34280E-08  & 2.04280E-14 & 1.18434E-07 \\
 5 $yr$      & 0.34745  & 2.14846E-07  & 4.98268E-13 & 1.18445E-07 \\
 20 $yr$     & 0.06115  & 5.37023E-06  & 6.50502E-12 & 1.18389E-07 \\
 50 $yr$     & 0.74803  & 3.35328E-05  & 4.32525E-11 & 1.18322E-07 \\
-\hline
-\end{tabular}
+\bottomrule
+\end{tabularx}
 \end{table}
 The absolute error is not stable, but for $dt=10^{-2}$ and $dt=10^{-3}$ we can see a tendency - they both have increasing absolute error for longer times. For $dt=10^{-4}$ the absolute error is almost constant for all the times, and larger than for $dt=10^{-2}$ and $dt=10^{-3}$
 \section{Discussion}

@@ -3,7 +3,6 @@
 #include <cmath>
 
 RelativisticNewtonianGravity::RelativisticNewtonianGravity(double G) : m_G(G) {
-
 }
 
 void RelativisticNewtonianGravity::computeForces(Particle& a, Particle& b) {
