@@ -69,7 +69,8 @@ void System::integrate(int numberOfSteps) {
         m_integrator->integrateOneStep(m_particles);
         printIntegrateInfo(i);
         if (m_writeToFile == true){
-        writePositionsToFile();}
+            writePositionsToFile();
+        }
     }
     closeOutFile();
 }
@@ -113,7 +114,7 @@ void System::printIntegrateInfo(int stepNumber) {
              << "  o Potential in use:    " << m_potential->getName() << endl
              << "  o Integrator in use:   " << m_integrator->getName() << endl
              << endl;
-    } else if (stepNumber % 10 == 0) {
+    } else if (stepNumber % 1000 == 0) {
         m_kineticEnergy     = computeKineticEnergy();
         m_angularMomentum   = computeAngularMomentum();
         m_potentialEnergy   = m_potential->getPotentialEnergy();
@@ -191,7 +192,7 @@ void System::writePositionsToFile() {
         m_outFileOpenMercury = true;
     }
     Particle *p = m_particles.at(1);
-    m_outFilemercury << setprecision(10) << p->getPosition()(0) << " " << setprecision(10) << p->getPosition()(1) << " " << p->getPosition().length() << endl;
+    m_outFilemercury << setprecision(15) << p->getPosition()(0) << " " << setprecision(15) << p->getPosition()(1) << " " << (p->getPosition()-m_particles.at(0)->getPosition()).length() << endl;
     }
 }
 void System::closeOutFile() {
@@ -202,8 +203,9 @@ void System::closeOutFile() {
     }
 }
 
-void System::setTestVelocity(bool velocitytest){
+void System::setTestVelocity(bool velocitytest, double tol){
     m_testvelocity = velocitytest;
+    m_tol = tol;
 }
 
 void System::testVelocity(){

@@ -18,21 +18,21 @@
 
 void Examples::twoBodyProblem() {
     double G            = 4*pow(M_PI,2);
-    clock_t start, finish;
+    //clock_t start, finish;
 
     System* twoBodySystem = new System();
     twoBodySystem->setIntegrator        (new VelocityVerlet(twoBodySystem));
-    twoBodySystem->setDt                (1e-3);
+    twoBodySystem->setDt                (1e-1);
     twoBodySystem->setPotential         (new NewtonianGravity(G));
     twoBodySystem->setInitialCondition  (new TwoBody());
-    twoBodySystem->setFileWriting       (false);
-    twoBodySystem->setTestVelocity      (false);
+    twoBodySystem->setFileWriting       (true);
+    twoBodySystem->setTestVelocity      (false, 1);
     twoBodySystem->removeLinearMomentum ();
-    start = clock();
-    twoBodySystem->integrate            (100000);
-    finish = clock();
-    double t = (double) (finish - start)/CLOCKS_PER_SEC;
-    std::cout << t << std::endl;
+    //start = clock();
+    twoBodySystem->integrate            (100);
+    //finish = clock();
+    //double t = (double) (finish - start)/CLOCKS_PER_SEC;
+    //std::cout << t << std::endl;
 }
 
 void Examples::threeBodyProblem() {
@@ -79,11 +79,11 @@ void Examples::mercurySunProblem() {
     double G            = 4*pow(M_PI,2);
     System* mercurySunSystem = new System();
     mercurySunSystem->setIntegrator        (new VelocityVerlet(mercurySunSystem));
-    mercurySunSystem->setPotential         (new RelativisticNewtonianGravity(G));
-    mercurySunSystem->setInitialCondition  (new MercurySun());
-    mercurySunSystem->setDt                (1e-3);
+    mercurySunSystem->setPotential         (new NewtonianGravity(G));//(new RelativisticNewtonianGravity(G));
+    mercurySunSystem->setInitialCondition  (new MercurySun());//(new MercurySun());
+    mercurySunSystem->setDt                (1e-5);
     mercurySunSystem->setFileWriting       (true);
     mercurySunSystem->setFileWritingMercury(true);
     mercurySunSystem->removeLinearMomentum ();
-    mercurySunSystem->integrate            (100000);
+    mercurySunSystem->integrate            (10000000);
 }

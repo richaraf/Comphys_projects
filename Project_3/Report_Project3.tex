@@ -50,7 +50,7 @@ In this project, our goal is to simulate the solar system as accurately as possi
 \vspace{2mm}
 Thereafter we implement a more realistic model for the entire solar system using the planet's actual elliptical orbits including the movement of the Sun around the center of mass. The theory is presented in section 2.4. We then use our model to observe the difference a relativistic Newtonian gravity force makes on the perihelion precession of Mercury. Finally, in section 4 and 5 we present and discuss our results.
 \section{Theory}
-In this project we are simulating the planet orbits of the solar system by using Newton's laws of motion. Newton's second law states that the total force on an object with mass $m$ is given by
+In this project we are simulating the planet orbits of the solar system by using Newton's laws of motion. Newton's second law states that the total force acting on an object with mass $m$ is given by
 \begin{equation}
 \Sigma\vec{F}=m\vec{a}
 \label{eq:N2L}
@@ -60,11 +60,16 @@ where $\Sigma \vec{F}$ is the sum of the forces acting on the object and $\vec{a
 \vec{F}_G=-G\frac{m_1\cdot m_2}{r^2}\hat{r}
 \label{eq:GravitationalForce}
 \end{equation}
-where $G$ is the gravitational constant, $m_1$ and $m_2$ are the masses of the objects, $r$ is the distance between them and $\hat{r}$ is an unit vector in radial direction. Since we are using astronomical units, this gives the value $G = 4\pi^2 M_{\odot} ^{-1} AU^3 yr^{-2}$ \cite{Project_text} for the gravitational constant. The absolute gravitational force between two objects is therefore
+where $G$ is the gravitational constant, $m_1$ and $m_2$ are the masses of the objects, $r$ is the distance between them and $\hat{r}$ is an unit vector in radial direction \cite{Barycenter}. Since we are using astronomical units, this gives the value $G = 4\pi^2 M_{\odot} ^{-1} AU^3 yr^{-2}$ \cite{Project_text} for the gravitational constant.  The absolute gravitational force between two objects is therefore
 \begin{equation}
 F_G=-G\frac{m_1\cdot m_2}{r^2}.
 \label{eq:absGravitationalForce}
 \end{equation}
+We are also going to deal with the Barycenter (the center of mass for a system with two or more objects), which is defined as the point where we have equal masses in all directions. For a solar system, this can mathematically be written as
+\begin{equation}
+\vec{R}=\sum_{i=1}^N \frac{m_i}{M}\vec{r}
+\end{equation}
+where $N$ is the number of objects, $m_i$ is the mass of object $i$, $\vec{r}_i$ is the position of the mass center of object $i$ and $M$ is the total mass of the system \cite{Barycenter}.
 
 \subsection{Two-body System}
 Initially we are studying the two-body problem with the sun fixed to origin and with Earth orbiting the sun. This is not fully correct, since the size of the force on the sun is the same as the size of the force on Earth (Newton's third law). Anyway this is still a good approximation because the mass of Sun is much larger than that of Earth, so the affection from Earth on the sun is negligible. The Earth's orbit around the sun is co-planar (two-dimensional), so we are decomposing the force in two directions, and from Equation (\ref{eq:N2L}) we obtain
@@ -75,7 +80,7 @@ and
 \begin{equation}
 a_y=\frac{d^2y}{dt^2}=\frac{F_{G,y}}{M_{Earth}}.
 \end{equation}
-Where $F_{G,x}$ and $F_{G,y}$ are the forces on Earth in respectively x-direction and y-direction. By inserting Equation (\ref{eq:GravitationalForce}) into these equations, we can calculate the total acceleration of Earth:
+Where $F_{G,x}$ and $F_{G,y}$ are the forces acting on Earth in respectively x-direction and y-direction. By insert Equation (\ref{eq:GravitationalForce}) into these equations, we can calculate the total acceleration of Earth:
 \begin{equation}
 \frac{d^2x}{dt^2}=-G\frac{M_\odot}{r^3}x
 \end{equation}
@@ -148,14 +153,14 @@ For an object in a distance $|\vec{r}| = 1AU$ from the Sun (as is the case for t
 If we want to check numerically whether a planet is trappet in a gravitational field or escapes, we can implement a test that checks if the total energy of the planet $E = E_k + E_p$ is smaller or bigger than a given tolerance. If the total energy is bigger that the tolerance, the planet is not bound in the gravitational field, and will escape.
 
 \subsection{Three-Body System}
-Furthermore we have a three-body system where the heaviest planet in the solar system, Jupiter, is set to a circular orbit around the Sun while Earth is still orbiting the sun by a distance 1AU with the sun kept fixed to the origin. For the two-body system we found an analytical solution of the motion, but in this case this is hard, if not even impossible because of the interaction between the planets. Nevertheless we can solve it numerically by using the same equations as for the two-body system. For each "time-step" $dt$ we now need to update the position and velocity for both planets where we also compute the interaction force between them. 
+Furthermore we have a three-body system where the heaviest planet in the solar system, Jupiter, is set to a circular orbit around the Sun while Earth is still orbiting the sun by a distance 1AU with the sun kept fixed to the origin. For the two-body system we found an analytical solution of the motion, but in this case this is hard, if not even impossible because of the interaction between the planets. Nevertheless we can solve it numerically by using the same equations as for the two-body system. For each "time-step" $dt$ we now need to update the position and velocity for both planets where we also compute the interaction forces between them. 
 
 \subsection{Solar System (Many-body System)}
 The implementation of the many-body system is very similar to the three-body system, the main difference is that we will have many more forces. Every time we add a new object, we will have $N-1$ new forces acting on the system where $N$ is the total number of objects. The total number of forces acting on a many-body system is therefore given by
 \begin{equation}
 P(N)=\sum_{i=1}^N(i-1)=\sum_{i=0}^{N-1}i=\frac{N(N-1)}{2}.
 \end{equation}
-We will also look at the real case when all the objects in the solar system are orbiting a barycenter (center of mass). When we implement the model, we do not need equations for all the forces, but we need one equation for the position and velocity in each direction for all the objects. We will therefore need $2\cdot2\cdot8=32$ equations to implement a model for our solar system with 7 planets and the sun in two dimensions. For this we need the masses, distances to Sun, initial positions and initial velocities for all the planets and the sun. The masses and distances to Sun are found in Table (\ref{tab:Masses}).
+where the last transition from an arithmetic to a geometric sequence can be found in a collection of mathematical formulae.  We will also look at the real case when all the objects in the solar system are orbiting a barycenter (center of mass). When we implement the model, we do not need equations for all the forces, but we need one equation for the position and velocity in each direction for all the objects. We will therefore need $2\cdot2\cdot8=32$ equations to implement a model for our solar system with 7 planets and the sun in two dimensions. For this we need the masses, distances to Sun, initial positions and initial velocities for all the planets and the sun. The masses and distances to Sun are found in Table (\ref{tab:Masses}).
 \begin{table}[H]
 \centering
 \caption{Masses and distances to sun for all planets in the solar system, given in respectively solar masses and AU.}
@@ -267,6 +272,7 @@ for(i, i++):
 In this project we have opted for an object oriented approach. There are several reasons for why we have chosen to do so. We save some time and effort programming because the different experimental scenarios can share a lot of the same code. Since the scenarios share code, it is easier to change aspects of our numerical experiments for example the planets, the ODE solver or the force acting on the planets, without introducing new errors. 
 
 The object oriented approach makes it so that in order to perform an experiment, we simply have to decide which planets and initial conditions we want, which ODE solver we want use, which in practice is just a couple of lines of code.
+
 \section{Results}
 \section{Discussion}
 \section{Conclusion}
@@ -280,11 +286,17 @@ The object oriented approach makes it so that in order to perform an experiment,
   Department of Physics, University of Oslo.
   August 2015.
 \bibitem{Project_text}
+  Project Description:\newline
   \url{https://github.com/CompPhysics/ComputationalPhysics/blob/gh-pages/doc/Projects/2016/Project3/pdf/Project3.pdf}
 \bibitem{NASA}
+  Data from NASA:\newline
   \url{http://ssd.jpl.nasa.gov/horizons.cgi}
 \bibitem{kepler}
+  Kepler's laws of planetary motion:\newline
   \url{https://en.wikipedia.org/wiki/Kepler\%27s_laws_of_planetary_motion}
+\bibitem{Barycenter}
+  Barycenter:\newline
+  \url{http://www.uio.no/studier/emner/matnat/astro/AST1100/h14/undervisningsmateriale/lecture1.pdf}
 \end{thebibliography}
 \endgroup
 \end{document}
