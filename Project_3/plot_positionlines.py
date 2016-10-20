@@ -9,6 +9,8 @@ with  open('positions.dat', 'r') as inFile :
     n = len(str)/2
     num_lines = sum(1 for line in open('positions.dat'))
 
+
+print n
 '''
 for i in xrange(n) :
     R.append([])
@@ -24,9 +26,11 @@ for line in infile:
     for i in xrange(n):
         R[0][j] = float(words[2*i])
         R[1][j] = float(words[2*i+1])
+
     j += 1
 
-planets = ['Sun', 'Earth', 'Mars', 'Jupiter']
+
+planets = ['Sun', 'Earth', 'Jupiter']
 colors = ['oy', '.b', '.g', '.c', '.r', '.w', '.k']
 ms=[8,5,5,5,5,5,5]
 
@@ -40,7 +44,7 @@ p=[]
 
 plt.plot(R[0][:],R[1][:])
 plt.plot(0.0,0.0,'oy')
-plt.axis([-1.55,1.55,-1.25,1.25])
+plt.axis([-7,7,-7,7])
 plt.xlabel('x-direction', **axis_size)
 plt.ylabel('y-direction', **axis_size)
 plt.grid()
