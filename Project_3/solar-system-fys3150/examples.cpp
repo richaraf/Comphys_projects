@@ -26,7 +26,7 @@ void Examples::twoBodyProblem() {
     twoBodySystem.setPotential         (new NewtonianGravity(G));
     twoBodySystem.setInitialCondition  (new TwoBody());
     twoBodySystem.setFileWriting       (true);
-    twoBodySystem.setTestVelocity      (true, 1); //(Run/not, tol)
+    twoBodySystem.setTestVelocity      (false, 1); //(Run/not, tol)
     twoBodySystem.removeLinearMomentum ();
     //start = clock();
     twoBodySystem.integrate            (5000);

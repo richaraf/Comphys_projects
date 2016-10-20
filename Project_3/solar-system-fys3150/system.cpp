@@ -124,7 +124,6 @@ void System::printIntegrateInfo(int stepNumber) {
         if (m_printEscape == true){
             EscapeVelocity();
         }
-        cout << m_testvelocity << endl;
         if (m_testvelocity == true){
             testVelocity();
         }
@@ -212,7 +211,7 @@ void System::testVelocity(){
     cout << "Running Velocity Test..." << endl;
     Particle* p = m_particles.at(1);       //Earth
     m_velNumerical = (p->getVelocity()).length();
-    cout << m_velNumerical << endl;
+    cout << setprecision(16) << std::abs(m_velNumerical-m_velAnalytical) << endl;
     if(std::abs(m_velNumerical-m_velAnalytical) > m_tol){
         throw std::invalid_argument("The calculated velocity has larger error than the tolerance");
     }

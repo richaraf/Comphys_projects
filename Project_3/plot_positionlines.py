@@ -10,13 +10,13 @@ with  open('positions.dat', 'r') as inFile :
     num_lines = sum(1 for line in open('positions.dat'))
 
 
-print n
 '''
 for i in xrange(n) :
     R.append([])
 
 # R = [[],[],[],..]
 '''
+
 infile = open('positions.dat', 'r')
 
 R = np.zeros([n,num_lines])
