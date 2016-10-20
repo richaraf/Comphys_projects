@@ -26,7 +26,7 @@ for line in infile:
         R[i].append([float(words[2*i]), float(words[2*i+1])])
 
 pylab.ion()
-limits = (-10.0, 10.0)
+limits = (-.5, .5)
 fig = plt.figure()
 ax = fig.add_subplot(111, autoscale_on = False, xlim= limits, ylim=limits)
 
@@ -42,7 +42,7 @@ pylab.xlabel('x-direction')
 pylab.ylabel('y-direction')
 pylab.show()
 
-for i in xrange(0, lineNum, 10):
+for i in xrange(0, lineNum, 5000):
     for k in xrange(n):
         lines[k].set_data(R[k][i][0], R[k][i][1])
     pylab.draw()

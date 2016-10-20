@@ -180,7 +180,7 @@ void System::writePositionsToFile() {
         Particle *p = m_particles.at(i);
         m_outFile << setprecision(20) << p->getPosition()(0) << " " << setprecision(20) << p->getPosition()(1) << " ";
     }
-    m_outFile << endl;
+    m_outFile << "\n";
     // write total energy of system
     m_kineticEnergy     = computeKineticEnergy();
     m_potentialEnergy   = m_potential->getPotentialEnergy();
@@ -192,7 +192,7 @@ void System::writePositionsToFile() {
         m_outFileOpenMercury = true;
     }
     Particle *p = m_particles.at(1);
-    m_outFilemercury << setprecision(15) << p->getPosition()(0) << " " << setprecision(15) << p->getPosition()(1) << " " << (p->getPosition()-m_particles.at(0)->getPosition()).length() << endl;
+    m_outFilemercury << setprecision(15) << p->getPosition()(0) << " " << setprecision(15) << p->getPosition()(1) << " " << (p->getPosition()-m_particles.at(0)->getPosition()).length() << "\n";
     }
 }
 void System::closeOutFile() {
