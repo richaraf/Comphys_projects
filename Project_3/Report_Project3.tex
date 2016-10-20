@@ -20,6 +20,14 @@
 \lstset{showtabs=false}
 \lstset{breaklines}
 \lstset{postbreak=\raisebox{0ex}[0ex][0ex]{\ensuremath{\color{red}\hookrightarrow\space}}}
+\usepackage{titlesec}
+
+\setcounter{secnumdepth}{4}
+
+\titleformat{\paragraph}
+{\normalfont\normalsize\bfseries}{\theparagraph}{1em}{}
+\titlespacing*{\paragraph}
+{0pt}{3.25ex plus 1ex minus .2ex}{1.5ex plus .2ex}
 
 
 \title{FYS3150 - Computational Physics\\\vspace{2mm} \Large{Project 3}}
@@ -274,6 +282,118 @@ In this project we have opted for an object oriented approach. There are several
 The object oriented approach makes it so that in order to perform an experiment, we simply have to decide which planets and initial conditions we want, which ODE solver we want use, which in practice is just a couple of lines of code.
 
 \section{Results}
+\subsection{Two Body System}
+\subsubsection{Stability for different $dt$}
+
+Using the assumption of a circular orbit and the initial velocity for the Earth we calculated in section 2.2.1, we plotted the orbit of the Earth for different $dt$, checking the stability of the system. The result when we used VelocityVerlet's method for $dt = 10^{-3}$ is shown in Figure \ref{fig:EarthOrbit_Verlet_det = 10(-3)}, and $dt = 10^{-1}$ in Figure \ref{fig:EarthOrbit_Verlet_det = 10(-1)}. Both plots shows the planet's motion over at 10 year time period, which means we had to change the number of grid points when we changed the time step.
+\par 
+\vspace{3mm}
+
+\begin{figure} [H]
+    \centering
+    \includegraphics[scale=0.6]{oppg_3c_sun_earth_verlet_dt=10(-3)}
+    \caption{The Earth's orbit, shown as a blue line, around the Sun, shown as a yellow dot. The motion is solved with VelocityVerlet, and plotted with $dt = 10^{-3}$ for a 10 year time period}
+    \label{fig:EarthOrbit_Verlet_det = 10(-3)}
+\end{figure}
+
+\begin{figure} [H]
+    \centering
+    \includegraphics[scale=0.6]{oppg_3c_sun_earth_verlet_dt=10(-1)}
+    \caption{The Earth's orbit, shown as blue dots, around the Sun, shown as a yellow dot. The motion is solved with VelocityVerlet, and plotted with $dt = 10^{-1}$ for a 10 year time period}
+    \label{fig:EarthOrbit_Verlet_det = 10(-1)}
+\end{figure}
+
+We also compared this to the results we got when using the ODE solver EulerCromer. The plot for $dt=10{-3}$ looked the same as Figure \ref{fig:EarthOrbit_Verlet_det = 10(-3)}. The result EulerChromer gave for $dt=10^{-1}$ is presented in Figure \ref{fig:oppg_3c_sun_earth_euler_dt=10(-1)}
+
+\begin{figure} [H]
+    \centering
+    \includegraphics[scale=0.6]{oppg_3c_sun_earth_euler_dt=10(-1)}
+    \caption{The Earth's orbit, shown as blue dots, around the Sun, shown as a yellow dot. The motion is solved with EulerChromer, and plotted with $dt = 10^{-1}$ for a 10 year time period}
+    \label{fig:oppg_3c_sun_earth_euler_dt=10(-1)}
+\end{figure}
+
+\subsubsection{Conservation of energy and angular momentum}
+We checked the conservation of total energy and angular momentum for EulerCromer and VelocityVerlet for different time steps. The results are presented in table \ref{euler_dt=10(-3)} - \ref{verlet_dt=10(-1)}
+\par
+\vspace{3mm}
+
+\begin{table} [H]
+\caption{Conservation of energy and angular momentum, using EulerCromer with $dt=10^{-3}$, for a 5 year period}
+\begin{tabular}{|c|c|c|} \hline
+    {\bf Numer of Timestep & \bf Total Energy [unit]& \bf Angular Momentum [unit]\\ \hline
+    1000 & -0.0000197 & 0.0000063\\ \hline
+    2000 & -0.0000197 & 0.0000063\\ \hline
+    3000 & -0.0000197 & 0.0000063\\ \hline
+    4000 & -0.0000197 & 0.0000063\\ \hline
+    5000 & -0.0000197 & 0.0000063\\ \hline 
+\end{tabular}
+\label{euler_dt=10(-3)}
+\end{table}
+
+\begin{table} [H]
+\caption{Conservation of energy and angular momentum, using EulerCromer with $dt=10^{-1}$, for a 5 year period}
+\begin{tabular}{|c|c|c|} \hline
+    {\bf Numer of Timestep & \bf Total Energy [unit]& \bf Angular Momentum [unit]\\ \hline
+    10 & -0.0000161 & 0.0000063\\ \hline
+    20 & -0.0000172 & 0.0000063\\ \hline
+    30 & -0.0000183 & 0.0000063\\ \hline
+    40 & -0.0000197 & 0.0000063\\ \hline
+    50 & -0.0000123 & 0.0000063\\ \hline 
+\end{tabular}
+\label{euler_dt=10(-1)}
+\end{table}
+
+\begin{table} [H]
+\caption{Conservation of energy and angular momentum, using VelocityVerlet with $dt=10^{-1}$, for a 5 year period}
+\begin{tabular}{|c|c|c|} \hline
+    {\bf Numer of Timestep & \bf Total Energy [unit]& \bf Angular Momentum [unit]\\ \hline
+    10 & -0.0000197 & 0.0000063\\ \hline
+    20 & -0.0000196 & 0.0000063\\ \hline
+    30 & -0.0000196 & 0.0000063\\ \hline
+    40 & -0.0000195 & 0.0000063\\ \hline
+    50 & -0.0000194 & 0.0000063\\ \hline 
+\end{tabular}
+\label{verlet_dt=10(-1)}
+\end{table}
+
+\subsubsection{Time, VelocityVerlet vs EulerCromer}
+We ran our program with $dt = 10^{-3}$ and $100000$ grid points several times, comparing the running time of EulerCromer and VelocityVerlet. The result is presented in table \ref{timeTable}
+
+\begin{table} [H]
+\caption{Running time for $dt=10^{-3}$ and $100000$ grid points for EulerCromer and VelocityVerlet, given in seconds}
+\begin{tabular}{|c|c|} \hline
+    \bf EulerCromer & \bf VelocityVerlet \\ \hline
+    0.096678 & 0.149523\\ \hline
+    0.094968 & 0.156597\\ \hline
+    0.093523 & 0.154659\\ \hline
+    0.092571 & 0.143399\\ \hline
+    0.095489 & 0.135062\\ \hline
+    0.099472 & 0.146875\\ \hline
+    0.102891 & 0.13598\\ \hline
+    0.092515 & 0.146285\\ \hline
+\end{tabular}
+\label{timeTable}
+\end{table}
+
+Table \ref{timeTable} gives that the average running time for EulerCromer is $0.096018$ seconds, while the average running time for VelocityVerlet is $0.146048$ seconds.
+
+\subsubsection{Escape Velocity}
+In section 2.2.2 we calculated the analytical escape velocity for a planet in a distance $1 AU$ from the Sun, where we got $v_{esc} = 8.886 AU/yr$. Using VelocityVerlet, we tested which velocities gave the planet a total energy greater than 0. The results are presented in in table \ref{trappedTable}
+
+\begin{table} [H]
+\caption{Different initial velocities in the y-direction, and the result of the test if the planet escapes or is trapped}
+\begin{tabular}{|c|c|} \hline
+    (0,v_y, 0) [AU/yr] & \bf Is the planet trapped or does it escape \\ \hline
+    8.883 & trapped \\ \hline
+    8.884 & trapped \\ \hline
+    8.885 & trapped \\ \hline
+    8.886 & escaped \\ \hline
+    8.887 & escaped \\ \hline
+\end{tabular}
+\label{trappedTable}
+\end{table}
+
+
 \section{Discussion}
 \section{Conclusion}
 \section{References}
