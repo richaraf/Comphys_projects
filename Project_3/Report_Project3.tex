@@ -36,12 +36,10 @@
 \begin{document}
 
 \maketitle
-
 \begin{abstract}
 This project aims to use ODE solvers on orbiting planets. For a simple two-body system we compare the Euler-Cromer and the velocity Verlet methods. We then use velocity Verlet to model Earth-Jupiter-Sun systems, the solar system and the perihelion precession of Mercury.
 
-We found that velocity Verlet has a higher numerical precision than Euler-Cromer but is about $50\%$ more time consuming. For different choices of Jupiter-masses, the Earth-Jupiter-Sun system behaves as expected.
-\end{abstract}
+We found that velocity Verlet had a higher numerical precision than Euler-Cromer but is about $50\%$ more time consuming. For different choices of Jupiter-masses, the Earth-Jupiter-Sun system behaved as expected. Our implementation of the solar system was stable for at least a hundred years with time step $dt=10^{-3}$. However the perihelion precession of Mercury was not found to be anywhere close to what we expected.\end{abstract}
 \begin{itemize}
 \item Github repository containing programs and results are in: \url{https://github.com/richaraf/Comphys_projects/tree/master/Project_3}
 \end{itemize}
@@ -336,8 +334,9 @@ We checked the conservation of total energy and angular momentum for EulerCromer
 
 \begin{table} [H]
 \caption{Conservation of energy and angular momentum, using EulerCromer with $dt=10^{-3}$, for a 5 year period}
-\begin{tabular}{|c|c|c|} \hline
-    {\bf Numer of Timestep} & {\bf Total Energy [unit]}& {\bf Angular Momentum [unit]}\\ \hline
+\begin{tabular}{ccc} \hline
+    {\bf Number of Timesteps} & {\bf Total Energy }& {\bf Angular Momentum} \\
+    &[$M_\odot AU^2/yr^2$]&[$M_\odot AU^2/yr$]\\ \hline
     1000 & -0.0000197 & 0.0000063\\ \hline
     2000 & -0.0000197 & 0.0000063\\ \hline
     3000 & -0.0000197 & 0.0000063\\ \hline
@@ -349,8 +348,9 @@ We checked the conservation of total energy and angular momentum for EulerCromer
 
 \begin{table} [H]
 \caption{Conservation of energy and angular momentum, using EulerCromer with $dt=10^{-1}$, for a 5 year period}
-\begin{tabular}{|c|c|c|} \hline
-    {\bf Numer of Timestep} & {\bf Total Energy [unit]}& {\bf Angular Momentum [unit]}\\ \hline
+\begin{tabular}{ccc} \hline
+    {\bf Number of Timesteps} & {\bf Total Energy }& {\bf Angular Momentum} \\
+    &[$M_\odot AU^2/yr^2$]&[$M_\odot AU^2/yr$]\\ \hline
     10 & -0.0000161 & 0.0000063\\ \hline
     20 & -0.0000172 & 0.0000063\\ \hline
     30 & -0.0000183 & 0.0000063\\ \hline
@@ -362,8 +362,9 @@ We checked the conservation of total energy and angular momentum for EulerCromer
 
 \begin{table} [H]
 \caption{Conservation of energy and angular momentum, using VelocityVerlet with $dt=10^{-1}$, for a 5 year period}
-\begin{tabular}{|c|c|c|} \hline
-    {\bf Number of Timestep} & \bf {Total Energy [unit]}& \bf {Angular Momentum [unit]}\\ \hline
+\begin{tabular}{ccc} \hline
+    {\bf Number of Timesteps} & {\bf Total Energy }& {\bf Angular Momentum} \\
+    &[$M_\odot AU^2/yr^2$]&[$M_\odot AU^2/yr$]\\ \hline
     10 & -0.0000197 & 0.0000063\\ \hline
     20 & -0.0000196 & 0.0000063\\ \hline
     30 & -0.0000196 & 0.0000063\\ \hline
@@ -378,7 +379,7 @@ We ran our program with $dt = 10^{-3}$ and $100000$ grid points several times, c
 
 \begin{table} [H]
 \caption{Running time for $dt=10^{-3}$ and $100000$ grid points for EulerCromer and VelocityVerlet, given in seconds}
-\begin{tabular}{|c|c|} \hline
+\begin{tabular}{cc} \hline
     \bf EulerCromer & \bf VelocityVerlet \\ \hline
     0.096678 & 0.149523\\ \hline
     0.094968 & 0.156597\\ \hline
@@ -399,7 +400,7 @@ In section 2.2.2 we calculated the analytical escape velocity for a planet in a 
 
 \begin{table} [H]
 \caption{Different initial velocities in the y-direction, and the result of the test if the planet escapes or is trapped}
-\begin{tabular}{|c|c|} \hline
+\begin{tabular}{cc} \hline
     (0,$v_y$, 0) [AU/yr] & \bf Is the planet trapped or does it escape \\ \hline
     8.883 & trapped \\ \hline
     8.884 & trapped \\ \hline
@@ -440,8 +441,9 @@ The conservation of energy and angular momentum  for $dt= 10^{-3}$ and $dt = 10^
 
 \begin{table} [H]
 \caption{Conservation of energy and angular momentum for the three body system, using VelocityVerlet with $dt=10^{-3}$, over a 5 year period}
-\begin{tabular}{|c|c|c|} \hline
-    {\bf Numer of Timestep} & {\bf Total Energy [unit]}& {\bf Angular Momentum [unit]}\\ \hline
+\begin{tabular}{ccc} \hline
+    {\bf Number of Timesteps} & {\bf Total Energy }& {\bf Angular Momentum} \\
+    &[$M_\odot AU^2/yr^2$]&[$M_\odot AU^2/yr$]\\ \hline
     1000 & -0.0038167 & 0.0143197\\ \hline
     2000 & -0.0038167 & 0.0143197\\ \hline
     3000 & -0.0038167 & 0.0143197\\ \hline
@@ -453,8 +455,9 @@ The conservation of energy and angular momentum  for $dt= 10^{-3}$ and $dt = 10^
 
 \begin{table} [H]
 \caption{Conservation of energy and angular momentum for the three body system, using VelocityVerlet with $dt=10^{-1}$, over a 5 year period}
-\begin{tabular}{|c|c|c|} \hline
-    {\bf Numer of Timestep} & {\bf Total Energy [unit]}& {\bf Angular Momentum [unit]}\\ \hline
+\begin{tabular}{ccc} \hline
+    {\bf Number of Timesteps} & {\bf Total Energy }& {\bf Angular Momentum} \\
+    &[$M_\odot AU^2/yr^2$]&[$M_\odot AU^2/yr$]\\ \hline
     10 & -0.0038167 & 0.0143197\\ \hline
     20 & -0.0038166 & 0.0143197\\ \hline
     30 & -0.0038166 & 0.0143197\\ \hline
@@ -486,6 +489,15 @@ We increased the mass of Jupiter again, to $M_J = M_{\odot}$, and plotted the mo
     \label{fig:Jupiter_m=1_Earth}
 \end{figure}
 
+\subsection{Mercury-Sun system}
+To find the perihelion precession of Mercury, we gave Mercury initial position (0, 0.3075, 0) AU and velocity (0, 12.44, 0) AU/yr, and the sun at origo with no velocity. For time step $dt=1e-6$ the perihelion angles, using equation \ref{eq:perihelionangle}, for ten years was found to be as shown in figure \ref{fig:precesion}. From figure \ref{fig:precesion} we get a precession of $\approx 17$ arc seconds per decade which is the same as $\approx 170$ arc seconds per century.
+\begin{figure}
+\centering
+\includegraphics[scale=0.7]{precesion.png}
+\caption{Plot of the perihelion angle of Mercury in radians over ten years, equivalent to forty Mercury-years. The time step used was $dt=10^{-6}$, meaning one million grid points per Earth-year.}
+\label{fig:precesion}
+\end{figure}
+
 \subsection{Benchmarks}
 We did some benchmarks for the two-body system to check how the numerical velocity of Earth varying for different time steps when we are comparing with the analytical velocity calculated in Equation (\ref{eq:AnalyticVel}). The absolute error is calculated with a similar program to the one found in \textit{Test Velocity}, and the table shows the absolute error for different times (1 $yr$, 5 $yr$, 20 $yr$ and 50 $yr$) and different time steps ($10^-1$s, $10^-2$s and $10^-3$s):
 \begin{table}[H]
@@ -505,7 +517,7 @@ $\log_{10}(dt)$ [s]        & -1 & -2 & -3 & -4 \\
 \hline
 \end{tabular}
 \end{table}
-The absolute error is not stable, but for $dt=10^{-2}$ and $dt=1-^{-3}$ we can see a tendency - they both have increasing absolute error for longer times. For $dt=10^{-4}$ the absolute error is almost constant for all the times, and larger than for $dt=10^{-2}$ and $dt=10^{-3}$
+The absolute error is not stable, but for $dt=10^{-2}$ and $dt=10^{-3}$ we can see a tendency - they both have increasing absolute error for longer times. For $dt=10^{-4}$ the absolute error is almost constant for all the times, and larger than for $dt=10^{-2}$ and $dt=10^{-3}$
 \section{Discussion}
 In figure \ref{euler_dt=10(-1)} and \ref{fig:oppg_3c_sun_earth_euler_dt=10(-1)} we clearly see that velocity Verlet is far superior to Euler-Cromer when it comes to numerical precision. However the velocity Verlet was about $50\%$ more time consuming. This is also evident when looking at conservation of energy and angular momentum for $dt = 10^{-1}$, where we see that the change in energy and angular momentum is much smaller for velocity Verlet than Euler-Cromer.
 
@@ -519,7 +531,7 @@ When comparing the motion of the two body system in Figure \ref{fig:EarthOrbit_V
 \vspace{3mm}
 \par
 
-We saw that the Solar system is stable for 100 $yr$, but as we have in Equation (\ref{eq:velVerx}) and (\ref{eq:vel2ndorder} the integration method has errors, so we expect that the system will be unstable in the long run. \par
+We saw that the Solar system is stable for 100 $yr$, but as we have seen in Equation (\ref{eq:velVerx}) and (\ref{eq:velVerv}) the integration method has errors, so we expect that the system will be unstable in the long run. \par
 
 When it comes to the benchmark results, we saw that the absolute error was unstable. For $dt=10^{-1}$ the error was large as expected, but when we decreased $dt$ to $10^{-2}$, the errors were much smaller. The reason of this dramatic difference is that the error goes as $dt^3$, so it should not be surprising that the error decreases really fast for smaller time steps. The same tendency applies for $dt=10^{-3}$, but what about $dt=10^{-4}$? For $dt=10^{-4}$ the absolute error is large, something that is surprising based on the fact that we would expect an error of order $dt^3$. There can be several reasons why the error is increasing here, but the most probable is that we get truncation errors when we are finding the difference numerically. Computers with 64-bits processors is able to handle about 16 decimals, and as we can see from Table (\ref{tab:Benchmark}), the absolute error is about $10^{-14}$ when $dt=10^{-3}$. For $dt=10^{-4}$ we will have an actual absolute error of an order of $ <10^{-16}$. From the same table we can read that the error is increasing for longer times (for $dt=10^{-2}$ and $dt=10^{-3}$), something that is expected since we should have the same error for every year (every orbit). 
 \section{Conclusion}
@@ -527,7 +539,6 @@ We have seen that the two- and three body systems behave as expected when given 
 Furthermore, we have also seen that the ODE-solver EulerCromer is less time consuming than the VelocityVerlet solver, though VelocityVerlet is more stable and energy-conserving for larger time steps that EulerCromer.
 
 For the benchmark we found that the error is decreasing really fast for smaller time steps when we do not deal with truncation error. For longer times the error is increasing.
-\newpage
 \section{References}
 \begingroup
 \renewcommand{\section}[2]{}
