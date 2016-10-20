@@ -35,6 +35,20 @@
 \item Github repository containing programs and results are in: \url{https://github.com/richaraf/Comphys_projects/tree/master/Project_3}
 \end{itemize}
 \section{Introduction}
+The solar system is a complex system consisting, among other things, of a star, eight planets and several moons. Newton's law of gravity gives that the force acting between each pairs of bodies in the system is described by equation \ref{eq:GravityForce}
+
+\begin{equation}
+    F_G = \frac{G m_1 m_2}{|\vec{r}|^3}\vec{r}
+    \label{eq:GravityForce}
+\end{equation}
+
+If we want to obtain the motion of the planets using equation \ref{eq:GravityForce} and Newtons laws of motion,  we get a set of coupled differential equations. Solving these equations has been a goal for physicists for several centuries, but before the age of computers, this was tiresome.
+\par 
+\vspace{2mm}
+In this project, our goal is to simulate the solar system as accurately as possible. We start by implementing a simplified two body system, consisting of the Sun and the Earth, by rewriting equation \ref{eq:GravityForce} as a set of coupled differential equations for the positions and velocity of the two bodies. We assume circular orbit and neglect the motion of the Sun. The theory behind the rewriting of these equations is presented in section 2.1.  We check the stability of the system using the ODE-solvers EulerCromer and VelocityVerlet, presented in section 3.1,  for different timesteps $dt$, and study the conservation of energy and angular momentum. When this simulation runs as required, we add Jupiter, and solve the motion for the three body system, again looking at the stability of the system. 
+\par
+\vspace{2mm}
+Thereafter we implement a more realistic model for the entire solar system using the planet's actual elliptical orbits including the movement of the Sun around the center of mass. The theory is presented in section 2.4. We then use our model to observe the difference a relativistic Newtonian gravity force makes on the perihelion precession of Mercury. Finally, in section 4 and 5 we present and discuss our results.
 \section{Theory}
 In this project we are simulating the planet orbits of the solar system by using Newton's laws of motion. Newton's second law states that the total force acting on an object with mass $m$ is given by
 \begin{equation}
