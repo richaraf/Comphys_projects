@@ -27,11 +27,18 @@ ms=[8,5,5,5,5,5,5]
 for i in xrange(len(R)):
     for j in xrange(0,num_lines,1):
         plt.plot(R[0][:],R[1][:], colors[i], markersize=ms[i])
+axis_size = {'size': '18'}
+#plt.plot(0.0,0.0,'oy')
+p=[]
+#for i in xrange(len(R)):
+#    p.append(planets[i])
+#    for j in xrange(0,num_lines,1):
+#        plt.plot(R[0][j],R[1][j])#[1],colors[i],markersize=ms[i])
 
 plt.plot(R[0][:],R[1][:])
+plt.plot(0.0,0.0,'oy')
 plt.axis([-1.55,1.55,-1.25,1.25])
-plt.xlabel('x-direction')
-plt.ylabel('y-direction')
-plt.legend(p,loc='best')
+plt.xlabel('x-direction', **axis_size)
+plt.ylabel('y-direction', **axis_size)
 plt.grid()
 plt.show()

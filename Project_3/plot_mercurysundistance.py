@@ -23,9 +23,12 @@ for i in index_list:
     angles[j]=np.arctan2(x[i], y[i])
     j+=1
 print len(angles)
-plt.plot(angles)
-#plt.show()
 
+plt.plot(angles)
+plt.ylabel('angles')
+plt.show()
+'''
 plt.figure()
 plt.plot(r)
 plt.show()
+'''
