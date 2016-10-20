@@ -22,11 +22,11 @@ void Examples::twoBodyProblem() {
 
     System twoBodySystem;
     twoBodySystem.setIntegrator        (new VelocityVerlet(&twoBodySystem));
-    twoBodySystem.setDt                (1e-4);
+    twoBodySystem.setDt                (1e-3);
     twoBodySystem.setPotential         (new NewtonianGravity(G));
     twoBodySystem.setInitialCondition  (new TwoBody());
     twoBodySystem.setFileWriting       (true);
-    twoBodySystem.setTestVelocity      (true, 1); //(Run/not, tol)
+    twoBodySystem.setTestVelocity      (false, 1); //(Run/not, tol)
     twoBodySystem.removeLinearMomentum ();
     //start = clock();
     twoBodySystem.integrate            (5000);
@@ -40,6 +40,7 @@ void Examples::threeBodyProblem() {
 
     System threeBodySystem;
     threeBodySystem.setIntegrator          (new VelocityVerlet(&threeBodySystem));
+    threeBodySystem.setDt                  (1e-3);
     threeBodySystem.setPotential           (new NewtonianGravity(G));
     threeBodySystem.setInitialCondition    (new ThreeBody());
     threeBodySystem.setFileWriting         (true);
