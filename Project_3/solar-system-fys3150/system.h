@@ -18,7 +18,7 @@ private:
     double                      m_angularMomentum       = 0;
     double                      m_totalEnergy           = 0;
     double                      m_potentialEnergy       = 0;
-    double                      m_tol                   = 1;
+    double                      m_tol                   = 0;
     double                      m_velAnalytical         = 2*M_PI;
     double                      m_velNumerical          = 0;
     class Integrator*           m_integrator            = nullptr;
@@ -37,7 +37,7 @@ public:
     void setIntegrator          (class Integrator* integrator);
     void setInitialCondition    (class InitialCondition* initialCondition);
     void setDt                  (double dt);
-    void setTestVelocity        (bool velocitytest);
+    void setTestVelocity        (bool velocitytest, double tol);
     void integrate              (int numberOfSteps);
     void addParticle            (Particle* p);
     void printIntegrateInfo     (int stepNumber);

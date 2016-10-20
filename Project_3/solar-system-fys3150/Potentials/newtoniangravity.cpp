@@ -31,10 +31,10 @@ void NewtonianGravity::computeForces(Particle& a, Particle& b) {
     vec3 dr = a.getPosition()-b.getPosition();
     double drlength = dr.length();
     double drlength2 = dr.lengthSquared();
-    double dFx = -m_G*(a.getMass()*b.getMass())/(drlength*drlength2)*b.getPosition()(0);
-    double dFy = -m_G*(a.getMass()*b.getMass())/(drlength*drlength2)*b.getPosition()(1);
+    double dFx = m_G*(a.getMass() * b.getMass()) / (drlength*drlength2) * dr(0);
+    double dFy = m_G*(a.getMass() * b.getMass()) / (drlength*drlength2) * dr(1);
     double dFz = 0.0;
-    double V = -m_G*(a.getMass()*b.getMass())/drlength;
+    double V = -m_G*(a.getMass()*b.getMass()) / drlength;
     m_potentialEnergy += V;
     a.addForce(-dFx, -dFy, -dFz);
     b.addForce(dFx,dFy,dFz);

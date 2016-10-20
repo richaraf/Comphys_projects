@@ -18,7 +18,11 @@ void VelocityVerlet::integrateOneStep(std::vector<Particle*> particles) {
      * Velocity Verlet algorithm only after you have a working implementation
      * of Euler-Cromer.
      */
-    m_system->computeForces();
+    if (m_firstStep) {
+        m_system->computeForces();
+        m_firstStep = false;
+    }
+
     for (int i=0; i<particles.size(); i++) {
         Particle* p = particles.at(i);
         p->getVelocity() += p->getForce()*m_dt/2.0/p->getMass();
@@ -29,5 +33,4 @@ void VelocityVerlet::integrateOneStep(std::vector<Particle*> particles) {
         Particle* p = particles.at(i);
         p->getVelocity() += p->getForce()*m_dt/2.0/p->getMass();
     }
-
 }

@@ -69,7 +69,8 @@ void System::integrate(int numberOfSteps) {
         m_integrator->integrateOneStep(m_particles);
         printIntegrateInfo(i);
         if (m_writeToFile == true){
-        writePositionsToFile();}
+            writePositionsToFile();
+        }
     }
     closeOutFile();
 }
@@ -118,7 +119,7 @@ void System::printIntegrateInfo(int stepNumber) {
         m_angularMomentum   = computeAngularMomentum();
         m_potentialEnergy   = m_potential->getPotentialEnergy();
         m_totalEnergy       = m_kineticEnergy + m_potentialEnergy;
-        printf("Step: %5d    E =%10.5f   Ek =%10.5f    Ep =%10.5f   L =%10.5f\n",
+        printf("Step: %5d    E =%10.5g   Ek =%10.5g    Ep =%10.5g   L =%10.5f\n",
                stepNumber, m_totalEnergy, m_kineticEnergy, m_potentialEnergy, m_angularMomentum);
         if (m_printEscape == true){
             EscapeVelocity();
@@ -191,7 +192,7 @@ void System::writePositionsToFile() {
         m_outFileOpenMercury = true;
     }
     Particle *p = m_particles.at(1);
-    m_outFilemercury << setprecision(10) << p->getPosition()(0) << " " << setprecision(10) << p->getPosition()(1) << " " << p->getPosition().length() << endl;
+    m_outFilemercury << setprecision(15) << p->getPosition()(0) << " " << setprecision(15) << p->getPosition()(1) << " " << (p->getPosition()-m_particles.at(0)->getPosition()).length() << endl;
     }
 }
 void System::closeOutFile() {
@@ -202,8 +203,9 @@ void System::closeOutFile() {
     }
 }
 
-void System::setTestVelocity(bool velocitytest){
+void System::setTestVelocity(bool velocitytest, double tol){
     m_testvelocity = velocitytest;
+    m_tol = tol;
 }
 
 void System::testVelocity(){

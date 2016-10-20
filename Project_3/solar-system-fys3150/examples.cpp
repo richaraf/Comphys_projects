@@ -19,11 +19,11 @@ void Examples::twoBodyProblem() {
 
     System* twoBodySystem = new System();
     twoBodySystem->setIntegrator        (new VelocityVerlet(twoBodySystem));
-    twoBodySystem->setDt                (1e-2);
+    twoBodySystem->setDt                (1e-4);
     twoBodySystem->setPotential         (new NewtonianGravity(G));
     twoBodySystem->setInitialCondition  (new TwoBody());
     twoBodySystem->setFileWriting       (true);
-    twoBodySystem->setTestVelocity      (true);
+    twoBodySystem->setTestVelocity      (true, 1); //(Run/not, tol)
     twoBodySystem->removeLinearMomentum ();
     twoBodySystem->integrate            (5000);
 }
@@ -72,11 +72,11 @@ void Examples::mercurySunProblem() {
     double G            = 4*pow(M_PI,2);
     System* mercurySunSystem = new System();
     mercurySunSystem->setIntegrator        (new VelocityVerlet(mercurySunSystem));
-    mercurySunSystem->setPotential         (new RelativisticNewtonianGravity(G));
-    mercurySunSystem->setInitialCondition  (new MercurySun());
-    mercurySunSystem->setDt                (1e-3);
+    mercurySunSystem->setPotential         (new NewtonianGravity(G));//(new RelativisticNewtonianGravity(G));
+    mercurySunSystem->setInitialCondition  (new MercurySun());//(new MercurySun());
+    mercurySunSystem->setDt                (1e-5);
     mercurySunSystem->setFileWriting       (true);
     mercurySunSystem->setFileWritingMercury(true);
     mercurySunSystem->removeLinearMomentum ();
-    mercurySunSystem->integrate            (100000);
+    mercurySunSystem->integrate            (10000000);
 }

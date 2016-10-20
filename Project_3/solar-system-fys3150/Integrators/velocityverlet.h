@@ -7,6 +7,7 @@ class VelocityVerlet : public Integrator {
 private:
     bool m_firstStep = true;
 
+
 public:
     VelocityVerlet(class System* system);
     std::string getName();
