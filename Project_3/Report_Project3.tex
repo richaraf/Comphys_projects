@@ -38,6 +38,9 @@
 \maketitle
 
 \begin{abstract}
+This project aims to use ODE solvers on orbiting planets. For a simple two-body system we compare the Euler-Cromer and the velocity Verlet methods. We then use velocity Verlet to model Earth-Jupiter-Sun systems, the solar system and the perihelion precession of Mercury.
+
+We found that velocity Verlet has a higher numerical precision than Euler-Cromer but is about $50\%$ more time consuming. For different choices of Jupiter-masses, the Earth-Jupiter-Sun system behaves as expected.
 \end{abstract}
 \begin{itemize}
 \item Github repository containing programs and results are in: \url{https://github.com/richaraf/Comphys_projects/tree/master/Project_3}
@@ -231,38 +234,39 @@ If we give Mercury initial position on the $x$-axis such that $y=0$, we can find
 where $x_p$ and $y_p$ gives the position of Mercury at perihelion.
 \section{Method}
 \subsection{Ordinary differential equation solvers}
-In this project we use two different ODE solvers, the Euler-Cromer method and the velocity Verlet method. Both are derived using Taylor expansions to respectfully second and third order. For sufficiently small timesteps $h$, both these methods should conserve energy for conservative forces such as the gravitational force. In both methods we are looking at a system with position $x_i$ and velocity $v_i$ at step number $i$, where $x_0$ and $v_0$ are known initial conditions.
+In this project we use two different ODE solvers, the Euler-Cromer method and the velocity Verlet method. Both are derived using Taylor expansions to respectfully second and third order. For sufficiently small timesteps $dt$, both these methods should conserve energy for conservative forces such as the gravitational force. In both methods we are looking at a system with position $x_i$ and velocity $v_i$ at step number $i$, where $x_0$ and $v_0$ are known initial conditions.
 \subsubsection{Euler-Cromer}
 To find an algorithm for Euler-Cromer we first estimate the velocity at step $i+1$, $v_{i+1}$, by doing a second order Taylor expansion of the velocity 
 \begin{equation}
-v_{i+1} = v_i + hv_i^{(1)} + {\cal O}(h^2). 
+v_{i+1} = v_i + dtv_i^{(1)} + {\cal O}(dt^2). 
 \label{eq:EulCrov}
 \end{equation}
 We can then use $v_{i+1}$ to find the position at step $i+1$
 \begin{equation}
-x_{i+1} = x_i + hv_{i+1} + {\cal O}(h^2).
+x_{i+1} = x_i + dtv_{i+1} + {\cal O}(dt^2).
 \label{eq:EulCrox}
 \end{equation}
+In our program counting $+,-,*,/$ the Euler-Cromer method should take $5N$ FLOPS per object (planet or sun).
 \subsubsection{Velocity Verlet}
 By using third order Taylor expansions we get that the position at step number $i+1$ becomes \begin{equation}
-x_{i+1} = x_i + h v_i + \frac{h^2}{2}v_i^{(1)} + {\cal O}(h^3),
+x_{i+1} = x_i + dt v_i + \frac{dt^2}{2}v_i^{(1)} + {\cal O}(dt^3),
 \label{eq:velVerx}
 \end{equation}
-where we have used that $x_i^{(1)} = v_i$ and $h$ is the step length. Similarly we can express the velocity as
+where we have used that $x_i^{(1)} = v_i$ and $dt$ is the step length. Similarly we can express the velocity as
 \begin{equation}
-v_{i+1} = v_i + h v_i^{(1)} + \frac{h^2}{2}v_i^{(2)} + {\cal O}(h^3).
+v_{i+1} = v_i + h v_i^{(1)} + \frac{h^2}{2}v_i^{(2)} + {\cal O}(dt^3).
 \label{eq:vel2ndorder}
 \end{equation}
 Since the first derivative of the velocity, acceleration is often known analytically we can use a second order Taylor expansion to find an estimate for the acceleration at time step $i+1$
-$$v_{i+1}^{(1)} = v_i^{(1)} + hv_i^{(2)} + {\cal O}(h^2), $$
-which can for small $h$ be written as 
+$$v_{i+1}^{(1)} = v_i^{(1)} + dtv_i^{(2)} + {\cal O}(dt^2), $$
+which can for small $dt$ be written as 
 \begin{equation}
-hv_i^{(2)} \approx v_{i+1}^{(1)}- v_i^{(1)}.
+dtv_i^{(2)} \approx v_{i+1}^{(1)}- v_i^{(1)}.
 \label{eq:hv1approx}
 \end{equation}
 We can then insert equation (\ref{eq:hv1approx}) into equation (\ref{eq:vel2ndorder}) to get the approximation which we will use for velocity
 \begin{equation}
-v_{i+1} = v_i + \frac{h}{2}\left(v_{i+1}^{(1)} + v_i^{(1)}\right) + {\cal O}(h^3),
+v_{i+1} = v_i + \frac{dt}{2}\left(v_{i+1}^{(1)} + v_i^{(1)}\right) + {\cal O}(dt^3),
 \label{eq:velVerv}
 \end{equation}
 alongside equation (\ref{eq:velVerx}) for the position. 
@@ -271,12 +275,13 @@ When we have an analytical expression for the force, we can use Newton's second 
 \begin{lstlisting}
 for(i, i++):
 	a(i) = computeForce/mass
-	v(i+1/2) = v(i) + h/2 * a(i)
-	x(i+1) = x(i) + h * v(i+1/2)
+	v(i+1/2) = v(i) + dt/2 * a(i)
+	x(i+1) = x(i) + dt * v(i+1/2)
 	// calculate force at the new time step i+1
 	a(i+1) = computeForce/mass
-	v(i+1) = v(i+1/2) + h/2 * a(i+1)
+	v(i+1) = v(i+1/2) + dt/2 * a(i+1)
 \end{lstlisting}
+Counting the same arithmetic operations as for Euler-Cromer, velocity Verlet should use $10N$ FLOPS per object.
 \subsection{Structure}
 In this project we have opted for an object oriented approach. There are several reasons for why we have chosen to do so. We save some time and effort programming because the different experimental scenarios can share a lot of the same code. Since the scenarios share code, it is easier to change aspects of our numerical experiments for example the planets, the ODE solver or the force acting on the planets, without introducing new errors. 
 
@@ -404,6 +409,8 @@ In section 2.2.2 we calculated the analytical escape velocity for a planet in a 
 \end{tabular}
 \label{trappedTable}
 \end{table}
+\subsection{Solar System (many-body System)}
+We implemented the eight planets of the solar system and observed that for the velocity Verlet method and time step $dt=1e-3$ the system was stable for at least a hundred years. 
 
 \subsection{Three Body System}
 
@@ -500,6 +507,7 @@ $\log_{10}(dt)$ [s]        & -1 & -2 & -3 & -4 \\
 \end{table}
 The absolute error is not stable, but for $dt=10^{-2}$ and $dt=1-^{-3}$ we can see a tendency - they both have increasing absolute error for longer times. For $dt=10^{-4}$ the absolute error is almost constant for all the times, and larger than for $dt=10^{-2}$ and $dt=10^{-3}$
 \section{Discussion}
+<<<<<<< HEAD
 
 When comparing the motion of the two body system in Figure \ref{fig:EarthOrbit_Verlet_det = 10(-3)} and the three body system in Figure \ref{fig:Jupiter_m=10^(-3)_Earth_dt=10^(-3)}, we observe that the Earth's orbit is slightly more elliptical after Jupiter is added. This is as expected, since the gravitational force between Earth and Jupiter drags Earth slightly out of its circular orbit. When Jupiter's mass was increased to $M_J = 0.01 M_{\odot}$, in Figure \ref{fig:Jupiter_m=10^(-2)_Earth}, we see that this drags Earth even further out of the circular orbit, and Earth spirals outwards. Finally, when $M_J = M_{\odot}$, in Figure \ref{fig:Jupiter_m=1_Earth}, the three body system becomes unstable. Theoretically we have here created a binary star system. Here we also  plot the movement of the Sun, we observe that the Sun is now visibly affected by the gravitational pull from Jupiter. Based on these plots, we conclude that our three body system behaves as we expect, and we conclude that our code works for modeling the motion of planets.\par 
 \vspace{3mm}
@@ -511,6 +519,9 @@ We saw that the Solar system is stable for 100 $yr$, but as we have in Equation 
 When it comes to the benchmark results, we saw that the absolute error was unstable. For $dt=10^{-1}$ the error was large as expected, but when we decreased $dt$ to $10^{-2}$, the errors were much smaller. The reason of this dramatic difference is that the error goes as $dt^3$, so it should not be surprising that the error decreases really fast for smaller time steps. The same tendency applies for $dt=10^{-3}$, but what about $dt=10^{-4}$? For $dt=10^{-4}$ the absolute error is large, something that is surprising based on the fact that we would expect an error of order $dt^3$. There can be several reasons why the error is increasing here, but the most probable is that we get truncation errors when we are finding the difference numerically. Computers with 64-bits processors is able to handle about 16 decimals, and as we can see from Table (\ref{tab:Benchmark}), the absolute error is about $10^{-14}$ when $dt=10^{-3}$. For $dt=10^{-4}$ we will have an actual absolute error of an order of $ <10^{-16}$. From the same table we can read that the error is increasing for longer times (for $dt=10^{-2}$ and $dt=10^{-3}$)
 
 
+In figure \ref{euler_dt=10(-1)} and \ref{fig:oppg_3c_sun_earth_euler_dt=10(-1)} we clearly see that velocity Verlet is far superior to Euler-Cromer when it comes to numerical precision. However the velocity Verlet was about $50\%$ more time consuming. This is also evident when looking at conservation of energy and angular momentum for $dt = 10^{-1}$, where we see that the change in energy and angular momentum is much smaller for velocity Verlet than Euler-Cromer.
+
+From table \ref{trappedTable} we see that our numerically calculated escape velocity for the two-body system is as we expected for time step $dt=10^{-3}$.
 \section{Conclusion}
 
 Benchmark: The error is decreasing really fast!
