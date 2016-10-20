@@ -21,13 +21,13 @@ void Examples::twoBodyProblem() {
 
     System* twoBodySystem = new System();
     twoBodySystem->setIntegrator        (new EulerCromer(twoBodySystem));
-    twoBodySystem->setDt                (1e-2);
+    twoBodySystem->setDt                (1e-3);
     twoBodySystem->setPotential         (new NewtonianGravity(G));
     twoBodySystem->setInitialCondition  (new TwoBody());
     twoBodySystem->setFileWriting       (true);
-    twoBodySystem->testVelocity         (true, velAnalytic, tolerance);
+    twoBodySystem->testVelocity         (false, velAnalytic, tolerance);
     twoBodySystem->removeLinearMomentum ();
-    twoBodySystem->integrate            (500);
+    twoBodySystem->integrate            (5000);
 }
 
 void Examples::threeBodyProblem() {
