@@ -405,8 +405,82 @@ In section 2.2.2 we calculated the analytical escape velocity for a planet in a 
 \label{trappedTable}
 \end{table}
 
+\subsection{Three Body System}
+
+\subsubsection{Stability of VerletVelocity for different masses of Jupiter}
+
+\paragraph{\textbf{$M_J = 0.001M_{\odot}$}}
+
+After implementing Jupiter with mass $M_J = 0.001M_{\odot}$ and using $dt = 10^{-3}$, we got the motion of the Three Body System over a course of 10 years, shown in Figure \ref{fig:Jupiter_m=10^(-3)_Earth_dt=10^(-3)} We use VelocityVerlet
+
+\begin{figure} [H]
+    \centering
+    \includegraphics[scale=0.6]{oppg_3e_threebody_Jupiter_m=10_(-3)_Earth}
+    \caption{The motion of the three body system, where Earth is plotted with a blue line, Jupiter with green and the Sun as a yellow dot. The plot shows the motion over a course of 10 years. We have used the time step $dt = 10^{-3}$.}
+    \label{fig:Jupiter_m=10^(-3)_Earth_dt=10^(-3)}
+\end{figure}
+
+If we plot this with a larger time step, for example $dt = 10^{-1}$, we get the result as shown in Figure \ref{fig:Jupiter_m=10^(-3)_Earth_dt=10^(-1)}
+
+\begin{figure} [H]
+    \centering
+    \includegraphics[scale= 0.6] {oppg_3e_threebody_Jupiter_m=10_(-3)_Earth_dt=10(-1)}
+    \caption{The motion of the three body system, where Earth is plotted with a blue line, Jupiter with green and the Sun as a yellow dot. The plot shows the motion over a course of 10 years. We have used the time step $dt = 10^{-1}$.}
+    \label{fig:Jupiter_m=10^(-3)_Earth_dt=10^(-1)}
+\end{figure}
+
+The conservation of energy and angular momentum  for $dt= 10^{-3}$ and $dt = 10^{-1}$ is shown in table \ref{threebody_energy_dt=10(-3)} and \ref{threebody_energy_dt=10(-1)}
+
+\begin{table} [H]
+\caption{Conservation of energy and angular momentum for the three body system, using VelocityVerlet with $dt=10^{-3}$, over a 5 year period}
+\begin{tabular}{|c|c|c|} \hline
+    {\bf Numer of Timestep} & {\bf Total Energy [unit]}& {\bf Angular Momentum [unit]}\\ \hline
+    1000 & -0.0038167 & 0.0143197\\ \hline
+    2000 & -0.0038167 & 0.0143197\\ \hline
+    3000 & -0.0038167 & 0.0143197\\ \hline
+    4000 & -0.0038167 & 0.0143197\\ \hline
+    5000 & -0.0038167 & 0.0143197\\ \hline 
+\end{tabular}
+\label{threebody_energy_dt=10(-3)}
+\end{table}
+
+\begin{table} [H]
+\caption{Conservation of energy and angular momentum for the three body system, using VelocityVerlet with $dt=10^{-1}$, over a 5 year period}
+\begin{tabular}{|c|c|c|} \hline
+    {\bf Numer of Timestep} & {\bf Total Energy [unit]}& {\bf Angular Momentum [unit]}\\ \hline
+    10 & -0.0038167 & 0.0143197\\ \hline
+    20 & -0.0038166 & 0.0143197\\ \hline
+    30 & -0.0038166 & 0.0143197\\ \hline
+    40 & -0.0038165 & 0.0143197\\ \hline
+    50 & -0.0038164 & 0.0143197\\ \hline 
+\end{tabular}
+\label{threebody_energy_dt=10(-1)}
+\end{table}
+
+\paragraph{\textbf{$M_J = 0.01M_{\odot}$}}
+
+We increased the mass of Jupiter to $M_J = 0.01M_{\odot}$, and plotted the motion of the three body system. The result is shown in Figure \ref{fig:Jupiter_m=10^(-2)_Earth}
+
+\begin{figure} [H]
+    \centering
+    \includegraphics[scale=0.6]{oppg_3e_threebody_Jupiter_m=10_(-2)_Earth}
+    \caption{The motion of the three body system, where Earth is plotted with a blue line, Jupiter with green and the Sun as a yellow dot. The mass of Jupiter is 10 times its original. The plot shows the motion over a course of 5 years. We have used the time step $dt = 10^{-3}$}
+    \label{fig:Jupiter_m=10^(-2)_Earth}
+\end{figure}
+
+\paragraph{\textbf{$M_J = M_{\odot}$}}
+
+We increased the mass of Jupiter again, to $M_J = M_{\odot}$, and plotted the motion of the three body system. The result is shown in Figure \ref{fig:Jupiter_m=1_Earth}
+
+\begin{figure} [H]
+    \centering
+    \includegraphics[scale=0.6]{oppg_3e_threebody_Jupiter_m=1_Earth}
+    \caption{The motion of the three body system, where Earth is plotted with a blue line, Jupiter with green and the Sun as a yellow dot. The mass of Jupiter is 1000 times its original. The plot shows the motion over a course of 5 years. We have used the time step $dt = 10^{-3}$}
+    \label{fig:Jupiter_m=1_Earth}
+\end{figure}
+
 \subsection{Benchmarks}
-We did some benchmarks for the two-body system to check how the numerical velocity of Earth varying for different time steps when we are comparing with the analytical velocity calculated in Equation (\ref{eq:AnalyticVel}). The absolute error is calculated with a similar program to the one found in \textit{Test Velocity}. Since we are interested in the absolute error, the table shows the absolute error for different times (1 $yr$, 5 $yr$, 20 $yr$ and 50 $yr$) and different time steps ($10^-1$s, $10^-2$s and $10^-3$s):
+We did some benchmarks for the two-body system to check how the numerical velocity of Earth varying for different time steps when we are comparing with the analytical velocity calculated in Equation (\ref{eq:AnalyticVel}). The absolute error is calculated with a similar program to the one found in \textit{Test Velocity}, and the table shows the absolute error for different times (1 $yr$, 5 $yr$, 20 $yr$ and 50 $yr$) and different time steps ($10^-1$s, $10^-2$s and $10^-3$s):
 \begin{table}[H]
 \centering
 \caption{The absolute error for the Earth-Sun system where $dt=[10^-1s,10^-2s,10^-3s]$ calculated after 1 $yr$, 5 $yr$, 20 $yr$ and 50 $yr$.}
@@ -424,8 +498,14 @@ $\log_{10}(dt)$ [s]        & -1 & -2 & -3 & -4 \\
 \hline
 \end{tabular}
 \end{table}
-
+The absolute error is varying, but we can see a
 \section{Discussion}
+
+
+
+We saw that the Solar system is stable for 100 $yr$, but as we have in Equation (\ref{eq:velVerx}) and (\ref{eq:vel2ndorder} the integration method has errors, so we expect that the system will be unstable in the long run. 
+
+When it comes to the benchmark results, we saw that the 
 \section{Conclusion}
 \section{References}
 \begingroup

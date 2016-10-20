@@ -20,17 +20,6 @@ void Examples::twoBodyProblem() {
     double G            = 4*pow(M_PI,2);
     //clock_t start, finish;
 
-<<<<<<< HEAD
-    System* twoBodySystem = new System();
-    twoBodySystem->setIntegrator        (new VelocityVerlet(twoBodySystem));
-    twoBodySystem->setDt                (1e-4);
-    twoBodySystem->setPotential         (new NewtonianGravity(G));
-    twoBodySystem->setInitialCondition  (new TwoBody());
-    twoBodySystem->setFileWriting       (true);
-    twoBodySystem->setTestVelocity      (true, 1); //(Run/not, tol)
-    twoBodySystem->removeLinearMomentum ();
-    twoBodySystem->integrate            (500000);
-=======
     System twoBodySystem;
     twoBodySystem.setIntegrator        (new VelocityVerlet(&twoBodySystem));
     twoBodySystem.setDt                (1e-4);
@@ -44,7 +33,6 @@ void Examples::twoBodyProblem() {
     //finish = clock();
     //double t = (double) (finish - start)/CLOCKS_PER_SEC;
     //std::cout << t << std::endl;
->>>>>>> 6d90006b68a70ea3a06804e042df02c770b6b391
 }
 
 void Examples::threeBodyProblem() {
@@ -63,17 +51,6 @@ void Examples::solarSystemProblem()
 {
     double G = 4*pow(M_PI,2);
 
-<<<<<<< HEAD
-    System* solarSystem = new System();
-    solarSystem->setIntegrator          (new VelocityVerlet(solarSystem));
-    solarSystem->setDt                  (1e-3);
-    solarSystem->setPotential           (new NewtonianGravity(G));
-    solarSystem->setInitialCondition    (new SolarSystem());
-    solarSystem->setFileWriting         (true);
-    solarSystem->removeLinearMomentum   ();
-    solarSystem->integrate              (100000);
-    solarSystem->computeAngularMomentum ();
-=======
     System solarSystem;
     solarSystem.setIntegrator          (new VelocityVerlet(&solarSystem));
     solarSystem.setDt                  (1e-3);
@@ -83,7 +60,6 @@ void Examples::solarSystemProblem()
     solarSystem.removeLinearMomentum   ();
     solarSystem.integrate              (50000);
     solarSystem.computeAngularMomentum ();
->>>>>>> 6d90006b68a70ea3a06804e042df02c770b6b391
 }
 
 void Examples::twoBody_escape_velProblem() {
