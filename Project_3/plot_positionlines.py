@@ -9,12 +9,6 @@ with  open('positions.dat', 'r') as inFile :
     n = len(str)/2
     num_lines = sum(1 for line in open('positions.dat'))
 
-'''
-for i in xrange(n) :
-    R.append([])
-
-# R = [[],[],[],..]
-'''
 infile = open('positions.dat', 'r')
 
 R = np.zeros([n,num_lines])
@@ -30,12 +24,9 @@ planets = ['Sun', 'Earth', 'Mars', 'Jupiter']
 colors = ['oy', '.b', '.g', '.c', '.r', '.w', '.k']
 ms=[8,5,5,5,5,5,5]
 
-#plt.plot(0.0,0.0,'oy')
-p=[]
-#for i in xrange(len(R)):
-#    p.append(planets[i])
-#    for j in xrange(0,num_lines,1):
-#        plt.plot(R[0][j],R[1][j])#[1],colors[i],markersize=ms[i])
+for i in xrange(len(R)):
+    for j in xrange(0,num_lines,1):
+        plt.plot(R[0][:],R[1][:], colors[i], markersize=ms[i])
 
 plt.plot(R[0][:],R[1][:])
 plt.axis([-1.55,1.55,-1.25,1.25])

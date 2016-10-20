@@ -42,7 +42,7 @@ pylab.xlabel('x-direction')
 pylab.ylabel('y-direction')
 pylab.show()
 
-for i in xrange(0, lineNum, 10):
+for i in xrange(0, lineNum, 50):
     for k in xrange(n):
         lines[k].set_data(R[k][i][0], R[k][i][1])
     pylab.draw()

@@ -25,7 +25,7 @@ void Examples::twoBodyProblem() {
     twoBodySystem->setFileWriting       (true);
     twoBodySystem->setTestVelocity      (true, 1); //(Run/not, tol)
     twoBodySystem->removeLinearMomentum ();
-    twoBodySystem->integrate            (5000);
+    twoBodySystem->integrate            (500000);
 }
 
 void Examples::threeBodyProblem() {
@@ -51,7 +51,7 @@ void Examples::solarSystemProblem()
     solarSystem->setInitialCondition    (new SolarSystem());
     solarSystem->setFileWriting         (true);
     solarSystem->removeLinearMomentum   ();
-    solarSystem->integrate              (50000);
+    solarSystem->integrate              (100000);
     solarSystem->computeAngularMomentum ();
 }
 
