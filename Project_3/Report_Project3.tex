@@ -507,24 +507,26 @@ $\log_{10}(dt)$ [s]        & -1 & -2 & -3 & -4 \\
 \end{table}
 The absolute error is not stable, but for $dt=10^{-2}$ and $dt=1-^{-3}$ we can see a tendency - they both have increasing absolute error for longer times. For $dt=10^{-4}$ the absolute error is almost constant for all the times, and larger than for $dt=10^{-2}$ and $dt=10^{-3}$
 \section{Discussion}
-<<<<<<< HEAD
-
-When comparing the motion of the two body system in Figure \ref{fig:EarthOrbit_Verlet_det = 10(-3)} and the three body system in Figure \ref{fig:Jupiter_m=10^(-3)_Earth_dt=10^(-3)}, we observe that the Earth's orbit is slightly more elliptical after Jupiter is added. This is as expected, since the gravitational force between Earth and Jupiter drags Earth slightly out of its circular orbit. When Jupiter's mass was increased to $M_J = 0.01 M_{\odot}$, in Figure \ref{fig:Jupiter_m=10^(-2)_Earth}, we see that this drags Earth even further out of the circular orbit, and Earth spirals outwards. Finally, when $M_J = M_{\odot}$, in Figure \ref{fig:Jupiter_m=1_Earth}, the three body system becomes unstable. Theoretically we have here created a binary star system. Here we also  plot the movement of the Sun, we observe that the Sun is now visibly affected by the gravitational pull from Jupiter. Based on these plots, we conclude that our three body system behaves as we expect, and we conclude that our code works for modeling the motion of planets.\par 
-\vspace{3mm}
-
-By comparing Figure \ref{fig:Jupiter_m=10^(-3)_Earth_dt=10^(-3)} with Figure \ref{fig:Jupiter_m=10^(-3)_Earth_dt=10^(-1)}, we study the stability of the VerletVelocity ODE-solver. The larger time step visibly affects the stability of the VerletVelocity solver, as it did for the two body system. 
-
-We saw that the Solar system is stable for 100 $yr$, but as we have in Equation (\ref{eq:velVerx}) and (\ref{eq:vel2ndorder} the integration method has errors, so we expect that the system will be unstable in the long run. 
-
-When it comes to the benchmark results, we saw that the absolute error was unstable. For $dt=10^{-1}$ the error was large as expected, but when we decreased $dt$ to $10^{-2}$, the errors were much smaller. The reason of this dramatic difference is that the error goes as $dt^3$, so it should not be surprising that the error decreases really fast for smaller time steps. The same tendency applies for $dt=10^{-3}$, but what about $dt=10^{-4}$? For $dt=10^{-4}$ the absolute error is large, something that is surprising based on the fact that we would expect an error of order $dt^3$. There can be several reasons why the error is increasing here, but the most probable is that we get truncation errors when we are finding the difference numerically. Computers with 64-bits processors is able to handle about 16 decimals, and as we can see from Table (\ref{tab:Benchmark}), the absolute error is about $10^{-14}$ when $dt=10^{-3}$. For $dt=10^{-4}$ we will have an actual absolute error of an order of $ <10^{-16}$. From the same table we can read that the error is increasing for longer times (for $dt=10^{-2}$ and $dt=10^{-3}$)
-
-
 In figure \ref{euler_dt=10(-1)} and \ref{fig:oppg_3c_sun_earth_euler_dt=10(-1)} we clearly see that velocity Verlet is far superior to Euler-Cromer when it comes to numerical precision. However the velocity Verlet was about $50\%$ more time consuming. This is also evident when looking at conservation of energy and angular momentum for $dt = 10^{-1}$, where we see that the change in energy and angular momentum is much smaller for velocity Verlet than Euler-Cromer.
 
 From table \ref{trappedTable} we see that our numerically calculated escape velocity for the two-body system is as we expected for time step $dt=10^{-3}$.
-\section{Conclusion}
 
-Benchmark: The error is decreasing really fast!
+By comparing Figure \ref{fig:Jupiter_m=10^(-3)_Earth_dt=10^(-3)} with Figure \ref{fig:Jupiter_m=10^(-3)_Earth_dt=10^(-1)}, we study the stability of the VerletVelocity ODE-solver. The larger time step visibly affects the stability of the VerletVelocity solver, as it did for the two body system. 
+
+\par
+
+When comparing the motion of the two body system in Figure \ref{fig:EarthOrbit_Verlet_det = 10(-3)} and the three body system in Figure \ref{fig:Jupiter_m=10^(-3)_Earth_dt=10^(-3)}, we observe that the Earth's orbit is slightly more elliptical after Jupiter is added. This is as expected, since the gravitational force between Earth and Jupiter drags Earth slightly out of its circular orbit. When Jupiter's mass was increased to $M_J = 0.01 M_{\odot}$, in Figure \ref{fig:Jupiter_m=10^(-2)_Earth}, we see that this drags Earth even further out of the circular orbit, and Earth spirals outwards. Finally, when $M_J = M_{\odot}$, in Figure \ref{fig:Jupiter_m=1_Earth}, the three body system becomes unstable. Theoretically we have here created a binary star system. Here we also  plot the movement of the Sun, we observe that the Sun is now visibly affected by the gravitational pull from Jupiter. Based on these plots, we conclude that our three body system behaves as we expect, and we conclude that our code works for modeling the motion of planets.\par 
+\vspace{3mm}
+\par
+
+We saw that the Solar system is stable for 100 $yr$, but as we have in Equation (\ref{eq:velVerx}) and (\ref{eq:vel2ndorder} the integration method has errors, so we expect that the system will be unstable in the long run. \par
+
+When it comes to the benchmark results, we saw that the absolute error was unstable. For $dt=10^{-1}$ the error was large as expected, but when we decreased $dt$ to $10^{-2}$, the errors were much smaller. The reason of this dramatic difference is that the error goes as $dt^3$, so it should not be surprising that the error decreases really fast for smaller time steps. The same tendency applies for $dt=10^{-3}$, but what about $dt=10^{-4}$? For $dt=10^{-4}$ the absolute error is large, something that is surprising based on the fact that we would expect an error of order $dt^3$. There can be several reasons why the error is increasing here, but the most probable is that we get truncation errors when we are finding the difference numerically. Computers with 64-bits processors is able to handle about 16 decimals, and as we can see from Table (\ref{tab:Benchmark}), the absolute error is about $10^{-14}$ when $dt=10^{-3}$. For $dt=10^{-4}$ we will have an actual absolute error of an order of $ <10^{-16}$. From the same table we can read that the error is increasing for longer times (for $dt=10^{-2}$ and $dt=10^{-3}$), something that is expected since we should have the same error for every year (every orbit). 
+\section{Conclusion}
+We have seen that the two- and three body systems behave as expected when given different sets of initial values, and when the whole solar system is implemented, it is stable over the course of a hundred years. This indicates that our model and implementation of the Newtonian gravitational force is correct. \par 
+Furthermore, we have also seen that the ODE-solver EulerCromer is less time consuming than the VelocityVerlet solver, though VelocityVerlet is more stable and energy-conserving for larger time steps that EulerCromer.
+
+For the benchmark we found that the error is decreasing really fast for smaller time steps when we do not deal with truncation error. For longer times the error is increasing.
 \section{References}
 \begingroup
 \renewcommand{\section}[2]{}
