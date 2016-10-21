@@ -169,7 +169,7 @@ For an object in a distance $|\vec{r}| = 1AU$ from the Sun (as is the case for t
 If we want to check numerically whether a planet is trappet in a gravitational field or escapes, we can implement a test that checks if the total energy of the planet $E = E_k + E_p$ is smaller or bigger than a given tolerance. If the total energy is bigger that the tolerance, the planet is not bound in the gravitational field, and will escape.
 
 \subsection{Three-Body System}
-Furthermore we have a three-body system where the heaviest planet in the solar system, Jupiter, is set to a circular orbit around the Sun while Earth is still orbiting the sun by a distance 1AU with the sun kept fixed to the origin. For the two-body system we found an analytical solution of the motion, but in this case this is hard, or maybe not even possible, because of the interaction between the planets. Nevertheless we can solve it numerically by using the same equations as for the two-body system. For each "time-step" $dt$ we now need to update the position and velocity for both planets where we also compute the interaction forces between them. 
+Furthermore we have a three-body system where the most massive planet in the solar system, Jupiter, is set to a circular orbit around the Sun while Earth is still orbiting the sun by a distance 1AU with the sun kept fixed to the origin. For the two-body system we found an analytical solution of the motion, but in this case this is hard, or maybe not even possible, because of the interaction between the planets. Nevertheless we can solve it numerically by using the same equations as for the two-body system. For each "time-step" $dt$ we now need to update the position and velocity for both planets where we also compute the interaction forces between them. 
 
 \subsection{Solar System (Many-body System)}
 The implementation of the many-body system is very similar to the three-body system, the main difference is that we will have many more forces. Every time we add a new object, the new object will have forces acting on all other objects, so we will have $N-1$ new forces where $N$ is the total number of objects. The total number of forces acting on a many-body system is therefore given by
@@ -389,7 +389,7 @@ We ran our program with $dt = 10^{-3}$ and $100000$ grid points several times, c
 \begin{table} [H]
 \centering
 \caption{Running time for $dt=10^{-3}$ and $100000$ grid points for EulerCromer and VelocityVerlet, given in seconds}
-\begin{tabularx}{\textwidth}{cXc} \toprule
+\begin{tabularx}{\textwidth}{XccX} \toprule
     \bf EulerCromer & \bf VelocityVerlet \\ \hline
     0.096678 & 0.149523\\ \hline
     0.094968 & 0.156597\\ \hline
@@ -411,7 +411,7 @@ In section 2.2.2 we calculated the analytical escape velocity for a planet in a 
 \begin{table} [H]
 \centering
 \caption{Different initial velocities in the y-direction, and the result of the test if the planet escapes or is trapped}
-\begin{tabularx}{\textwidth}{cXc} \toprule
+\begin{tabularx}{\textwidth}{XcXcX} \toprule
     (0,$v_y$, 0) [AU/yr] & \bf Is the planet trapped or does it escape \\ \hline
     8.883 & trapped \\ \hline
     8.884 & trapped \\ \hline
