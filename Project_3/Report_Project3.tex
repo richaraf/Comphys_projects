@@ -503,7 +503,7 @@ We increased the mass of Jupiter again, to $M_J = M_{\odot}$, and plotted the mo
 \end{figure}
 
 \subsection{Mercury-Sun system}
-To find the perihelion precession of Mercury, we gave Mercury initial position (0, 0.3075, 0) AU and velocity (0, 12.44, 0) AU/yr, and the sun at origo with no velocity. For time step $dt=1e-6$ the perihelion angles, using equation \ref{eq:perihelionangle}, for ten years was found to be as shown in figure \ref{fig:precesion}. From figure \ref{fig:precesion} we get a precession of $\approx 17$ arc seconds per decade which is the same as $\approx 170$ arc seconds per century.
+To find the perihelion precession of Mercury, we gave Mercury initial position (0, 0.3075, 0) AU and velocity (0, 12.44, 0) AU/yr, and the sun at origo with no velocity. For time step $dt=10^{-6}$ the perihelion angles, using equation \ref{eq:perihelionangle}, for ten years was found to be as shown in figure \ref{fig:precesion}. From figure \ref{fig:precesion} we get a precession of $\approx 17$ arc seconds per decade which is the same as $\approx 170$ arc seconds per century.
 \begin{figure}
 \centering
 \includegraphics[scale=0.7]{precesion.png}
@@ -545,6 +545,8 @@ When comparing the motion of the two body system in Figure \ref{fig:EarthOrbit_V
 \par
 
 We saw that the Solar system is stable for 100 $yr$, but as we have seen in Equation (\ref{eq:velVerx}) and (\ref{eq:velVerv}) the integration method has errors, so we expect that the system will be unstable in the long run. \par
+
+We found the perihelion precession of Mercury to be approximately $170$ arc seconds per century, which is more than three times what we expected. We used a time step of $dt=10^{-6}$, which in retrospect may have been to low. A reduction of the time step would have probably yielded a better result. 
 
 When it comes to the benchmark results, we saw that the absolute error was unstable. For $dt=10^{-1}$ the error was large as expected, but when we decreased $dt$ to $10^{-2}$, the errors were much smaller. The reason of this dramatic difference is that the error goes as $dt^3$, so it should not be surprising that the error decreases really fast for smaller time steps. The same tendency applies for $dt=10^{-3}$, but what about $dt=10^{-4}$? For $dt=10^{-4}$ the absolute error is large, something that is surprising based on the fact that we would expect an error of order $dt^3$. There can be several reasons why the error is increasing here, but the most probable is that we get truncation errors when we are finding the difference numerically. Computers with 64-bits processors is able to handle about 16 decimals, and as we can see from Table (\ref{tab:Benchmark}), the absolute error is about $10^{-14}$ when $dt=10^{-3}$. For $dt=10^{-4}$ we will have an actual absolute error of an order of $ <10^{-16}$. From the same table we can read that the error is increasing for longer times (for $dt=10^{-2}$ and $dt=10^{-3}$), something that is expected since we should have the same error for every year (every orbit). 
 \section{Conclusion}
