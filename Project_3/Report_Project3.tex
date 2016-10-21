@@ -107,7 +107,7 @@ In the two-body case the velocity of Earth is set to the analytical velocity whi
 In the Solar system the orbits of the planets are elliptical, with the Sun in one of the foci \cite{kepler}. In the two-body- and three-body parts of this system, we assume circular orbits for the planets we study. To get circular orbits, we have to assume that $M_{\odot} >> M_{planet}$, and that the Sun stands still in the center of mass of the system. \par
 \vspace{3mm}
 
-For setting the initial velocity of the planets, we need the orbital velocity of a circular orbit. The centripetal force is the force that makes an object follow a curved path, and its magnitude is given by equation \ref{eq:CentripetalForce}, where $m$ is the mass of object, $v$ is the tangential velocity and $r$ is the radius of the circular path. 
+For setting the initial velocity of the planets, we need the orbital velocity of a circular orbit. The centripetal force is the force that makes an object follow a curved path, and its magnitude is given by equation \ref{eq:CentripetalForce}, where $m$ is the mass of the object, $v$ is the tangential velocity and $r$ is the radius of the circular path. 
 
 \begin{equation}
      F_c = m \frac{v^2}{r}
@@ -175,7 +175,7 @@ P(N)=\sum_{i=1}^N(i-1)=\sum_{i=0}^{N-1}i=\frac{N(N-1)}{2}.
 where the last transition can be found in a collection of mathematical formulae.  We will also look at the real case when all the objects in the solar system are orbiting a barycentre (center of mass). When we implement the model, we do not need equations for all the forces, but we need one equation for the position and velocity in each direction for all the objects. We will therefore need $2\cdot2\cdot8=32$ equations to implement a model for our solar system with 8 planets and the sun in two dimensions. For this we need the masses, initial positions in relation to the barycentre and initial velocities for all the planets and the sun. The masses and distances to Sun are found in Table (\ref{tab:Masses}).
 \begin{table}[H]
 \centering
-\caption{Masses and distances to sun for all planets in the solar system, given in respectively solar masses and AU.}
+\caption{Masses and distances to sun for all planets in the solar system, given in respectively $M_\odot$ and AU.}
 \label{tab:Masses} 
 \begin{tabularx}{\textwidth}{lXcccXr}
 \toprule
@@ -231,7 +231,7 @@ If we give Mercury initial position on the $x$-axis such that $y=0$, we can find
 \text{tan }\theta_p = \frac{y_p}{x_p},
 \label{eq:perihelionangle}
 \end{equation}
-where $x_p$ and $y_p$ gives the position of Mercury at perihelion.
+where $x_p$ and $y_p$ give the position of Mercury at perihelion.
 \section{Method}
 \subsection{Ordinary differential equation solvers}
 In this project we use two different ODE solvers, the Euler-Cromer method and the velocity Verlet method. Both are derived using Taylor expansions to respectfully second and third order. For sufficiently small timesteps $dt$, both these methods should conserve energy for conservative forces such as the gravitational force. In both methods we are looking at a system with position $x_i$ and velocity $v_i$ at step number $i$, where $x_0$ and $v_0$ are known initial conditions.
@@ -246,6 +246,13 @@ We can then use $v_{i+1}$ to find the position at step $i+1$
 x_{i+1} = x_i + dtv_{i+1} + {\cal O}(dt^2).
 \label{eq:EulCrox}
 \end{equation}
+We can implement the method numerically by simple for-loop:
+\begin{lstlisting}
+for(i, i++):
+	a(i) = computeForce/mass
+	v(i+1) = v(i) + dt * a(i)
+	x(i+1) = x(i) + dt * v(i+1)
+\end{lstlisting}
 In our program counting $+,-,*,/$ the Euler-Cromer method should take $5N$ FLOPS per object (planet or sun).
 \subsubsection{Velocity Verlet}
 By using third order Taylor expansions we get that the position at step number $i+1$ becomes \begin{equation}
@@ -309,23 +316,23 @@ Using the assumption of a circular orbit and the initial velocity for the Earth 
 \begin{figure} [H]
     \centering
     \includegraphics[scale=0.6]{oppg_3c_sun_earth_verlet_dt=10(-3)}
-    \caption{The Earth's orbit, shown as a blue line, around the Sun, shown as a yellow dot. The motion is solved with VelocityVerlet, and plotted with $dt = 10^{-3}$ for a 10 year time period.}
+    \caption{The Earth's orbit, shown as a blue line, around the Sun, shown as a yellow dot. The motion is solved with VelocityVerlet, and plotted with $dt = 10^{-3}$ for a 10 year time period. The unit on both axis is AU.}
     \label{fig:EarthOrbit_Verlet_det = 10(-3)}
 \end{figure}
 
 \begin{figure} [H]
     \centering
     \includegraphics[scale=0.6]{oppg_3c_sun_earth_verlet_dt=10(-1)}
-    \caption{The Earth's orbit, shown as blue lines, around the Sun, shown as a yellow dot. The motion is solved with VelocityVerlet, and plotted with $dt = 10^{-1}$ for a 10 year time period.}
+    \caption{The Earth's orbit, shown as blue lines, around the Sun, shown as a yellow dot. The motion is solved with VelocityVerlet, and plotted with $dt = 10^{-2}$ for a 10 year time period. The unit on both axis is AU.}
     \label{fig:EarthOrbit_Verlet_det = 10(-1)}
 \end{figure}
 
-We also compared this to the results we got when using the ODE solver EulerCromer. The plot for $dt=10{-3}$ looked the same as Figure \ref{fig:EarthOrbit_Verlet_det = 10(-3)}. The result when using EulerCromer for $dt=10^{-1}$ is presented in Figure \ref{fig:oppg_3c_sun_earth_euler_dt=10(-1)}
+We also compared this to the results we got when using the ODE solver EulerCromer. The plot for $dt=10^{-3}$ looked the same as Figure \ref{fig:EarthOrbit_Verlet_det = 10(-3)}. The result when using EulerCromer for $dt=10^{-1}$ is presented in Figure \ref{fig:oppg_3c_sun_earth_euler_dt=10(-1)}
 
 \begin{figure} [H]
     \centering
     \includegraphics[scale=0.6]{oppg_3c_sun_earth_euler_dt=10(-1)}
-    \caption{The Earth's orbit, shown as blue lines, around the Sun, shown as a yellow dot. The motion is solved with EulerCromer, and plotted with $dt = 10^{-1}$ for a 10 year time period.}
+    \caption{The Earth's orbit, shown as blue lines, around the Sun, shown as a yellow dot. The motion is solved with EulerCromer, and plotted with $dt = 10^{-1}$ for a 10 year time period. The unit on both axis is AU.}
     \label{fig:oppg_3c_sun_earth_euler_dt=10(-1)}
 \end{figure}
 
@@ -351,15 +358,15 @@ We checked the conservation of total energy and angular momentum for EulerCromer
 
 \begin{table} [H]
 \centering
-\caption{Conservation of energy and angular momentum, using EulerCromer with $dt=10^{-1}$, for a 5 year period.}
+\caption{Conservation of energy and angular momentum, using EulerCromer with $dt=10^{-2}$, for a 5 year period.}
 \begin{tabularx}{\textwidth}{cXcXc} \toprule
     {\bf Number of Timesteps} & {\bf Total Energy }& {\bf Angular Momentum} \\
     &[$M_\odot AU^2/yr^2$]&[$M_\odot AU^2/yr$]\\ \hline
-    10 & -0.0000161 & 0.0000063\\ \hline
-    20 & -0.0000172 & 0.0000063\\ \hline
-    30 & -0.0000183 & 0.0000063\\ \hline
-    40 & -0.0000197 & 0.0000063\\ \hline
-    50 & -0.0000123 & 0.0000063\\ \bottomrule 
+    100 & -0.0000161 & 0.0000063\\ \hline
+    200 & -0.0000172 & 0.0000063\\ \hline
+    300 & -0.0000183 & 0.0000063\\ \hline
+    400 & -0.0000197 & 0.0000063\\ \hline
+    500 & -0.0000123 & 0.0000063\\ \bottomrule 
 \end{tabularx}
 \label{euler_dt=10(-1)}
 \end{table}
@@ -496,7 +503,7 @@ We increased the mass of Jupiter again, to $M_J = M_{\odot}$, and plotted the mo
 \end{figure}
 
 \subsection{Solar System (many-body System)}
-We implemented the eight planets of the solar system and observed that for the velocity Verlet method and time step $dt=1e-3$ the system was stable for at least a hundred years. 
+We implemented the eight planets of the solar system and observed that for the velocity Verlet method and time step $dt=10^{-3}$ the system was stable for at least a hundred years. 
 
 \subsection{Mercury-Sun system}
 To find the perihelion precession of Mercury, we gave Mercury initial position (0.3075, 0, 0) AU and velocity (0, 12.44, 0) AU/yr, and the sun at origo with no velocity. We also used the relativistic gravitational force (\ref{eq:GravitationalForceRelativistic}). For time step $dt=10^{-6}$ the perihelion angles, using equation \ref{eq:perihelionangle}, for ten years was found to be as shown in figure \ref{fig:precesion}. From figure \ref{fig:precesion} we get a precession of $\approx 17$ arc seconds per decade which is the same as $\approx 170$ arc seconds per century.
@@ -508,7 +515,7 @@ To find the perihelion precession of Mercury, we gave Mercury initial position (
 \end{figure}
 
 \subsection{Benchmarks}
-We did some benchmarks for the two-body system to check how the numerical velocity of Earth varied for different time steps when compared to the analytical velocity calculated in Equation (\ref{eq:AnalyticVel}). The absolute error is calculated with a similar program to the one found in \textit{Test Velocity}, and the table \ref{tab:Benchmark} shows the absolute error for different times (1 $yr$, 5 $yr$, 20 $yr$ and 50 $yr$) and different time steps ($10^-1$ $yr$, $10^-2$ $yr$ and $10^-3$ $yr$).
+We did some benchmarks for the two-body system to check how the numerical velocity of Earth varied for different time steps when compared to the analytical velocity calculated in Equation (\ref{eq:AnalyticVel}). The absolute error is calculated with a similar program to the one found in \textit{Test Velocity}, and the table \ref{tab:Benchmark} shows the absolute error for different times (1 $yr$, 5 $yr$, 20 $yr$ and 50 $yr$) and different time steps ($10^{-1}$ $yr$, $10^{-2}$ $yr$ and $10^{-3}$ $yr$).
 \begin{table}[H]
 \centering
 \caption{The absolute error for the Earth-Sun system where $dt=[10^{-1}yr,10^{-2}yr,10^{-3}yr]$ calculated after 1 $yr$, 5 $yr$, 20 $yr$ and 50 $yr$.}
@@ -526,7 +533,7 @@ $\log_{10}(dt)$ [yr]        & -1 & -2 & -3 & -4 \\
 \bottomrule
 \end{tabularx}
 \end{table}
-The absolute error is not stable, but for $dt=10^{-2}$ and $dt=10^{-3}$ we can see a tendency - they both have increasing absolute error for longer times. For $dt=10^{-4}$ the absolute error is almost constant for all the times, and larger than for $dt=10^{-2}$ and $dt=10^{-3}$
+The absolute error is not stable, but for $dt=10^{-2}$ and $dt=10^{-3}$ we can see a tendency - they both have increasing absolute error for longer times. For $dt=10^{-4}$ the absolute error is almost constant for all the times, and larger than for $dt=10^{-2}$ and $dt=10^{-3}$.
 \section{Discussion}
 In figure \ref{euler_dt=10(-1)} and \ref{fig:oppg_3c_sun_earth_euler_dt=10(-1)} we clearly see that velocity Verlet is far superior to Euler-Cromer when it comes to numerical precision. However the velocity Verlet was about $50\%$ more time consuming. This is also evident when looking at conservation of energy and angular momentum for $dt = 10^{-1}$, where we see that the change in energy and angular momentum is much smaller for velocity Verlet than Euler-Cromer.
 
@@ -548,7 +555,7 @@ When it comes to the benchmark results, we saw that the absolute error was unsta
 \section{Conclusion}
 We have seen that the two- and three body systems behave as expected when given different sets of initial values, and when the whole solar system is implemented, it is stable over the course of a hundred years. This indicates that our model and implementation of the Newtonian gravitational force is correct. However for the perihelion precession of Mercury our findings where wrong, but this was probably due too insufficient time resolution. 
 
-Furthermore, we have also seen that the ODE-solver EulerCromer is less time consuming than the VelocityVerlet solver, though VelocityVerlet is more stable and energy-conserving for larger time steps that EulerCromer.
+Furthermore, we have also seen that the ODE-solver EulerCromer is less time consuming than the VelocityVerlet solver, though VelocityVerlet is more stable and energy-conserving for larger time steps than EulerCromer.
 
 For the benchmark we found that the error is decreasing really fast for smaller time steps when we do not deal with truncation error. For longer times the error is increasing. 
 \newpage
@@ -562,19 +569,19 @@ For the benchmark we found that the error is decreasing really fast for smaller 
   Department of Physics, University of Oslo.
   August 2015.
 \bibitem{Project_text}
-  Project Description:\newline
+  Project Description: 					(October 21th 2016)\newline
   \url{https://github.com/CompPhysics/ComputationalPhysics/blob/gh-pages/doc/Projects/2016/Project3/pdf/Project3.pdf}
 \bibitem{NASA}
-  Data from NASA:\newline
+  Data from NASA: 						(October 21th 2016)\newline
   \url{http://ssd.jpl.nasa.gov/horizons.cgi}
 \bibitem{kepler}
-  Kepler's laws of planetary motion:\newline
+  Kepler's laws of planetary motion: 	(October 21th 2016)\newline
   \url{https://en.wikipedia.org/wiki/Kepler\%27s_laws_of_planetary_motion}
 \bibitem{Barycenter}
-  Barycenter:\newline
+  Barycenter: 							(October 21th 2016)\newline
   \url{http://www.uio.no/studier/emner/matnat/astro/AST1100/h14/undervisningsmateriale/lecture1.pdf}
 \bibitem{solar-system-fys3150}
-  Code-basis:\newline
+  Code-basis: 							(October 21th 2016)\newline
   \url{https://github.com/mortele/solar-system-fys3150}
 \end{thebibliography}
 \endgroup
