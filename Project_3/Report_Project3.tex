@@ -40,7 +40,7 @@
 \begin{abstract}
 This project aims to use ODE solvers on orbiting planets. For a simple two-body system we compare the Euler-Cromer and the velocity Verlet methods. We then use velocity Verlet to model Earth-Jupiter-Sun systems, the solar system and the perihelion precession of Mercury.
 
-We found that velocity Verlet had a higher numerical precision than Euler-Cromer but is about $50\%$ more time consuming. For different choices of Jupiter-masses, the Earth-Jupiter-Sun system behaved as expected. Our implementation of the solar system was stable for at least a hundred years with time step $dt=10^{-3}$. However the perihelion precession of Mercury was not found to be anywhere close to what we expected.\end{abstract}
+We found that velocity Verlet had a higher numerical precision than Euler-Cromer but was about $50\%$ more time consuming. For different choices of Jupiter-masses, the Earth-Jupiter-Sun system behaved as expected. Our implementation of the solar system was stable for at least a hundred years with time step $dt=10^{-3}$. However the perihelion precession of Mercury was found to be several time larger than expected.\end{abstract}
 \begin{itemize}
 \item Github repository containing programs and results are in: \url{https://github.com/richaraf/Comphys_projects/tree/master/Project_3}
 \end{itemize}
@@ -48,7 +48,7 @@ We found that velocity Verlet had a higher numerical precision than Euler-Cromer
 The solar system is a complex system consisting, among other things, of a star, eight planets and several moons. Newton's law of gravity gives that the force acting between each pairs of bodies in the system is described by equation \ref{eq:GravityForce}
 
 \begin{equation}
-    F_G = \frac{G m_1 m_2}{|\vec{r}|^3}\vec{r}
+    F_G = \frac{G m_1 m_2}{|\vec{r}|^3}\vec{r}.
     \label{eq:GravityForce}
 \end{equation}
 
@@ -65,12 +65,8 @@ In this project we are simulating the planet orbits of the solar system by using
 \Sigma\vec{F}=m\vec{a}
 \label{eq:N2L}
 \end{equation}
-where $\Sigma \vec{F}$ is the sum of the forces acting on the object and $\vec{a}$ is the acceleration. In our case we are going to use this reversed, with finding the acceleration when we already know the force on an object and the mass of the object. Since we are going to deal with long distances, heavy objects and high velocities, we will use astronomical units such as average distance between Earth and the sun, AU, (1AU $\approx1.5\cdot10^{11}$m), Solar mass $M_\odot$ ($1M_{\odot}\approx2\cdot10^{30}$ kg) and velocity in AU/$yr$, while the time has unit years, $yr$. The constants are taken from the Project instructions (reference \cite {Project_text}). In space we do not have any friction, so all forces come from gravitation between planets, stars and other objects. Newton's universal law of gravitation between two objects is given by
-\begin{equation}
-\vec{F}_G=-G\frac{m_1\cdot m_2}{r^2}\hat{r}
-\label{eq:GravitationalForce}
-\end{equation}
-where $G$ is the gravitational constant, $m_1$ and $m_2$ are the masses of the objects, $r$ is the distance between them and $\hat{r}$ is an unit vector in radial direction \cite{Barycenter}. Since we are using astronomical units, this gives the value $G = 4\pi^2 M_{\odot} ^{-1} AU^3 yr^{-2}$ \cite{Project_text} for the gravitational constant.  The absolute gravitational force between two objects is therefore
+where $\Sigma \vec{F}$ is the sum of the forces acting on the object and $\vec{a}$ is the acceleration. In our case we are going to use this reversed, with finding the acceleration when we already know the force on an object and the mass of the object. Since we are going to deal with long distances, heavy objects and high velocities, we will use astronomical units such as average distance between Earth and the sun, AU, (1AU $\approx1.5\cdot10^{11}$m), Solar mass $M_\odot$ ($1M_{\odot}\approx2\cdot10^{30}$ kg) and velocity in AU/$yr$, while the time has unit years, $yr$. The constants are taken from the Project instructions \cite {Project_text}. In space we do not have any friction, so all forces come from gravitation between planets, stars and other objects. Newton's universal law of gravitation between two objects is given by equation (\ref{eq:GravityForce})
+where $G$ is the gravitational constant, $m_1$ and $m_2$ are the masses of the objects, $\vec{r}$ is a vector representing the distance between them. Since we are using astronomical units, this gives the value $G = 4\pi^2 M_{\odot} ^{-1} AU^3 yr^{-2}$ \cite{Project_text} for the gravitational constant.  The absolute gravitational force between two objects is therefore
 \begin{equation}
 F_G=-G\frac{m_1\cdot m_2}{r^2}.
 \label{eq:absGravitationalForce}
@@ -85,9 +81,9 @@ Another physical concept which we are going to use to check the stability of the
 \begin{equation}
 L=\vec{r}\times\vec{p}.
 \end{equation}
-where we assume that the centre of rotation is set to the origin. The solar system is a global system (not affected by other systems), and the globally conservation laws will always hold. This means that we do not have any external torque, so the angular momentum must be conserved. 
+where we assume that the centre of rotation is set to the origin. The solar system is a global system (not affected by other systems), and the conservation laws will always hold. This means that we do not have any external torque, so the angular momentum must be conserved. 
 \subsection{Two-body System}
-Initially we are studying the two-body problem with the sun fixed to origin and with Earth orbiting the sun. This is not fully correct, since the size of the force on the sun is the same as the size of the force on Earth (Newton's third law). Anyway this is still a good approximation because the mass of Sun is much larger than that of Earth, so the affection from Earth on the sun is negligible. The Earth's orbit around the sun is co-planar (two-dimensional), so we are decomposing the force in two directions, and from Equation (\ref{eq:N2L}) we obtain
+Initially we are studying the two-body problem with the sun fixed to origin and with Earth orbiting the sun. This is not fully correct, since the size of the force on the sun is the same as the size of the force on Earth (Newton's third law). Anyway this is still a good approximation because the mass of Sun is much larger than that of Earth, such that the movement of the sun becomes negligible. The Earth's orbit around the sun is co-planar (two-dimensional), so we are decomposing the force in two directions, and from Equation (\ref{eq:N2L}) we obtain
 \begin{equation}
 a_x=\frac{d^2x}{dt^2}=\frac{F_{G,x}}{M_{Earth}}
 \end{equation}
@@ -95,7 +91,7 @@ and
 \begin{equation}
 a_y=\frac{d^2y}{dt^2}=\frac{F_{G,y}}{M_{Earth}}.
 \end{equation}
-Where $F_{G,x}$ and $F_{G,y}$ are the forces acting on Earth in respectively x-direction and y-direction. By insert Equation (\ref{eq:GravitationalForce}) into these equations, we can calculate the total acceleration of Earth:
+Where $F_{G,x}$ and $F_{G,y}$ are the forces acting on Earth in respectively x-direction and y-direction. By inserting Equation (\ref{eq:GravityForce}) into these equations, we can calculate the total acceleration of Earth in the $x$ and $y$ directions:
 \begin{equation}
 \frac{d^2x}{dt^2}=-G\frac{M_\odot}{r^3}x
 \end{equation}
@@ -108,7 +104,7 @@ In the two-body case the velocity of Earth is set to the analytical velocity whi
  
 \subsection{Gravitational theory}
 \subsubsection{Circular Orbit}
-In the Solar system the orbits of the planets are elliptical, with the Sun in one of the \cite{kepler}. In the two-body- and three-body parts of this system, we assume circular orbits for the planets we study. To get circular orbits, we have to assume that $M_{\odot} >> M_{planet}$, and that the Sun stands still in the center of mass of the system. \par
+In the Solar system the orbits of the planets are elliptical, with the Sun in one of the foci \cite{kepler}. In the two-body- and three-body parts of this system, we assume circular orbits for the planets we study. To get circular orbits, we have to assume that $M_{\odot} >> M_{planet}$, and that the Sun stands still in the center of mass of the system. \par
 \vspace{3mm}
 
 For setting the initial velocity of the planets, we need the orbital velocity of a circular orbit. The centripetal force is the force that makes an object follow a curved path, and its magnitude is given by equation \ref{eq:CentripetalForce}, where $m$ is the mass of object, $v$ is the tangential velocity and $r$ is the radius of the circular path. 
@@ -118,7 +114,7 @@ For setting the initial velocity of the planets, we need the orbital velocity of
      \label{eq:CentripetalForce}
 \end{equation}
 
-For a circular orbit, the centripetal force $F_c$ must be equal to the gravitational force, given by \ref{eq:GravitationalForce}, where we use $m = m_1$ and $M =m_2$. We can now calculate the orbital velocity $v_{orb}$ of a circular orbit with radius r:
+For a circular orbit, the centripetal force $F_c$ must be equal to the gravitational force, given by \ref{eq:GravityForce}, where we use $m = m_1$ and $M =m_2$. We can now calculate the orbital velocity $v_{orb}$ of a circular orbit with radius r:
 
 \begin{equation}
     F_c = F_G \quad \quad m \frac{v_{orb}^2}{r} = \frac{GmM}{r^2} \quad \Rightarrow \quad v_{orb} = \sqrt{\frac{GM}{r}}
@@ -135,7 +131,7 @@ v_{orb} = \sqrt{\frac{GM}{r}} = \sqrt{\frac{ 4\pi^2 M_{\odot} ^{-1} AU^3 yr^{-2}
 We also need the orbital velocity of Jupiter in a circular orbit. By using equation \ref{eq:OrbitalVelocity} and the average distance between the Sun and Jupiter, $r = 5.20 AU$ \cite{Project_text}, we find that the velocity of Jupiter in our circular orbit approximation is $\approx 2.755 AU/yr$.
 
 \subsubsection{Escape velocity}
-A two body system consists of two objects, object 1 with mass $m_1$ and object 2 with mass $m_2$. The kinetic energy of the object 1 is given by equation \ref{eq:kineticE}, where $v$ is object 1's velocity with respect to the center of mass. The potential energy of object 1 in the gravitational field between the two objects, is given by equation \ref{eq:potE}, where G is the gravitational constant and $|\vec{r}|$ is the distance between the two objects. 
+A two body system consists of two objects, object 1 with mass $m_1$ and object 2 with mass $m_2$. The kinetic energy of object 1 is given by equation \ref{eq:kineticE}, where $v$ is object 1's velocity with respect to the center of mass. The potential energy of object 1 in the gravitational field between the two objects, is given by equation \ref{eq:potE}, where G is the gravitational constant and $|\vec{r}|$ is the distance between the two objects. 
 
 \begin{equation}
     E_k = \frac{1}{2} m_1 v^2
@@ -169,14 +165,14 @@ For an object in a distance $|\vec{r}| = 1AU$ from the Sun (as is the case for t
 If we want to check numerically whether a planet is trappet in a gravitational field or escapes, we can implement a test that checks if the total energy of the planet $E = E_k + E_p$ is smaller or bigger than a given tolerance. If the total energy is bigger that the tolerance, the planet is not bound in the gravitational field, and will escape.
 
 \subsection{Three-Body System}
-Furthermore we have a three-body system where the most massive planet in the solar system, Jupiter, is set to a circular orbit around the Sun while Earth is still orbiting the sun by a distance 1AU with the sun kept fixed to the origin. For the two-body system we found an analytical solution of the motion, but in this case this is hard, or maybe not even possible, because of the interaction between the planets. Nevertheless we can solve it numerically by using the same equations as for the two-body system. For each "time-step" $dt$ we now need to update the position and velocity for both planets where we also compute the interaction forces between them. 
+Furthermore we have a three-body system where the most massive planet in the solar system, Jupiter, is set to a circular orbit around the Sun while Earth is still orbiting the sun by a distance 1AU with the sun kept fixed to the origin. For the two-body system we found an analytical solution for the motion, but in this case this is hard, if not impossible, because of the interaction between the planets. Nevertheless we can solve it numerically by using the same equations as for the two-body system. For each "time-step" $dt$ we now need to update the position and velocity for both planets where we also compute the interaction forces between them. 
 
 \subsection{Solar System (Many-body System)}
 The implementation of the many-body system is very similar to the three-body system, the main difference is that we will have many more forces. Every time we add a new object, the new object will have forces acting on all other objects, so we will have $N-1$ new forces where $N$ is the total number of objects. The total number of forces acting on a many-body system is therefore given by
 \begin{equation}
 P(N)=\sum_{i=1}^N(i-1)=\sum_{i=0}^{N-1}i=\frac{N(N-1)}{2}.
 \end{equation}
-where the last transition can be found in a collection of mathematical formulae.  We will also look at the real case when all the objects in the solar system are orbiting a barycenter (center of mass). When we implement the model, we do not need equations for all the forces, but we need one equation for the position and velocity in each direction for all the objects. We will therefore need $2\cdot2\cdot8=32$ equations to implement a model for our solar system with 7 planets and the sun in two dimensions. For this we need the masses, distances to Sun, initial positions and initial velocities for all the planets and the sun. The masses and distances to Sun are found in Table (\ref{tab:Masses}).
+where the last transition can be found in a collection of mathematical formulae.  We will also look at the real case when all the objects in the solar system are orbiting a barycentre (center of mass). When we implement the model, we do not need equations for all the forces, but we need one equation for the position and velocity in each direction for all the objects. We will therefore need $2\cdot2\cdot8=32$ equations to implement a model for our solar system with 8 planets and the sun in two dimensions. For this we need the masses, initial positions in relation to the barycentre and initial velocities for all the planets and the sun. The masses and distances to Sun are found in Table (\ref{tab:Masses}).
 \begin{table}[H]
 \centering
 \caption{Masses and distances to sun for all planets in the solar system, given in respectively solar masses and AU.}
@@ -199,7 +195,7 @@ Neptun  &	& 5.15000E-05  &    & 30.06   \\
 The masses and distances in Table (\ref{tab:Masses}) are taken from the Project instructions \cite{Project_text}, and where we have reduced the number of decimals to 5, although we include 10 decimals in the program. The initial velocities and positions are found in Table ({\ref{tab:Positions}).
 \begin{table}[H]
 \centering
-\caption{Initial positions and velocities for all the planets in the solar system and the sun, given in respectively AU and AU/yr. These data are actual, and downloaded from NASA October 12. 2016.}
+\caption{Initial positions relative to a centre of mass and velocities for all the planets in the solar system and the sun, given in respectively AU and AU/yr. These are actual data for October 12th 2016, downloaded from NASA.}
 \label{tab:Positions}
 \begin{tabularx}{\textwidth}{lrrrrr}
 \toprule
@@ -220,10 +216,10 @@ Neptun 		 & 2.82579E+01  & -9.93123E+00 & & 1.02007E-03  & 2.97988E-03  \\
 \bottomrule
 \end{tabularx}
 \end{table}
-These are the actual data downloaded from NASA \cite{NASA} October 12. 2016. NB: The data from NASA was given in three dimensions (x, y, z) but since we are studying the solar system in two dimensions (x, y), we have only included the data in x- and y-direction. This \par\vspace{3mm}
+NB: The data from NASA was given in three dimensions (x, y, z) but since we are studying the solar system in two dimensions (x, y), we have only included the data in x- and y-direction. This can introduce some errors, for example the velocity of the Earth changes slightly when we ignore the $z$ direction. \par\vspace{3mm}
 
 \subsection{Mercury-Sun system}
-Mercury's orbit around the sun has an observed perihelion precession of 43'' per century. To study this effect we make a relativistic correction to equation (\ref{eq:GravitationalForce}) means that the force acting on Mercury from the Sun becomes
+Mercury's orbit around the sun has an observed perihelion precession of 43 arc seconds per century. To study this effect we make a relativistic correction to equation (\ref{eq:GravityForce}) meaning that the force acting on Mercury from the Sun becomes
 \begin{equation}
 F_G=-G\frac{m_1\cdot m_2}{r^2} \left[1 + \frac{3l^2}{r^2c^2}\right], 
 \label{eq:GravitationalForceRelativistic}
@@ -258,7 +254,7 @@ x_{i+1} = x_i + dt v_i + \frac{dt^2}{2}v_i^{(1)} + {\cal O}(dt^3),
 \end{equation}
 where we have used that $x_i^{(1)} = v_i$ and $dt$ is the step length. Similarly we can express the velocity as
 \begin{equation}
-v_{i+1} = v_i + h v_i^{(1)} + \frac{h^2}{2}v_i^{(2)} + {\cal O}(dt^3).
+v_{i+1} = v_i + dt v_i^{(1)} + \frac{dt^2}{2}v_i^{(2)} + {\cal O}(dt^3).
 \label{eq:vel2ndorder}
 \end{equation}
 Since the first derivative of the velocity, acceleration is often known analytically we can use a second order Taylor expansion to find an estimate for the acceleration at time step $i+1$
@@ -275,7 +271,7 @@ v_{i+1} = v_i + \frac{dt}{2}\left(v_{i+1}^{(1)} + v_i^{(1)}\right) + {\cal O}(dt
 \end{equation}
 alongside equation (\ref{eq:velVerx}) for the position. 
 
-When we have an analytical expression for the force, we can use Newton's second law of motion (\ref{eq:N2L} and \ref{eq:GravitationalForce}) to find accelerations $v_{i+1}^{(1)}$ and $v_{i}^{(1)}$. Numerically this can be implemented by:
+When we have an analytical expression for the force (\ref{eq:GravityForce}), we can use Newton's second law of motion (\ref{eq:N2L}) to find accelerations $v_{i+1}^{(1)}$ and $v_{i}^{(1)}$. Numerically this can be implemented by:
 \begin{lstlisting}
 for(i, i++):
 	a(i) = computeForce/mass
@@ -291,9 +287,9 @@ In this project we have opted for an object oriented approach. There are several
 
 The object oriented approach makes it so that in order to perform an experiment, we simply have to decide which planets and initial conditions we want, which ODE solver we want use, which in practice is just a couple of lines of code.
 
-\subsection{Test}
+Our code for this project is largely based on the files from Morten Ledum's github \cite{solar-system-fys3150}.
 \subsubsection{Velocity Test}
-We are comparing the analytical velocity found in Equation ({\ref{eq:AnalyticVel}}) with the numerical velocity for the Earth-Sun system (two-body system). We are finding the absolute error of the velocity with calculating the absolute difference between the analytical and numerical velocity. The test can be implemented with a tolerance, and the test kicks in when the difference is larger than the tolerance:
+We are comparing the analytical velocity found in Equation ({\ref{eq:AnalyticVel}}) with the numerical velocity for the Earth-Sun system (two-body system). We are finding the absolute error of the velocity by calculating the absolute difference between the analytical and numerical velocity. The test can be implemented with a tolerance, and the test kicks in when the difference is larger than the tolerance:
 \begin{lstlisting}
 tol            =  1e-5
 Analytical_vel =  2*pi
@@ -304,32 +300,32 @@ if(abs(Analytical_vel-Numerical_vel) > tol)
 
 \section{Results}
 \subsection{Two Body System}
-\subsubsection{Stability for different $dt$}
+\subsubsection{Stability for different time steps $dt$}
 
-Using the assumption of a circular orbit and the initial velocity for the Earth we calculated in section 2.2.1, we plotted the orbit of the Earth for different $dt$, checking the stability of the system. The result when we used VelocityVerlet's method for $dt = 10^{-3}$ is shown in Figure \ref{fig:EarthOrbit_Verlet_det = 10(-3)}, and $dt = 10^{-1}$ in Figure \ref{fig:EarthOrbit_Verlet_det = 10(-1)}. Both plots shows the planet's motion over at 10 year time period, which means we had to change the number of grid points when we changed the time step.
+Using the assumption of a circular orbit and the initial velocity for the Earth we calculated in section 2.2.1, we plotted the orbit of the Earth for different $dt$, checking the stability of the system. The result when we used VelocityVerlet's method for $dt = 10^{-3}$ is shown in Figure \ref{fig:EarthOrbit_Verlet_det = 10(-3)}, and $dt = 10^{-1}$ in Figure \ref{fig:EarthOrbit_Verlet_det = 10(-1)}. Both plots shows the planet's motion over a 10 year time period, which means we had to change the number of grid points when we changed the time step.
 \par 
 \vspace{3mm}
 
 \begin{figure} [H]
     \centering
     \includegraphics[scale=0.6]{oppg_3c_sun_earth_verlet_dt=10(-3)}
-    \caption{The Earth's orbit, shown as a blue line, around the Sun, shown as a yellow dot. The motion is solved with VelocityVerlet, and plotted with $dt = 10^{-3}$ for a 10 year time period}
+    \caption{The Earth's orbit, shown as a blue line, around the Sun, shown as a yellow dot. The motion is solved with VelocityVerlet, and plotted with $dt = 10^{-3}$ for a 10 year time period.}
     \label{fig:EarthOrbit_Verlet_det = 10(-3)}
 \end{figure}
 
 \begin{figure} [H]
     \centering
     \includegraphics[scale=0.6]{oppg_3c_sun_earth_verlet_dt=10(-1)}
-    \caption{The Earth's orbit, shown as blue dots, around the Sun, shown as a yellow dot. The motion is solved with VelocityVerlet, and plotted with $dt = 10^{-1}$ for a 10 year time period}
+    \caption{The Earth's orbit, shown as blue lines, around the Sun, shown as a yellow dot. The motion is solved with VelocityVerlet, and plotted with $dt = 10^{-1}$ for a 10 year time period.}
     \label{fig:EarthOrbit_Verlet_det = 10(-1)}
 \end{figure}
 
-We also compared this to the results we got when using the ODE solver EulerCromer. The plot for $dt=10{-3}$ looked the same as Figure \ref{fig:EarthOrbit_Verlet_det = 10(-3)}. The result EulerChromer gave for $dt=10^{-1}$ is presented in Figure \ref{fig:oppg_3c_sun_earth_euler_dt=10(-1)}
+We also compared this to the results we got when using the ODE solver EulerCromer. The plot for $dt=10{-3}$ looked the same as Figure \ref{fig:EarthOrbit_Verlet_det = 10(-3)}. The result when using EulerCromer for $dt=10^{-1}$ is presented in Figure \ref{fig:oppg_3c_sun_earth_euler_dt=10(-1)}
 
 \begin{figure} [H]
     \centering
     \includegraphics[scale=0.6]{oppg_3c_sun_earth_euler_dt=10(-1)}
-    \caption{The Earth's orbit, shown as blue dots, around the Sun, shown as a yellow dot. The motion is solved with EulerChromer, and plotted with $dt = 10^{-1}$ for a 10 year time period}
+    \caption{The Earth's orbit, shown as blue lines, around the Sun, shown as a yellow dot. The motion is solved with EulerCromer, and plotted with $dt = 10^{-1}$ for a 10 year time period.}
     \label{fig:oppg_3c_sun_earth_euler_dt=10(-1)}
 \end{figure}
 
@@ -340,7 +336,7 @@ We checked the conservation of total energy and angular momentum for EulerCromer
 
 \begin{table} [H]
 \centering
-\caption{Conservation of energy and angular momentum, using EulerCromer with $dt=10^{-3}$, for a 5 year period}
+\caption{Conservation of energy and angular momentum, using EulerCromer with $dt=10^{-3}$, for a 5 year period.}
 \begin{tabularx}{\textwidth}{cXcXc} \toprule
     {\bf Number of Timesteps} & {\bf Total Energy }& {\bf Angular Momentum} \\
     &[$M_\odot AU^2/yr^2$]&[$M_\odot AU^2/yr$]\\ \hline
@@ -355,7 +351,7 @@ We checked the conservation of total energy and angular momentum for EulerCromer
 
 \begin{table} [H]
 \centering
-\caption{Conservation of energy and angular momentum, using EulerCromer with $dt=10^{-1}$, for a 5 year period}
+\caption{Conservation of energy and angular momentum, using EulerCromer with $dt=10^{-1}$, for a 5 year period.}
 \begin{tabularx}{\textwidth}{cXcXc} \toprule
     {\bf Number of Timesteps} & {\bf Total Energy }& {\bf Angular Momentum} \\
     &[$M_\odot AU^2/yr^2$]&[$M_\odot AU^2/yr$]\\ \hline
@@ -370,7 +366,7 @@ We checked the conservation of total energy and angular momentum for EulerCromer
 
 \begin{table} [H]
 \centering
-\caption{Conservation of energy and angular momentum, using VelocityVerlet with $dt=10^{-1}$, for a 5 year period}
+\caption{Conservation of energy and angular momentum, using VelocityVerlet with $dt=10^{-1}$, for a 5 year period.}
 \begin{tabularx}{\textwidth}{cXcXc} \toprule
     {\bf Number of Timesteps} & {\bf Total Energy }& {\bf Angular Momentum} \\
     &[$M_\odot AU^2/yr^2$]&[$M_\odot AU^2/yr$]\\ \hline
@@ -384,13 +380,13 @@ We checked the conservation of total energy and angular momentum for EulerCromer
 \end{table}
 
 \subsubsection{Time, VelocityVerlet vs EulerCromer}
-We ran our program with $dt = 10^{-3}$ and $100000$ grid points several times, comparing the running time of EulerCromer and VelocityVerlet. The result is presented in table \ref{timeTable}
+We ran our program with $dt = 10^{-3}$ and $100000$ grid points several times, comparing the running time of EulerCromer and VelocityVerlet. The result is presented in table \ref{timeTable}.
 
 \begin{table} [H]
 \centering
-\caption{Running time for $dt=10^{-3}$ and $100000$ grid points for EulerCromer and VelocityVerlet, given in seconds}
+\caption{Running time for $dt=10^{-3}$ and $100000$ grid points for EulerCromer and VelocityVerlet, given in seconds.}
 \begin{tabularx}{\textwidth}{XccX} \toprule
-    \bf EulerCromer & \bf VelocityVerlet \\ \hline
+    \bf EulerCromer [s] & \bf VelocityVerlet [s] \\ \hline
     0.096678 & 0.149523\\ \hline
     0.094968 & 0.156597\\ \hline
     0.093523 & 0.154659\\ \hline
@@ -410,9 +406,9 @@ In section 2.2.2 we calculated the analytical escape velocity for a planet in a 
 
 \begin{table} [H]
 \centering
-\caption{Different initial velocities in the y-direction, and the result of the test if the planet escapes or is trapped}
+\caption{Different initial velocities in the y-direction $(0,v_y,0)$, and whether the test showed the planet escaped or was trapped.}
 \begin{tabularx}{\textwidth}{XcXcX} \toprule
-    (0,$v_y$, 0) [AU/yr] & \bf Is the planet trapped or does it escape \\ \hline
+    $v_y$ [AU/yr] & \bf Is the planet trapped or does it escape \\ \hline
     8.883 & trapped \\ \hline
     8.884 & trapped \\ \hline
     8.885 & trapped \\ \hline
@@ -421,8 +417,6 @@ In section 2.2.2 we calculated the analytical escape velocity for a planet in a 
 \end{tabularx}
 \label{trappedTable}
 \end{table}
-\subsection{Solar System (many-body System)}
-We implemented the eight planets of the solar system and observed that for the velocity Verlet method and time step $dt=1e-3$ the system was stable for at least a hundred years. 
 
 \subsection{Three Body System}
 
@@ -430,8 +424,7 @@ We implemented the eight planets of the solar system and observed that for the v
 
 \paragraph{\textbf{$M_J = 0.001M_{\odot}$}}
 
-After implementing Jupiter with mass $M_J = 0.001M_{\odot}$ and using $dt = 10^{-3}$, we got the motion of the Three Body System over a course of 10 years, shown in Figure \ref{fig:Jupiter_m=10^(-3)_Earth_dt=10^(-3)} We use VelocityVerlet
-
+After implementing Jupiter with mass $M_J = 0.001M_{\odot}$ and using $dt = 10^{-3}$, we got the motion of the Three Body System over a course of 10 years, shown in Figure \ref{fig:Jupiter_m=10^(-3)_Earth_dt=10^(-3)} where we used VelocityVerlet.
 \begin{figure} [H]
     \centering
     \includegraphics[scale=0.6]{oppg_3e_threebody_Jupiter_m=10_(-3)_Earth}
@@ -439,7 +432,7 @@ After implementing Jupiter with mass $M_J = 0.001M_{\odot}$ and using $dt = 10^{
     \label{fig:Jupiter_m=10^(-3)_Earth_dt=10^(-3)}
 \end{figure}
 
-If we plot this with a larger time step, for example $dt = 10^{-1}$, we get the result as shown in Figure \ref{fig:Jupiter_m=10^(-3)_Earth_dt=10^(-1)}
+If we plot this with a larger time step, for example $dt = 10^{-1}$, we get the result as shown in Figure \ref{fig:Jupiter_m=10^(-3)_Earth_dt=10^(-1)}.
 
 \begin{figure} [H]
     \centering
@@ -448,11 +441,11 @@ If we plot this with a larger time step, for example $dt = 10^{-1}$, we get the 
     \label{fig:Jupiter_m=10^(-3)_Earth_dt=10^(-1)}
 \end{figure}
 
-The conservation of energy and angular momentum  for $dt= 10^{-3}$ and $dt = 10^{-1}$ is shown in table \ref{threebody_energy_dt=10(-3)} and \ref{threebody_energy_dt=10(-1)}
+The conservation of energy and angular momentum  for $dt= 10^{-3}$ and $dt = 10^{-1}$ is shown in table \ref{threebody_energy_dt=10(-3)} and \ref{threebody_energy_dt=10(-1)}.
 
 \begin{table} [H]
 \centering
-\caption{Conservation of energy and angular momentum for the three body system, using VelocityVerlet with $dt=10^{-3}$, over a 5 year period}
+\caption{Conservation of energy and angular momentum for the three body system, using VelocityVerlet with $dt=10^{-3}$, over a 5 year period.}
 \begin{tabularx}{\textwidth}{cXcXc} \toprule
     {\bf Number of Timesteps} & {\bf Total Energy }& {\bf Angular Momentum} \\
     &[$M_\odot AU^2/yr^2$]&[$M_\odot AU^2/yr$]\\ \hline
@@ -467,7 +460,7 @@ The conservation of energy and angular momentum  for $dt= 10^{-3}$ and $dt = 10^
 
 \begin{table} [H]
 \centering
-\caption{Conservation of energy and angular momentum for the three body system, using VelocityVerlet with $dt=10^{-1}$, over a 5 year period}
+\caption{Conservation of energy and angular momentum for the three body system, using VelocityVerlet with $dt=10^{-1}$, over a 5 year period.}
 \begin{tabularx}{\textwidth}{cXcXc} \toprule
     {\bf Number of Timesteps} & {\bf Total Energy }& {\bf Angular Momentum} \\
     &[$M_\odot AU^2/yr^2$]&[$M_\odot AU^2/yr$]\\ \hline
@@ -482,28 +475,31 @@ The conservation of energy and angular momentum  for $dt= 10^{-3}$ and $dt = 10^
 
 \paragraph{\textbf{$M_J = 0.01M_{\odot}$}}
 
-We increased the mass of Jupiter to $M_J = 0.01M_{\odot}$, and plotted the motion of the three body system. The result is shown in Figure \ref{fig:Jupiter_m=10^(-2)_Earth}
+We increased the mass of Jupiter to $M_J = 0.01M_{\odot}$, and plotted the motion of the three body system. The result is shown in Figure \ref{fig:Jupiter_m=10^(-2)_Earth}.
 
 \begin{figure} [H]
     \centering
     \includegraphics[scale=0.6]{oppg_3e_threebody_Jupiter_m=10_(-2)_Earth}
-    \caption{The motion of the three body system, where Earth is plotted with a blue line, Jupiter with green and the Sun as a yellow dot. The mass of Jupiter is 10 times its original. The plot shows the motion over a course of 5 years. We have used the time step $dt = 10^{-3}$}
+    \caption{The motion of the three body system, where Earth is plotted with a blue line, Jupiter with green and the Sun as a yellow dot. The mass of Jupiter is 10 times its original. The plot shows the motion over a course of 5 years. We have used the time step $dt = 10^{-3}$.}
     \label{fig:Jupiter_m=10^(-2)_Earth}
 \end{figure}
 
 \paragraph{\textbf{$M_J = M_{\odot}$}}
 
-We increased the mass of Jupiter again, to $M_J = M_{\odot}$, and plotted the motion of the three body system. The result is shown in Figure \ref{fig:Jupiter_m=1_Earth}
+We increased the mass of Jupiter again, to $M_J = M_{\odot}$, and plotted the motion of the three body system. The result is shown in Figure \ref{fig:Jupiter_m=1_Earth}.
 
 \begin{figure} [H]
     \centering
     \includegraphics[scale=0.6]{oppg_3e_threebody_Jupiter_m=1_Earth}
-    \caption{The motion of the three body system, where Earth is plotted with a blue line, Jupiter with green and the Sun as a yellow dot. The mass of Jupiter is 1000 times its original. The plot shows the motion over a course of 5 years. We have used the time step $dt = 10^{-3}$}
+    \caption{The motion of the three body system, where Earth is plotted with a blue line, Jupiter with green and the Sun with red. The mass of Jupiter is 1000 times its original. The plot shows the motion over the course of 5 years. We have used the time step $dt = 10^{-3}$.}
     \label{fig:Jupiter_m=1_Earth}
 \end{figure}
 
+\subsection{Solar System (many-body System)}
+We implemented the eight planets of the solar system and observed that for the velocity Verlet method and time step $dt=1e-3$ the system was stable for at least a hundred years. 
+
 \subsection{Mercury-Sun system}
-To find the perihelion precession of Mercury, we gave Mercury initial position (0, 0.3075, 0) AU and velocity (0, 12.44, 0) AU/yr, and the sun at origo with no velocity. For time step $dt=10^{-6}$ the perihelion angles, using equation \ref{eq:perihelionangle}, for ten years was found to be as shown in figure \ref{fig:precesion}. From figure \ref{fig:precesion} we get a precession of $\approx 17$ arc seconds per decade which is the same as $\approx 170$ arc seconds per century.
+To find the perihelion precession of Mercury, we gave Mercury initial position (0.3075, 0, 0) AU and velocity (0, 12.44, 0) AU/yr, and the sun at origo with no velocity. We also used the relativistic gravitational force (\ref{eq:GravitationalForceRelativistic}). For time step $dt=10^{-6}$ the perihelion angles, using equation \ref{eq:perihelionangle}, for ten years was found to be as shown in figure \ref{fig:precesion}. From figure \ref{fig:precesion} we get a precession of $\approx 17$ arc seconds per decade which is the same as $\approx 170$ arc seconds per century.
 \begin{figure}
 \centering
 \includegraphics[scale=0.7]{precesion.png}
@@ -512,16 +508,16 @@ To find the perihelion precession of Mercury, we gave Mercury initial position (
 \end{figure}
 
 \subsection{Benchmarks}
-We did some benchmarks for the two-body system to check how the numerical velocity of Earth varying for different time steps when we are comparing with the analytical velocity calculated in Equation (\ref{eq:AnalyticVel}). The absolute error is calculated with a similar program to the one found in \textit{Test Velocity}, and the table shows the absolute error for different times (1 $yr$, 5 $yr$, 20 $yr$ and 50 $yr$) and different time steps ($10^-1$s, $10^-2$s and $10^-3$s):
+We did some benchmarks for the two-body system to check how the numerical velocity of Earth varied for different time steps when compared to the analytical velocity calculated in Equation (\ref{eq:AnalyticVel}). The absolute error is calculated with a similar program to the one found in \textit{Test Velocity}, and the table \ref{tab:Benchmark} shows the absolute error for different times (1 $yr$, 5 $yr$, 20 $yr$ and 50 $yr$) and different time steps ($10^-1$ $yr$, $10^-2$ $yr$ and $10^-3$ $yr$).
 \begin{table}[H]
 \centering
-\caption{The absolute error for the Earth-Sun system where $dt=[10^{-1}s,10^{-2}s,10^{-3}s]$ calculated after 1 $yr$, 5 $yr$, 20 $yr$ and 50 $yr$.}
+\caption{The absolute error for the Earth-Sun system where $dt=[10^{-1}yr,10^{-2}yr,10^{-3}yr]$ calculated after 1 $yr$, 5 $yr$, 20 $yr$ and 50 $yr$.}
 \label{tab:Benchmark}
 \begin{tabularx}{\textwidth}{lXrXrXrXr}
 \toprule
 \multicolumn{5}{c}{Absolute error}\\
 \midrule
-$\log_{10}(dt)$ [s]        & -1 & -2 & -3 & -4 \\
+$\log_{10}(dt)$ [yr]        & -1 & -2 & -3 & -4 \\
 \midrule
 1 $yr$      & 0.02573  & 1.34280E-08  & 2.04280E-14 & 1.18434E-07 \\
 5 $yr$      & 0.34745  & 2.14846E-07  & 4.98268E-13 & 1.18445E-07 \\
@@ -544,16 +540,17 @@ When comparing the motion of the two body system in Figure \ref{fig:EarthOrbit_V
 \vspace{3mm}
 \par
 
-We saw that the Solar system is stable for 100 $yr$, but as we have seen in Equation (\ref{eq:velVerx}) and (\ref{eq:velVerv}) the integration method has errors, so we expect that the system will be unstable in the long run. \par
+We saw that the Solar system is stable for 100 $yr$, but as we have seen in Equation (\ref{eq:velVerx}) and (\ref{eq:velVerv}) the integration method has errors, so we expect that the system will become unstable in the long run.
 
 We found the perihelion precession of Mercury to be approximately $170$ arc seconds per century, which is more than three times what we expected. We used a time step of $dt=10^{-6}$, which in retrospect may have been to low. A reduction of the time step would have probably yielded a better result. 
 
-When it comes to the benchmark results, we saw that the absolute error was unstable. For $dt=10^{-1}$ the error was large as expected, but when we decreased $dt$ to $10^{-2}$, the errors were much smaller. The reason of this dramatic difference is that the error goes as $dt^3$, so it should not be surprising that the error decreases really fast for smaller time steps. The same tendency applies for $dt=10^{-3}$, but what about $dt=10^{-4}$? For $dt=10^{-4}$ the absolute error is large, something that is surprising based on the fact that we would expect an error of order $dt^3$. There can be several reasons why the error is increasing here, but the most probable is that we get truncation errors when we are finding the difference numerically. Computers with 64-bits processors is able to handle about 16 decimals, and as we can see from Table (\ref{tab:Benchmark}), the absolute error is about $10^{-14}$ when $dt=10^{-3}$. For $dt=10^{-4}$ we will have an actual absolute error of an order of $ <10^{-16}$. From the same table we can read that the error is increasing for longer times (for $dt=10^{-2}$ and $dt=10^{-3}$), something that is expected since we should have the same error for every year (every orbit). 
+When it comes to the benchmark results, we saw that the absolute error was unstable. For $dt=10^{-1}$ the error was large as expected, and when we decreased $dt$ to $10^{-2}$, the errors were much smaller. The reason for this dramatic difference is that the error goes as $dt^3$, so it should not be surprising that the error decreases really fast for smaller time steps. The same tendency applies for $dt=10^{-3}$, but what about $dt=10^{-4}$? For $dt=10^{-4}$ the absolute error is large, something that is surprising based on the fact that we would expect an error of order $dt^3$. There can be several reasons why the error is increasing here, but the most probable is that we get truncation errors when we are finding the difference numerically. Computers with 64-bits processors is able to handle about 16 decimals, and as we can see from Table (\ref{tab:Benchmark}), the absolute error is about $10^{-14}$ when $dt=10^{-3}$. For $dt=10^{-4}$ we will have an actual absolute error of an order of $ <10^{-16}$. From the same table we can read that the error is increasing for longer times (for $dt=10^{-2}$ and $dt=10^{-3}$), something that is expected since we should have the same error for every year (every orbit). 
 \section{Conclusion}
-We have seen that the two- and three body systems behave as expected when given different sets of initial values, and when the whole solar system is implemented, it is stable over the course of a hundred years. This indicates that our model and implementation of the Newtonian gravitational force is correct. \par 
+We have seen that the two- and three body systems behave as expected when given different sets of initial values, and when the whole solar system is implemented, it is stable over the course of a hundred years. This indicates that our model and implementation of the Newtonian gravitational force is correct. However for the perihelion precession of Mercury our findings where wrong, but this was probably due too insufficient time resolution. 
+
 Furthermore, we have also seen that the ODE-solver EulerCromer is less time consuming than the VelocityVerlet solver, though VelocityVerlet is more stable and energy-conserving for larger time steps that EulerCromer.
 
-For the benchmark we found that the error is decreasing really fast for smaller time steps when we do not deal with truncation error. For longer times the error is increasing.
+For the benchmark we found that the error is decreasing really fast for smaller time steps when we do not deal with truncation error. For longer times the error is increasing. 
 \newpage
 \section{References}
 \begingroup
@@ -576,6 +573,9 @@ For the benchmark we found that the error is decreasing really fast for smaller 
 \bibitem{Barycenter}
   Barycenter:\newline
   \url{http://www.uio.no/studier/emner/matnat/astro/AST1100/h14/undervisningsmateriale/lecture1.pdf}
+\bibitem{solar-system-fys3150}
+  Code-basis:\newline
+  \url{https://github.com/mortele/solar-system-fys3150}
 \end{thebibliography}
 \endgroup
 \end{document}
