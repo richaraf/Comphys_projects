@@ -38,9 +38,9 @@
 
 \maketitle
 \begin{abstract}
-This project aims to use ODE solvers on orbiting planets. For a simple two-body system we compare the Euler-Cromer and the velocity Verlet methods. We then use velocity Verlet to model Earth-Jupiter-Sun systems, the solar system and the perihelion precession of Mercury.
+This project aims to use ODE solvers on orbiting planets. For a simple two-body system we compare the Euler-Cromer and the Velocity Verlet methods. We then use Velocity Verlet to model Earth-Jupiter-Sun systems, the solar system and the perihelion precession of Mercury.
 
-We found that velocity Verlet had a higher numerical precision than Euler-Cromer but was about $50\%$ more time consuming. For different choices of Jupiter-masses, the Earth-Jupiter-Sun system behaved as expected. Our implementation of the solar system was stable for at least a hundred years with time step $dt=10^{-3}$. However the perihelion precession of Mercury was found to be several time larger than expected.\end{abstract}
+We found that Velocity Verlet had a higher numerical precision than Euler-Cromer but was about $50\%$ more time consuming. For different choices of Jupiter-masses, the Earth-Jupiter-Sun system behaved as expected. Our implementation of the solar system was stable for at least a hundred years with time step $dt=10^{-3}$. However the perihelion precession of Mercury was found to be several time larger than expected.\end{abstract}
 \begin{itemize}
 \item Github repository containing programs and results are in: \url{https://github.com/richaraf/Comphys_projects/tree/master/Project_3}
 \end{itemize}
@@ -71,6 +71,8 @@ where $G$ is the gravitational constant, $m_1$ and $m_2$ are the masses of the o
 F_G=-G\frac{m_1\cdot m_2}{r^2}.
 \label{eq:absGravitationalForce}
 \end{equation}
+The gravitational force is a conservative force, which means it conservs mechanical energy\cite{Concervative_Force}. The total mechanical energy, the sum of the potential and the kinetic energy, should therefore be conserved in our model.
+
 We are also going to deal with the Barycenter (the center of mass for a system with two or more objects), which is defined as the point where we have equal masses in all directions. For a solar system, this can mathematically be written as
 \begin{equation}
 \vec{R}=\sum_{i=1}^N \frac{m_i}{M}\vec{r}
@@ -83,7 +85,7 @@ L=\vec{r}\times\vec{p}.
 \end{equation}
 where we assume that the centre of rotation is set to the origin. The solar system is a global system (not affected by other systems), and the conservation laws will always hold. This means that we do not have any external torque, so the angular momentum must be conserved. 
 \subsection{Two-body System}
-Initially we are studying the two-body problem with the sun fixed to origin and with Earth orbiting the sun. This is not fully correct, since the size of the force on the sun is the same as the size of the force on Earth (Newton's third law). Anyway this is still a good approximation because the mass of Sun is much larger than that of Earth, such that the movement of the sun becomes negligible. The Earth's orbit around the sun is co-planar (two-dimensional), so we are decomposing the force in two directions, and from Equation (\ref{eq:N2L}) we obtain
+Initially we are studying the two-body problem with the Sun fixed to origin and with Earth orbiting the Sun. This is not fully correct, since the size of the force on the Sun is the same as the size of the force on Earth (Newton's third law). Anyway this is still a good approximation because the mass of Sun is much larger than that of Earth, such that the movement of the Sun becomes negligible. The Earth's orbit around the Sun is co-planar (two-dimensional), so we are decomposing the force in two directions, and from Equation (\ref{eq:N2L}) we obtain
 \begin{equation}
 a_x=\frac{d^2x}{dt^2}=\frac{F_{G,x}}{M_{Earth}}
 \end{equation}
@@ -114,7 +116,7 @@ For setting the initial velocity of the planets, we need the orbital velocity of
      \label{eq:CentripetalForce}
 \end{equation}
 
-For a circular orbit, the centripetal force $F_c$ must be equal to the gravitational force, given by \ref{eq:GravityForce}, where we use $m = m_1$ and $M =m_2$. We can now calculate the orbital velocity $v_{orb}$ of a circular orbit with radius r:
+For a circular orbit, the centripetal force $F_c$ must be equal to the gravitational force, given by equation \ref{eq:GravityForce}, where we use $m = m_1$ and $M =m_2$. We can now calculate the orbital velocity $v_{orb}$ of a circular orbit with radius r:
 
 \begin{equation}
     F_c = F_G \quad \quad m \frac{v_{orb}^2}{r} = \frac{GmM}{r^2} \quad \Rightarrow \quad v_{orb} = \sqrt{\frac{GM}{r}}
@@ -391,7 +393,7 @@ We ran our program with $dt = 10^{-3}$ and $100000$ grid points several times, c
 
 \begin{table} [H]
 \centering
-\caption{Running time for $dt=10^{-3}$ and $100000$ grid points for EulerCromer and VelocityVerlet, given in seconds.}
+\caption{Running time for $dt=10^{-3}$ and $10^{5}$ grid points for EulerCromer and VelocityVerlet, given in seconds.}
 \begin{tabularx}{\textwidth}{XccX} \toprule
     \bf EulerCromer [s] & \bf VelocityVerlet [s] \\ \hline
     0.096678 & 0.149523\\ \hline
@@ -406,7 +408,7 @@ We ran our program with $dt = 10^{-3}$ and $100000$ grid points several times, c
 \label{timeTable}
 \end{table}
 
-Table \ref{timeTable} gives that the average running time for EulerCromer is $0.096018$ seconds, while the average running time for VelocityVerlet is $0.146048$ seconds.
+Table \ref{timeTable} gives that the average running time for EulerCromer is $0.096018$ seconds, while the average running time for VelocityVerlet is $0.146048$ seconds for $10^{5}$ grid points.
 
 \subsubsection{Escape Velocity}
 In section 2.2.2 we calculated the analytical escape velocity for a planet in a distance $1 AU$ from the Sun, where we got $v_{esc} = 8.886 AU/yr$. Using VelocityVerlet, we tested which velocities gave the planet a total energy greater than 0. The results are presented in in table \ref{trappedTable}
@@ -535,21 +537,23 @@ $\log_{10}(dt)$ [yr]        & -1 & -2 & -3 & -4 \\
 \end{table}
 The absolute error is not stable, but for $dt=10^{-2}$ and $dt=10^{-3}$ we can see a tendency - they both have increasing absolute error for longer times. For $dt=10^{-4}$ the absolute error is almost constant for all the times, and larger than for $dt=10^{-2}$ and $dt=10^{-3}$.
 \section{Discussion}
-In figure \ref{euler_dt=10(-1)} and \ref{fig:oppg_3c_sun_earth_euler_dt=10(-1)} we clearly see that velocity Verlet is far superior to Euler-Cromer when it comes to numerical precision. However the velocity Verlet was about $50\%$ more time consuming. This is also evident when looking at conservation of energy and angular momentum for $dt = 10^{-1}$, where we see that the change in energy and angular momentum is much smaller for velocity Verlet than Euler-Cromer.
+In figure \ref{euler_dt=10(-1)} and \ref{fig:oppg_3c_sun_earth_euler_dt=10(-1)} we clearly see that Velocity Verlet is far superior to Euler-Cromer when it comes to numerical precision. However the Velocity Verlet was about $50\%$ more time consuming. This is also evident when looking at conservation of energy and angular momentum for $dt = 10^{-1}$, where we see that the change in energy and angular momentum is much smaller for Velocity Verlet than Euler-Cromer.
 
 From table \ref{trappedTable} we see that our numerically calculated escape velocity for the two-body system is as we expected for time step $dt=10^{-3}$.
 
-By comparing Figure \ref{fig:Jupiter_m=10^(-3)_Earth_dt=10^(-3)} with Figure \ref{fig:Jupiter_m=10^(-3)_Earth_dt=10^(-1)}, we study the stability of the VerletVelocity ODE-solver. The larger time step visibly affects the stability of the VerletVelocity solver, as it did for the two body system. 
-
 \par
-
+\vspace{3mm}
 When comparing the motion of the two body system in Figure \ref{fig:EarthOrbit_Verlet_det = 10(-3)} and the three body system in Figure \ref{fig:Jupiter_m=10^(-3)_Earth_dt=10^(-3)}, we observe that the Earth's orbit is slightly more elliptical after Jupiter is added. This is as expected, since the gravitational force between Earth and Jupiter drags Earth slightly out of its circular orbit. When Jupiter's mass was increased to $M_J = 0.01 M_{\odot}$, in Figure \ref{fig:Jupiter_m=10^(-2)_Earth}, we see that this drags Earth even further out of the circular orbit, and Earth spirals outwards. Finally, when $M_J = M_{\odot}$, in Figure \ref{fig:Jupiter_m=1_Earth}, the three body system becomes unstable. Theoretically we have here created a binary star system. Here we also  plot the movement of the Sun, we observe that the Sun is now visibly affected by the gravitational pull from Jupiter. Based on these plots, we conclude that our three body system behaves as we expect, and we conclude that our code works for modeling the motion of planets.\par 
+By comparing Figure \ref{fig:Jupiter_m=10^(-3)_Earth_dt=10^(-3)} with Figure \ref{fig:Jupiter_m=10^(-3)_Earth_dt=10^(-1)}, we study the stability of the VerletVelocity ODE-solver for the three body system. The larger time step visibly affects the stability of the VerletVelocity solver, as it did for the two body system. 
 \vspace{3mm}
 \par
 
 We saw that the Solar system is stable for 100 $yr$, but as we have seen in Equation (\ref{eq:velVerx}) and (\ref{eq:velVerv}) the integration method has errors, so we expect that the system will become unstable in the long run.
-
-We found the perihelion precession of Mercury to be approximately $170$ arc seconds per century, which is more than three times what we expected. We used a time step of $dt=10^{-6}$, which in retrospect may have been to low. A reduction of the time step would have probably yielded a better result. 
+\par 
+\vspace{3mm}
+We found the perihelion precession of Mercury to be approximately $170$ arc seconds per century, which is more than three times what we expected. We used a time step of $dt=10^{-6}$, which in retrospect may have been to low. A reduction of the time step would have probably yielded a better result.
+\par 
+\vspace{3mm}
 
 When it comes to the benchmark results, we saw that the absolute error was unstable. For $dt=10^{-1}$ the error was large as expected, and when we decreased $dt$ to $10^{-2}$, the errors were much smaller. The reason for this dramatic difference is that the error goes as $dt^3$, so it should not be surprising that the error decreases really fast for smaller time steps. The same tendency applies for $dt=10^{-3}$, but what about $dt=10^{-4}$? For $dt=10^{-4}$ the absolute error is large, something that is surprising based on the fact that we would expect an error of order $dt^3$. There can be several reasons why the error is increasing here, but the most probable is that we get truncation errors when we are finding the difference numerically. Computers with 64-bits processors is able to handle about 16 decimals, and as we can see from Table (\ref{tab:Benchmark}), the absolute error is about $10^{-14}$ when $dt=10^{-3}$. For $dt=10^{-4}$ we will have an actual absolute error of an order of $ <10^{-16}$. From the same table we can read that the error is increasing for longer times (for $dt=10^{-2}$ and $dt=10^{-3}$), something that is expected since we should have the same error for every year (every orbit). 
 \section{Conclusion}
@@ -583,6 +587,9 @@ For the benchmark we found that the error is decreasing really fast for smaller 
 \bibitem{solar-system-fys3150}
   Code-basis: 							(October 21th 2016)\newline
   \url{https://github.com/mortele/solar-system-fys3150}
+\bibitem{Concervative_Force}
+  Concervative Force:                   (October 23th 2016)\newline
+  \url{https://en.wikipedia.org/wiki/Conservative_force}
 \end{thebibliography}
 \endgroup
 \end{document}
