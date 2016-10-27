@@ -11,6 +11,7 @@ public:
     Lattice();
     double setL(int L)     {return m_L = L;}
 
+
     double getL()     {return m_L;}
 };
 

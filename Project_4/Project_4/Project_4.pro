@@ -4,7 +4,9 @@ CONFIG -= app_bundle
 CONFIG -= qt
 
 SOURCES += main.cpp \
-    lattice.cpp
+    lattice.cpp \
+    exact2x2.cpp
 
 HEADERS += \
-    lattice.h
+    lattice.h \
+    exact2x2.h
