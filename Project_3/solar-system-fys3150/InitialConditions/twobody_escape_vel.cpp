@@ -6,7 +6,7 @@
 
 void TwoBody_escape_vel::setupParticles(System &system) {
     /*
-    *Class for testing escape velocities
+     *Class for testing escape velocities
      */
 
     // initial positions for oct 12

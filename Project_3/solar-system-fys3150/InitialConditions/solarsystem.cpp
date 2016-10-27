@@ -5,17 +5,6 @@
 
 
 void SolarSystem::setupParticles(System &system) {
-    /*
-     * This is where you should implement the initialization of a three-body
-     * system.
-     *
-     * You should start by impelmenting the two-body scheme in the
-     * InitialiCondition::TwoBody class, and then implement the more
-     * complicated three-body initialization only after you have a working
-     * implementation of the two-body case.
-     */
-
-
     // sun mass 1.988544E30 kg
 
     // initial positions for oct 12   -----------Positions--------------                        --------Velocity--------                        ----Mass----

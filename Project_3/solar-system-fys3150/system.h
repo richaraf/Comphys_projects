@@ -41,7 +41,6 @@ public:
     void integrate              (int numberOfSteps);
     void addParticle            (Particle* p);
     void printIntegrateInfo     (int stepNumber);
-    void removeLinearMomentum   ();
     void testVelocity           ();
     void setFileWriting         (bool writeToFile);
     void printEscape            (bool printEscape);
