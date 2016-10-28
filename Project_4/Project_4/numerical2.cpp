@@ -92,6 +92,15 @@ double Numerical2(){
 
             if(1 > exp(-beta*delta_E)){
                 //draw random number from 0 to 1, check if bigger than exp()
+                double r = (double)rand() / (double)RAND_MAX;
+                if (r <= exp(-beta*delta_E)){
+                    //cout << r << endl;
+                    E_tot += E;
+                }
+                else{
+                    // discard change
+                    R(i,j) = R_late;
+                }
             }
 
             else if(1 < exp(-beta*delta_E)){
