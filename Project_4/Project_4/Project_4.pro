@@ -5,8 +5,10 @@ CONFIG -= qt
 
 SOURCES += main.cpp \
     lattice.cpp \
-    exact2x2.cpp
+    exact2x2.cpp \
+    numerical2.cpp
 
 HEADERS += \
     lattice.h \
-    exact2x2.h
+    exact2x2.h \
+    numerical2.h
