@@ -1,4 +1,17 @@
-run of 2x2 latice T = 1e8:
+run of 2x2 lattice, T = 1e7:
+
+Exact energy for 2x2, E = -7.98393
+E_tot:-79835952J
+E_average:-7.98359
+E_average_sqrd:63.8688
+M_tot:-300
+M_average:-3e-05
+M_tot_sqrd:54640
+M_average_sqrd:0.005464
+-0.005464
+-0.131001
+
+run of 2x2 lattice, T = 1e8:
 
 Exact energy for 2x2, E = -7.98393
 E_tot:-798386576J
@@ -10,3 +23,16 @@ M_tot_sqrd:537984
 M_average_sqrd:0.00537984
 -0.00537984
 42.8208
+
+run of 2c2 lattice, T = 1e9:
+
+Exact energy for 2x2, E = -7.98393 // avrundingsfeil?
+E_tot:605977224J
+E_average:0.605977
+E_average_sqrd:-0.552837
+M_tot:912
+M_average:9.12e-07
+M_tot_sqrd:5348024
+M_average_sqrd:0.00534802
+-0.00534802
+0.920045
