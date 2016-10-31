@@ -8,7 +8,7 @@ using namespace std;
 using namespace arma;
 double Numerical2(double* X, double* Cv){
     int N = 2;
-    int T = 1000;
+    int T = 1000000;
     double beta = 1.0;
     srand(time(NULL));
 
@@ -94,10 +94,10 @@ double Numerical2(double* X, double* Cv){
     E_tot_sqrd += E*E;
     M_tot += M;
     M_tot_sqrd += M*M;
-    cout << "The energy of the first microstate is:" << E << "J" << endl;
+    //cout << "The energy of the first microstate is:" << E << "J" << endl;
 
-    cout << "U-matrix:\n" << U << endl;
-    cout << R << endl;
+    //cout << "U-matrix:\n" << U << endl;
+    //cout << R << endl;
     //cout << "The total energy is " << E_tot << "J" << endl;
 
     for(int t=0; t < T; t++){
@@ -144,7 +144,7 @@ double Numerical2(double* X, double* Cv){
             M += 2*R(i,j);
             M_tot += M;
             M_tot_sqrd += M*M;
-            cout << "#1 The energy of the sec microstate is:" << E << "J" << endl;
+            //cout << "#1 The energy of the sec microstate is:" << E << "J" << endl;
         }
 
         else if(delta_E > 0){
@@ -159,7 +159,7 @@ double Numerical2(double* X, double* Cv){
                     M += 2*R(i,j);
                     M_tot += M;
                     M_tot_sqrd += M*M;
-                    cout << "#2 The energy of the sec microstate is:" << E << "J" << endl;
+                    //cout << "#2 The energy of the sec microstate is:" << E << "J" << endl;
                 }
                 else{
                     // discard change
@@ -182,7 +182,7 @@ double Numerical2(double* X, double* Cv){
                     E_tot_sqrd += E*E;
                     M_tot += M;
                     M_tot_sqrd += M*M;
-                    cout << "#3 The energy of the sec microstate is:" << E << "J" << endl;
+                    //cout << "#3 The energy of the sec microstate is:" << E << "J" << endl;
                 }
             }
 
@@ -192,7 +192,7 @@ double Numerical2(double* X, double* Cv){
                 M += 2*R(i,j);
                 M_tot += M;
                 M_tot_sqrd += M*M;
-                cout << "#4 The energy of the sec microstate is:" << E << "J" << endl;
+                //cout << "#4 The energy of the sec microstate is:" << E << "J" << endl;
             }
 
         }
@@ -202,11 +202,11 @@ double Numerical2(double* X, double* Cv){
                 M += 2*R(i,j);
                 M_tot += M;
                 M_tot_sqrd += M*M;
-                cout << "#5 The energy of the sec microstate is:" << E << "J" << endl;
+                //cout << "#5 The energy of the sec microstate is:" << E << "J" << endl;
             }
 
-        cout << R << endl;
-        cout << U << endl;
+        //cout << R << endl;
+        //cout << U << endl;
     }
     cout << "E_tot:" << E_tot << "J" << endl;
     double E_average = E_tot/(T + 1.0);
