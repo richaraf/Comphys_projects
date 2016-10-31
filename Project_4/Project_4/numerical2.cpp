@@ -8,7 +8,7 @@ using namespace std;
 using namespace arma;
 double Numerical2(double* X, double* Cv){
     int N = 2;
-    int T = 2;
+    int T = 1000;
     double beta = 1.0;
     srand(time(NULL));
 
@@ -104,6 +104,8 @@ double Numerical2(double* X, double* Cv){
         int i = rand()%N;
         int j = rand()%N;
         int R_late = R(i,j);
+        //int E_part_late = R_late*U(i+1,j+2) + R_late*U(i,j) + R_late*U(i+2, j+1) + R_late*U(i,j+1);
+        int E_part_late = R_late*U(i+1,j) + R_late*U(i,j+1) + R_late*U(i+2,j+1) + R_late*U(i+1, j+2);
 
         if( R(i,j) == 1){
             R(i,j) =-1;
@@ -114,10 +116,24 @@ double Numerical2(double* X, double* Cv){
             U(i+1, j+1) = 1;
         }
 
-        int E_part_late = R_late*U(i+1,j+2) + R_late*U(i,j) + R_late*U(i+2, j+1) + R_late*U(i,j+1);
-        int E_part_new = R(i,j)*U(i+1,j+2) + R(i,j)*U(i,j) + R(i,j)*U(i+2, j+1) + R(i,j)*U(i,j+1);
+        if(i==0){
+            U(N+1,j+1) = R(i,j);
+        }
+        if(i==(N-1)){
+            U(0, j+1) = R(i,j);
+        }
+        if(j==0){
+            U(i+1,N+1) = R(i,j);
+        }
+        if(j==N-1){
+            U(i+1,0) = R(i,j);
+        }
+
+
+        //int E_part_new = R(i,j)*U(i+1,j+2) + R(i,j)*U(i,j) + R(i,j)*U(i+2, j+1) + R(i,j)*U(i,j+1);
+        int E_part_new = R(i,j)*U(i+1,j) + R(i,j)*U(i,j+1) + R(i,j)*U(i+2,j+1) + R(i,j)*U(i+1, j+2);
         int delta_E = E_part_new - E_part_late;
-        cout << "delta_E" << delta_E << endl;
+        //cout << "delta_E" << delta_E << endl;
         int E_prev = E;
         E = E + delta_E;
 
@@ -148,6 +164,19 @@ double Numerical2(double* X, double* Cv){
                 else{
                     // discard change
                     R(i,j) = R_late;
+                    U(i+1,j+1) = R_late;
+                    if(i==0){
+                        U(N+1,j+1) = R(i,j);
+                    }
+                    if(i==(N-1)){
+                        U(0, j+1) = R(i,j);
+                    }
+                    if(j==0){
+                        U(i+1,N+1) = R(i,j);
+                    }
+                    if(j==N-1){
+                        U(i+1,0) = R(i,j);
+                    }
                     E_tot += E_prev;
                     E = E_prev;
                     E_tot_sqrd += E*E;
@@ -177,6 +206,7 @@ double Numerical2(double* X, double* Cv){
             }
 
         cout << R << endl;
+        cout << U << endl;
     }
     cout << "E_tot:" << E_tot << "J" << endl;
     double E_average = E_tot/(T + 1.0);
