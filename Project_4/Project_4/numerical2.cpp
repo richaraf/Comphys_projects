@@ -7,8 +7,8 @@
 using namespace std;
 using namespace arma;
 double Numerical2(){
-    int N = 5;
-    int T = 1;
+    int N = 2;
+    int T = 2;
     double beta = 1.0;
     srand(time(NULL));
 
@@ -25,8 +25,8 @@ double Numerical2(){
         }
     }
 
-    //Calculate energy
-//    int E_tot = 0; //Energy of T microstates added together
+    //Calculate energy, spesicif 2x2
+    //int E_tot = 0; //Energy of T microstates added together
     //int E = 0; //Energy of one microstate
 
 //    for(int i=0; i<N; i++){
@@ -78,8 +78,9 @@ double Numerical2(){
     }
     int E_tot = E;
 
-    cout << "U-matrix:\n" << U << endl;
-    cout << "The total energy is " << E_tot << "J" << endl;
+    //cout << "U-matrix:\n" << U << endl;
+    //cout << "The total energy is " << E_tot << "J" << endl;
+    cout << "Energy of the first microstate is" << E << "J" << endl;
 
     for(int t=0; t < T; t++){
         int i = rand()%N;
@@ -96,10 +97,13 @@ double Numerical2(){
         int E_part_late = R_late*U(i+1,j+2) + R_late*U(i,j) + R_late*U(i+2, j+1) + R_late*U(i,j+1);
         int E_part_new = R(i,j)*U(i+1,j+2) + R(i,j)*U(i,j) + R(i,j)*U(i+2, j+1) + R(i,j)*U(i,j+1);
         int delta_E = E_part_new - E_part_late;
+        int E_prev = E;
         E = E + delta_E;
+        cout << "delta_E:" << delta_E << endl;
 
         if(delta_E < 0){
             E_tot += E;
+            cout << "#1: Energy of the second microstate is" << E << "J" << endl;
         }
 
         else if(delta_E > 0){
@@ -110,21 +114,32 @@ double Numerical2(){
                 if (r <= exp(-beta*delta_E)){
                     //cout << r << endl;
                     E_tot += E;
+                    cout << "#2 Energy of the sec microstate is" << E << "J" << endl;
                 }
                 else{
                     // discard change
                     R(i,j) = R_late;
+                    E_tot += E_prev;
+                    cout << "#3 Energy of the sec microstate is" << E_prev << "J" << endl;
                 }
             }
 
             else if(1 < exp(-beta*delta_E)){
                 E_tot += E;
+                cout << "#4 Energy of the sec microstate is" << E << "J" << endl;
             }
 
         }
+        else if(delta_E==0){
+                E_tot += E;
+                cout << "#5 Energy of the sec microstate is" << E << "J" << endl;
+            }
 
 
     }
+    cout << "E_tot:" << E_tot << "J" << endl;
+    double E_average = E_tot/(T + 1.0);
+    cout << "E_average:" << E_average << endl;
 
 
 }
