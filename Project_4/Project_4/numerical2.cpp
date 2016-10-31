@@ -54,6 +54,12 @@ double Numerical2(){
     // Husk at R(i,j) = U(i+1, j+1)
     //E_tot += E;
 
+//    mat R = zeros<mat>(N,N);
+//    R(0,0) = R(1,1) = -1;
+//    R(0,1) = R(1,0) = 1;
+
+
+
     mat U = zeros<mat>(N+2, N+2);
     for(int i=0; i<N; i++){
         for(int j=0; j <N; j++){
@@ -76,11 +82,13 @@ double Numerical2(){
             E += U(i,j)*U(i,j-1)+U(i,j)*U(i+1,j);
         }
     }
-    int E_tot = E;
+
+    int E_tot = 0;
+    E_tot += E;
+    cout << "The energy of the first microstate is:" << E << "J" << endl;
 
     //cout << "U-matrix:\n" << U << endl;
     //cout << "The total energy is " << E_tot << "J" << endl;
-    cout << "Energy of the first microstate is" << E << "J" << endl;
 
     for(int t=0; t < T; t++){
         int i = rand()%N;
@@ -89,21 +97,22 @@ double Numerical2(){
 
         if( R(i,j) == 1){
             R(i,j) =-1;
+            U(i+1, j+1) = -1;
         }
         else{
             R(i,j) = 1;
+            U(i+1, j+1) = 1;
         }
-
         int E_part_late = R_late*U(i+1,j+2) + R_late*U(i,j) + R_late*U(i+2, j+1) + R_late*U(i,j+1);
         int E_part_new = R(i,j)*U(i+1,j+2) + R(i,j)*U(i,j) + R(i,j)*U(i+2, j+1) + R(i,j)*U(i,j+1);
         int delta_E = E_part_new - E_part_late;
         int E_prev = E;
         E = E + delta_E;
-        cout << "delta_E:" << delta_E << endl;
+
 
         if(delta_E < 0){
             E_tot += E;
-            cout << "#1: Energy of the second microstate is" << E << "J" << endl;
+            cout << "#1 The energy of the sec microstate is:" << E << "J" << endl;
         }
 
         else if(delta_E > 0){
@@ -114,27 +123,27 @@ double Numerical2(){
                 if (r <= exp(-beta*delta_E)){
                     //cout << r << endl;
                     E_tot += E;
-                    cout << "#2 Energy of the sec microstate is" << E << "J" << endl;
+                    cout << "#2 The energy of the sec microstate is:" << E << "J" << endl;
                 }
                 else{
                     // discard change
                     R(i,j) = R_late;
                     E_tot += E_prev;
-                    cout << "#3 Energy of the sec microstate is" << E_prev << "J" << endl;
+                    E = E_prev;
+                    cout << "#3 The energy of the sec microstate is:" << E << "J" << endl;
                 }
             }
 
             else if(1 < exp(-beta*delta_E)){
                 E_tot += E;
-                cout << "#4 Energy of the sec microstate is" << E << "J" << endl;
+                cout << "#4 The energy of the sec microstate is:" << E << "J" << endl;
             }
 
         }
         else if(delta_E==0){
                 E_tot += E;
-                cout << "#5 Energy of the sec microstate is" << E << "J" << endl;
+                cout << "#5 The energy of the sec microstate is:" << E << "J" << endl;
             }
-
 
     }
     cout << "E_tot:" << E_tot << "J" << endl;
