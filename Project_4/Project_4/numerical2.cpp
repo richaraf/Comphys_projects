@@ -6,7 +6,7 @@
 
 using namespace std;
 using namespace arma;
-double Numerical2(){
+double Numerical2(double* X, double* Cv){
     int N = 2;
     int T = 2;
     double beta = 1.0;
@@ -26,8 +26,8 @@ double Numerical2(){
     }
 
     //Calculate energy, spesicif 2x2
-    //int E_tot = 0; //Energy of T microstates added together
-    //int E = 0; //Energy of one microstate
+//    int E_tot = 0; //Energy of T microstates added together
+//    int E = 0; //Energy of one microstate
 
 //    for(int i=0; i<N; i++){
 //        for(int j=0; j<N; j++){
@@ -52,6 +52,7 @@ double Numerical2(){
     //cout << R << endl;
 
     // Husk at R(i,j) = U(i+1, j+1)
+
     //E_tot += E;
 
 //    mat R = zeros<mat>(N,N);
@@ -77,17 +78,26 @@ double Numerical2(){
      * to calculate an interaction twice, but we will still calculate all
      * interactions. (This is general) */
     int E = 0;
+    int M = 0;
     for(int i = 1; i < N+1; i++){
         for(int j = 1; j < N+1; j++){
             E += U(i,j)*U(i,j-1)+U(i,j)*U(i+1,j);
+            M += U(i,j);
         }
     }
 
     int E_tot = 0;
+    int E_tot_sqrd = 0;
+    int M_tot = 0;
+    int M_tot_sqrd = 0;
     E_tot += E;
+    E_tot_sqrd += E*E;
+    M_tot += M;
+    M_tot_sqrd += M*M;
     cout << "The energy of the first microstate is:" << E << "J" << endl;
 
-    //cout << "U-matrix:\n" << U << endl;
+    cout << "U-matrix:\n" << U << endl;
+    cout << R << endl;
     //cout << "The total energy is " << E_tot << "J" << endl;
 
     for(int t=0; t < T; t++){
@@ -103,15 +113,21 @@ double Numerical2(){
             R(i,j) = 1;
             U(i+1, j+1) = 1;
         }
+
         int E_part_late = R_late*U(i+1,j+2) + R_late*U(i,j) + R_late*U(i+2, j+1) + R_late*U(i,j+1);
         int E_part_new = R(i,j)*U(i+1,j+2) + R(i,j)*U(i,j) + R(i,j)*U(i+2, j+1) + R(i,j)*U(i,j+1);
         int delta_E = E_part_new - E_part_late;
+        cout << "delta_E" << delta_E << endl;
         int E_prev = E;
         E = E + delta_E;
 
 
         if(delta_E < 0){
             E_tot += E;
+            E_tot_sqrd += E*E;
+            M += 2*R(i,j);
+            M_tot += M;
+            M_tot_sqrd += M*M;
             cout << "#1 The energy of the sec microstate is:" << E << "J" << endl;
         }
 
@@ -123,6 +139,10 @@ double Numerical2(){
                 if (r <= exp(-beta*delta_E)){
                     //cout << r << endl;
                     E_tot += E;
+                    E_tot_sqrd += E*E;
+                    M += 2*R(i,j);
+                    M_tot += M;
+                    M_tot_sqrd += M*M;
                     cout << "#2 The energy of the sec microstate is:" << E << "J" << endl;
                 }
                 else{
@@ -130,25 +150,50 @@ double Numerical2(){
                     R(i,j) = R_late;
                     E_tot += E_prev;
                     E = E_prev;
+                    E_tot_sqrd += E*E;
+                    M_tot += M;
+                    M_tot_sqrd += M*M;
                     cout << "#3 The energy of the sec microstate is:" << E << "J" << endl;
                 }
             }
 
             else if(1 < exp(-beta*delta_E)){
                 E_tot += E;
+                E_tot_sqrd += E*E;
+                M += 2*R(i,j);
+                M_tot += M;
+                M_tot_sqrd += M*M;
                 cout << "#4 The energy of the sec microstate is:" << E << "J" << endl;
             }
 
         }
         else if(delta_E==0){
                 E_tot += E;
+                E_tot_sqrd += E*E;
+                M += 2*R(i,j);
+                M_tot += M;
+                M_tot_sqrd += M*M;
                 cout << "#5 The energy of the sec microstate is:" << E << "J" << endl;
             }
 
+        cout << R << endl;
     }
     cout << "E_tot:" << E_tot << "J" << endl;
     double E_average = E_tot/(T + 1.0);
     cout << "E_average:" << E_average << endl;
+    double E_average_sqrd = E_tot_sqrd/(T+1.0);
+    cout << "E_average_sqrd:" << E_average_sqrd << endl;
+
+    cout << "M_tot:" << M_tot << endl;
+    double M_average = M_tot/(T+ 1.0);
+    cout << "M_average:" << M_average << endl;
+    cout << "M_tot_sqrd:" << M_tot_sqrd << endl;
+    double M_average_sqrd = M_tot_sqrd/(T+1.0);
+    cout << "M_average_sqrd:" << M_average_sqrd << endl;
+
+    *Cv = (E_average*E_average - E_average_sqrd)*beta;
+    *X = (M_average*M_average - M_average_sqrd)*beta;
+
 
 
 }

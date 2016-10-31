@@ -19,5 +19,11 @@ int main()
 //    cout << "Exact partition function for 2x2, Z = " << Z << endl;
 //    return 0;
 
-    Numerical2();
+    double X = 0;
+    double Cv = 0;
+    Numerical2(&X, &Cv);
+    cout << X << endl;
+    cout << Cv << endl;
+
+
 }
