@@ -8,7 +8,7 @@ using namespace std;
 using namespace arma;
 double Numerical2(double* X, double* Cv){
     int N = 2;
-    int T = 2;
+    int T = 1000;
     double beta = 1.0;
     srand(time(NULL));
 
@@ -94,31 +94,45 @@ double Numerical2(double* X, double* Cv){
     E_tot_sqrd += E*E;
     M_tot += M;
     M_tot_sqrd += M*M;
-    cout << "The energy of the first microstate is:" << E << "J" << endl;
+    //cout << "The energy of the first microstate is:" << E << "J" << endl;
 
     //cout << "U-matrix:\n" << U << endl;
-    cout << R << endl;
+    //cout << R << endl;
     //cout << "The total energy is " << E_tot << "J" << endl;
 
     for(int t=0; t < T; t++){
         int i = rand()%N;
         int j = rand()%N;
         int R_late = R(i,j);
+        //int E_part_late = R_late*U(i+1,j+2) + R_late*U(i,j) + R_late*U(i+2, j+1) + R_late*U(i,j+1);
+        int E_part_late = R_late*U(i+1,j) + R_late*U(i,j+1) + R_late*U(i+2,j+1) + R_late*U(i+1, j+2);
 
         if( R(i,j) == 1){
             R(i,j) =-1;
             U(i+1, j+1) = -1;
 
-            //Oppdater grensebetingelsene til U
         }
         else{
             R(i,j) = 1;
             U(i+1, j+1) = 1;
-            //Oppdater grensebetingelsene til U
         }
 
-        int E_part_late = R_late*U(i+1,j+2) + R_late*U(i,j) + R_late*U(i+2, j+1) + R_late*U(i,j+1);
-        int E_part_new = R(i,j)*U(i+1,j+2) + R(i,j)*U(i,j) + R(i,j)*U(i+2, j+1) + R(i,j)*U(i,j+1);
+        if(i==0){
+            U(N+1,j+1) = R(i,j);
+        }
+        if(i==(N-1)){
+            U(0, j+1) = R(i,j);
+        }
+        if(j==0){
+            U(i+1,N+1) = R(i,j);
+        }
+        if(j==N-1){
+            U(i+1,0) = R(i,j);
+        }
+
+
+        //int E_part_new = R(i,j)*U(i+1,j+2) + R(i,j)*U(i,j) + R(i,j)*U(i+2, j+1) + R(i,j)*U(i,j+1);
+        int E_part_new = R(i,j)*U(i+1,j) + R(i,j)*U(i,j+1) + R(i,j)*U(i+2,j+1) + R(i,j)*U(i+1, j+2);
         int delta_E = E_part_new - E_part_late;
         cout << "delta_E: " << delta_E << endl;
         int E_prev = E;
@@ -151,6 +165,19 @@ double Numerical2(double* X, double* Cv){
                 else{
                     // discard change
                     R(i,j) = R_late;
+                    U(i+1,j+1) = R_late;
+                    if(i==0){
+                        U(N+1,j+1) = R(i,j);
+                    }
+                    if(i==(N-1)){
+                        U(0, j+1) = R(i,j);
+                    }
+                    if(j==0){
+                        U(i+1,N+1) = R(i,j);
+                    }
+                    if(j==N-1){
+                        U(i+1,0) = R(i,j);
+                    }
                     E_tot += E_prev;
                     E = E_prev;
                     E_tot_sqrd += E*E;
@@ -158,6 +185,7 @@ double Numerical2(double* X, double* Cv){
                     M_tot_sqrd += M*M;
                     cout << "#3 The energy of the sec microstate is:" << E << "J" << endl;
                     //Gaa tilbake til gamle grensebetingelser for U
+                    //cout << "#3 The energy of the sec microstate is:" << E << "J" << endl;
                 }
             }
 
@@ -180,7 +208,8 @@ double Numerical2(double* X, double* Cv){
                 cout << "#5 The energy of the sec microstate is:" << E << "J" << endl;
             }
 
-        cout << R << endl;
+        //cout << R << endl;
+        //cout << U << endl;
     }
     cout << "E_tot:" << E_tot << "J" << endl;
     double E_average = E_tot/(T + 1.0);
