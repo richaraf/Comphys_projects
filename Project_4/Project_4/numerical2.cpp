@@ -6,7 +6,7 @@
 
 using namespace std;
 using namespace arma;
-double Numerical2(double* X, double* Cv){
+void Numerical2(double* X, double* Cv){
     int N = 2;
     int T = 1e8;
     double beta = 1.0;
@@ -81,7 +81,7 @@ double Numerical2(double* X, double* Cv){
     int M = 0;
     for(int i = 1; i < N+1; i++){
         for(int j = 1; j < N+1; j++){
-            E -= U(i,j)*U(i,j-1)+U(i,j)*U(i+1,j);
+            E -= U(i,j)*U(i,j-1) + U(i,j)*U(i+1,j);
             M += U(i,j);
         }
     }
@@ -226,7 +226,4 @@ double Numerical2(double* X, double* Cv){
 
     *Cv = (E_average_sqrd - E_average*E_average)*beta;
     *X = (M_average_sqrd - M_average*M_average)*beta;
-
-
-
 }
