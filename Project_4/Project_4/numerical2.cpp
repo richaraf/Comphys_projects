@@ -96,7 +96,7 @@ double Numerical2(double* X, double* Cv){
     M_tot_sqrd += M*M;
     cout << "The energy of the first microstate is:" << E << "J" << endl;
 
-    cout << "U-matrix:\n" << U << endl;
+    //cout << "U-matrix:\n" << U << endl;
     cout << R << endl;
     //cout << "The total energy is " << E_tot << "J" << endl;
 
@@ -108,16 +108,19 @@ double Numerical2(double* X, double* Cv){
         if( R(i,j) == 1){
             R(i,j) =-1;
             U(i+1, j+1) = -1;
+
+            //Oppdater grensebetingelsene til U
         }
         else{
             R(i,j) = 1;
             U(i+1, j+1) = 1;
+            //Oppdater grensebetingelsene til U
         }
 
         int E_part_late = R_late*U(i+1,j+2) + R_late*U(i,j) + R_late*U(i+2, j+1) + R_late*U(i,j+1);
         int E_part_new = R(i,j)*U(i+1,j+2) + R(i,j)*U(i,j) + R(i,j)*U(i+2, j+1) + R(i,j)*U(i,j+1);
         int delta_E = E_part_new - E_part_late;
-        cout << "delta_E" << delta_E << endl;
+        cout << "delta_E: " << delta_E << endl;
         int E_prev = E;
         E = E + delta_E;
 
@@ -154,6 +157,7 @@ double Numerical2(double* X, double* Cv){
                     M_tot += M;
                     M_tot_sqrd += M*M;
                     cout << "#3 The energy of the sec microstate is:" << E << "J" << endl;
+                    //Gaa tilbake til gamle grensebetingelser for U
                 }
             }
 
