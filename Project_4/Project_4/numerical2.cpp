@@ -1,14 +1,14 @@
 #include <numerical2.h>
 #include <armadillo>
 #include <random>
-#include<cstdlib>
-#include<time.h>
+#include <cstdlib>
+#include <time.h>
 
 using namespace std;
 using namespace arma;
 double Numerical2(double* X, double* Cv){
     int N = 2;
-    int T = 1000;
+    int T = 1e8;
     double beta = 1.0;
     srand(time(NULL));
 
@@ -81,7 +81,7 @@ double Numerical2(double* X, double* Cv){
     int M = 0;
     for(int i = 1; i < N+1; i++){
         for(int j = 1; j < N+1; j++){
-            E += U(i,j)*U(i,j-1)+U(i,j)*U(i+1,j);
+            E -= U(i,j)*U(i,j-1)+U(i,j)*U(i+1,j);
             M += U(i,j);
         }
     }
@@ -105,7 +105,7 @@ double Numerical2(double* X, double* Cv){
         int j = rand()%N;
         int R_late = R(i,j);
         //int E_part_late = R_late*U(i+1,j+2) + R_late*U(i,j) + R_late*U(i+2, j+1) + R_late*U(i,j+1);
-        int E_part_late = R_late*U(i+1,j) + R_late*U(i,j+1) + R_late*U(i+2,j+1) + R_late*U(i+1, j+2);
+        int E_part_late = -(R_late*U(i+1,j) + R_late*U(i,j+1) + R_late*U(i+2,j+1) + R_late*U(i+1, j+2));
 
         if( R(i,j) == 1){
             R(i,j) =-1;
@@ -132,9 +132,9 @@ double Numerical2(double* X, double* Cv){
 
 
         //int E_part_new = R(i,j)*U(i+1,j+2) + R(i,j)*U(i,j) + R(i,j)*U(i+2, j+1) + R(i,j)*U(i,j+1);
-        int E_part_new = R(i,j)*U(i+1,j) + R(i,j)*U(i,j+1) + R(i,j)*U(i+2,j+1) + R(i,j)*U(i+1, j+2);
+        int E_part_new = -(R(i,j)*U(i+1,j) + R(i,j)*U(i,j+1) + R(i,j)*U(i+2,j+1) + R(i,j)*U(i+1, j+2));
         int delta_E = E_part_new - E_part_late;
-        cout << "delta_E: " << delta_E << endl;
+        //cout << "delta_E: " << delta_E << endl;
         int E_prev = E;
         E = E + delta_E;
 
@@ -145,7 +145,7 @@ double Numerical2(double* X, double* Cv){
             M += 2*R(i,j);
             M_tot += M;
             M_tot_sqrd += M*M;
-            cout << "#1 The energy of the sec microstate is:" << E << "J" << endl;
+            //cout << "#1 The energy of the sec microstate is:" << E << "J" << endl;
         }
 
         else if(delta_E > 0){
@@ -160,7 +160,7 @@ double Numerical2(double* X, double* Cv){
                     M += 2*R(i,j);
                     M_tot += M;
                     M_tot_sqrd += M*M;
-                    cout << "#2 The energy of the sec microstate is:" << E << "J" << endl;
+                    //cout << "#2 The energy of the sec microstate is:" << E << "J" << endl;
                 }
                 else{
                     // discard change
@@ -183,7 +183,7 @@ double Numerical2(double* X, double* Cv){
                     E_tot_sqrd += E*E;
                     M_tot += M;
                     M_tot_sqrd += M*M;
-                    cout << "#3 The energy of the sec microstate is:" << E << "J" << endl;
+                    //cout << "#3 The energy of the sec microstate is:" << E << "J" << endl;
                     //Gaa tilbake til gamle grensebetingelser for U
                     //cout << "#3 The energy of the sec microstate is:" << E << "J" << endl;
                 }
@@ -195,7 +195,7 @@ double Numerical2(double* X, double* Cv){
                 M += 2*R(i,j);
                 M_tot += M;
                 M_tot_sqrd += M*M;
-                cout << "#4 The energy of the sec microstate is:" << E << "J" << endl;
+                //cout << "#4 The energy of the sec microstate is:" << E << "J" << endl;
             }
 
         }
@@ -205,9 +205,9 @@ double Numerical2(double* X, double* Cv){
                 M += 2*R(i,j);
                 M_tot += M;
                 M_tot_sqrd += M*M;
-                cout << "#5 The energy of the sec microstate is:" << E << "J" << endl;
+                //cout << "#5 The energy of the sec microstate is:" << E << "J" << endl;
             }
-
+        //cout << M << " " << E << " ";
         //cout << R << endl;
         //cout << U << endl;
     }
@@ -224,8 +224,8 @@ double Numerical2(double* X, double* Cv){
     double M_average_sqrd = M_tot_sqrd/(T+1.0);
     cout << "M_average_sqrd:" << M_average_sqrd << endl;
 
-    *Cv = (E_average*E_average - E_average_sqrd)*beta;
-    *X = (M_average*M_average - M_average_sqrd)*beta;
+    *Cv = (E_average_sqrd - E_average*E_average)*beta;
+    *X = (M_average_sqrd - M_average*M_average)*beta;
 
 
 
