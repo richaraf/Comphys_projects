@@ -6,22 +6,27 @@
 
 using namespace std;
 using namespace arma;
+
 void Numerical2(double* X, double* Cv){
-    int N = 2;
-    int T = 1e8;
+    int N = 20;
+    int T = 1e7;
     double beta = 1.0;
     srand(time(NULL));
 
     mat R = zeros<mat>(N, N);
     for(int i=0; i < N; i++){
         for(int j=0; j < N; j++){
-            int x = rand()%2; //trekker tall mellom 0 og 1
-            if(x==1){
-                R(i,j) = 1;
-            }
-            else{
-                R(i,j) = -1;
-            }
+            //Fill matrix randomly
+//            int x = rand()%2; //trekker tall mellom 0 og 1
+//            if(x==1){
+//                R(i,j) = 1;
+//            }
+//            else{
+//                R(i,j) = -1;
+//            }
+
+            //Fill matrix manually
+            R(i,j)=1;
         }
     }
 
@@ -130,7 +135,6 @@ void Numerical2(double* X, double* Cv){
             U(i+1,0) = R(i,j);
         }
 
-
         //int E_part_new = R(i,j)*U(i+1,j+2) + R(i,j)*U(i,j) + R(i,j)*U(i+2, j+1) + R(i,j)*U(i,j+1);
         int E_part_new = -(R(i,j)*U(i+1,j) + R(i,j)*U(i,j+1) + R(i,j)*U(i+2,j+1) + R(i,j)*U(i+1, j+2));
         int delta_E = E_part_new - E_part_late;
@@ -145,7 +149,7 @@ void Numerical2(double* X, double* Cv){
             M += 2*R(i,j);
             M_tot += M;
             M_tot_sqrd += M*M;
-            //cout << "#1 The energy of the sec microstate is:" << E << "J" << endl;
+            cout << "#1 The energy of the sec microstate is:" << E << "J" << endl;
         }
 
         else if(delta_E > 0){
@@ -153,7 +157,7 @@ void Numerical2(double* X, double* Cv){
             if(1 > exp(-beta*delta_E)){
                 //draw random number from 0 to 1, check if bigger than exp()
                 double r = (double)rand() / (double)RAND_MAX;
-                if (r <= exp(-beta*delta_E)){
+                if (r <= exp(beta*delta_E)){
                     //cout << r << endl;
                     E_tot += E;
                     E_tot_sqrd += E*E;
@@ -207,6 +211,12 @@ void Numerical2(double* X, double* Cv){
                 M_tot_sqrd += M*M;
                 //cout << "#5 The energy of the sec microstate is:" << E << "J" << endl;
             }
+
+        cout << "M_mid: " << M << endl;
+        if(M==0){
+            cout << "Equlibrium state reached" << endl;
+            break;
+        }
         //cout << M << " " << E << " ";
         //cout << R << endl;
         //cout << U << endl;
