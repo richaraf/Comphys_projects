@@ -22,8 +22,8 @@ int main()
     double X = 0;
     double Cv = 0;
     Numerical2(&X, &Cv);
-    cout << X << endl;
-    cout << Cv << endl;
+    cout << "X: " << X << endl;
+    cout << "Cv: " << Cv << endl;
 
 
 }
