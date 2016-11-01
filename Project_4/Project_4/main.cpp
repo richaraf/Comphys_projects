@@ -1,7 +1,10 @@
 #include <iostream>
 #include "lattice.h"
 #include "exact2x2.h"
-#include<numerical2.h>
+#include <numerical2.h>
+#include <time.h>
+//#include <fstream>
+#include <iomanip>
 
 using namespace std;
 
@@ -23,9 +26,19 @@ int main()
 
     double X = 0;
     double Cv = 0;
+
+    // Start timer
+    clock_t start, finish;
+    start = clock();
     Numerical2(&X, &Cv);
+    // End timer
+    finish = clock();
+    ((finish-start)/CLOCKS_PER_SEC);
+    double timeused = (double) (finish - start)/(CLOCKS_PER_SEC );
+
     cout << "X: " << X << endl;
     cout << "Cv: " << Cv << endl;
 
-
+    cout << setiosflags(ios::showpoint | ios::uppercase);
+    cout << setprecision(10) << setw(20) << "Time used =" << timeused  << endl;
 }
