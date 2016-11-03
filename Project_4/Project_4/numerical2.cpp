@@ -159,8 +159,8 @@ void Numerical2(double* X, double* Cv, int T, double beta, int L, bool random){
 //            outfile_E_M << t + 2.0 << " " << E_average << " " << M_average << endl;
 //        }
 
-        if(t>1e6){
-            outfile_E_prob << E << endl;
+        if(t>1e6 && t%10==0){
+            outfile_E_prob << E_tot << " " << E << endl;
         }
 
     }
