@@ -11,10 +11,9 @@ Lattice::Lattice()
 
 void Lattice::makeLattice(mat &R, bool random, int L){
     /* The LxL lattice is set up as a L+2xL+2 matrix
-     * where we take care of Periodic Boundary Conditions */
+     * where we use Periodic Boundary Conditions */
 
     srand(time(NULL));
-    //mat R = zeros<mat>(L+2, L+2);
     if(random==true){
         for(int i=1; i < L+1; i++){
             for(int j=1; j < L+1; j++){
@@ -32,8 +31,8 @@ void Lattice::makeLattice(mat &R, bool random, int L){
     else{
         for(int i=1; i < L+1; i++){
             for(int j=1; j < L+1; j++){
-                //Fill matrix manually
-                R(i,j)=1;
+                //Fill ordered matrix
+                R(i,j) = 1;
             }
         }
     }

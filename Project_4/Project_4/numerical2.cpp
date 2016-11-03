@@ -8,12 +8,12 @@ using namespace arma;
 
 void Numerical2(double* X, double* Cv, int T, double beta, int L, bool random){
 
-    // Making matrix with function
+    // Make matrix using lattice.cpp
     mat R = zeros<mat>(L+2, L+2);
     Lattice lattice;
     lattice.makeLattice(R, random, L);
 
-    // Calculate total energy
+    // Calculate total beginning energy
     int E = 0;
     int M = 0;
     for(int i = 1; i < L+1; i++){
@@ -137,6 +137,18 @@ void Numerical2(double* X, double* Cv, int T, double beta, int L, bool random){
             outfile << t+1 << "  " << (t+1-number_of_discards)/(t+1.0) << endl;
         }
 
+
+        //Need this for doing measurements in exercise 4c
+//        int S = 1000;               //Number of uniform distrubuted elements in file
+//        if(T>S){
+//            if(t%(T/S)==0){
+//                outfile << t+1 << "  " << t+1-number_of_discards << endl;
+//            }
+//        }
+//        else{
+//            outfile << t+1 << "  " << t+1-number_of_discards << endl;
+//        }
+
         double E_average        = E_tot/(t + 1.0);
         double M_average        = M_tot/(t+ 1.0);
 
@@ -144,7 +156,6 @@ void Numerical2(double* X, double* Cv, int T, double beta, int L, bool random){
             outfile_E_M << t + 1.0 << " " << E_average << " " << M_average << endl;
         }
     }
-    cout << R << endl;
     outfile.close();
 
     double E_average               = E_tot/(T + 1.0);
