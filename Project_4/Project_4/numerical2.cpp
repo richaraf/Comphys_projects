@@ -23,10 +23,10 @@ void Numerical2(double* X, double* Cv, int T, double beta, int L, bool random){
         }
     }
 
-    int E_tot       =   0;
-    int E_tot_sqrd  =   0;
-    int M_tot       =   0;
-    int M_tot_sqrd  =   0;
+    double E_tot       =   0.0;
+    double E_tot_sqrd  =   0.0;
+    double M_tot       =   0.0;
+    double M_tot_sqrd  =   0.0;
     E_tot           +=  E;
     E_tot_sqrd      +=  E*E;
     M_tot           +=  M;
@@ -35,6 +35,10 @@ void Numerical2(double* X, double* Cv, int T, double beta, int L, bool random){
     int number_of_discards = 0;
     ofstream outfile;
     outfile.open("../number_of_accept.dat", std::ios::out);
+
+    //Write acerage energy and mean magnetization to file
+    ofstream outfile_E_M;
+    outfile_E_M.open("../E_M_T=1_0_file.dat");
 
     for(int t=0; t < T; t++){
         //Choosing flip index randomly
@@ -127,16 +131,24 @@ void Numerical2(double* X, double* Cv, int T, double beta, int L, bool random){
 
         }
         //Need this for doing measurements in exercise 4c
-        int M = 1000;               //Number of uniform distrubuted elements in file
-        if(t%(T/M)==0){
-            outfile << t+1 << "  " << t+1-number_of_discards << endl;
+        //int M = 1000;               //Number of uniform distrubuted elements in file
+        //if(t%(T/M)==0){
+            //outfile << t+1 << "  " << t+1-number_of_discards << endl;
+        //}
+
+        double E_average        = E_tot/(t + 1.0);
+        double M_average        = M_tot/(t+ 1.0);
+
+        if(T>100 && t%100 ==0){
+        outfile_E_M << t << " " << E_average << " " << M_average << endl;
         }
     }
+    cout << R << endl;
     outfile.close();
 
-    double E_average        = E_tot/(T + 1.0);
+    double E_average               = E_tot/(T + 1.0);
     double E_average_sqrd   = E_tot_sqrd/(T+1.0);
-    double M_average        = M_tot/(T+ 1.0);
+    double M_average               = M_tot/(T+ 1.0);
     double M_average_sqrd   = M_tot_sqrd/(T+1.0);
 
     cout << "E_tot: "           << E_tot << "J"     << endl;
@@ -149,6 +161,8 @@ void Numerical2(double* X, double* Cv, int T, double beta, int L, bool random){
 
     *Cv  = (E_average_sqrd - E_average*E_average)*beta;
     *X   = (M_average_sqrd - M_average*M_average)*beta;
+
+
 
     //Making matrix without function
 //    srand(time(NULL));

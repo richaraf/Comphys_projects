@@ -9,7 +9,7 @@ using namespace std;
 
 int main()
 {
-    int L = 2;
+    int L = 20;
 
     if(L==2){
         Exact2x2 exact; // bruker foreløpig J = k = T = 1.0
@@ -35,7 +35,7 @@ int main()
 
     //Numerical2(susceptibility, heat capacity, number of sweeps,
     //           beta, size of system, spin ordered randomly)
-    Numerical2(&X, &Cv, 1e6, 1.0, L, true);
+    Numerical2(&X, &Cv, 1e7, 1.0, L, true);
 
     // End timer
     finish = clock();
@@ -47,4 +47,5 @@ int main()
 
     cout << setiosflags(ios::showpoint | ios::uppercase);
     cout << setprecision(10) << setw(20) << "Time used = " << timeused  << endl;
+
 }
