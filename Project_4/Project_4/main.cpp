@@ -4,12 +4,13 @@
 #include <numerical2.h>
 #include <time.h>
 #include <iomanip>
+#include <mpi.h>
 
 using namespace std;
 
-int main()
+int main(int nargs, char* args[])
 {
-    int L = 20;
+    int L = 2;
 
     if(L==2){
         Exact2x2 exact; // bruker foreløpig J = k = T = 1.0
@@ -28,6 +29,7 @@ int main()
     }
     double X = 0;
     double Cv = 0;
+    double X_total = 0.0;
 
     // Start timer
     clock_t start, finish;
@@ -36,18 +38,33 @@ int main()
     //Numerical2(susceptibility, heat capacity, number of sweeps,
     //           beta, size of system, spin ordered randomly)
 
-    Numerical2(&X, &Cv, 1e7, 1.0/2.4, L, false);
+
+    int numprocs, my_rank;
+    MPI_Init (&nargs, &args);
+    MPI_Comm_size (MPI_COMM_WORLD, &numprocs);
+    MPI_Comm_rank (MPI_COMM_WORLD, &my_rank);
+    Numerical2(&X, &Cv, 1e2, 1.0, L, true, my_rank);
+    MPI_Reduce(&X, &X_total, 1, MPI_DOUBLE, MPI_SUM, 0, MPI_COMM_WORLD);
 
 
+
+
+    //cout << "Cv: " << Cv << endl;
+    //cout << setiosflags(ios::showpoint | ios::uppercase);
+    //cout << setprecision(10) << setw(20) << "Time used = " << timeused  << endl;
+    MPI_Barrier(MPI_COMM_WORLD);
+    cout << "X for process = " << X << endl;
+    MPI_Barrier(MPI_COMM_WORLD);
+    if( my_rank ==0 ){
+        cout << "X average for all processes = " << X_total/numprocs << endl;
+    }
+    MPI_Finalize();
+    /*
     // End timer
     finish = clock();
     ((finish-start)/CLOCKS_PER_SEC);
     double timeused = (double) (finish - start)/(CLOCKS_PER_SEC );
-
-    cout << "X: " << X << endl;
-    cout << "Cv: " << Cv << endl;
-
     cout << setiosflags(ios::showpoint | ios::uppercase);
     cout << setprecision(10) << setw(20) << "Time used = " << timeused  << endl;
-
+    */
 }

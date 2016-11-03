@@ -6,12 +6,12 @@
 using namespace std;
 using namespace arma;
 
-void Numerical2(double* X, double* Cv, int T, double beta, int L, bool random){
+void Numerical2(double* X, double* Cv, int T, double beta, int L, bool random, int my_rank){
 
     // Make matrix using lattice.cpp
     mat R = zeros<mat>(L+2, L+2);
     Lattice lattice;
-    lattice.makeLattice(R, random, L);
+    lattice.makeLattice(R, random, L, my_rank);
 
     // Calculate total beginning energy
     int E = 0;
