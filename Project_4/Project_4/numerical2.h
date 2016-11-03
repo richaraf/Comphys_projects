@@ -1,3 +1,3 @@
 #pragma once
 using namespace std;
-double Numerical2(double *X, double *Cv);
+void Numerical2(double *X, double *Cv, int T, double beta, int L, bool random);
