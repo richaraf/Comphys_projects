@@ -36,7 +36,7 @@ int main()
     //Numerical2(susceptibility, heat capacity, number of sweeps,
     //           beta, size of system, spin ordered randomly)
 
-    Numerical2(&X, &Cv, 1e6, 1.0, L, true);
+    Numerical2(&X, &Cv, 1e8, 1.0, L, true);
 
     // End timer
     finish = clock();

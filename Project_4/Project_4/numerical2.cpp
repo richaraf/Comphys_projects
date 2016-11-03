@@ -132,16 +132,16 @@ void Numerical2(double* X, double* Cv, int T, double beta, int L, bool random){
 
         }
         //Need this for doing measurements in exercise 4c
-        //int M = 1000;               //Number of uniform distrubuted elements in file
-        //if(t%(T/M)==0){
-            //outfile << t+1 << "  " << t+1-number_of_discards << endl;
-        //}
+        //int M = 100;               //Number of uniform distrubuted elements in file
+        if(T>100 && t%100==0){
+            outfile << t+1 << "  " << (t+1-number_of_discards)/(t+1.0) << endl;
+        }
 
         double E_average        = E_tot/(t + 1.0);
         double M_average        = M_tot/(t+ 1.0);
 
         if(T>100 && t%100 ==0){
-        outfile_E_M << t << " " << E_average << " " << M_average << endl;
+            outfile_E_M << t + 1.0 << " " << E_average << " " << M_average << endl;
         }
     }
     cout << R << endl;

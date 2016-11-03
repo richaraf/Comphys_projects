@@ -12,10 +12,18 @@ for line in infile:
     E_average.append(float(words[1]))
     M_average.append(float(words[2]))
 
-plt.plot(t, E_average)
-plt.legend(("E_average [J]"))
+axis_size = {"size" : "18"}
+
+plt.plot(log10(t), E_average)
+plt.legend(("E_average"))
+plt.title("E_average", **axis_size)
+plt.xlabel("MC cycles, log", **axis_size)
+plt.ylabel("E_average", **axis_size)
 plt.show()
 
-plt.plot(t, M_average)
-plt.legend(( "M_average [M]"))
+plt.plot(log10(t), M_average)
+plt.legend(( "M_average"))
+plt.title("M_average", **axis_size)
+plt.xlabel("MC cycles, log", **axis_size)
+plt.ylabel("M_average", **axis_size)
 plt.show()
