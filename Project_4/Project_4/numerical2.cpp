@@ -41,6 +41,9 @@ void Numerical2(double* X, double* Cv, int T, double beta, int L, bool random){
     ofstream outfile_E_M;
     outfile_E_M.open("../E_M_T=1_0_file.dat");
 
+    ofstream outfile_E_prob;
+    outfile_E_prob.open("../E_prob_file.dat");
+
     for(int t=0; t < T; t++){
         //Choosing flip index randomly
         int i = rand()%L;
@@ -133,9 +136,9 @@ void Numerical2(double* X, double* Cv, int T, double beta, int L, bool random){
         }
         //Need this for doing measurements in exercise 4c
         //int M = 100;               //Number of uniform distrubuted elements in file
-        if(T>100 && t%100==0){
-            outfile << t+2 << "  " << (t+2-number_of_discards)/(t+2.0) << endl;
-        }
+//        if(T>100 && t%100==0){
+//            outfile << t+2 << "  " << (t+2-number_of_discards)/(t+2.0) << endl;
+//        }
 
 
         //Need this for doing measurements in exercise 4c
@@ -152,11 +155,18 @@ void Numerical2(double* X, double* Cv, int T, double beta, int L, bool random){
         double E_average        = E_tot/(t + 2.0);
         double M_average        = M_tot/(t+ 2.0);
 
-        if(T>100 && t%100 ==0){
-            outfile_E_M << t + 2.0 << " " << E_average << " " << M_average << endl;
+//        if(T>100 && t%100 ==0){
+//            outfile_E_M << t + 2.0 << " " << E_average << " " << M_average << endl;
+//        }
+
+        if(t>1e6){
+            outfile_E_prob << E << endl;
         }
+
     }
     outfile.close();
+    outfile_E_M.close();
+    outfile_E_prob.close();
 
     double E_average               = E_tot/(T + 1.0);
     double E_average_sqrd   = E_tot_sqrd/(T+1.0);
