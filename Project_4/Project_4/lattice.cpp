@@ -45,4 +45,5 @@ void Lattice::makeLattice(mat &R, bool random, int L){
             R(i+1,L+1) = R(i+1,1);
         }
     }
+
 }

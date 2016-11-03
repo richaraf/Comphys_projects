@@ -1,0 +1,4 @@
+from scitool.std import *
+import matplotlib.pyplot as plt
+
+infile = open(r, "E_M_T=1_0_file.dat")
