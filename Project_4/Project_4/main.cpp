@@ -14,7 +14,7 @@ using namespace std;
 int main(int nargs, char* args[])
 {
 
-    int L = 40; double Temp = 2.4;
+    int L = 60; double Temp = 2.4;
 
     int numprocs, my_rank;
 
@@ -91,43 +91,43 @@ int main(int nargs, char* args[])
     ofstream oppgd25;
     ofstream oppgd26;
     if(my_rank == 0){
-        oppgd20.open("../oppgdL40T200_file.dat");
+        oppgd20.open("../oppgdL60T200_file.dat");
         oppgd20 << local_expectation_values;
         cout << local_expectation_values << endl;
         oppgd20.close();
     }
     if(my_rank == 1){
-        oppgd21.open("../oppgdL40T205_file.dat");
+        oppgd21.open("../oppgdL60T205_file.dat");
         oppgd21 << local_expectation_values;
         cout << local_expectation_values << endl;
         oppgd21.close();
     }
     if(my_rank == 2){
-        oppgd22.open("../oppgdL40T210_file.dat");
+        oppgd22.open("../oppgdL60T210_file.dat");
         oppgd22 << local_expectation_values;
         cout << local_expectation_values << endl;
         oppgd22.close();
     }
     if(my_rank == 3){
-        oppgd23.open("../oppgdL40T215_file.dat");
+        oppgd23.open("../oppgdL60T215_file.dat");
         oppgd23 << local_expectation_values;
         cout << local_expectation_values << endl;
         oppgd23.close();
     }
     if(my_rank == 4){
-        oppgd24.open("../oppgdL40T220_file.dat");
+        oppgd24.open("../oppgdL60T220_file.dat");
         oppgd24 << local_expectation_values;
         cout << local_expectation_values << endl;
         oppgd24.close();
     }
     if(my_rank == 5){
-        oppgd25.open("../oppgdL40T225_file.dat");
+        oppgd25.open("../oppgdL60T225_file.dat");
         oppgd25 << local_expectation_values;
         cout << local_expectation_values << endl;
         oppgd25.close();
     }
     if(my_rank == 6){
-        oppgd26.open("../oppgdL40T230_file.dat");
+        oppgd26.open("../oppgdL60T230_file.dat");
         oppgd26 << local_expectation_values;
         cout << local_expectation_values << endl;
         oppgd26.close();
