@@ -42,10 +42,10 @@ int main(int nargs, char* args[])
 //    double X_total = 0.0;
 //    double Cv_total = 0.0;
 
-//    // Start timer
-//    cout << "timer start" << endl;
-//    clock_t start, finish;
-//    start = clock();
+    // Start timer
+    cout << "timer start" << endl;
+    clock_t start, finish;
+    start = clock();
 
     //Numerical2(susceptibility, heat capacity, number of sweeps,
     //           beta, size of system, spin ordered randomly)
@@ -61,7 +61,7 @@ int main(int nargs, char* args[])
     double beta = 1/T[my_rank];
     //cout << T[my_rank] << " " << beta << endl;
 
-    Numerical2(1e7, beta, L, false, my_rank, local_expectation_values);
+    Numerical2(1e8, beta, L, false, my_rank, local_expectation_values);
     // local_expectation_values now contains the different expectation values
     // for different temperatures for the different processes
 
@@ -148,11 +148,11 @@ int main(int nargs, char* args[])
 //    }
     MPI_Finalize();
 
-//    // End timer
-//    finish = clock();
-//    ((finish-start)/CLOCKS_PER_SEC);
-//    double timeused = (double) (finish - start)/(CLOCKS_PER_SEC );
-//    cout << setiosflags(ios::showpoint | ios::uppercase);
-//    cout << setprecision(10) << setw(20) << "Time used = " << timeused  << endl;
+    // End timer
+    finish = clock();
+    ((finish-start)/CLOCKS_PER_SEC);
+    double timeused = (double) (finish - start)/(CLOCKS_PER_SEC );
+    cout << setiosflags(ios::showpoint | ios::uppercase);
+    cout << setprecision(10) << setw(20) << "Time used = " << timeused  << endl;
 
 }

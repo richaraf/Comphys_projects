@@ -159,10 +159,10 @@ void run_measurements(double* X, double* Cv, int T, double beta, int L, bool ran
     double M_average                = M_tot/(T+ 1.0);
     double M_average_sqrd           = M_tot_sqrd/(T+1.0);
 
-    cout << "E_tot_sqrd: "      << E_tot_sqrd << "J*J" << endl;
-    cout << "E_tot: "           << E_tot << "J"     << endl;
-    cout << "E_average: "       << E_average        << endl;
-    cout << "E_average_sqrd: "  << E_average_sqrd   << endl;
+    cout << "E_tot_sqrd: "      << E_tot_sqrd       << "J^2"  << endl;
+    cout << "E_tot: "           << E_tot            << "J"    << endl;
+    cout << "E_average: "       << E_average        << "J"    << endl;
+    cout << "E_average_sqrd: "  << E_average_sqrd   << "J^2"  << endl;
     cout << "M_tot: "           << M_tot            << endl;
     cout << "M_average: "       << M_average        << endl;
     cout << "M_tot_sqrd: "      << M_tot_sqrd       << endl;

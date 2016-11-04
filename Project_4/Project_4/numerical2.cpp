@@ -122,23 +122,10 @@ void Numerical2(int T, double beta, int L, bool random, int my_rank, mat &local_
         }
     }
 
-//    outfile.close();
-//    outfile_E_M.close();
-//    outfile_E_prob.close();
-
     double E_average               = E_tot/(T + 1.0);
     double E_average_sqrd   = E_tot_sqrd/(T+1.0);
     double M_average               = M_tot/(T+ 1.0);
     double M_average_sqrd   = M_tot_sqrd/(T+1.0);
-
-//    cout << "E_tot_sqrd: "      << E_tot_sqrd << "J*J" << endl;
-//    cout << "E_tot: "           << E_tot << "J"     << endl;
-//    cout << "E_average: "       << E_average        << endl;
-//    cout << "E_average_sqrd: "  << E_average_sqrd   << endl;
-//    cout << "M_tot: "           << M_tot            << endl;
-//    cout << "M_average: "       << M_average        << endl;
-//    cout << "M_tot_sqrd: "      << M_tot_sqrd       << endl;
-//    cout << "M_average_sqrd: "  << M_average_sqrd   << endl;
 
     double Cv  = (E_average_sqrd - E_average*E_average)*beta*beta;
     double X   = (M_average_sqrd - M_average*M_average)*beta;
