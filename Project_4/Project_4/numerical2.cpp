@@ -6,7 +6,7 @@
 using namespace std;
 using namespace arma;
 
-void Numerical2(double* X, double* Cv, int T, double beta, int L, bool random, int my_rank){
+void Numerical2(double* X, double* Cv, int T, double beta, int L, bool random, int my_rank, vec local_expectation_values){
 
     // Make matrix using lattice.cpp
     mat R = zeros<mat>(L+2, L+2);
@@ -33,7 +33,6 @@ void Numerical2(double* X, double* Cv, int T, double beta, int L, bool random, i
     M_tot_sqrd      +=  M*M;
 
     double expbetadelta_E;
-
     for(int t=0; t < T; t++){
         //Choosing flip index randomly
         int i = rand()%L;
@@ -122,21 +121,4 @@ void Numerical2(double* X, double* Cv, int T, double beta, int L, bool random, i
             }
         }
     }
-
-    double E_average               = E_tot/(T + 1.0);
-    double E_average_sqrd   = E_tot_sqrd/(T+1.0);
-    double M_average               = M_tot/(T+ 1.0);
-    double M_average_sqrd   = M_tot_sqrd/(T+1.0);
-
-    cout << "E_tot_sqrd: "      << E_tot_sqrd << "J*J" << endl;
-    cout << "E_tot: "           << E_tot << "J"     << endl;
-    cout << "E_average: "       << E_average        << endl;
-    cout << "E_average_sqrd: "  << E_average_sqrd   << endl;
-    cout << "M_tot: "           << M_tot            << endl;
-    cout << "M_average: "       << M_average        << endl;
-    cout << "M_tot_sqrd: "      << M_tot_sqrd       << endl;
-    cout << "M_average_sqrd: "  << M_average_sqrd   << endl;
-
-    *Cv  = (E_average_sqrd - E_average*E_average)*beta*beta;
-    *X   = (M_average_sqrd - M_average*M_average)*beta;
 }
