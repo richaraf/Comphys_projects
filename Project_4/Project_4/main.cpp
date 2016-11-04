@@ -2,6 +2,7 @@
 #include "lattice.h"
 #include "exact2x2.h"
 #include <numerical2.h>
+#include <measurements.h>
 #include <time.h>
 #include <iomanip>
 #include <mpi.h>
@@ -12,7 +13,8 @@ using namespace std;
 
 int main(int nargs, char* args[])
 {
-    int L = 40;
+
+    int L = 40; double Temp = 2.4;
 
     int numprocs, my_rank;
 
@@ -22,12 +24,12 @@ int main(int nargs, char* args[])
 
     if(L==2 && my_rank == 0){
         Exact2x2 exact; // bruker foreløpig J = k = T = 1.0
-        double E = exact.Energy(1.0);
-        double E_squared = exact.EnergySquared(1.0);
+        double E = exact.Energy(Temp);
+        double E_squared = exact.EnergySquared(Temp);
         double M = exact.MagneticMoment();
-        double M_squared = exact.MagneticMomentSquared(1.0);
-        double Cv_exact = exact.HeatCapacity(E_squared, E, 1.0);
-        double X_exact = exact.Susceptibility(M_squared, M, 1.0);
+        double M_squared = exact.MagneticMomentSquared(Temp);
+        double Cv_exact = exact.HeatCapacity(E_squared, E, Temp);
+        double X_exact = exact.Susceptibility(M_squared, M, Temp);
         cout << "Exact energy for 2x2, E = " << E << endl;
         cout << "Exact energy  squared for 2x2, E*E = " << E_squared << endl;
         cout << "Exact magnetic moment for 2x2, M = " << M << endl;
@@ -68,7 +70,7 @@ int main(int nargs, char* args[])
     //MPI_Reduce(&Cv, &Cv_total, 1, MPI_DOUBLE, MPI_SUM, 0, MPI_COMM_WORLD);
 
 
-
+    //run_measurements(&X, &Cv, 1e4, 1.0/T, L, true, my_rank);
 
     //cout << "Cv: " << Cv << endl;
     //cout << setiosflags(ios::showpoint | ios::uppercase);
