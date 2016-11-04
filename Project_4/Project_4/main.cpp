@@ -2,6 +2,7 @@
 #include "lattice.h"
 #include "exact2x2.h"
 #include <numerical2.h>
+#include <measurements.h>
 #include <time.h>
 #include <iomanip>
 #include <mpi.h>
@@ -10,16 +11,16 @@ using namespace std;
 
 int main(int nargs, char* args[])
 {
-    int L = 2;
+    int L = 2; double T = 2.4;
 
     if(L==2){
         Exact2x2 exact; // bruker foreløpig J = k = T = 1.0
-        double E = exact.Energy(1.0);
-        double E_squared = exact.EnergySquared(1.0);
+        double E = exact.Energy(T);
+        double E_squared = exact.EnergySquared(T);
         double M = exact.MagneticMoment();
-        double M_squared = exact.MagneticMomentSquared(1.0);
-        double Cv_exact = exact.HeatCapacity(E_squared, E, 1.0);
-        double X_exact = exact.Susceptibility(M_squared, M, 1.0);
+        double M_squared = exact.MagneticMomentSquared(T);
+        double Cv_exact = exact.HeatCapacity(E_squared, E, T);
+        double X_exact = exact.Susceptibility(M_squared, M, T);
         cout << "Exact energy for 2x2, E = " << E << endl;
         cout << "Exact energy  squared for 2x2, E*E = " << E_squared << endl;
         cout << "Exact magnetic moment for 2x2, M = " << M << endl;
@@ -43,13 +44,13 @@ int main(int nargs, char* args[])
     MPI_Init (&nargs, &args);
     MPI_Comm_size (MPI_COMM_WORLD, &numprocs);
     MPI_Comm_rank (MPI_COMM_WORLD, &my_rank);
-    Numerical2(&X, &Cv, 1e2, 1.0, L, true, my_rank);
+    //Numerical2(&X, &Cv, 1e4, 1.0/T, L, true, my_rank);
     MPI_Reduce(&X, &X_total, 1, MPI_DOUBLE, MPI_SUM, 0, MPI_COMM_WORLD);
 
 
+    run_measurements(&X, &Cv, 1e4, 1.0/T, L, true, my_rank);
 
-
-    //cout << "Cv: " << Cv << endl;
+    cout << "Cv: " << Cv << endl;
     //cout << setiosflags(ios::showpoint | ios::uppercase);
     //cout << setprecision(10) << setw(20) << "Time used = " << timeused  << endl;
     MPI_Barrier(MPI_COMM_WORLD);

@@ -18,9 +18,11 @@ QMAKE_CXXFLAGS_RELEASE += $$system(mpicxx --showme:compile) -DMPICH_IGNORE_CXX_S
 SOURCES += main.cpp \
     lattice.cpp \
     exact2x2.cpp \
-    numerical2.cpp
+    numerical2.cpp \
+    measurements.cpp
 
 HEADERS += \
     lattice.h \
     exact2x2.h \
-    numerical2.h
+    numerical2.h \
+    measurements.h

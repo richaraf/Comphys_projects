@@ -1,4 +1,4 @@
-#include <numerical2.h>
+#include <measurements.h>
 #include <armadillo>
 #include <cstdlib>
 #include <lattice.h>
@@ -6,7 +6,7 @@
 using namespace std;
 using namespace arma;
 
-void Numerical2(double* X, double* Cv, int T, double beta, int L, bool random, int my_rank){
+void run_measurements(double* X, double* Cv, int T, double beta, int L, bool random, int my_rank){
 
     // Make matrix using lattice.cpp
     mat R = zeros<mat>(L+2, L+2);
@@ -32,7 +32,17 @@ void Numerical2(double* X, double* Cv, int T, double beta, int L, bool random, i
     M_tot           +=  M;
     M_tot_sqrd      +=  M*M;
 
+    int number_of_discards = 0;
+    ofstream outfile;
     double expbetadelta_E;
+    outfile.open("../number_of_accept.dat", std::ios::out);
+
+    //Write acerage energy and mean magnetization to file
+    ofstream outfile_E_M;
+    outfile_E_M.open("../E_M_T=1_0_file.dat");
+
+    ofstream outfile_E_prob;
+    outfile_E_prob.open("../E_prob_file.dat");
 
     for(int t=0; t < T; t++){
         //Choosing flip index randomly
@@ -78,6 +88,7 @@ void Numerical2(double* X, double* Cv, int T, double beta, int L, bool random, i
             M_tot += M;
             M_tot_sqrd += M*M;
         }
+
         else if(delta_E > 0){
             expbetadelta_E = exp(-beta*delta_E);
             if(1 > expbetadelta_E){
@@ -92,6 +103,7 @@ void Numerical2(double* X, double* Cv, int T, double beta, int L, bool random, i
                 }
                 else{
                     // discard change
+                    number_of_discards += 1;
                     R(i+1,j+1) = R_late;
                     if(i==0){
                         R(L+1,j+1) = R(i+1,j+1);
@@ -121,12 +133,31 @@ void Numerical2(double* X, double* Cv, int T, double beta, int L, bool random, i
                 M_tot_sqrd += M*M;
             }
         }
-    }
+        double E_average        = E_tot/(t + 2.0);
+        double M_average        = M_tot/(t+ 2.0);
 
-    double E_average               = E_tot/(T + 1.0);
-    double E_average_sqrd   = E_tot_sqrd/(T+1.0);
-    double M_average               = M_tot/(T+ 1.0);
-    double M_average_sqrd   = M_tot_sqrd/(T+1.0);
+        //Need this for doing measurements in exercise 4c
+        if(T > 100 && t%100 == 0){
+            outfile << t+2 << "  " << (t+2-number_of_discards)/(t+2.0) << endl;
+        }
+
+        if(T > 100 && t%100 == 0){
+            outfile_E_M << t + 2.0 << " " << E_average << " " << M_average << endl;
+        }
+
+        if(t > 1e6 && t%10 == 0){
+            outfile_E_prob << E_tot << " " << E << endl;
+        }
+
+    }
+    outfile.close();
+    outfile_E_M.close();
+    outfile_E_prob.close();
+
+    double E_average                = E_tot/(T + 1.0);
+    double E_average_sqrd           = E_tot_sqrd/(T+1.0);
+    double M_average                = M_tot/(T+ 1.0);
+    double M_average_sqrd           = M_tot_sqrd/(T+1.0);
 
     cout << "E_tot_sqrd: "      << E_tot_sqrd << "J*J" << endl;
     cout << "E_tot: "           << E_tot << "J"     << endl;
