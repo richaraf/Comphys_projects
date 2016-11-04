@@ -6,7 +6,7 @@
 using namespace std;
 using namespace arma;
 
-void Numerical2(double* X, double* Cv, int T, double beta, int L, bool random, int my_rank, vec local_expectation_values){
+void Numerical2(int T, double beta, int L, bool random, int my_rank, mat &local_expectation_values){
 
     // Make matrix using lattice.cpp
     mat R = zeros<mat>(L+2, L+2);
@@ -173,16 +173,24 @@ void Numerical2(double* X, double* Cv, int T, double beta, int L, bool random, i
     double M_average               = M_tot/(T+ 1.0);
     double M_average_sqrd   = M_tot_sqrd/(T+1.0);
 
-    cout << "E_tot_sqrd: "      << E_tot_sqrd << "J*J" << endl;
-    cout << "E_tot: "           << E_tot << "J"     << endl;
-    cout << "E_average: "       << E_average        << endl;
-    cout << "E_average_sqrd: "  << E_average_sqrd   << endl;
-    cout << "M_tot: "           << M_tot            << endl;
-    cout << "M_average: "       << M_average        << endl;
-    cout << "M_tot_sqrd: "      << M_tot_sqrd       << endl;
-    cout << "M_average_sqrd: "  << M_average_sqrd   << endl;
+//    cout << "E_tot_sqrd: "      << E_tot_sqrd << "J*J" << endl;
+//    cout << "E_tot: "           << E_tot << "J"     << endl;
+//    cout << "E_average: "       << E_average        << endl;
+//    cout << "E_average_sqrd: "  << E_average_sqrd   << endl;
+//    cout << "M_tot: "           << M_tot            << endl;
+//    cout << "M_average: "       << M_average        << endl;
+//    cout << "M_tot_sqrd: "      << M_tot_sqrd       << endl;
+//    cout << "M_average_sqrd: "  << M_average_sqrd   << endl;
 
-    *Cv  = (E_average_sqrd - E_average*E_average)*beta;
-    *X   = (M_average_sqrd - M_average*M_average)*beta;
-    //local_expectation_values(0) =
+    double Cv  = (E_average_sqrd - E_average*E_average)*beta*beta;
+    double X   = (M_average_sqrd - M_average*M_average)*beta;
+    M_average = abs(M_average);
+    // add expectation values from this process into the local list
+    local_expectation_values[0] = E_average;
+    local_expectation_values[1] = E_average_sqrd;
+    local_expectation_values[2] = M_average; // this is absolute value
+    local_expectation_values[3] = M_average_sqrd;
+    local_expectation_values[4] = Cv;
+    local_expectation_values[5] = X;
+
 }
