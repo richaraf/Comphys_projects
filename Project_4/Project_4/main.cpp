@@ -5,7 +5,9 @@
 #include <time.h>
 #include <iomanip>
 #include <mpi.h>
+#include <armadillo>
 
+using namespace arma;
 using namespace std;
 
 int main(int nargs, char* args[])
@@ -43,7 +45,11 @@ int main(int nargs, char* args[])
     MPI_Init (&nargs, &args);
     MPI_Comm_size (MPI_COMM_WORLD, &numprocs);
     MPI_Comm_rank (MPI_COMM_WORLD, &my_rank);
-    Numerical2(&X, &Cv, 1e2, 1.0, L, true, my_rank);
+    //array to is going to hold the expectation values
+    //for calculated by the different processes:
+    vec local_expectation_values = zeros<vec>(6);
+
+    Numerical2(&X, &Cv, 1e1, 1.0, L, true, my_rank, local_expectation_values);
     MPI_Reduce(&X, &X_total, 1, MPI_DOUBLE, MPI_SUM, 0, MPI_COMM_WORLD);
 
 

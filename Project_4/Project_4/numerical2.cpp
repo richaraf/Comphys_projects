@@ -6,7 +6,7 @@
 using namespace std;
 using namespace arma;
 
-void Numerical2(double* X, double* Cv, int T, double beta, int L, bool random, int my_rank){
+void Numerical2(double* X, double* Cv, int T, double beta, int L, bool random, int my_rank, vec local_expectation_values){
 
     // Make matrix using lattice.cpp
     mat R = zeros<mat>(L+2, L+2);
@@ -33,16 +33,16 @@ void Numerical2(double* X, double* Cv, int T, double beta, int L, bool random, i
     M_tot_sqrd      +=  M*M;
 
     int number_of_discards = 0;
-    ofstream outfile;
+ //   ofstream outfile;
     double expbetadelta_E;
-    outfile.open("../number_of_accept.dat", std::ios::out);
+//    outfile.open("../number_of_accept.dat", std::ios::out);
 
-    //Write acerage energy and mean magnetization to file
-    ofstream outfile_E_M;
-    outfile_E_M.open("../E_M_T=1_0_file.dat");
+//    //Write acerage energy and mean magnetization to file
+//    ofstream outfile_E_M;
+//    outfile_E_M.open("../E_M_T=1_0_file.dat");
 
-    ofstream outfile_E_prob;
-    outfile_E_prob.open("../E_prob_file.dat");
+//    ofstream outfile_E_prob;
+//    outfile_E_prob.open("../E_prob_file.dat");
 
     for(int t=0; t < T; t++){
         //Choosing flip index randomly
@@ -103,7 +103,7 @@ void Numerical2(double* X, double* Cv, int T, double beta, int L, bool random, i
                 }
                 else{
                     // discard change
-                    number_of_discards += 1;
+                    //number_of_discards += 1;
                     R(i+1,j+1) = R_late;
                     if(i==0){
                         R(L+1,j+1) = R(i+1,j+1);
@@ -159,14 +159,14 @@ void Numerical2(double* X, double* Cv, int T, double beta, int L, bool random, i
 //            outfile_E_M << t + 2.0 << " " << E_average << " " << M_average << endl;
 //        }
 
-        if(t>1e6 && t%10==0){
-            outfile_E_prob << E_tot << " " << E << endl;
-        }
+//        if(t>1e6 && t%10==0){
+//            outfile_E_prob << E_tot << " " << E << endl;
+//        }
 
     }
-    outfile.close();
-    outfile_E_M.close();
-    outfile_E_prob.close();
+//    outfile.close();
+//    outfile_E_M.close();
+//    outfile_E_prob.close();
 
     double E_average               = E_tot/(T + 1.0);
     double E_average_sqrd   = E_tot_sqrd/(T+1.0);
@@ -184,4 +184,5 @@ void Numerical2(double* X, double* Cv, int T, double beta, int L, bool random, i
 
     *Cv  = (E_average_sqrd - E_average*E_average)*beta;
     *X   = (M_average_sqrd - M_average*M_average)*beta;
+    //local_expectation_values(0) =
 }
