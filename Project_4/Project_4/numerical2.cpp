@@ -6,7 +6,7 @@
 using namespace std;
 using namespace arma;
 
-void Numerical2(int T, double beta, int L, bool random, int my_rank, mat &local_expectation_values){
+void Numerical2(long int T, double beta, int L, bool random, int my_rank, mat &local_expectation_values){
 
     // Make matrix using lattice.cpp
     mat R = zeros<mat>(L+2, L+2);
