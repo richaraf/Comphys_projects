@@ -3,11 +3,10 @@ import numpy as np
 
 L = 100
 
-
-T_list = [2.00, 2.05, 2.10, 2.15, 2.20, 2.25, 2.30]
+T_list = [200, 205, 210, 215, 220, 225, 230]
 infiles = []
 for T in T_list:
-    infiles.append('oppgdL%dT%d_file.dat'%(L, int(T*100+.5)))
+    infiles.append('oppgdL%dT%d_file.dat'%(L, T))
 
 data = np.zeros([6,len(T_list)])
 
@@ -37,7 +36,7 @@ plt.show()
 
 plt.plot(T_list, data[4,:])
 plt.xlabel('Temperature $T$, $[kT/J]$',**SZ)
-plt.ylabel(r'Heat capacity $C_v$, $[J^3/k^3T^2]$',**SZ) 
+plt.ylabel(r'Heat capacity $C_v$, $[J^2/k^3T]$',**SZ) 
 plt.grid()
 plt.show()
 
