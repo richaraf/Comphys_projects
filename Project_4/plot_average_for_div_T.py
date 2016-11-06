@@ -1,7 +1,7 @@
 import matplotlib.pyplot as plt
 import numpy as np
 
-L = 100
+L = 140
 
 T_list = [200, 205, 210, 215, 220, 225, 230]
 infiles = []

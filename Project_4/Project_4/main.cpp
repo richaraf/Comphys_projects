@@ -14,7 +14,7 @@ using namespace std;
 int main(int nargs, char* args[])
 {
 
-    int L = 100; double Temp = 2.4;
+    int L = 140; double Temp = 2.4;
 
 
     int numprocs, my_rank;
@@ -62,7 +62,7 @@ int main(int nargs, char* args[])
     double beta = 1/T[my_rank];
     //cout << T[my_rank] << " " << beta << endl;
 
-    Numerical2(1e8, beta, L, false, my_rank, local_expectation_values);
+    Numerical2(5e10, beta, L, false, my_rank, local_expectation_values);
     // local_expectation_values now contains the different expectation values
     // for different temperatures for the different processes
 
@@ -92,43 +92,43 @@ int main(int nargs, char* args[])
     ofstream oppgd25;
     ofstream oppgd26;
     if(my_rank == 0){
-        oppgd20.open("../oppgdL100T200_file.dat");
+        oppgd20.open("../oppgdL140T200_file.dat");
         oppgd20 << local_expectation_values;
         cout << local_expectation_values << endl;
         oppgd20.close();
     }
     if(my_rank == 1){
-        oppgd21.open("../oppgdL100T205_file.dat");
+        oppgd21.open("../oppgdL140T205_file.dat");
         oppgd21 << local_expectation_values;
         cout << local_expectation_values << endl;
         oppgd21.close();
     }
     if(my_rank == 2){
-        oppgd22.open("../oppgdL100T210_file.dat");
+        oppgd22.open("../oppgdL140T210_file.dat");
         oppgd22 << local_expectation_values;
         cout << local_expectation_values << endl;
         oppgd22.close();
     }
     if(my_rank == 3){
-        oppgd23.open("../oppgdL100T215_file.dat");
+        oppgd23.open("../oppgdL140T215_file.dat");
         oppgd23 << local_expectation_values;
         cout << local_expectation_values << endl;
         oppgd23.close();
     }
     if(my_rank == 4){
-        oppgd24.open("../oppgdL100T220_file.dat");
+        oppgd24.open("../oppgdL140T220_file.dat");
         oppgd24 << local_expectation_values;
         cout << local_expectation_values << endl;
         oppgd24.close();
     }
     if(my_rank == 5){
-        oppgd25.open("../oppgdL100T225_file.dat");
+        oppgd25.open("../oppgdL140T225_file.dat");
         oppgd25 << local_expectation_values;
         cout << local_expectation_values << endl;
         oppgd25.close();
     }
     if(my_rank == 6){
-        oppgd26.open("../oppgdL100T230_file.dat");
+        oppgd26.open("../oppgdL140T230_file.dat");
         oppgd26 << local_expectation_values;
         cout << local_expectation_values << endl;
         oppgd26.close();
