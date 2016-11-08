@@ -71,10 +71,9 @@ int main(int nargs, char* args[])
     //for calculated by the different processes:
     mat local_expectation_values = zeros<mat>(6,1);
     //double beta = 1/T[my_rank];
-    double beta = 1/Temp;
-    //cout << T[my_rank] << " " << beta << endl;
+    double beta = 1/T[my_rank];
 
-    Numerical2(1e5, beta, L, false, my_rank, local_expectation_values);
+    Numerical2(1e8, beta, L, false, my_rank, local_expectation_values);
     // local_expectation_values now contains the different expectation values
     // for different temperatures for the different processes
 
