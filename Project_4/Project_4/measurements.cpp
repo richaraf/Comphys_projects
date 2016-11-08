@@ -170,4 +170,7 @@ void run_measurements(double* X, double* Cv, int T, double beta, int L, bool ran
 
     *Cv  = (E_average_sqrd - E_average*E_average)*beta*beta;
     *X   = (M_average_sqrd - M_average*M_average)*beta;
+
+    cout << "Heat capacity: "   << *Cv               << endl;
+    cout << "Suscept: "         << *X                << endl;
 }

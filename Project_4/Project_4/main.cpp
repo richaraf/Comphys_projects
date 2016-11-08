@@ -14,7 +14,8 @@ using namespace std;
 int main(int nargs, char* args[])
 {
 
-    int L = 40; double Temp = 2.4;
+    int L = 60; double Temp = 2.4;
+
 
     int numprocs, my_rank;
 
@@ -37,10 +38,10 @@ int main(int nargs, char* args[])
         cout << "Exact heat capacity for 2x2 Cv = " << Cv_exact << endl;
         cout << "Exact susceptibility for 2x2 X = " << X_exact << endl;
     }
-    //double X = 0;
-    //double Cv = 0;
-    //double X_total = 0.0;
-    //double Cv_total = 0.0;
+//    double X = 0;
+//    double Cv = 0;
+//    double X_total = 0.0;
+//    double Cv_total = 0.0;
 
     // Start timer
     cout << "timer start" << endl;
@@ -69,31 +70,14 @@ int main(int nargs, char* args[])
     //array to is going to hold the expectation values
     //for calculated by the different processes:
     mat local_expectation_values = zeros<mat>(6,1);
-    double beta = 1/T[my_rank];
+    //double beta = 1/T[my_rank];
+    double beta = 1/Temp;
     //cout << T[my_rank] << " " << beta << endl;
 
-    Numerical2(1e8, beta, L, false, my_rank, local_expectation_values);
+    Numerical2(1e5, beta, L, false, my_rank, local_expectation_values);
     // local_expectation_values now contains the different expectation values
     // for different temperatures for the different processes
 
-
-    MPI_Barrier(MPI_COMM_WORLD);
-    //MPI_Reduce(&Cv, &Cv_total, 1, MPI_DOUBLE, MPI_SUM, 0, MPI_COMM_WORLD);
-
-
-    //run_measurements(&X, &Cv, 1e3, 1/Temp, L, true, my_rank);
-
-    //cout << "Cv: " << Cv << endl;
-    //cout << setiosflags(ios::showpoint | ios::uppercase);
-    //cout << setprecision(10) << setw(20) << "Time used = " << timeused  << endl;
-
-//    for(int i = 0; i < numprocs; i++){
-//        MPI_Barrier(MPI_COMM_WORLD);
-//        if (my_rank == i){
-//            cout << "Local expectation values for T = " << T[i] << ":" << endl << local_expectation_values << endl;
-//        }
-
-//    }
 
     ofstream oppgd200;
     ofstream oppgd201;

@@ -31,7 +31,8 @@ parameters = [0,2,4,5]
 parameter_labels = [r'Mean energy $\langle E\rangle$, $[J]$', 
                     r'Mean energy squared $\langle E^2\rangle$, $[J^2]$',
                     r'Mean absolute magnetization $\langle |M|\rangle$',
-                    r'Mean magnetization squared $\langle M^2\rangle$', r'Heat capacity $C_v$, $[J^2/k^3T]$', 
+                    r'Mean magnetization squared $\langle M^2\rangle$', 
+                    r'Heat capacity $C_v$, $[J^2/k^3T]$', 
                     r'Susceptibility $\chi$']
 
 for para in parameters:
@@ -44,8 +45,9 @@ for para in parameters:
 
 #Plot the average, heat and susceptibility for various system sizes
 #in the same plot
+
 '''
-L_list = [40, 60, 140]
+L_list = [40, 60, 100, 140]
 T_list = [200, 205, 210, 215, 220, 225, 230]
 data = np.zeros(shape=[6,len(T_list),len(L_list)])
 
@@ -68,7 +70,7 @@ for L in L_list:
 #---Plot---
 for para in parameters:
     for i in range(len(L_list)):
-        plt.plot(T_list, data[para][:,i],label="L = %d"%L_list[i])
+        plt.plot(T_list, data[para][:,i]/L_list[i]**2,label="L = %d"%L_list[i])
     plt.ylabel(parameter_labels[para],**SZ)
     plt.xlabel('Temperature $T$, $[kT/J]$',**SZ)
     plt.legend(loc='best')

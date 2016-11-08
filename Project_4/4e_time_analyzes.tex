@@ -1,0 +1,33 @@
+\documentclass[norsk,a4paper,12pt]{article}
+\usepackage{booktabs}  % Tabs
+\usepackage{tabularx}
+\usepackage{float}
+
+\begin{document}
+\begin{table}[H]
+\centering
+\caption{With parallelization for $c=1e8$ Monte Carlo cycles and without parallelization for $n=10$ processes and $c=1e7$ Monte Carlo cycles (in total 1e8 Monte Carlo cycles).}
+\label{tab:timeParallelize} 
+\begin{tabularx}{\textwidth}{XlcXrX}
+\toprule
+\multicolumn{3}{c}{Total time [s]}\\
+\cline{2-3}
+Running  & with parallelization  & without parallelization \\
+\midrule
+1	& 13.32  & 30.36    \\
+2   & 13.72  & 30.09    \\
+3   & 14.76  & 30.35    \\
+4   & 13.62  & 30.44    \\
+5   & 13.59  & 30.29    \\
+6 	& 13.21  & 30.54    \\
+7 	& 14.05  & 29.98    \\
+8   & 13.80  & 30.05    \\
+9   & 14.01  & 30.48    \\
+10  & 13.66  & 32.13    \\
+\midrule
+Sum & 137.74 & 304.71 \\
+Average & 13.78 & 30.47 \\
+\bottomrule
+\end{tabularx}
+\end{table}
+\end{document}
