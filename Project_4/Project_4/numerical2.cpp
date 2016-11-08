@@ -169,9 +169,10 @@ void Numerical2(double* X, double* Cv, int T, double beta, int L, bool random){
     outfile_E_prob.close();
 
     double E_average               = E_tot/(T + 1.0);
-    double E_average_sqrd   = E_tot_sqrd/(T+1.0);
+    double E_average_sqrd          = E_tot_sqrd/(T+1.0);
     double M_average               = M_tot/(T+ 1.0);
-    double M_average_sqrd   = M_tot_sqrd/(T+1.0);
+    double M_average_sqrd          = M_tot_sqrd/(T+1.0);
+    double sigma_sqrd              = E_average_sqrd - E_average*E_average;
 
     cout << "E_tot_sqrd: "      << E_tot_sqrd << "J*J" << endl;
     cout << "E_tot: "           << E_tot << "J"     << endl;
@@ -181,6 +182,7 @@ void Numerical2(double* X, double* Cv, int T, double beta, int L, bool random){
     cout << "M_average: "       << M_average        << endl;
     cout << "M_tot_sqrd: "      << M_tot_sqrd       << endl;
     cout << "M_average_sqrd: "  << M_average_sqrd   << endl;
+    cout << "Variance: "        << sigma_sqrd       << endl;
 
     *Cv  = (E_average_sqrd - E_average*E_average)*beta;
     *X   = (M_average_sqrd - M_average*M_average)*beta;
