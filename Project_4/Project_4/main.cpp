@@ -14,7 +14,7 @@ using namespace std;
 int main(int nargs, char* args[])
 {
 
-    int L = 2; double Temp = 2.4;
+    int L = 2; double Temp = 1.0;
 
     int numprocs, my_rank;
     my_rank = 0;
@@ -38,10 +38,10 @@ int main(int nargs, char* args[])
         cout << "Exact heat capacity for 2x2 Cv = " << Cv_exact << endl;
         cout << "Exact susceptibility for 2x2 X = " << X_exact << endl;
     }
-    //double X = 0;
-    //double Cv = 0;
-    //double X_total = 0.0;
-    //double Cv_total = 0.0;
+    double X = 0;
+    double Cv = 0;
+    double X_total = 0.0;
+    double Cv_total = 0.0;
 
     // Start timer
     cout << "timer start" << endl;
@@ -63,7 +63,7 @@ int main(int nargs, char* args[])
     double beta = 1/Temp;
     //cout << T[my_rank] << " " << beta << endl;
 
-    Numerical2(1e8, beta, L, false, my_rank, local_expectation_values);
+    //Numerical2(1e3, beta, L, false, my_rank, local_expectation_values);
     // local_expectation_values now contains the different expectation values
     // for different temperatures for the different processes
 
@@ -72,7 +72,7 @@ int main(int nargs, char* args[])
     //MPI_Reduce(&Cv, &Cv_total, 1, MPI_DOUBLE, MPI_SUM, 0, MPI_COMM_WORLD);
 
 
-    //run_measurements(&X, &Cv, 1e3, 1/Temp, L, true, my_rank);
+    run_measurements(&X, &Cv, 1e5, 1/Temp, L, true, my_rank);
 
     //cout << "Cv: " << Cv << endl;
     //cout << setiosflags(ios::showpoint | ios::uppercase);
