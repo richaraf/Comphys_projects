@@ -6,12 +6,12 @@
 using namespace std;
 using namespace arma;
 
-void Numerical2(double* X, double* Cv, int T, double beta, int L, bool random){
+void Numerical2(long int T, double beta, int L, bool random, int my_rank, mat &local_expectation_values){
 
     // Make matrix using lattice.cpp
     mat R = zeros<mat>(L+2, L+2);
     Lattice lattice;
-    lattice.makeLattice(R, random, L);
+    lattice.makeLattice(R, random, L, my_rank);
 
     // Calculate total beginning energy
     int E = 0;
@@ -32,18 +32,7 @@ void Numerical2(double* X, double* Cv, int T, double beta, int L, bool random){
     M_tot           +=  M;
     M_tot_sqrd      +=  M*M;
 
-    int number_of_discards = 0;
-    ofstream outfile;
     double expbetadelta_E;
-    outfile.open("../number_of_accept.dat", std::ios::out);
-
-    //Write acerage energy and mean magnetization to file
-    ofstream outfile_E_M;
-    outfile_E_M.open("../E_M_T=1_0_file.dat");
-
-    ofstream outfile_E_prob;
-    outfile_E_prob.open("../E_prob_file.dat");
-
     for(int t=0; t < T; t++){
         //Choosing flip index randomly
         int i = rand()%L;
@@ -88,7 +77,6 @@ void Numerical2(double* X, double* Cv, int T, double beta, int L, bool random){
             M_tot += M;
             M_tot_sqrd += M*M;
         }
-
         else if(delta_E > 0){
             expbetadelta_E = exp(-beta*delta_E);
             if(1 > expbetadelta_E){
@@ -103,7 +91,6 @@ void Numerical2(double* X, double* Cv, int T, double beta, int L, bool random){
                 }
                 else{
                     // discard change
-                    number_of_discards += 1;
                     R(i+1,j+1) = R_late;
                     if(i==0){
                         R(L+1,j+1) = R(i+1,j+1);
@@ -132,41 +119,8 @@ void Numerical2(double* X, double* Cv, int T, double beta, int L, bool random){
                 M_tot += M;
                 M_tot_sqrd += M*M;
             }
-
         }
-        //Need this for doing measurements in exercise 4c
-        //int M = 100;               //Number of uniform distrubuted elements in file
-//        if(T>100 && t%100==0){
-//            outfile << t+2 << "  " << (t+2-number_of_discards)/(t+2.0) << endl;
-//        }
-
-
-        //Need this for doing measurements in exercise 4c
-//        int S = 1000;               //Number of uniform distrubuted elements in file
-//        if(T>S){
-//            if(t%(T/S)==0){
-//                outfile << t+1 << "  " << t+1-number_of_discards << endl;
-//            }
-//        }
-//        else{
-//            outfile << t+1 << "  " << t+1-number_of_discards << endl;
-//        }
-
-        double E_average        = E_tot/(t + 2.0);
-        double M_average        = M_tot/(t+ 2.0);
-
-//        if(T>100 && t%100 ==0){
-//            outfile_E_M << t + 2.0 << " " << E_average << " " << M_average << endl;
-//        }
-
-        if(t>1e6 && t%10==0){
-            outfile_E_prob << E_tot << " " << E << endl;
-        }
-
     }
-    outfile.close();
-    outfile_E_M.close();
-    outfile_E_prob.close();
 
     double E_average               = E_tot/(T + 1.0);
     double E_average_sqrd          = E_tot_sqrd/(T+1.0);
@@ -174,16 +128,14 @@ void Numerical2(double* X, double* Cv, int T, double beta, int L, bool random){
     double M_average_sqrd          = M_tot_sqrd/(T+1.0);
     double sigma_sqrd              = E_average_sqrd - E_average*E_average;
 
-    cout << "E_tot_sqrd: "      << E_tot_sqrd << "J*J" << endl;
-    cout << "E_tot: "           << E_tot << "J"     << endl;
-    cout << "E_average: "       << E_average        << endl;
-    cout << "E_average_sqrd: "  << E_average_sqrd   << endl;
-    cout << "M_tot: "           << M_tot            << endl;
-    cout << "M_average: "       << M_average        << endl;
-    cout << "M_tot_sqrd: "      << M_tot_sqrd       << endl;
-    cout << "M_average_sqrd: "  << M_average_sqrd   << endl;
-    cout << "Variance: "        << sigma_sqrd       << endl;
-
-    *Cv  = (E_average_sqrd - E_average*E_average)*beta;
-    *X   = (M_average_sqrd - M_average*M_average)*beta;
+    double Cv  = (E_average_sqrd - E_average*E_average)*beta*beta;
+    double X   = (M_average_sqrd - M_average*M_average)*beta;
+    M_average = abs(M_average);
+    // add expectation values from this process into the local list
+    local_expectation_values[0] = E_average;
+    local_expectation_values[1] = E_average_sqrd;
+    local_expectation_values[2] = M_average; // this is absolute value
+    local_expectation_values[3] = M_average_sqrd;
+    local_expectation_values[4] = Cv;
+    local_expectation_values[5] = X;
 }

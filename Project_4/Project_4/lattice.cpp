@@ -9,11 +9,11 @@ Lattice::Lattice()
 
 }
 
-void Lattice::makeLattice(mat &R, bool random, int L){
+void Lattice::makeLattice(mat &R, bool random, int L, int my_rank){
     /* The LxL lattice is set up as a L+2xL+2 matrix
      * where we use Periodic Boundary Conditions */
 
-    srand(time(NULL));
+    srand(my_rank*time(NULL));
     if(random==true){
         for(int i=1; i < L+1; i++){
             for(int j=1; j < L+1; j++){

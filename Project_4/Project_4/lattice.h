@@ -14,7 +14,7 @@ public:
 
 
     double getL()     {return m_L;}
-    void makeLattice(arma::mat &R, bool random, int L);
+    void makeLattice(arma::mat &R, bool random, int L, int my_rank);
 };
 
 #endif // LATTICE_H
