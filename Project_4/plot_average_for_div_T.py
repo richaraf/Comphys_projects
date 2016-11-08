@@ -1,7 +1,7 @@
 import matplotlib.pyplot as plt
 import numpy as np
 
-L = 40
+L = 100
 
 T_list = [200, 205, 210, 215, 220, 225, 230]
 infiles = []
@@ -63,7 +63,7 @@ for L in L_list:
 #---Plot---
 for para in parameters:
     for i in range(len(L_list)):
-        plt.plot(T_list, data[para][:,i],label="T = %d"%L_list[i])
+        plt.plot(T_list, data[para][:,i],label="L = %d"%L_list[i])
     plt.ylabel(parameter_labels[para],**SZ)
     plt.xlabel('Temperature $T$, $[kT/J]$',**SZ)
     plt.legend(loc='best')
