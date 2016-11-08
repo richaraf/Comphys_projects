@@ -14,7 +14,8 @@ using namespace std;
 int main(int nargs, char* args[])
 {
 
-    int L = 60; double Temp = 2.4;
+    int L = 100; double Temp = 2.4;
+
 
     int numprocs, my_rank;
 
@@ -37,10 +38,10 @@ int main(int nargs, char* args[])
         cout << "Exact heat capacity for 2x2 Cv = " << Cv_exact << endl;
         cout << "Exact susceptibility for 2x2 X = " << X_exact << endl;
     }
-    //double X = 0;
-    //double Cv = 0;
-    //double X_total = 0.0;
-    //double Cv_total = 0.0;
+//    double X = 0;
+//    double Cv = 0;
+//    double X_total = 0.0;
+//    double Cv_total = 0.0;
 
     // Start timer
     cout << "timer start" << endl;
@@ -51,89 +52,212 @@ int main(int nargs, char* args[])
     //           beta, size of system, spin ordered randomly)
 
     double* T = new double[numprocs];
-    for (int i = 0; i < numprocs; i++){
-        T[i] = 2.0 + i*0.5;
+    T[0] = 2.0;
+    T[1] = 2.1;
+    T[2] = 2.15;
+    T[3] = 2.20;
+    for (int i = 4; i < numprocs; i++){
+        T[i] = 2.205 + i*0.005;
     }
+    MPI_Barrier(MPI_COMM_WORLD);
+    for (int i = 0; i < numprocs; i++){
+        MPI_Barrier(MPI_COMM_WORLD);
+        if (my_rank == i){cout << T[my_rank] << endl;}
+    }
+
+
 
     //array to is going to hold the expectation values
     //for calculated by the different processes:
     mat local_expectation_values = zeros<mat>(6,1);
+    //double beta = 1/T[my_rank];
     double beta = 1/T[my_rank];
-    //cout << T[my_rank] << " " << beta << endl;
 
-    Numerical2(1e3, beta, L, false, my_rank, local_expectation_values);
+    Numerical2(1e4, beta, L, true, my_rank, local_expectation_values);
     // local_expectation_values now contains the different expectation values
     // for different temperatures for the different processes
 
 
-    MPI_Barrier(MPI_COMM_WORLD);
-    //MPI_Reduce(&Cv, &Cv_total, 1, MPI_DOUBLE, MPI_SUM, 0, MPI_COMM_WORLD);
+    ofstream oppgd200;
+    ofstream oppgd201;
+    ofstream oppgd202;
+    ofstream oppgd203;
+    ofstream oppgd204;
+    ofstream oppgd205;
+    ofstream oppgd206;
+    ofstream oppgd207;
+    ofstream oppgd208;
+    ofstream oppgd209;
+    ofstream oppgd210;
+    ofstream oppgd211;
+    ofstream oppgd212;
+    ofstream oppgd213;
+    ofstream oppgd214;
+    ofstream oppgd215;
+    ofstream oppgd216;
+    ofstream oppgd217;
+    ofstream oppgd218;
+    ofstream oppgd219;
+    ofstream oppgd220;
+    ofstream oppgd221;
+    ofstream oppgd222;
+    ofstream oppgd223;
+    ofstream oppgd224;
 
+    //remember to change filename depending on L!
 
-    //run_measurements(&X, &Cv, 1e3, 1/Temp, L, true, my_rank);
-
-    //cout << "Cv: " << Cv << endl;
-    //cout << setiosflags(ios::showpoint | ios::uppercase);
-    //cout << setprecision(10) << setw(20) << "Time used = " << timeused  << endl;
-
-//    for(int i = 0; i < numprocs; i++){
-//        MPI_Barrier(MPI_COMM_WORLD);
-//        if (my_rank == i){
-//            cout << "Local expectation values for T = " << T[i] << ":" << endl << local_expectation_values << endl;
-//        }
-
-//    }
-/*
-    ofstream oppgd20;
-    ofstream oppgd21;
-    ofstream oppgd22;
-    ofstream oppgd23;
-    ofstream oppgd24;
-    ofstream oppgd25;
-    ofstream oppgd26;
     if(my_rank == 0){
-        oppgd20.open("../oppgdL60T200_file.dat");
-        oppgd20 << local_expectation_values;
+        oppgd200.open("../oppgdL100T2000_file.dat");
+        oppgd200 << local_expectation_values;
         cout << local_expectation_values << endl;
-        oppgd20.close();
+        oppgd200.close();
     }
     if(my_rank == 1){
-        oppgd21.open("../oppgdL60T205_file.dat");
-        oppgd21 << local_expectation_values;
+        oppgd201.open("../oppgdL100T2100_file.dat");
+        oppgd201 << local_expectation_values;
         cout << local_expectation_values << endl;
-        oppgd21.close();
+        oppgd201.close();
     }
     if(my_rank == 2){
-        oppgd22.open("../oppgdL60T210_file.dat");
-        oppgd22 << local_expectation_values;
+        oppgd202.open("../oppgdL100T2150_file.dat");
+        oppgd202 << local_expectation_values;
         cout << local_expectation_values << endl;
-        oppgd22.close();
+        oppgd202.close();
     }
     if(my_rank == 3){
-        oppgd23.open("../oppgdL60T215_file.dat");
-        oppgd23 << local_expectation_values;
+        oppgd203.open("../oppgdL100T2200_file.dat");
+        oppgd203 << local_expectation_values;
         cout << local_expectation_values << endl;
-        oppgd23.close();
+        oppgd203.close();
     }
     if(my_rank == 4){
-        oppgd24.open("../oppgdL60T220_file.dat");
-        oppgd24 << local_expectation_values;
+        oppgd204.open("../oppgdL100T2225_file.dat");
+        oppgd204 << local_expectation_values;
         cout << local_expectation_values << endl;
-        oppgd24.close();
+        oppgd204.close();
     }
     if(my_rank == 5){
-        oppgd25.open("../oppgdL60T225_file.dat");
-        oppgd25 << local_expectation_values;
+        oppgd205.open("../oppgdL100T2230_file.dat");
+        oppgd205 << local_expectation_values;
         cout << local_expectation_values << endl;
-        oppgd25.close();
+        oppgd205.close();
     }
     if(my_rank == 6){
-        oppgd26.open("../oppgdL60T230_file.dat");
-        oppgd26 << local_expectation_values;
+        oppgd206.open("../oppgdL100T2235_file.dat");
+        oppgd206 << local_expectation_values;
         cout << local_expectation_values << endl;
-        oppgd26.close();
+        oppgd206.close();
     }
-*/
+    if(my_rank == 7){
+        oppgd207.open("../oppgdL100T2240_file.dat");
+        oppgd207 << local_expectation_values;
+        cout << local_expectation_values << endl;
+        oppgd207.close();
+    }
+    if(my_rank == 8){
+        oppgd208.open("../oppgdL100T2245_file.dat");
+        oppgd208 << local_expectation_values;
+        cout << local_expectation_values << endl;
+        oppgd208.close();
+    }
+    if(my_rank == 9){
+        oppgd209.open("../oppgdL100T2250_file.dat");
+        oppgd209 << local_expectation_values;
+        cout << local_expectation_values << endl;
+        oppgd209.close();
+    }
+    if(my_rank == 10){
+        oppgd210.open("../oppgdL100T2255_file.dat");
+        oppgd210 << local_expectation_values;
+        cout << local_expectation_values << endl;
+        oppgd210.close();
+    }
+    if(my_rank == 11){
+        oppgd211.open("../oppgdL100T2260_file.dat");
+        oppgd211 << local_expectation_values;
+        cout << local_expectation_values << endl;
+        oppgd211.close();
+    }
+    if(my_rank == 12){
+        oppgd212.open("../oppgdL100T2265_file.dat");
+        oppgd212 << local_expectation_values;
+        cout << local_expectation_values << endl;
+        oppgd212.close();
+    }
+    if(my_rank == 13){
+        oppgd213.open("../oppgdL100T2270_file.dat");
+        oppgd213 << local_expectation_values;
+        cout << local_expectation_values << endl;
+        oppgd213.close();
+    }
+    if(my_rank == 14){
+        oppgd214.open("../oppgdL100T2275_file.dat");
+        oppgd214 << local_expectation_values;
+        cout << local_expectation_values << endl;
+        oppgd214.close();
+    }
+    if(my_rank == 15){
+        oppgd215.open("../oppgdL100T2280_file.dat");
+        oppgd215 << local_expectation_values;
+        cout << local_expectation_values << endl;
+        oppgd215.close();
+    }
+    if(my_rank == 16){
+        oppgd216.open("../oppgdL100T2285_file.dat");
+        oppgd216 << local_expectation_values;
+        cout << local_expectation_values << endl;
+        oppgd216.close();
+    }
+    if(my_rank == 17){
+        oppgd217.open("../oppgdL100T2290_file.dat");
+        oppgd217 << local_expectation_values;
+        cout << local_expectation_values << endl;
+        oppgd217.close();
+    }
+    if(my_rank == 18){
+        oppgd218.open("../oppgdL100T2295_file.dat");
+        oppgd218 << local_expectation_values;
+        cout << local_expectation_values << endl;
+        oppgd218.close();
+    }
+    if(my_rank == 19){
+        oppgd219.open("../oppgdL100T2300_file.dat");
+        oppgd219 << local_expectation_values;
+        cout << local_expectation_values << endl;
+        oppgd219.close();
+    }
+    if(my_rank == 20){
+        oppgd220.open("../oppgdL100T2305_file.dat");
+        oppgd220 << local_expectation_values;
+        cout << local_expectation_values << endl;
+        oppgd220.close();
+    }
+    if(my_rank == 21){
+        oppgd221.open("../oppgdL100T2310_file.dat");
+        oppgd221 << local_expectation_values;
+        cout << local_expectation_values << endl;
+        oppgd221.close();
+    }
+    if(my_rank == 22){
+        oppgd222.open("../oppgdL100T2315_file.dat");
+        oppgd222 << local_expectation_values;
+        cout << local_expectation_values << endl;
+        oppgd222.close();
+    }
+    if(my_rank == 23){
+        oppgd223.open("../oppgdL100T2320_file.dat");
+        oppgd223 << local_expectation_values;
+        cout << local_expectation_values << endl;
+        oppgd223.close();
+    }
+    if(my_rank == 24){
+        oppgd224.open("../oppgdL100T2325_file.dat");
+        oppgd224 << local_expectation_values;
+        cout << local_expectation_values << endl;
+        oppgd224.close();
+    }
+
+
 //    for (int i = 0; i < numprocs-1; i++){
 //        expectation_values(i, my_rank) = local_expectation_values[i];
 //        //cout << i << " " << my_rank << endl;
