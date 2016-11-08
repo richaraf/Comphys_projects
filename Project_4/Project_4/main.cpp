@@ -157,4 +157,6 @@ int main(int nargs, char* args[])
     cout << setiosflags(ios::showpoint | ios::uppercase);
     cout << setprecision(10) << setw(20) << "Time used = " << timeused  << endl;
 
+    //Nar du skal kjore, kommenter inn linjene over 136
+
 }
