@@ -14,14 +14,13 @@ using namespace std;
 int main(int nargs, char* args[])
 {
 
-    int L = 2; double Temp = 1.0;
+    int L = 140; double Temp = 1.0;
 
     int numprocs, my_rank;
-    my_rank = 0;
 
-    //MPI_Init (&nargs, &args);
-    //MPI_Comm_size (MPI_COMM_WORLD, &numprocs);
-    //MPI_Comm_rank (MPI_COMM_WORLD, &my_rank);
+    MPI_Init (&nargs, &args);
+    MPI_Comm_size (MPI_COMM_WORLD, &numprocs);
+    MPI_Comm_rank (MPI_COMM_WORLD, &my_rank);
 
     if(L==2 && my_rank == 0){
         Exact2x2 exact; // bruker foreløpig J = k = T = 1.0
@@ -51,28 +50,27 @@ int main(int nargs, char* args[])
     //Numerical2(susceptibility, heat capacity, number of flips,
     //           beta, size of system, spin ordered randomly)
 
-    //double* T = new double[numprocs];
-    //for (int i = 0; i < numprocs; i++){
-    //    T[i] = 2.0 + i*0.5;
-    //}
+    double* T = new double[numprocs];
+    for (int i = 0; i < numprocs; i++){
+        T[i] = 2.0 + i*0.5;
+    }
 
     //array to is going to hold the expectation values
     //for calculated by the different processes:
     mat local_expectation_values = zeros<mat>(6,1);
-    //double beta = 1/T[my_rank];
-    double beta = 1/Temp;
+    double beta = 1/T[my_rank];
     //cout << T[my_rank] << " " << beta << endl;
 
-    //Numerical2(1e3, beta, L, false, my_rank, local_expectation_values);
+    Numerical2(1e3, beta, L, false, my_rank, local_expectation_values);
     // local_expectation_values now contains the different expectation values
     // for different temperatures for the different processes
 
 
-    //MPI_Barrier(MPI_COMM_WORLD);
+    MPI_Barrier(MPI_COMM_WORLD);
     //MPI_Reduce(&Cv, &Cv_total, 1, MPI_DOUBLE, MPI_SUM, 0, MPI_COMM_WORLD);
 
 
-    run_measurements(&X, &Cv, 1e5, 1/Temp, L, true, my_rank);
+    //run_measurements(&X, &Cv, 5e10, 1/Temp, L, true, my_rank);
 
     //cout << "Cv: " << Cv << endl;
     //cout << setiosflags(ios::showpoint | ios::uppercase);
