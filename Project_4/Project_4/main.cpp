@@ -14,7 +14,7 @@ using namespace std;
 int main(int nargs, char* args[])
 {
 
-    int L = 60; double Temp = 2.4;
+    int L = 40; double Temp = 2.4;
 
 
     int numprocs, my_rank;
@@ -73,7 +73,7 @@ int main(int nargs, char* args[])
     //double beta = 1/T[my_rank];
     double beta = 1/T[my_rank];
 
-    Numerical2(1e8, beta, L, false, my_rank, local_expectation_values);
+    Numerical2(1e10, beta, L, true, my_rank, local_expectation_values);
     // local_expectation_values now contains the different expectation values
     // for different temperatures for the different processes
 
@@ -107,151 +107,151 @@ int main(int nargs, char* args[])
     //remember to change filename depending on L!
 
     if(my_rank == 0){
-        oppgd200.open("../oppgdL60T2000_file.dat");
+        oppgd200.open("../oppgdL40T2000_file.dat");
         oppgd200 << local_expectation_values;
         cout << local_expectation_values << endl;
         oppgd200.close();
     }
     if(my_rank == 1){
-        oppgd201.open("../oppgdL60T2100_file.dat");
+        oppgd201.open("../oppgdL40T2100_file.dat");
         oppgd201 << local_expectation_values;
         cout << local_expectation_values << endl;
         oppgd201.close();
     }
     if(my_rank == 2){
-        oppgd202.open("../oppgdL60T2150_file.dat");
+        oppgd202.open("../oppgdL40T2150_file.dat");
         oppgd202 << local_expectation_values;
         cout << local_expectation_values << endl;
         oppgd202.close();
     }
     if(my_rank == 3){
-        oppgd203.open("../oppgdL60T2200_file.dat");
+        oppgd203.open("../oppgdL40T2200_file.dat");
         oppgd203 << local_expectation_values;
         cout << local_expectation_values << endl;
         oppgd203.close();
     }
     if(my_rank == 4){
-        oppgd204.open("../oppgdL60T2225_file.dat");
+        oppgd204.open("../oppgdL40T2225_file.dat");
         oppgd204 << local_expectation_values;
         cout << local_expectation_values << endl;
         oppgd204.close();
     }
     if(my_rank == 5){
-        oppgd205.open("../oppgdL60T2230_file.dat");
+        oppgd205.open("../oppgdL40T2230_file.dat");
         oppgd205 << local_expectation_values;
         cout << local_expectation_values << endl;
         oppgd205.close();
     }
     if(my_rank == 6){
-        oppgd206.open("../oppgdL60T2235_file.dat");
+        oppgd206.open("../oppgdL40T2235_file.dat");
         oppgd206 << local_expectation_values;
         cout << local_expectation_values << endl;
         oppgd206.close();
     }
     if(my_rank == 7){
-        oppgd207.open("../oppgdL60T2240_file.dat");
+        oppgd207.open("../oppgdL40T2240_file.dat");
         oppgd207 << local_expectation_values;
         cout << local_expectation_values << endl;
         oppgd207.close();
     }
     if(my_rank == 8){
-        oppgd208.open("../oppgdL60T2245_file.dat");
+        oppgd208.open("../oppgdL40T2245_file.dat");
         oppgd208 << local_expectation_values;
         cout << local_expectation_values << endl;
         oppgd208.close();
     }
     if(my_rank == 9){
-        oppgd209.open("../oppgdL60T2250_file.dat");
+        oppgd209.open("../oppgdL40T2250_file.dat");
         oppgd209 << local_expectation_values;
         cout << local_expectation_values << endl;
         oppgd209.close();
     }
     if(my_rank == 10){
-        oppgd210.open("../oppgdL60T2255_file.dat");
+        oppgd210.open("../oppgdL40T2255_file.dat");
         oppgd210 << local_expectation_values;
         cout << local_expectation_values << endl;
         oppgd210.close();
     }
     if(my_rank == 11){
-        oppgd211.open("../oppgdL60T2260_file.dat");
+        oppgd211.open("../oppgdL40T2260_file.dat");
         oppgd211 << local_expectation_values;
         cout << local_expectation_values << endl;
         oppgd211.close();
     }
     if(my_rank == 12){
-        oppgd212.open("../oppgdL60T2265_file.dat");
+        oppgd212.open("../oppgdL40T2265_file.dat");
         oppgd212 << local_expectation_values;
         cout << local_expectation_values << endl;
         oppgd212.close();
     }
     if(my_rank == 13){
-        oppgd213.open("../oppgdL60T2270_file.dat");
+        oppgd213.open("../oppgdL40T2270_file.dat");
         oppgd213 << local_expectation_values;
         cout << local_expectation_values << endl;
         oppgd213.close();
     }
     if(my_rank == 14){
-        oppgd214.open("../oppgdL60T2275_file.dat");
+        oppgd214.open("../oppgdL40T2275_file.dat");
         oppgd214 << local_expectation_values;
         cout << local_expectation_values << endl;
         oppgd214.close();
     }
     if(my_rank == 15){
-        oppgd215.open("../oppgdL60T2280_file.dat");
+        oppgd215.open("../oppgdL40T2280_file.dat");
         oppgd215 << local_expectation_values;
         cout << local_expectation_values << endl;
         oppgd215.close();
     }
     if(my_rank == 16){
-        oppgd216.open("../oppgdL60T2285_file.dat");
+        oppgd216.open("../oppgdL40T2285_file.dat");
         oppgd216 << local_expectation_values;
         cout << local_expectation_values << endl;
         oppgd216.close();
     }
     if(my_rank == 17){
-        oppgd217.open("../oppgdL60T2290_file.dat");
+        oppgd217.open("../oppgdL40T2290_file.dat");
         oppgd217 << local_expectation_values;
         cout << local_expectation_values << endl;
         oppgd217.close();
     }
     if(my_rank == 18){
-        oppgd218.open("../oppgdL60T2295_file.dat");
+        oppgd218.open("../oppgdL40T2295_file.dat");
         oppgd218 << local_expectation_values;
         cout << local_expectation_values << endl;
         oppgd218.close();
     }
     if(my_rank == 19){
-        oppgd219.open("../oppgdL60T2300_file.dat");
+        oppgd219.open("../oppgdL40T2300_file.dat");
         oppgd219 << local_expectation_values;
         cout << local_expectation_values << endl;
         oppgd219.close();
     }
     if(my_rank == 20){
-        oppgd220.open("../oppgdL60T2305_file.dat");
+        oppgd220.open("../oppgdL40T2305_file.dat");
         oppgd220 << local_expectation_values;
         cout << local_expectation_values << endl;
         oppgd220.close();
     }
     if(my_rank == 21){
-        oppgd221.open("../oppgdL60T2310_file.dat");
+        oppgd221.open("../oppgdL40T2310_file.dat");
         oppgd221 << local_expectation_values;
         cout << local_expectation_values << endl;
         oppgd221.close();
     }
     if(my_rank == 22){
-        oppgd222.open("../oppgdL60T2315_file.dat");
+        oppgd222.open("../oppgdL40T2315_file.dat");
         oppgd222 << local_expectation_values;
         cout << local_expectation_values << endl;
         oppgd222.close();
     }
     if(my_rank == 23){
-        oppgd223.open("../oppgdL60T2320_file.dat");
+        oppgd223.open("../oppgdL40T2320_file.dat");
         oppgd223 << local_expectation_values;
         cout << local_expectation_values << endl;
         oppgd223.close();
     }
     if(my_rank == 24){
-        oppgd224.open("../oppgdL60T2325_file.dat");
+        oppgd224.open("../oppgdL40T2325_file.dat");
         oppgd224 << local_expectation_values;
         cout << local_expectation_values << endl;
         oppgd224.close();
