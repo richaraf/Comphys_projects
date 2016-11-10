@@ -37,7 +37,7 @@ void Numerical2(long int T, double beta, int L, bool random, int my_rank, mat &l
     //cout << R << endl;
 
     // Get to steady state:
-    for(int k=0; k<1e5; k++) {
+    for(int k=0; k<1e9; k++) {
     //Choosing flip index randomly
     int i = rand()%L;
     int j = rand()%L;
@@ -128,9 +128,9 @@ void Numerical2(long int T, double beta, int L, bool random, int my_rank, mat &l
 }
 //cout << R << endl;
 //cout << E << endl;
-    ofstream oppgdT10;
-    oppgdT10.open("../oppgdT10_file.dat");
-
+//    ofstream oppgdT10;
+//    oppgdT10.open("../oppgdT10_file.dat");
+    cout << "START MC" << endl;
     // Monte-Carlo cycles
     for(int t=0; t < T; t++){
         for(int k=0; k<L*L; k++) {
@@ -182,7 +182,7 @@ void Numerical2(long int T, double beta, int L, bool random, int my_rank, mat &l
             if(1 > expbetadelta_E){
                 //draw random number from 0 to 1, check if bigger than exp()
                 double r = (double)rand() / (double)RAND_MAX;
-                cout << r << endl;
+                //cout << r << endl;
                 if (r <= expbetadelta_E){
                     //E_tot += E;
                     //E_tot_sqrd += E*E;
@@ -225,14 +225,14 @@ void Numerical2(long int T, double beta, int L, bool random, int my_rank, mat &l
         //cout << M << endl;
         //cout << t << endl;
         //cout << E << endl;
-        oppgdT10 << E << endl;
+        //oppgdT10 << E << endl;
 
         E_tot += E;
         E_tot_sqrd += E*E;
         M_tot += M;
         M_tot_sqrd += M*M;
     }
-    oppgdT10.close();
+    //oppgdT10.close();
     double E_average               = E_tot/(T + 1.0);
     double E_average_sqrd          = E_tot_sqrd/(T+1.0);
     double M_average               = M_tot/(T+ 1.0);
