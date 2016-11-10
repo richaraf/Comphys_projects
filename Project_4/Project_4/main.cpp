@@ -14,12 +14,8 @@ using namespace std;
 int main(int nargs, char* args[])
 {
 
-<<<<<<< HEAD
-    int L = 2; double Temp = 2.4;
 
-=======
     int L = 20; double Temp = 1.0;
->>>>>>> 5703f5aa4913c4e541ab871aa2ec347e33c3c6e8
 
     int numprocs, my_rank;
     my_rank = 0;
@@ -53,7 +49,6 @@ int main(int nargs, char* args[])
     clock_t start, finish;
     start = clock();
 
-    run_measurements(&X, &Cv, 1e8, 1./Temp, L, false, my_rank);
 
     //Numerical2(susceptibility, heat capacity, number of flips,
     //           beta, size of system, spin ordered randomly)
@@ -82,11 +77,10 @@ int main(int nargs, char* args[])
     //cout << T[my_rank] << " " << beta << endl;
     //double beta = 1/Temp;
 
-<<<<<<< HEAD
-    Numerical2(1e7, beta, L, true, my_rank, local_expectation_values);
-=======
+
+    //Numerical2(1e3, beta, L, true, my_rank, local_expectation_values);
+
     //Numerical2(100000, beta, L, true, my_rank, local_expectation_values);
->>>>>>> 5703f5aa4913c4e541ab871aa2ec347e33c3c6e8
     // local_expectation_values now contains the different expectation values
     // for different temperatures for the different processes
 
