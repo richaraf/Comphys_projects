@@ -35,6 +35,6 @@ Prob_array = Freq_array/sum(Freq_array)
 SZ = {'size':'16'}
 width = 0.9
 plt.bar(Measure_array-0.5*width, Prob_array,  width = width)
-plt.xlabel(r'Energy, $E\quad[J]$',**SZ)
+plt.xlabel(r'Energy, $E/J$',**SZ)
 plt.ylabel(r'Probability of energy, $P(E)$',**SZ)
 plt.show()

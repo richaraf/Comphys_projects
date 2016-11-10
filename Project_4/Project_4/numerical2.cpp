@@ -82,6 +82,7 @@ void Numerical2(long int T, double beta, int L, bool random, int my_rank, mat &l
             if(1 > expbetadelta_E){
                 //draw random number from 0 to 1, check if bigger than exp()
                 double r = (double)rand() / (double)RAND_MAX;
+                cout << r << endl;
                 if (r <= expbetadelta_E){
                     E_tot += E;
                     E_tot_sqrd += E*E;
