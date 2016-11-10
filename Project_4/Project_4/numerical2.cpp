@@ -23,17 +23,117 @@ void Numerical2(long int T, double beta, int L, bool random, int my_rank, mat &l
         }
     }
 
-    double E_tot       =   0.0;
-    double E_tot_sqrd  =   0.0;
-    double M_tot       =   0.0;
-    double M_tot_sqrd  =   0.0;
+    long E_tot       =   0.0;
+    long E_tot_sqrd  =   0.0;
+    long M_tot       =   0.0;
+    long M_tot_sqrd  =   0.0;
+    // int64_t
     E_tot           +=  E;
     E_tot_sqrd      +=  E*E;
     M_tot           +=  M;
     M_tot_sqrd      +=  M*M;
 
     double expbetadelta_E;
+    //cout << R << endl;
+
+    // Get to steady state:
+    for(int k=0; k<1e5; k++) {
+    //Choosing flip index randomly
+    int i = rand()%L;
+    int j = rand()%L;
+
+    //Store old values if the flip is discarded
+    int R_late = R(i+1,j+1);
+    int E_part_late = -(R_late*R(i+1,j) + R_late*R(i,j+1) + R_late*R(i+2,j+1) + R_late*R(i+1, j+2));
+
+    //Flip (sweep)
+    if( R(i+1,j+1) == 1){
+        R(i+1, j+1) = -1;
+    }
+    else{
+        R(i+1, j+1) = 1;
+    }
+
+    //Update boundary conditions
+    if(i==0){
+        R(L+1,j+1) = R(i+1,j+1);
+    }
+    if(i==(L-1)){
+        R(0, j+1) = R(i+1,j+1);
+    }
+    if(j==0){
+        R(i+1,L+1) = R(i+1,j+1);
+    }
+    if(j==L-1){
+        R(i+1,0) = R(i+1,j+1);
+    }
+
+    //Calculate delta_E
+    int E_part_new = -(R(i+1,j+1)*R(i+1,j) + R(i+1,j+1)*R(i,j+1) + R(i+1,j+1)*R(i+2,j+1) + R(i+1,j+1)*R(i+1, j+2));
+    int delta_E = E_part_new - E_part_late;
+    int E_prev = E;
+    E = E + delta_E;
+
+    if(delta_E <= 0){
+        //E_tot += E;
+        //E_tot_sqrd += E*E;
+        M += 2*R(i+1,j+1);
+        //M_tot += M;
+        //M_tot_sqrd += M*M;
+    }
+    else if(delta_E > 0){
+        expbetadelta_E = exp(-beta*delta_E);
+        if(1 > expbetadelta_E){
+            //draw random number from 0 to 1, check if bigger than exp()
+            double r = (double)rand() / (double)RAND_MAX;
+            if (r <= expbetadelta_E){
+                //E_tot += E;
+                //E_tot_sqrd += E*E;
+                M += 2*R(i+1,j+1);
+                //M_tot += M;
+                //M_tot_sqrd += M*M;
+            }
+            else{
+                // discard change
+                R(i+1,j+1) = R_late;
+                if(i==0){
+                    R(L+1,j+1) = R(i+1,j+1);
+                }
+                if(i==(L-1)){
+                    R(0, j+1) = R(i+1,j+1);
+                }
+                if(j==0){
+                    R(i+1,L+1) = R(i+1,j+1);
+                }
+                if(j==L-1){
+                    R(i+1,0) = R(i+1,j+1);
+                }
+                //E_tot += E_prev;
+                E = E_prev;
+                //E_tot_sqrd += E*E;
+                //M_tot += M;
+                //M_tot_sqrd += M*M;
+            }
+        }
+
+
+        else if(1 < expbetadelta_E){
+            //E_tot += E;
+            //E_tot_sqrd += E*E;
+            M += 2*R(i+1,j+1);
+            //M_tot += M;
+            //M_tot_sqrd += M*M;
+        }
+    }
+}
+//cout << R << endl;
+//cout << E << endl;
+    ofstream oppgdT10;
+    oppgdT10.open("../oppgdT10_file.dat");
+
+    // Monte-Carlo cycles
     for(int t=0; t < T; t++){
+        for(int k=0; k<L*L; k++) {
         //Choosing flip index randomly
         int i = rand()%L;
         int j = rand()%L;
@@ -71,23 +171,24 @@ void Numerical2(long int T, double beta, int L, bool random, int my_rank, mat &l
         E = E + delta_E;
 
         if(delta_E <= 0){
-            E_tot += E;
-            E_tot_sqrd += E*E;
+            //E_tot += E;
+            //E_tot_sqrd += E*E;
             M += 2*R(i+1,j+1);
-            M_tot += M;
-            M_tot_sqrd += M*M;
+            //M_tot += M;
+            //M_tot_sqrd += M*M;
         }
         else if(delta_E > 0){
             expbetadelta_E = exp(-beta*delta_E);
             if(1 > expbetadelta_E){
                 //draw random number from 0 to 1, check if bigger than exp()
                 double r = (double)rand() / (double)RAND_MAX;
+                cout << r << endl;
                 if (r <= expbetadelta_E){
-                    E_tot += E;
-                    E_tot_sqrd += E*E;
+                    //E_tot += E;
+                    //E_tot_sqrd += E*E;
                     M += 2*R(i+1,j+1);
-                    M_tot += M;
-                    M_tot_sqrd += M*M;
+                    //M_tot += M;
+                    //M_tot_sqrd += M*M;
                 }
                 else{
                     // discard change
@@ -104,24 +205,34 @@ void Numerical2(long int T, double beta, int L, bool random, int my_rank, mat &l
                     if(j==L-1){
                         R(i+1,0) = R(i+1,j+1);
                     }
-                    E_tot += E_prev;
+                    //E_tot += E_prev;
                     E = E_prev;
-                    E_tot_sqrd += E*E;
-                    M_tot += M;
-                    M_tot_sqrd += M*M;
+                    //E_tot_sqrd += E*E;
+                    //M_tot += M;
+                    //M_tot_sqrd += M*M;
                 }
             }
 
             else if(1 < expbetadelta_E){
-                E_tot += E;
-                E_tot_sqrd += E*E;
+                //E_tot += E;
+                //E_tot_sqrd += E*E;
                 M += 2*R(i+1,j+1);
-                M_tot += M;
-                M_tot_sqrd += M*M;
+                //M_tot += M;
+                //M_tot_sqrd += M*M;
             }
         }
-    }
+        }
+        //cout << M << endl;
+        //cout << t << endl;
+        //cout << E << endl;
+        oppgdT10 << E << endl;
 
+        E_tot += E;
+        E_tot_sqrd += E*E;
+        M_tot += M;
+        M_tot_sqrd += M*M;
+    }
+    oppgdT10.close();
     double E_average               = E_tot/(T + 1.0);
     double E_average_sqrd          = E_tot_sqrd/(T+1.0);
     double M_average               = M_tot/(T+ 1.0);
@@ -131,6 +242,12 @@ void Numerical2(long int T, double beta, int L, bool random, int my_rank, mat &l
     double Cv  = (E_average_sqrd - E_average*E_average)*beta*beta;
     double X   = (M_average_sqrd - M_average*M_average)*beta;
     M_average = abs(M_average);
+    cout << "E = " << E_average << endl;
+    cout << "E*E = " << E_average_sqrd << endl;
+    cout << "sigma*sigma = " << E_average_sqrd - E_average*E_average << endl;
+    cout << "M = " << M_average << endl;
+    cout << "Cv = " << Cv << endl;
+    cout << "X = " << X << endl;
     // add expectation values from this process into the local list
     local_expectation_values[0] = E_average;
     local_expectation_values[1] = E_average_sqrd;

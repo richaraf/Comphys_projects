@@ -33,16 +33,16 @@ void run_measurements(double* X, double* Cv, int T, double beta, int L, bool ran
     M_tot_sqrd      +=  M*M;
 
     int number_of_discards = 0;
-    ofstream outfile;
+//    ofstream outfile;
     double expbetadelta_E;
-    outfile.open("../number_of_accept.dat", std::ios::out);
+//    outfile.open("../number_of_accept_T=2_4_ordered.dat", std::ios::out);
 
     //Write acerage energy and mean magnetization to file
-    ofstream outfile_E_M;
-    outfile_E_M.open("../E_M_T=1_0_file.dat");
+    //ofstream outfile_E_M;
+    //outfile_E_M.open("../E_M_T=2_4_file_ordered.dat");
 
-    ofstream outfile_E_prob;
-    outfile_E_prob.open("../E_prob_file.dat");
+    //ofstream outfile_E_prob;
+    //outfile_E_prob.open("../E_prob_file.dat");
 
     for(int t=0; t < T; t++){
         //Choosing flip index randomly
@@ -137,22 +137,22 @@ void run_measurements(double* X, double* Cv, int T, double beta, int L, bool ran
         double M_average        = M_tot/(t+ 2.0);
 
         //Need this for doing measurements in exercise 4c
-        if(T > 100 && t%100 == 0){
-            outfile << t+2 << "  " << (t+2-number_of_discards)/(t+2.0) << endl;
-        }
+//        if(T > 100 && t%100 == 0){
+//            outfile << t+2 << "  " << (t+2-number_of_discards)/(t+2.0) << endl;
+//        }
 
-        if(T > 100 && t%100 == 0){
-            outfile_E_M << t + 2.0 << " " << E_average << " " << M_average << endl;
-        }
+        //if(T > 100 && t%100 == 0){
+        //    outfile_E_M << t + 2.0 << " " << E_average << " " << M_average << endl;
+        //}
 
-        if(t > 1e6 && t%10 == 0){
-            outfile_E_prob << E_tot << " " << E << endl;
-        }
+        //if(t > 1e6 && t%10 == 0){
+        //    outfile_E_prob << E_tot << " " << E << endl;
+        //}
 
     }
-    outfile.close();
-    outfile_E_M.close();
-    outfile_E_prob.close();
+    //outfile.close();
+    //outfile_E_M.close();
+    //outfile_E_prob.close();
 
     double E_average                = E_tot/(T + 1.0);
     double E_average_sqrd           = E_tot_sqrd/(T+1.0);

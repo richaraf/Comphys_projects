@@ -14,14 +14,19 @@ using namespace std;
 int main(int nargs, char* args[])
 {
 
+<<<<<<< HEAD
     int L = 2; double Temp = 2.4;
 
+=======
+    int L = 20; double Temp = 1.0;
+>>>>>>> 5703f5aa4913c4e541ab871aa2ec347e33c3c6e8
 
     int numprocs, my_rank;
+    my_rank = 0;
 
-    MPI_Init (&nargs, &args);
-    MPI_Comm_size (MPI_COMM_WORLD, &numprocs);
-    MPI_Comm_rank (MPI_COMM_WORLD, &my_rank);
+    //MPI_Init (&nargs, &args);
+    //MPI_Comm_size (MPI_COMM_WORLD, &numprocs);
+    //MPI_Comm_rank (MPI_COMM_WORLD, &my_rank);
 
     if(L==2 && my_rank == 0){
         Exact2x2 exact; // bruker foreløpig J = k = T = 1.0
@@ -38,46 +43,54 @@ int main(int nargs, char* args[])
         cout << "Exact heat capacity for 2x2 Cv = " << Cv_exact << endl;
         cout << "Exact susceptibility for 2x2 X = " << X_exact << endl;
     }
-//    double X = 0;
-//    double Cv = 0;
-//    double X_total = 0.0;
-//    double Cv_total = 0.0;
+    double X = 0;
+    double Cv = 0;
+    double X_total = 0.0;
+    double Cv_total = 0.0;
 
     // Start timer
     cout << "timer start" << endl;
     clock_t start, finish;
     start = clock();
 
+    run_measurements(&X, &Cv, 1e8, 1./Temp, L, false, my_rank);
+
     //Numerical2(susceptibility, heat capacity, number of flips,
     //           beta, size of system, spin ordered randomly)
 
-    double* T = new double[numprocs];
-    T[0] = 2.0;
-    T[1] = 2.1;
-    T[2] = 2.15;
-    T[3] = 2.20;
-    for (int i = 4; i < numprocs; i++){
-        T[i] = 2.205 + i*0.005;
-    }
-    MPI_Barrier(MPI_COMM_WORLD);
-    for (int i = 0; i < numprocs; i++){
-        MPI_Barrier(MPI_COMM_WORLD);
-        if (my_rank == i){cout << T[my_rank] << endl;}
-    }
+//    double* T = new double[numprocs];
+//    T[0] = 2.0;
+//    T[1] = 2.1;
+//    T[2] = 2.15;
+//    T[3] = 2.20;
+//    for (int i = 4; i < numprocs; i++){
+//        T[i] = 2.205 + i*0.005;
+//    }
+//    MPI_Barrier(MPI_COMM_WORLD);
+//    for (int i = 0; i < numprocs; i++){
+//        MPI_Barrier(MPI_COMM_WORLD);
+//        if (my_rank == i){cout << T[my_rank] << endl;}
+//    }
 
 
 
     //array to is going to hold the expectation values
     //for calculated by the different processes:
-    mat local_expectation_values = zeros<mat>(6,1);
-    //double beta = 1/T[my_rank];
-    double beta = 1/T[my_rank];
+    //mat local_expectation_values = zeros<mat>(6,1);
 
+    //double beta = 1/T[my_rank];
+    //cout << T[my_rank] << " " << beta << endl;
+    //double beta = 1/Temp;
+
+<<<<<<< HEAD
     Numerical2(1e7, beta, L, true, my_rank, local_expectation_values);
+=======
+    //Numerical2(100000, beta, L, true, my_rank, local_expectation_values);
+>>>>>>> 5703f5aa4913c4e541ab871aa2ec347e33c3c6e8
     // local_expectation_values now contains the different expectation values
     // for different temperatures for the different processes
 
-
+    /*
     ofstream oppgd200;
     ofstream oppgd201;
     ofstream oppgd202;
@@ -105,7 +118,7 @@ int main(int nargs, char* args[])
     ofstream oppgd224;
 
     //remember to change filename depending on L!
-
+/*
     if(my_rank == 0){
         oppgd200.open("../oppgdL100T2000_file.dat");
         oppgd200 << local_expectation_values;
@@ -256,7 +269,7 @@ int main(int nargs, char* args[])
         cout << local_expectation_values << endl;
         oppgd224.close();
     }
-
+    */
 
 //    for (int i = 0; i < numprocs-1; i++){
 //        expectation_values(i, my_rank) = local_expectation_values[i];
@@ -272,7 +285,7 @@ int main(int nargs, char* args[])
 //    if( my_rank ==0 ){
 //        cout << "Cv average for all processes = " << Cv_total/numprocs << endl;
 //    }
-    MPI_Finalize();
+    //MPI_Finalize();
 
     // End timer
     finish = clock();

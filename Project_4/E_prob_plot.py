@@ -2,12 +2,15 @@ from scitools.std import *
 import numpy as np
 import matplotlib.pyplot as plt
 
-infile = open("E_prob_file.dat", "r")
+infile = open("oppgdT24_file.dat", "r")
+
+# run for 100000 MC cycles
+# T = 1.0 sigma^2 = 16.1344, T = 2.4 sigma^2 = 3194.79
 
 E = []
 for line in infile:
     words = line.split()
-    E.append(float(words[1]))
+    E.append(float(words[0]))
 
 
 E = np.array(E)
@@ -35,6 +38,6 @@ Prob_array = Freq_array/sum(Freq_array)
 SZ = {'size':'16'}
 width = 0.9
 plt.bar(Measure_array-0.5*width, Prob_array,  width = width)
-plt.xlabel(r'Energy, $E\quad[J]$',**SZ)
+plt.xlabel(r'Energy, $E/J$',**SZ)
 plt.ylabel(r'Probability of energy, $P(E)$',**SZ)
 plt.show()
