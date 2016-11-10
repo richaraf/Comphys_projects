@@ -77,7 +77,9 @@ int main(int nargs, char* args[])
     double beta = 1/T[my_rank];
     //double beta = 1/Temp;
 
-    Numerical2(4e3, beta, L, true, my_rank, local_expectation_values);
+
+    Numerical2(4e5, beta, L, true, my_rank, local_expectation_values);
+
     // local_expectation_values now contains the different expectation values
     // for different temperatures for the different processes
 
