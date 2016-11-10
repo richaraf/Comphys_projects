@@ -14,7 +14,7 @@ using namespace std;
 int main(int nargs, char* args[])
 {
 
-    int L = 100; double Temp = 2.4;
+    int L = 2; double Temp = 2.4;
 
 
     int numprocs, my_rank;
@@ -73,7 +73,7 @@ int main(int nargs, char* args[])
     //double beta = 1/T[my_rank];
     double beta = 1/T[my_rank];
 
-    Numerical2(1e4, beta, L, true, my_rank, local_expectation_values);
+    Numerical2(1e7, beta, L, true, my_rank, local_expectation_values);
     // local_expectation_values now contains the different expectation values
     // for different temperatures for the different processes
 
