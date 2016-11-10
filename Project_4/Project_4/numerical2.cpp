@@ -129,7 +129,7 @@ void Numerical2(long int T, double beta, int L, bool random, int my_rank, mat &l
 //cout << R << endl;
 //cout << E << endl;
     ofstream oppgdT10;
-    oppgdT10.open("../oppgdT24_file.dat");
+    oppgdT10.open("../oppgdT10_file.dat");
 
     // Monte-Carlo cycles
     for(int t=0; t < T; t++){
@@ -222,7 +222,7 @@ void Numerical2(long int T, double beta, int L, bool random, int my_rank, mat &l
         }
         }
         //cout << M << endl;
-        cout << t << endl;
+        //cout << t << endl;
         //cout << E << endl;
         oppgdT10 << E << endl;
 
@@ -242,7 +242,7 @@ void Numerical2(long int T, double beta, int L, bool random, int my_rank, mat &l
     M_average = abs(M_average);
     cout << "E = " << E_average << endl;
     cout << "E*E = " << E_average_sqrd << endl;
-    cout << "sigma = " << E_average_sqrd - E_average*E_average << endl;
+    cout << "sigma*sigma = " << E_average_sqrd - E_average*E_average << endl;
     cout << "M = " << M_average << endl;
     cout << "Cv = " << Cv << endl;
     cout << "X = " << X << endl;

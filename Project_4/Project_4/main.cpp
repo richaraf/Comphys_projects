@@ -14,7 +14,7 @@ using namespace std;
 int main(int nargs, char* args[])
 {
 
-    int L = 20; double Temp = 2.4;
+    int L = 20; double Temp = 1.0;
 
 
     int numprocs, my_rank;
