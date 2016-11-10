@@ -16,7 +16,6 @@ int main(int nargs, char* args[])
 
     int L = 40; double Temp = 2.0;
 
-
     int numprocs, my_rank;
 
     MPI_Init (&nargs, &args);
@@ -38,15 +37,17 @@ int main(int nargs, char* args[])
         cout << "Exact heat capacity for 2x2 Cv = " << Cv_exact << endl;
         cout << "Exact susceptibility for 2x2 X = " << X_exact << endl;
     }
-//    double X = 0;
-//    double Cv = 0;
-//    double X_total = 0.0;
-//    double Cv_total = 0.0;
+    double X = 0;
+    double Cv = 0;
+    double X_total = 0.0;
+    double Cv_total = 0.0;
 
     // Start timer
     cout << "timer start" << endl;
     clock_t start, finish;
     start = clock();
+
+    //run_measurements(&X, &Cv, 1e8, 1./Temp, L, false, my_rank);
 
     //Numerical2(susceptibility, heat capacity, number of flips,
     //           beta, size of system, spin ordered randomly)
@@ -69,11 +70,13 @@ int main(int nargs, char* args[])
 
     //array to is going to hold the expectation values
     //for calculated by the different processes:
+
     mat local_expectation_values = zeros<mat>(6,1);
     double beta = 1/T[my_rank];
     //double beta = 1/Temp;
 
     Numerical2(10000, beta, L, true, my_rank, local_expectation_values);
+
     // local_expectation_values now contains the different expectation values
     // for different temperatures for the different processes
 
@@ -280,5 +283,7 @@ int main(int nargs, char* args[])
     double timeused = (double) (finish - start)/(CLOCKS_PER_SEC );
     cout << setiosflags(ios::showpoint | ios::uppercase);
     cout << setprecision(10) << setw(20) << "Time used = " << timeused  << endl;
+
+    //Nar du skal kjore, kommenter inn linjene over 136
 
 }

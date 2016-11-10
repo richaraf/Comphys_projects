@@ -1,0 +1,93 @@
+\documentclass[norsk,a4paper,12pt]{article}
+\usepackage{booktabs}  % Tabs
+\usepackage{tabularx}
+\usepackage{float}
+
+\begin{document}
+\section{Benchmarks}
+\begin{table}[H]
+\centering
+\caption{...}
+\label{tab:benchmark1} 
+\begin{tabularx}{\textwidth}{XlXrXrXrXrX}
+\toprule
+\multicolumn{5}{c}{Average energy $\langle E\rangle$, [J]}\\
+\cline{2-3}
+Time [$c$]  & Analytical  & Numerical && Absolute error\\
+\midrule
+1e2   & -7.98393  & -5.94059   && 2.04334e-00\\
+1e3   & -7.98393  & -7.79221   && 1.9172e-01\\
+1e4   & -7.98393  & -7.95520   && 2.873e-02\\
+1e5   & -7.98393  & -7.98600   && 2.07e-03\\
+1e6   & -7.98393  & -7.98445   && 5.2e-04\\
+1e7 	  & -7.98393  & -7.98377   && 1.6e-04\\
+1e8   & -7.98393  & -7.98401   && 8.0e-05\\
+1e9   & -7.98393  & -7.98385   && 8.0e-05\\
+\bottomrule
+\end{tabularx}
+\end{table}
+\begin{table}[H]
+\centering
+\caption{...}
+\label{tab:benchmark2} 
+\begin{tabularx}{\textwidth}{XlXrXrXrXrX}
+\toprule
+\multicolumn{5}{c}{Average absolute}\\
+\multicolumn{5}{c}{magnetization $\langle |M|\rangle$}\\
+\cline{2-3}
+Time [$c$]  & Analytical  & Numerical && Absolute error\\
+\midrule
+1e2   & 0  & 3.04950   && 3.04950e-00\\
+1e3   & 0  & 3.90410   && 3.90410e-00\\
+1e4   & 0  & 1.67623   && 1.67623e-00\\
+1e5   & 0  & 0.324477  && 3.24477e-01\\
+1e6   & 0  & 0.106978  && 1.06978e-01\\
+1e7 	  & 0  & 0.103671  && 1.03671e-01\\
+1e8   & 0  & 0.0521412 && 5.21412e-02\\
+1e9   & 0  & 0.00455952&& 4.55952e-03\\
+\bottomrule
+\end{tabularx}
+\end{table}
+\begin{table}[H]
+\centering
+\caption{...}
+\label{tab:benchmark3} 
+\begin{tabularx}{\textwidth}{XlXrXrXrXrX}
+\toprule
+\multicolumn{5}{c}{Heat capacity $C_v/k_B$, [unit]}\\
+\cline{2-3}
+Time [$c$]  & Analytical  & Numerical && Absolute error\\
+\midrule
+1e2   & 0.128329  & 12.2341   && 1.2105771e+01\\
+1e3   & 0.128329  & 1.61916   && 1.490831e-00\\
+1e4   & 0.128329  & 0.356358  && 2.28029e-01\\
+1e5   & 0.128329  & 0.111803  && 1.6526e-02\\
+1e6   & 0.128329  & 0.124174  && 4.155e-03\\
+1e7 	  & 0.128329  & 0.129631  && 1.302e-03\\
+1e8   & 0.128329  & 0.127682  && 6.47e-04\\
+1e9   & 0.128329  & 0.128920  && 5.91e-04\\
+\bottomrule
+\end{tabularx}
+\end{table}
+\begin{table}[H]
+\centering
+\caption{...}
+\label{tab:benchmark4} 
+\begin{tabularx}{\textwidth}{XlXrXrXrXrX}
+\toprule
+\multicolumn{5}{c}{Susceptibility $\chi/k_B$}\\
+\cline{2-3}
+Time [$c$]  & Analytical  & Numerical && Absolute error\\
+\midrule
+1e2   & 15.9732  & 3.21537   && 1.275783e+01\\
+1e3   & 15.9732  & 0.406387  && 1.5566813e+01\\
+1e4   & 15.9732  & 13.1151   && 2.8581e-00\\
+1e5   & 15.9732  & 15.8714   && 1.018e-01\\
+1e6   & 15.9732  & 15.9627   && 1.05e-02\\
+1e7 	  & 15.9732  & 15.9622   && 1.1e-02\\
+1e8   & 15.9732  & 15.9706   && 2.6e-03\\
+1e9   & 15.9732  & 15.9731   && 1.0e-04 \\
+\bottomrule
+\end{tabularx}
+\end{table}
+\end{document}

@@ -4,7 +4,7 @@ import numpy as np
 L = 40
 
 T_list = [2, 2.1, 2.15, 2.2]
-for i in range(0,21):
+for i in range(0,20):
 	T_list.append(2.225+i*0.005)
 
 
