@@ -2,12 +2,12 @@ from scitools.std import *
 import numpy as np
 import matplotlib.pyplot as plt
 
-infile = open("E_prob_file.dat", "r")
+infile = open("oppgdT24_file.dat", "r")
 
 E = []
 for line in infile:
     words = line.split()
-    E.append(float(words[1]))
+    E.append(float(words[0]))
 
 
 E = np.array(E)

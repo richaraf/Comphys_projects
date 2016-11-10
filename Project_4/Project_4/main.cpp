@@ -14,7 +14,7 @@ using namespace std;
 int main(int nargs, char* args[])
 {
 
-    int L = 100; double Temp = 2.4;
+    int L = 20; double Temp = 2.4;
 
 
     int numprocs, my_rank;
@@ -51,19 +51,19 @@ int main(int nargs, char* args[])
     //Numerical2(susceptibility, heat capacity, number of flips,
     //           beta, size of system, spin ordered randomly)
 
-    double* T = new double[numprocs];
-    T[0] = 2.0;
-    T[1] = 2.1;
-    T[2] = 2.15;
-    T[3] = 2.20;
-    for (int i = 4; i < numprocs; i++){
-        T[i] = 2.205 + i*0.005;
-    }
-    MPI_Barrier(MPI_COMM_WORLD);
-    for (int i = 0; i < numprocs; i++){
-        MPI_Barrier(MPI_COMM_WORLD);
-        if (my_rank == i){cout << T[my_rank] << endl;}
-    }
+//    double* T = new double[numprocs];
+//    T[0] = 2.0;
+//    T[1] = 2.1;
+//    T[2] = 2.15;
+//    T[3] = 2.20;
+//    for (int i = 4; i < numprocs; i++){
+//        T[i] = 2.205 + i*0.005;
+//    }
+//    MPI_Barrier(MPI_COMM_WORLD);
+//    for (int i = 0; i < numprocs; i++){
+//        MPI_Barrier(MPI_COMM_WORLD);
+//        if (my_rank == i){cout << T[my_rank] << endl;}
+//    }
 
 
 
@@ -71,9 +71,9 @@ int main(int nargs, char* args[])
     //for calculated by the different processes:
     mat local_expectation_values = zeros<mat>(6,1);
     //double beta = 1/T[my_rank];
-    double beta = 1/T[my_rank];
+    double beta = 1/Temp;
 
-    Numerical2(4e10, beta, L, true, my_rank, local_expectation_values);
+    Numerical2(100000, beta, L, true, my_rank, local_expectation_values);
     // local_expectation_values now contains the different expectation values
     // for different temperatures for the different processes
 
@@ -105,7 +105,7 @@ int main(int nargs, char* args[])
     ofstream oppgd224;
 
     //remember to change filename depending on L!
-
+/*
     if(my_rank == 0){
         oppgd200.open("../oppgdL100T2000_file.dat");
         oppgd200 << local_expectation_values;
@@ -256,7 +256,7 @@ int main(int nargs, char* args[])
         cout << local_expectation_values << endl;
         oppgd224.close();
     }
-
+*/
 
 //    for (int i = 0; i < numprocs-1; i++){
 //        expectation_values(i, my_rank) = local_expectation_values[i];
