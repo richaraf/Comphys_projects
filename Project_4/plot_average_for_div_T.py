@@ -1,7 +1,7 @@
 import matplotlib.pyplot as plt
 import numpy as np
 
-L = 40
+L = 100
 
 T_list = [2, 2.1, 2.15, 2.2]
 for i in range(0,20):

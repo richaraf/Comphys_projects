@@ -37,7 +37,7 @@ void Numerical2(long int T, double beta, int L, bool random, int my_rank, mat &l
     //cout << R << endl;
 
     // Get to steady state:
-    for(int k=0; k<1e8; k++) {
+    for(int k=0; k<1e9; k++) {
     //Choosing flip index randomly
     int i = rand()%L;
     int j = rand()%L;
@@ -130,7 +130,7 @@ void Numerical2(long int T, double beta, int L, bool random, int my_rank, mat &l
 //cout << E << endl;
 //    ofstream oppgdT10;
 //    oppgdT10.open("../oppgdT10_file.dat");
-
+    cout << "START MC" << endl;
     // Monte-Carlo cycles
     for(int t=0; t < T; t++){
         for(int k=0; k<L*L; k++) {
