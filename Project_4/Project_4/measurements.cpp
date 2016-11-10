@@ -38,8 +38,8 @@ void run_measurements(double* X, double* Cv, int T, double beta, int L, bool ran
 //    outfile.open("../number_of_accept_T=2_4_ordered.dat", std::ios::out);
 
     //Write acerage energy and mean magnetization to file
-    ofstream outfile_E_M;
-    outfile_E_M.open("../E_M_T=2_4_file_ordered.dat");
+    //ofstream outfile_E_M;
+    //outfile_E_M.open("../E_M_T=2_4_file_ordered.dat");
 
     //ofstream outfile_E_prob;
     //outfile_E_prob.open("../E_prob_file.dat");
@@ -141,9 +141,9 @@ void run_measurements(double* X, double* Cv, int T, double beta, int L, bool ran
 //            outfile << t+2 << "  " << (t+2-number_of_discards)/(t+2.0) << endl;
 //        }
 
-        if(T > 100 && t%100 == 0){
-            outfile_E_M << t + 2.0 << " " << E_average << " " << M_average << endl;
-        }
+        //if(T > 100 && t%100 == 0){
+        //    outfile_E_M << t + 2.0 << " " << E_average << " " << M_average << endl;
+        //}
 
         //if(t > 1e6 && t%10 == 0){
         //    outfile_E_prob << E_tot << " " << E << endl;
@@ -151,7 +151,7 @@ void run_measurements(double* X, double* Cv, int T, double beta, int L, bool ran
 
     }
     //outfile.close();
-    outfile_E_M.close();
+    //outfile_E_M.close();
     //outfile_E_prob.close();
 
     double E_average                = E_tot/(T + 1.0);
