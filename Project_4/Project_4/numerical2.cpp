@@ -27,10 +27,12 @@ void Numerical2(long int T, double beta, int L, bool random, int my_rank, mat &l
     long E_tot_sqrd  =   0.0;
     long M_tot       =   0.0;
     long M_tot_sqrd  =   0.0;
-    // int64_t
+    long M_abs_tot = 0.0;
+
     E_tot           +=  E;
     E_tot_sqrd      +=  E*E;
     M_tot           +=  M;
+    M_abs_tot       += fabs(M);
     M_tot_sqrd      +=  M*M;
 
     double expbetadelta_E;
@@ -230,18 +232,20 @@ void Numerical2(long int T, double beta, int L, bool random, int my_rank, mat &l
         E_tot += E;
         E_tot_sqrd += E*E;
         M_tot += M;
+        M_abs_tot += fabs(M);
         M_tot_sqrd += M*M;
     }
     //oppgdT10.close();
     double E_average               = E_tot/(T + 1.0);
     double E_average_sqrd          = E_tot_sqrd/(T+1.0);
     double M_average               = M_tot/(T+ 1.0);
+    double M_abs_average           = M_abs_tot/(T+1.0);
     double M_average_sqrd          = M_tot_sqrd/(T+1.0);
     double sigma_sqrd              = E_average_sqrd - E_average*E_average;
 
     double Cv  = (E_average_sqrd - E_average*E_average)*beta*beta;
-    double X   = (M_average_sqrd - M_average*M_average)*beta;
-    M_average = abs(M_average);
+    double X   = (M_average_sqrd - M_abs_average*M_abs_average)*beta;
+
     cout << "E = " << E_average << endl;
     cout << "E*E = " << E_average_sqrd << endl;
     cout << "sigma*sigma = " << E_average_sqrd - E_average*E_average << endl;
@@ -251,8 +255,9 @@ void Numerical2(long int T, double beta, int L, bool random, int my_rank, mat &l
     // add expectation values from this process into the local list
     local_expectation_values[0] = E_average;
     local_expectation_values[1] = E_average_sqrd;
-    local_expectation_values[2] = M_average; // this is absolute value
+    local_expectation_values[2] = M_average; // this is NOT absolute value
     local_expectation_values[3] = M_average_sqrd;
     local_expectation_values[4] = Cv;
     local_expectation_values[5] = X;
+    local_expectation_values[6] = M_abs_average; //  this IS absolute value
 }
