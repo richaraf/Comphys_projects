@@ -37,10 +37,10 @@ int main(int nargs, char* args[])
         cout << "Exact heat capacity for 2x2 Cv = " << Cv_exact << endl;
         cout << "Exact susceptibility for 2x2 X = " << X_exact << endl;
     }
-    double X = 0;
-    double Cv = 0;
-    double X_total = 0.0;
-    double Cv_total = 0.0;
+//    double X = 0;
+//    double Cv = 0;
+//    double X_total = 0.0;
+//    double Cv_total = 0.0;
 
     // Start timer
     cout << "timer start" << endl;
@@ -71,11 +71,11 @@ int main(int nargs, char* args[])
     //array to is going to hold the expectation values
     //for calculated by the different processes:
 
-    mat local_expectation_values = zeros<mat>(6,1);
+    mat local_expectation_values = zeros<mat>(7,1);
     double beta = 1/T[my_rank];
     //double beta = 1/Temp;
 
-    Numerical2(1e6, beta, L, true, my_rank, local_expectation_values);
+    Numerical2(1e5, beta, L, true, my_rank, local_expectation_values);
 
     // local_expectation_values now contains the different expectation values
     // for different temperatures for the different processes
