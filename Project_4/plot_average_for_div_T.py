@@ -1,7 +1,7 @@
 import matplotlib.pyplot as plt
 import numpy as np
 
-L = 60
+L = 40
 
 T_list = [2, 2.1, 2.15, 2.2]
 for i in range(0,20):
@@ -13,7 +13,7 @@ infiles = []
 for T in T_list:
     infiles.append('oppgdL%dT%d_file.dat'%(L, int(round(T*1000))))
     print int(round(T*1000))
-data = np.zeros([6,len(T_list)])
+data = np.zeros([7,len(T_list)])
 
 i = 0
 for infile in infiles:
@@ -27,13 +27,14 @@ for infile in infiles:
 #---Plot---
 SZ = {'size':'16'}
 
-parameters = [0,2,4,5] 
+parameters = [0,6,4,5] 
 parameter_labels = [r'Mean energy $\langle E\rangle$, $[J]$', 
                     r'Mean energy squared $\langle E^2\rangle$, $[J^2]$',
-                    r'Mean absolute magnetization $\langle |M|\rangle$',
+                    r'Mean magnetization $\langle M\rangle$',
                     r'Mean magnetization squared $\langle M^2\rangle$', 
                     r'Heat capacity $C_v$, $[J^2/k^3T]$', 
-                    r'Susceptibility $\chi$']
+                    r'Susceptibility $\chi$',
+                    r'Mean absolute magnetization $\langle |M|\rangle$']
 
 for para in parameters:
     plt.plot(T_list, data[para,:]/L**2)
