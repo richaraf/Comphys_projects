@@ -42,21 +42,20 @@ for para in parameters:
     plt.ylabel(parameter_labels[para],**SZ) 
     plt.grid()
     plt.show()
-
+'''
 
 #Plot the average, heat and susceptibility for various system sizes
 #in the same plot
 
-'''
-L_list = [40, 60, 100, 140]
-T_list = [200, 205, 210, 215, 220, 225, 230]
+
+L_list = [40,60,100,140]
 data = np.zeros(shape=[6,len(T_list),len(L_list)])
 
 k = 0
 for L in L_list:
     infiles = []
     for T in T_list:
-        infiles.append('oppgdL%dT%d_file.dat'%(L, T))
+        infiles.append('oppgdL%dT%d_file.dat'%(L, int(round(T*1000))))
 
     i = 0
     for infile in infiles:
@@ -71,7 +70,7 @@ for L in L_list:
 #---Plot---
 for para in parameters:
     for i in range(len(L_list)):
-        plt.plot(T_list, data[para][:,i]/L_list[i]**2,label="L = %d"%L_list[i])
+        plt.plot(T_list, data[para][:,i],label="L = %d"%L_list[i])
     plt.ylabel(parameter_labels[para],**SZ)
     plt.xlabel('Temperature $T$, $[kT/J]$',**SZ)
     plt.legend(loc='best')
