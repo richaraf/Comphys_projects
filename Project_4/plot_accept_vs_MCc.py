@@ -59,7 +59,7 @@ plt.xlabel(r'Number of flips, $C$', **SZ)
 plt.ylabel(r'Ratio of accepted flips', **SZ)
 plt.legend(['T = 1.0', 'T = 2.4'], loc = 'best')
 plt.grid()
-plt.axis([0,1000,-0.1,0.5])
+plt.axis([0,10000,-0.1,0.5])
 #plt.savefig('accept_vs_MCc.png')
 
 plt.subplots_adjust(hspace=0.5)
