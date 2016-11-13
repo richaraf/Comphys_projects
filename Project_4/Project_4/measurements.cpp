@@ -27,22 +27,23 @@ void run_measurements(double* X, double* Cv, int T, double beta, int L, bool ran
     double E_tot_sqrd  =   0.0;
     double M_tot       =   0.0;
     double M_tot_sqrd  =   0.0;
+    double M_abs       =   0.0;
     E_tot           +=  E;
     E_tot_sqrd      +=  E*E;
     M_tot           +=  M;
     M_tot_sqrd      +=  M*M;
 
     int number_of_discards = 0;
-    ofstream outfile;
+//    ofstream outfile;
     double expbetadelta_E;
-    outfile.open("../number_of_accept.dat", std::ios::out);
+//    outfile.open("../number_of_accept.dat", std::ios::out);
 
-    //Write acerage energy and mean magnetization to file
-    ofstream outfile_E_M;
-    outfile_E_M.open("../E_M_T=1_0_file.dat");
+//    //Write acerage energy and mean magnetization to file
+//    ofstream outfile_E_M;
+//    outfile_E_M.open("../E_M_T=1_0_file.dat");
 
-    ofstream outfile_E_prob;
-    outfile_E_prob.open("../E_prob_file.dat");
+//    ofstream outfile_E_prob;
+//    outfile_E_prob.open("../E_prob_file.dat");
 
     for(int t=0; t < T; t++){
         //Choosing flip index randomly
@@ -85,6 +86,7 @@ void run_measurements(double* X, double* Cv, int T, double beta, int L, bool ran
             E_tot += E;
             E_tot_sqrd += E*E;
             M += 2*R(i+1,j+1);
+            M_abs += fabs(M);
             M_tot += M;
             M_tot_sqrd += M*M;
         }
@@ -98,6 +100,7 @@ void run_measurements(double* X, double* Cv, int T, double beta, int L, bool ran
                     E_tot += E;
                     E_tot_sqrd += E*E;
                     M += 2*R(i+1,j+1);
+                    M_abs += fabs(M);
                     M_tot += M;
                     M_tot_sqrd += M*M;
                 }
@@ -121,6 +124,7 @@ void run_measurements(double* X, double* Cv, int T, double beta, int L, bool ran
                     E = E_prev;
                     E_tot_sqrd += E*E;
                     M_tot += M;
+                    M_abs += fabs(M);
                     M_tot_sqrd += M*M;
                 }
             }
@@ -130,34 +134,37 @@ void run_measurements(double* X, double* Cv, int T, double beta, int L, bool ran
                 E_tot_sqrd += E*E;
                 M += 2*R(i+1,j+1);
                 M_tot += M;
+                M_abs += fabs(M);
                 M_tot_sqrd += M*M;
             }
         }
-        double E_average        = E_tot/(t + 2.0);
-        double M_average        = M_tot/(t+ 2.0);
+//        double E_average        = E_tot/(t + 2.0);
+//        double M_average        = M_tot/(t + 2.0);
+//        double M_abs_average    = M_abs/(t + 2.0);
 
         //Need this for doing measurements in exercise 4c
-        if(T > 100 && t%100 == 0){
-            outfile << t+2 << "  " << (t+2-number_of_discards)/(t+2.0) << endl;
-        }
+//        if(T > 100 && t%100 == 0){
+//            outfile << t+2 << "  " << (t+2-number_of_discards)/(t+2.0) << endl;
+//        }
 
-        if(T > 100 && t%100 == 0){
-            outfile_E_M << t + 2.0 << " " << E_average << " " << M_average << endl;
-        }
+//        if(T > 100 && t%100 == 0){
+//            outfile_E_M << t + 2.0 << " " << E_average << " " << M_average << endl;
+//        }
 
-        if(t > 1e6 && t%10 == 0){
-            outfile_E_prob << E_tot << " " << E << endl;
-        }
+//        if(t > 1e6 && t%10 == 0){
+//            outfile_E_prob << E_tot << " " << E << endl;
+//        }
 
     }
-    outfile.close();
-    outfile_E_M.close();
-    outfile_E_prob.close();
+//    outfile.close();
+//    outfile_E_M.close();
+//    outfile_E_prob.close();
 
     double E_average                = E_tot/(T + 1.0);
     double E_average_sqrd           = E_tot_sqrd/(T+1.0);
     double M_average                = M_tot/(T+ 1.0);
     double M_average_sqrd           = M_tot_sqrd/(T+1.0);
+    double M_abs_average            = M_abs/(T + 1.0);
 
     cout << "E_tot_sqrd: "      << E_tot_sqrd       << "J^2"  << endl;
     cout << "E_tot: "           << E_tot            << "J"    << endl;
@@ -167,6 +174,7 @@ void run_measurements(double* X, double* Cv, int T, double beta, int L, bool ran
     cout << "M_average: "       << M_average        << endl;
     cout << "M_tot_sqrd: "      << M_tot_sqrd       << endl;
     cout << "M_average_sqrd: "  << M_average_sqrd   << endl;
+    cout << "M_abs: "           << M_abs_average    << endl;
 
     *Cv  = (E_average_sqrd - E_average*E_average)*beta*beta;
     *X   = (M_average_sqrd - M_average*M_average)*beta;
