@@ -47,7 +47,7 @@ int main(int nargs, char* args[])
     clock_t start, finish;
     start = clock();
 
-    run_measurements(&X, &Cv, 1e9, 1./Temp, L, true, my_rank);
+    run_measurements(&X, &Cv, 1e6, 1./Temp, L, true, my_rank);
 
     //Numerical2(susceptibility, heat capacity, number of flips,
     //           beta, size of system, spin ordered randomly)

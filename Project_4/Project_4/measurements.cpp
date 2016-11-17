@@ -40,7 +40,7 @@ void run_measurements(double* X, double* Cv, int T, double beta, int L, bool ran
 
 //    //Write acerage energy and mean magnetization to file
 //    ofstream outfile_E_M;
-//    outfile_E_M.open("../E_M_T=1_0_file.dat");
+//    outfile_E_M.open("../E_M_abs_T=2_4_file.dat");
 
 //    ofstream outfile_E_prob;
 //    outfile_E_prob.open("../E_prob_file.dat");
@@ -138,9 +138,9 @@ void run_measurements(double* X, double* Cv, int T, double beta, int L, bool ran
                 M_tot_sqrd += M*M;
             }
         }
-//        double E_average        = E_tot/(t + 2.0);
-//        double M_average        = M_tot/(t + 2.0);
-//        double M_abs_average    = M_abs/(t + 2.0);
+        double E_average        = E_tot/(t + 2.0);
+        double M_average        = M_tot/(t + 2.0);
+        double M_abs_average    = M_abs/(t + 2.0);
 
         //Need this for doing measurements in exercise 4c
 //        if(T > 100 && t%100 == 0){
@@ -148,7 +148,7 @@ void run_measurements(double* X, double* Cv, int T, double beta, int L, bool ran
 //        }
 
 //        if(T > 100 && t%100 == 0){
-//            outfile_E_M << t + 2.0 << " " << E_average << " " << M_average << endl;
+//            outfile_E_M << t + 2.0 << " " << E_average << " " << M_abs_average << endl;
 //        }
 
 //        if(t > 1e6 && t%10 == 0){
