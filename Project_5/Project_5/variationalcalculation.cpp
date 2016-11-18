@@ -7,24 +7,16 @@
 
 using namespace std;
 
-//double Psi_T1(vec3 r_1, vec3 r_2, double alpha, double omega){
-//    double psi_t_value = exp(-alpha*omega*(r_1.lengthSquared() + r_2.lengthSquared())/2.0);
-//    return psi_t_value;
-//}
-
-//double E_L1(vec3 r_1, vec3 r_2, double alpha, double omega){
-//    return 0.5*omega*omega*(r_1.lengthSquared() + r_2.lengthSquared())*(1-alpha*alpha) + 3*alpha*omega;
-//}
-
+double random_position(double steplength){
+    return ((double)rand() / (double)RAND_MAX)*steplength;
+}
 
 void VariationalMethod(double omega, int N, int trialversion, double alpha, double beta){
 
     WaveFunction Psi;
     Psi.setTrialWF(trialversion);
 
-    //Initial positions
-    vec3 r_1(1,1,1);
-    vec3 r_2(-1, -1, -1);
+    srand(time(NULL));
 
     double steplength       = 1.0/sqrt(omega);
     double E_tot            = 0.0;
@@ -32,7 +24,14 @@ void VariationalMethod(double omega, int N, int trialversion, double alpha, doub
     double E_average        = 0.0;
     double E_sqrd_average   = 0.0;
 
-    srand(time(NULL));
+    //Initial positions
+    vec3 r_1(random_position(steplength), random_position(steplength),random_position(steplength));
+    vec3 r_2(random_position(steplength), random_position(steplength),random_position(steplength));
+    vec3 r1minus;
+    vec3 r1plus;
+    vec3 r2plus;
+    vec3 r2minus;
+
 
     for(int n=0; n < N; n++){
         double Psi_squared_old = Psi.Psi_value(r_1, r_2, alpha, omega, beta)*Psi.Psi_value(r_1, r_2, alpha, omega, beta);
@@ -51,6 +50,46 @@ void VariationalMethod(double omega, int N, int trialversion, double alpha, doub
         double Psi_squared_new = Psi.Psi_value(r_1, r_2, alpha, omega, beta)*Psi.Psi_value(r_1, r_2, alpha, omega, beta);
 
         if(Psi_squared_new >= Psi_squared_old){
+//            //vec3 rPlus = rMinus = r1;
+//            double h = 0.001;
+//            double waveFunctionMinus = 0;
+//            double waveFunctionPlus = 0;
+//            double waveFunctionCurrent = 0;
+//            // Kinetic energy, brute force derivations
+//            double kineticEnergy = 0;
+//            for(int i = 0; i < 2; i++) {
+//                for(int j = 0; j < 3; j++) {
+//                    if(i==0){
+//                        //rPlus = rMinus = r1;
+//                        //rPlus(j) += h;
+//                        //rMinus(j) -= h;
+//                        r1plus(j) = r_1(j) + h;
+//                        r1minus(j) = r_1(j) - h;
+//                        waveFunctionMinus = Psi.Psi_value(r1minus, r_2, alpha, omega, beta);
+//                        waveFunctionPlus = Psi.Psi_value(r1plus, r_2, alpha, omega, beta);
+//                    }
+//                    if(i==1){
+//                        //rPlus = rMinus = r2;
+//                        //rPlus(j) += h;
+//                        //rMinus(j) -= h;
+//                        r2plus(j) = r_2(j) + h;
+//                        r2minus(j) = r_2(j) - h;
+//                        waveFunctionMinus = Psi.Psi_value(r_1, r2minus, alpha, omega, beta);
+//                        waveFunctionPlus = Psi.Psi_value(r_1, r2plus, alpha, omega, beta);
+
+
+//                    }
+//                    waveFunctionCurrent = Psi.Psi_value(r_1, r_2, alpha, omega, beta);
+//                    kineticEnergy -= (waveFunctionMinus + waveFunctionPlus - 2 * waveFunctionCurrent);
+//                    r1plus = r1minus = r_1;
+//                    r2plus = r1minus = r_2;
+//                }
+//            }
+
+//            kineticEnergy = 0.5 * (1/(h*h) * kineticEnergy + omega*omega*(r_1.lengthSquared() + r_2.lengthSquared())) / waveFunctionCurrent;
+//            cout << kineticEnergy << endl;
+//            E_tot = E_tot + kineticEnergy;
+//            E_sqrd_tot += kineticEnergy*kineticEnergy;
             E_tot = E_tot + Psi.E_L(r_1, r_2, alpha, omega, beta);
             E_sqrd_tot += Psi.E_L(r_1, r_2, alpha, omega, beta)*Psi.E_L(r_1, r_2, alpha, omega, beta);
             //cout << "#1 E_tot: " << E_tot << endl;
@@ -60,6 +99,47 @@ void VariationalMethod(double omega, int N, int trialversion, double alpha, doub
             double Psi_new_div_old_squared = Psi_squared_new/Psi_squared_old;
 
             if(random_number <= Psi_new_div_old_squared){
+//                //vec3 rPlus = rMinus = r1;
+//                double h = 0.001;
+//                double waveFunctionMinus = 0;
+//                double waveFunctionPlus = 0;
+//                double waveFunctionCurrent = 0;
+//                // Kinetic energy, brute force derivations
+//                double kineticEnergy = 0;
+//                for(int i = 0; i < 2; i++) {
+//                    for(int j = 0; j < 3; j++) {
+//                        if(i==0){
+//                            //rPlus = rMinus = r1;
+//                            //rPlus(j) += h;
+//                            //rMinus(j) -= h;
+//                            r1plus(j) = r_1(j) + h;
+//                            r1minus(j) = r_1(j) - h;
+//                            waveFunctionMinus = Psi.Psi_value(r1minus, r_2, alpha, omega, beta);
+//                            waveFunctionPlus = Psi.Psi_value(r1plus, r_2, alpha, omega, beta);
+//                        }
+//                        if(i==1){
+//                            //rPlus = rMinus = r2;
+//                            //rPlus(j) += h;
+//                            //rMinus(j) -= h;
+//                            r2plus(j) = r_2(j) + h;
+//                            r2minus(j) = r_2(j) - h;
+//                            waveFunctionMinus = Psi.Psi_value(r_1, r2minus, alpha, omega, beta);
+//                            waveFunctionPlus = Psi.Psi_value(r_1, r2plus, alpha, omega, beta);
+
+
+//                        }
+//                        waveFunctionCurrent = Psi.Psi_value(r_1, r_2, alpha, omega, beta);
+//                        kineticEnergy -= (waveFunctionMinus + waveFunctionPlus - 2 * waveFunctionCurrent);
+//                        r1plus = r1minus = r_1;
+//                        r2plus = r1minus = r_2;
+//                    }
+//                }
+
+//                kineticEnergy = 0.5 * (1/(h*h) * kineticEnergy + omega*omega*(r_1.lengthSquared() + r_2.lengthSquared())) / waveFunctionCurrent;
+//                cout << kineticEnergy << endl;
+//                E_tot = E_tot + kineticEnergy;
+//                E_sqrd_tot += kineticEnergy*kineticEnergy;
+
                 E_tot = E_tot + Psi.E_L(r_1, r_2, alpha, omega, beta);
                 E_sqrd_tot += Psi.E_L(r_1, r_2, alpha, omega, beta)*Psi.E_L(r_1, r_2, alpha, omega, beta);
                 //cout << "#2 E_tot: " << E_tot << endl;
@@ -68,6 +148,46 @@ void VariationalMethod(double omega, int N, int trialversion, double alpha, doub
             else if(random_number > Psi_new_div_old_squared){
                 r_1 = r_1_old;
                 r_2 = r_2_old;
+//                //vec3 rPlus = rMinus = r1;
+//                double h = 0.001;
+//                double waveFunctionMinus = 0;
+//                double waveFunctionPlus = 0;
+//                double waveFunctionCurrent = 0;
+//                // Kinetic energy, brute force derivations
+//                double kineticEnergy = 0;
+//                for(int i = 0; i < 2; i++) {
+//                    for(int j = 0; j < 3; j++) {
+//                        if(i==0){
+//                            //rPlus = rMinus = r1;
+//                            //rPlus(j) += h;
+//                            //rMinus(j) -= h;
+//                            r1plus(j) = r_1(j) + h;
+//                            r1minus(j) = r_1(j) - h;
+//                            waveFunctionMinus = Psi.Psi_value(r1minus, r_2, alpha, omega, beta);
+//                            waveFunctionPlus = Psi.Psi_value(r1plus, r_2, alpha, omega, beta);
+//                        }
+//                        if(i==1){
+//                            //rPlus = rMinus = r2;
+//                            //rPlus(j) += h;
+//                            //rMinus(j) -= h;
+//                            r2plus(j) = r_2(j) + h;
+//                            r2minus(j) = r_2(j) - h;
+//                            waveFunctionMinus = Psi.Psi_value(r_1, r2minus, alpha, omega, beta);
+//                            waveFunctionPlus = Psi.Psi_value(r_1, r2plus, alpha, omega, beta);
+
+
+//                        }
+//                        waveFunctionCurrent = Psi.Psi_value(r_1, r_2, alpha, omega, beta);
+//                        kineticEnergy -= (waveFunctionMinus + waveFunctionPlus - 2 * waveFunctionCurrent);
+//                        r1plus = r1minus = r_1;
+//                        r2plus = r1minus = r_2;
+//                    }
+//                }
+
+//                kineticEnergy = 0.5 * (1/(h*h) * kineticEnergy + omega*omega*(r_1.lengthSquared() + r_2.lengthSquared())) / waveFunctionCurrent;
+//                cout << kineticEnergy << endl;
+//                E_tot = E_tot + kineticEnergy;
+//                E_sqrd_tot += kineticEnergy*kineticEnergy;
                 E_tot = E_tot + Psi.E_L(r_1, r_2, alpha, omega, beta);
                 E_sqrd_tot += Psi.E_L(r_1, r_2, alpha, omega, beta)*Psi.E_L(r_1, r_2, alpha, omega, beta);
                 //cout << "#3 E_tot: " << E_tot << endl;
