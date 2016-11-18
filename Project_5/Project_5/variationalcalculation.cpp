@@ -28,6 +28,7 @@ void VariationalMethod(double omega, int N, int trialversion, double alpha, doub
 
     double steplength       = 1.0/sqrt(omega);
     double E_tot            = 0.0;
+    double E_sqrd_tot       = 0.0;
     double E_average        = 0.0;
     double E_sqrd_average   = 0.0;
 
@@ -51,6 +52,7 @@ void VariationalMethod(double omega, int N, int trialversion, double alpha, doub
 
         if(Psi_squared_new >= Psi_squared_old){
             E_tot = E_tot + Psi.E_L(r_1, r_2, alpha, omega, beta);
+            E_sqrd_tot += Psi.E_L(r_1, r_2, alpha, omega, beta)*Psi.E_L(r_1, r_2, alpha, omega, beta);
             //cout << "#1 E_tot: " << E_tot << endl;
         }
         else if(Psi_squared_new < Psi_squared_old){
@@ -59,6 +61,7 @@ void VariationalMethod(double omega, int N, int trialversion, double alpha, doub
 
             if(random_number <= Psi_new_div_old_squared){
                 E_tot = E_tot + Psi.E_L(r_1, r_2, alpha, omega, beta);
+                E_sqrd_tot += Psi.E_L(r_1, r_2, alpha, omega, beta)*Psi.E_L(r_1, r_2, alpha, omega, beta);
                 //cout << "#2 E_tot: " << E_tot << endl;
             }
 
@@ -66,12 +69,14 @@ void VariationalMethod(double omega, int N, int trialversion, double alpha, doub
                 r_1 = r_1_old;
                 r_2 = r_2_old;
                 E_tot = E_tot + Psi.E_L(r_1, r_2, alpha, omega, beta);
+                E_sqrd_tot += Psi.E_L(r_1, r_2, alpha, omega, beta)*Psi.E_L(r_1, r_2, alpha, omega, beta);
                 //cout << "#3 E_tot: " << E_tot << endl;
             }
         }
         E_average = E_tot/(n+1.0);
+        E_sqrd_average = E_sqrd_tot/(n+1.0);
         //cout << "Average Energy:" << " "<< E_average << endl;
 
     }
-    cout <<"alpha: " << alpha << "E_average: " << E_average << endl;
+    cout <<"alpha: " << alpha << " E_average: " << E_average << " Variance E: " << E_sqrd_average - E_average*E_average << endl;
 }
