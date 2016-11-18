@@ -26,8 +26,10 @@ void VariationalMethod(double omega, int N, int trialversion, double alpha, doub
     vec3 r_1(1,1,1);
     vec3 r_2(-1, -1, -1);
 
-    double steplength   = 1.0;
-    double E_tot        = 0.0;
+    double steplength       = 1.0/sqrt(omega);
+    double E_tot            = 0.0;
+    double E_average        = 0.0;
+    double E_sqrd_average   = 0.0;
 
     srand(time(NULL));
 
@@ -67,12 +69,9 @@ void VariationalMethod(double omega, int N, int trialversion, double alpha, doub
                 //cout << "#3 E_tot: " << E_tot << endl;
             }
         }
-        double E_average = E_tot/(n+1.0);
-        cout << "Average Energy:" << " "<< E_average << endl;
+        E_average = E_tot/(n+1.0);
+        //cout << "Average Energy:" << " "<< E_average << endl;
 
     }
-
+    cout <<"alpha: " << alpha << "E_average: " << E_average << endl;
 }
-
-
-
