@@ -5,8 +5,10 @@ CONFIG -= qt
 
 SOURCES += main.cpp \
     variationalcalculation.cpp \
-    vec3.cpp
+    vec3.cpp \
+    wavefunction.cpp
 
 HEADERS += \
     variationalcalculation.h \
-    vec3.h
+    vec3.h \
+    wavefunction.h
