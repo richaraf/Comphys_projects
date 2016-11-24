@@ -7,8 +7,9 @@ using namespace std;
 int main(int argc, char *argv[])
 {
     //VariationalMethod(omega, N, trialversion, alpha, beta);
+    string filename = "../E_L2_file_omega=1.dat";
     ofstream ofs;
-    ofs.open("../E_L2_file_omega=1.dat", ofstream::out | ofstream::trunc);
+    ofs.open(filename, ofstream::out | ofstream::trunc);
     ofs.close();
 
     double alpha, beta;
@@ -16,7 +17,7 @@ int main(int argc, char *argv[])
         alpha = 0.90 + i*0.01;
         for (int j = 0; j < 11; j++){
             beta = 0.90 + j*0.01;
-            VariationalMethod(1.0, 1e6, 1, alpha, beta, "../E_L2_file_omega=1.dat");
+            VariationalMethod(1.0, 1e6, 1, alpha, beta, filename);
         }
     }
     //outfile_EL1.close();
