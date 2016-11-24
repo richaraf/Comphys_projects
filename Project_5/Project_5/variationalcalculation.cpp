@@ -3,7 +3,7 @@
 #include <cmath>
 #include "vec3.h"
 #include "wavefunction.h"
-
+#include <fstream>
 
 using namespace std;
 
@@ -11,10 +11,12 @@ double random_position(double steplength){
     return ((double)rand() / (double)RAND_MAX)*steplength;
 }
 
-void VariationalMethod(double omega, int N, int trialversion, double alpha, double beta){
+void VariationalMethod(double omega, int N, int trialversion, double alpha, double beta, string fileName){
 
     WaveFunction Psi;
     Psi.setTrialWF(trialversion);
+    ofstream outfile_EL1;
+    outfile_EL1.open(fileName, ios::app);
 
     srand(time(NULL));
 
@@ -198,5 +200,8 @@ void VariationalMethod(double omega, int N, int trialversion, double alpha, doub
         //cout << "Average Energy:" << " "<< E_average << endl;
 
     }
+
+    outfile_EL1 << alpha << ' ' << E_average << ' ' << E_sqrd_average - E_average*E_average << endl;
+    outfile_EL1.close();
     cout <<"alpha: " << alpha << "beta: " << beta << " E_average: " << E_average << " Variance E: " << E_sqrd_average - E_average*E_average << endl;
 }
