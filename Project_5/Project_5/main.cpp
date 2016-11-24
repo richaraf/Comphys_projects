@@ -7,9 +7,12 @@ using namespace std;
 int main(int argc, char *argv[])
 {
     //VariationalMethod(omega, N, trialversion, alpha, beta);
+    ofstream ofs;
+    ofs.open("../E_L2_file_omega=1.dat", ofstream::out | ofstream::trunc);
+    ofs.close();
 
     double alpha, beta;
-    for (int i = 0; i < 11; i++){
+    for (int i = 0; i < 21; i++){
         alpha = 0.90 + i*0.01;
         for (int j = 0; j < 11; j++){
             beta = 0.90 + j*0.01;
