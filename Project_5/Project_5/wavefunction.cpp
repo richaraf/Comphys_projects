@@ -56,7 +56,7 @@ double WaveFunction::PotentialE(vec3 r_1, vec3 r_2, double alpha, double omega, 
 {
     //double r12 = (r_1-r_2).length();
     if (m_trialversion==1){
-        return 0.5*omega*omega*(r_1.lengthSquared() + r_2.lengthSquared());
+        return 0.5*omega*omega*(r_1.lengthSquared() + r_2.lengthSquared());// + 1.0/(r_1-r_2).length();
     }
     if (m_trialversion==2){
         return 0;

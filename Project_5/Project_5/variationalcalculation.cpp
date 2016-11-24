@@ -15,8 +15,8 @@ void VariationalMethod(double omega, int N, int trialversion, double alpha, doub
 
     WaveFunction Psi;
     Psi.setTrialWF(trialversion);
-//    ofstream outfile_EL1;
-//    outfile_EL1.open(fileName, ios::app);
+    ofstream outfile_EL2;
+    outfile_EL2.open(fileName, ios::app);
 
     srand(time(NULL));
 
@@ -206,13 +206,8 @@ void VariationalMethod(double omega, int N, int trialversion, double alpha, doub
 //                cout << kineticEnergy << endl;
 //                E_tot = E_tot + kineticEnergy;
 //                E_sqrd_tot += kineticEnergy*kineticEnergy;
-                K = Psi.KineticE(r_1, r_2, alpha, omega, beta);
-                V = Psi.PotentialE(r_1, r_2, alpha, omega, beta);
-                E = K + V;
-                K_tot += K;
-                V_tot += V;
-                E_tot += E;
-                E_sqrd_tot += E*E;
+                E_tot = E_tot + Psi.E_L(r_1, r_2, alpha, omega, beta);
+                E_sqrd_tot += Psi.E_L(r_1, r_2, alpha, omega, beta)*Psi.E_L(r_1, r_2, alpha, omega, beta);
                 //cout << "#3 E_tot: " << E_tot << endl;
             }
         }
@@ -222,7 +217,7 @@ void VariationalMethod(double omega, int N, int trialversion, double alpha, doub
 
     }
 
-//    outfile_EL1 << alpha << ' ' << E_average << ' ' << E_sqrd_average - E_average*E_average << endl;
-//    outfile_EL1.close();
+    outfile_EL2 << alpha  << beta << ' ' << E_average << ' ' << E_sqrd_average - E_average*E_average << endl;
+    outfile_EL2.close();
     cout <<"alpha: " << alpha << "beta: " << beta << " E_average: " << E_average << " Variance E: " << E_sqrd_average - E_average*E_average << endl;
 }
