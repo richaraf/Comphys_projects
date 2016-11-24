@@ -198,5 +198,5 @@ void VariationalMethod(double omega, int N, int trialversion, double alpha, doub
         //cout << "Average Energy:" << " "<< E_average << endl;
 
     }
-    cout <<"alpha: " << alpha << " E_average: " << E_average << " Variance E: " << E_sqrd_average - E_average*E_average << endl;
+    cout <<"alpha: " << alpha << "beta: " << beta << " E_average: " << E_average << " Variance E: " << E_sqrd_average - E_average*E_average << endl;
 }
