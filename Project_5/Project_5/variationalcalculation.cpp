@@ -217,7 +217,7 @@ void VariationalMethod(double omega, int N, int trialversion, double alpha, doub
 
     }
 
-    outfile_EL2 << alpha  << beta << ' ' << E_average << ' ' << E_sqrd_average - E_average*E_average << endl;
+    outfile_EL2 << alpha  << ' ' << beta << ' ' << E_average << ' ' << E_sqrd_average - E_average*E_average << endl;
     outfile_EL2.close();
     cout <<"alpha: " << alpha << "beta: " << beta << " E_average: " << E_average << " Variance E: " << E_sqrd_average - E_average*E_average << endl;
 }
