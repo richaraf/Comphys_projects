@@ -96,6 +96,26 @@ where $r_{ij}$ is the distance between electron $i$ and $j$, $e$ is the elementa
     \label{eq:H_interaction}
 \end{equation}
 
+\subsection{Energies} \label{Energies}
+In order to find the local energy $E_L$ for a given trial function $\Psi_T$ we can use the following expression
+\begin{equation}
+E_L = \frac{1}{\Psi_T}\hat{H}\Psi_T,
+\label{eq:localenergy}
+\end{equation}
+where $\hat{H}$ is the Hamiltonian. Using equation (\ref{eq:localenergy}) and the first trial wave function (\ref{eq:PsiT1}) we get the local energy to be 
+\begin{equation}
+E_{L1} = \frac{1}{2}\omega^2 (r_1^2 + r_2^2)(1-\alpha^2) + 3\alpha \omega,
+\label{eq:EL1}
+\end{equation}
+which contains both kinetic $T_1$ and potential $V_1$ energy
+\begin{equation}
+T_1 = 3\alpha \omega -\frac{1}{2}\omega^2\alpha^2\left(r_1^2 + r_2^2\right),
+\label{eq:T_1}
+\end{equation}
+\begin{equation}
+V_1 = \frac{1}{2}\omega^2(r_1^2 + r_2^2).
+\end{equation}
+
 
 
 \section{Method}

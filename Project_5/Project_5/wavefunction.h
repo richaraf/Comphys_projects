@@ -11,5 +11,6 @@ public:
     int setTrialWF              (int trialversion);
     double Psi_value(vec3 r_1, vec3 r_2, double alpha, double omega, double beta);
     double E_L(vec3 r_1, vec3 r_2, double alpha, double omega, double beta);
-
+    double KineticE(vec3 r_1, vec3 r_2, double alpha, double omega, double beta);
+    double PotentialE(vec3 r_1, vec3 r_2, double alpha, double omega, double beta);
 };

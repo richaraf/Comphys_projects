@@ -39,3 +39,27 @@ double WaveFunction::E_L(vec3 r_1, vec3 r_2, double alpha, double omega, double 
 
     }
 }
+
+double WaveFunction::KineticE(vec3 r_1, vec3 r_2, double alpha, double omega, double beta)
+{
+    //double r12 = (r_1-r_2).length();
+    if (m_trialversion==1){
+        return 3*alpha*omega - 0.5*omega*omega*alpha*alpha*(r_1.lengthSquared() + r_2.lengthSquared());
+    }
+    if (m_trialversion==2){
+        return 0;
+
+    }
+}
+
+double WaveFunction::PotentialE(vec3 r_1, vec3 r_2, double alpha, double omega, double beta)
+{
+    //double r12 = (r_1-r_2).length();
+    if (m_trialversion==1){
+        return 0.5*omega*omega*(r_1.lengthSquared() + r_2.lengthSquared());
+    }
+    if (m_trialversion==2){
+        return 0;
+
+    }
+}
