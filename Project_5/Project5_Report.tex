@@ -1,0 +1,123 @@
+\documentclass[norsk,a4paper,12pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage{graphicx} %for å inkludere grafikk
+\usepackage{verbatim} %for å inkludere filer med tegn LaTeX ikke liker
+\usepackage{tabularx}
+\usepackage{booktabs}
+\usepackage{amsmath}
+\usepackage{float}
+\usepackage{color}
+\usepackage{listings}
+\usepackage{physics}
+\usepackage{hyperref}
+\lstset{language=c++}
+\lstset{basicstyle=\small}
+\lstset{backgroundcolor=\color{white}}
+\lstset{frame=single}
+\lstset{stringstyle=\ttfamily}
+\lstset{keywordstyle=\color{red}\bfseries}
+\lstset{commentstyle=\itshape\color{blue}}
+\lstset{showspaces=false}
+\lstset{showstringspaces=false}
+\lstset{showtabs=false}
+\lstset{breaklines}
+\lstset{postbreak=\raisebox{0ex}[0ex][0ex]{\ensuremath{\color{red}\hookrightarrow\space}}}
+\usepackage{titlesec}
+
+\setcounter{secnumdepth}{4}
+
+\titleformat{\paragraph}
+{\normalfont\normalsize\bfseries}{\theparagraph}{1em}{}
+\titlespacing*{\paragraph}
+{0pt}{3.25ex plus 1ex minus .2ex}{1.5ex plus .2ex}
+
+
+\title{FYS3150 - Computational Physics\\\vspace{2mm} \Large{Project 5}}
+\author{\large Richard Andr\'e Fauli\\ Dorthea Gjestvang\\ Even Marius Nordhagen}
+\date{December 24, 2016}
+\begin{document}
+
+\maketitle
+\begin{abstract}
+This project aims to simulate so-called quantum dots, electrons trapped in harmonic oscillator potentials, by
+\end{abstract}
+
+
+\begin{itemize}
+\item Github repository containing programs and results are in: \url{https://github.com/richaraf/Comphys_projects/tree/master/Project_5}
+\end{itemize}
+
+
+\section{Introduction}
+In this project, we study the theory behind quantum dots, a highly relevant subject in modern physics. A quantum dot is one or two electrons trapped in an quantum well. These are often referred to as arificial atoms, as they, like natural atoms, have discrete energy levels \cite{Nature}.
+
+Our goal in this project is to simulate a quantum dot, modelled as one or two electrons bound in a three-dimensional harmonic oscillator well.
+
+
+\section{Theory}
+
+\subsection{Variational Method}
+The variational method is a method in quantum mechanics for estimating an upper limit on the lowest energy state level for a given Hamiltonian \cite{Griffiths}. For any choice of wave function $\psi$, the following expression holds:
+
+\begin{equation}
+    E_0 \leq \frac{\bra{\psi} H \ket{\psi}}{\bra{\psi}\ket{\psi}}
+    \label{eq:VariationalMethod}
+\end{equation}
+
+Equation \ref{eq:VariationalMethod} states that given a wave function $\psi$, the calculated expectation value for the energy will always be greater than or equal to the lowest energy, $E_0$. This is trivial to understand: if the chosen $\psi$ indeed is the ground state $\psi_0$, then the energy is $E_0$. For any other choice of $\psi$, the energy must be higher than the energy of the ground state. \par 
+The variational method is particularly useful when the Hamiltonian has complicated eigenfunctions, or no analytical solution at all. A smart choice of a trial wave function $\psi_T(\alpha)$ where $\alpha$ is the variational parameter, gives the trial energy $E_T(\alpha)$, which is an upper limit on the ground state energy as a function of $\alpha$. The trial energy can thereafter be minimized with respect til $\alpha$, giving an upper limit to $E_0$ that is as low as possible.
+
+\subsection{Quantum Dot Model}
+As stated in the introduction, we simulate a quantum dot as two electrons in a three dimensional harmonic oscillator well. We will both simulate the electrons when neglecting Coulomb interaction between the two electrons, and when including this repulsion. For the non-interacting case, the Hamiltonian $\hat{H}$ is:
+
+\begin{equation}
+    \hat{H} = \sum_{i=1}^{2} (-\frac{\hbar^2}{2 m_e}\nabla_i^2 + \frac{1}{2}\hbar \omega^2r_i^2) 
+    \label{eq:H_non_interaction_unit}
+\end{equation}
+
+where the sum goes over all particles $i$, $\nabla_i^2$ is the Laplace operator for particle $i$, $\omega$ is the harmonic well frequency and $r_i$ is the position vector of particle $i$. 
+
+For the interacting case, the electrons notices a repulsion from the Coulomb interaction, and we have to include an additional term in the Hamiltonian:
+
+\begin{equation}
+    \hat{H_{rep}} = \sum_{i<j} \frac{e^2}{4\pi \epsilon_0 r_{ij}}
+    \label{eq:H_interaction_unit}
+\end{equation}
+
+where $r_{ij}$ is the distance between electron $i$ and $j$, $e$ is the elementary charge, $\epsilon_ 0$ is the permittivity of vacuum, and we sum over $i < j$ to avoid counting interactions twice, as the potential from electron $i$ acting on $j$ is the same as the potential from $j$ acting on $i$. Using natural units, that is scaling such that $\hbar = e = m_e = 1$ and $\epsilon_0 = \frac{1}{4\pi}$, we obtain the scaled Hamiltonians for the non-interacting and the interacting system presented in equation \ref{eq:H_non_interaction} and \ref{eq:H_interaction}:
+
+\begin{equation}
+    \hat{H} = \sum_{i=1}^{2} (-\frac{\hbar^2}{2 m_e}\nabla_i^2 + \frac{1}{2}\hbar \omega^2r_i^2) 
+    \label{eq:H_non_interaction}
+\end{equation}
+
+\begin{equation}
+    \hat{H_{rep}} = \sum_{i<j} \frac{e^2}{4\pi \epsilon_0 r_{ij}}
+    \label{eq:H_interaction}
+\end{equation}
+
+
+
+\section{Method}
+\section{Discussion}
+\section{Conclusion}
+
+\newpage
+\section{References}
+\begingroup
+\renewcommand{\section}[2]{}
+\begin{thebibliography}{}
+\bibitem{Nature}
+  R C Asgoori. 
+  Electrons in artificial atoms
+  Nature Vol 379 1.February 1996
+  \url{http://www.nature.com/nature/journal/v379/n6564/pdf/379413a0.pdf}
+\bibitem{Griffiths}
+  D J Griffiths (2014)
+  Introdction to Quantum Mechanics, Second Edition
+  
+  
+
+\end{thebibliography}
+
+\end{document}
