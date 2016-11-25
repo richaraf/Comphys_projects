@@ -29,10 +29,10 @@ double WaveFunction::E_L(vec3 r_1, vec3 r_2, double alpha, double omega, double 
     double r12 = (r_1-r_2).length();;
 
     if (m_trialversion==1){
-        return E + 1.0/r12;
+        return E;// + 1.0/r12;
     }
     if (m_trialversion==2){
-        return E + 1.0/r12; // + 1.0/((1+beta*r12)*(1+beta*r12))*(beta/(1+beta*r12) - 1./4 + 1./4*r12 - 1.0/r12);
+        return E + 1.0/r12 + 1.0/(2*(1+beta*r12)*(1+beta*r12))*(alpha*omega*r12 - 1.0/(2*(1+beta*r12)*(1+beta*r12)) - 2.0/r12 + (2*beta)/(1+beta*r12));
     }
 }
 
