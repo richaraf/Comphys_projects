@@ -21,7 +21,7 @@ void VariationalMethod(double omega, int N, int trialversion, double alpha, doub
 
     srand(time(NULL));
 
-    double steplength       = 1.0/sqrt(omega);
+    double steplength       = 1.5; //1.0/sqrt(omega);
     double K_tot            = 0.0;
     double K_average        = 0.0;
     double V_tot            = 0.0;
@@ -33,6 +33,8 @@ void VariationalMethod(double omega, int N, int trialversion, double alpha, doub
     double K                = 0.0;
     double V                = 0.0;
     double E                = 0.0;
+    double eq               = 0.3;
+    int accepted = 0;
 
     //Initial positions
     vec3 r_1(random_position(steplength), random_position(steplength),random_position(steplength));
@@ -45,16 +47,17 @@ void VariationalMethod(double omega, int N, int trialversion, double alpha, doub
 
     for(int n=0; n < N; n++){
         double Psi_squared_old = Psi.Psi_value(r_1, r_2, alpha, omega, beta)*Psi.Psi_value(r_1, r_2, alpha, omega, beta);
-        vec3 r_1_old = r_1;
-        vec3 r_2_old = r_2;
 
         int particle_number = rand()%2;
         int dimension_number = rand()%3;
+
+        double change = (2.0*((double)rand() / (double)RAND_MAX) -1.0)*steplength;
+
         if(particle_number ==0){
-            r_1[dimension_number] = r_1_old[dimension_number] + (2.0*((double)rand() / (double)RAND_MAX) -1.0)*steplength;
+            r_1[dimension_number] += change;
         }
         else if(particle_number ==1){
-            r_2[dimension_number] = r_2_old[dimension_number] + (2.0*((double)rand() / (double)RAND_MAX) -1.0)*steplength;
+            r_2[dimension_number] += change;
         }
 
         double Psi_squared_new = Psi.Psi_value(r_1, r_2, alpha, omega, beta)*Psi.Psi_value(r_1, r_2, alpha, omega, beta);
@@ -100,14 +103,19 @@ void VariationalMethod(double omega, int N, int trialversion, double alpha, doub
 //            cout << kineticEnergy << endl;
 //            E_tot = E_tot + kineticEnergy;
 //            E_sqrd_tot += kineticEnergy*kineticEnergy;
-            K = Psi.KineticE(r_1, r_2, alpha, omega, beta);
-            V = Psi.PotentialE(r_1, r_2, alpha, omega, beta);
-            E = K + V;
-            K_tot += K;
-            V_tot += V;
-            E_tot += E;
-            E_sqrd_tot += E*E;
-            //cout << "#1 E_tot: " << E_tot << endl;
+//            K = Psi.KineticE(r_1, r_2, alpha, omega, beta);
+//            V = Psi.PotentialE(r_1, r_2, alpha, omega, beta);
+//            E = K + V;
+//            K_tot += K;
+//            V_tot += V;
+//            E_tot += E;
+//            E_sqrd_tot += E*E;
+            if(n > eq*N) {
+                accepted += 1;
+                E_tot = E_tot + Psi.E_L(r_1, r_2, alpha, omega, beta);
+                E_sqrd_tot += Psi.E_L(r_1, r_2, alpha, omega, beta)*Psi.E_L(r_1, r_2, alpha, omega, beta);
+//              //cout << "#1 E_tot: " << E_tot << endl;
+            }
         }
         else if(Psi_squared_new < Psi_squared_old){
             double random_number = (double)rand() / (double)RAND_MAX;
@@ -154,19 +162,30 @@ void VariationalMethod(double omega, int N, int trialversion, double alpha, doub
 //                cout << kineticEnergy << endl;
 //                E_tot = E_tot + kineticEnergy;
 //                E_sqrd_tot += kineticEnergy*kineticEnergy;
-                K = Psi.KineticE(r_1, r_2, alpha, omega, beta);
-                V = Psi.PotentialE(r_1, r_2, alpha, omega, beta);
-                E = K + V;
-                K_tot += K;
-                V_tot += V;
-                E_tot += E;
-                E_sqrd_tot += E*E;
+//                K = Psi.KineticE(r_1, r_2, alpha, omega, beta);
+//                V = Psi.PotentialE(r_1, r_2, alpha, omega, beta);
+//                E = K + V;
+//                K_tot += K;
+//                V_tot += V;
+
+                if(n > eq*N) {
+                    accepted += 1;
+                    E_tot = E_tot + Psi.E_L(r_1, r_2, alpha, omega, beta);
+                    E_sqrd_tot += Psi.E_L(r_1, r_2, alpha, omega, beta)*Psi.E_L(r_1, r_2, alpha, omega, beta);
+    //              //cout << "#1 E_tot: " << E_tot << endl;
+                }//E_tot += E;
+                //E_sqrd_tot += E*E;
                 //cout << "#2 E_tot: " << E_tot << endl;
             }
 
             else if(random_number > Psi_new_div_old_squared){
-                r_1 = r_1_old;
-                r_2 = r_2_old;
+
+                if(particle_number ==0){
+                    r_1[dimension_number] -= change;
+                }
+                else if(particle_number ==1){
+                    r_2[dimension_number] -= change;
+                }
 //                //vec3 rPlus = rMinus = r1;
 //                double h = 0.001;
 //                double waveFunctionMinus = 0;
@@ -207,18 +226,25 @@ void VariationalMethod(double omega, int N, int trialversion, double alpha, doub
 //                cout << kineticEnergy << endl;
 //                E_tot = E_tot + kineticEnergy;
 //                E_sqrd_tot += kineticEnergy*kineticEnergy;
-                E_tot = E_tot + Psi.E_L(r_1, r_2, alpha, omega, beta);
-                E_sqrd_tot += Psi.E_L(r_1, r_2, alpha, omega, beta)*Psi.E_L(r_1, r_2, alpha, omega, beta);
-                //cout << "#3 E_tot: " << E_tot << endl;
+                if(n > eq*N) {
+                    //accepted += 1;
+                    E_tot = E_tot + Psi.E_L(r_1, r_2, alpha, omega, beta);
+                    E_sqrd_tot += Psi.E_L(r_1, r_2, alpha, omega, beta)*Psi.E_L(r_1, r_2, alpha, omega, beta);
+    //              //cout << "#1 E_tot: " << E_tot << endl;
+                }//cout << "#3 E_tot: " << E_tot << endl;
             }
         }
-        E_average = E_tot/(n+1.0);
-        E_sqrd_average = E_sqrd_tot/(n+1.0);
+
+
+
         //cout << "Average Energy:" << " "<< E_average << endl;
 
     }
 
+    E_average = E_tot/((1-eq)*N);
+    E_sqrd_average = E_sqrd_tot/((1-eq)*N);
+
     outfile_EL2 << setprecision(15) << setw(5) << alpha  << ' ' << setw(5) << beta << ' ' << setw(20) << E_average << ' ' << setw(20) << E_sqrd_average - E_average*E_average << endl;
     outfile_EL2.close();
-    cout <<"alpha: " << alpha << "beta: " << beta << " E_average: " << E_average << " Variance E: " << E_sqrd_average - E_average*E_average << endl;
+    cout <<"alpha: " << alpha << "beta: " << beta << " E_average: " << E_average << " Variance E: " << E_sqrd_average - E_average*E_average << " Acc ratio: " << accepted/((double)((1-eq)*N)) << endl;
 }
