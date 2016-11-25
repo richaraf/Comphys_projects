@@ -22,45 +22,31 @@ for infile in infiles:
         j += 1
 
     label_size = {'size':'16'}
+    meshgrid  = np.zeros(shape=[4,21,11])
 
-    geir = data[i, :, 0][::11]
-    even = data[i, :, 1][::11]
-    espen = data[i, :, 2][::11]
-    lars = data[i, :, 3][::11]
-    plt.plot(geir, espen)
+    for p in range(4):
+        h = 0
+        for u in range(21):
+            for v in range(11):
+                meshgrid[p, u, v] = data[i, h, p]
+                h += 1
 
-    aksel = np.zeros([21,11])
-    brede = np.zeros([21,11])
-    tom   = np.zeros([21,11])
-    tor   = np.zeros([21,11])
+    label_list = [r'Local energy, $E_{L2}$',
+                  r'Energy variance, $\sigma_E^2$']
 
-    h = 0
-    for u in range(21):
-        for v in range(11):
-            tor[u,v]   = data[0,h, 3]
-            aksel[u,v] = data[0,h, 2]
-            brede[u,v] = data[0,h, 1]
-            tom[u,v]   = data[0,h, 0]
-            h += 1
+    for j in range(2):
+        plt.figure()
+        plt.contourf(meshgrid[0], meshgrid[1], meshgrid[j+2], 50)
+        plt.colorbar()
+        plt.title(label_list[j],**label_size)
+        plt.xlabel(r'Variational parameter, $\beta$',**label_size)
+        plt.ylabel(r'Variational parameter, $\alpha$',**label_size)
 
-    plt.figure()
-    plt.contourf(tom, brede, aksel, 50)
-    plt.colorbar()
-    plt.xlabel(r'Variational paramater, $\beta$',**label_size)
-    plt.ylabel(r'Variational parameter, $\alpha$',**label_size)
-
-    fig1 = plt.figure()
-    ax = fig1.add_subplot(111, projection='3d') 
-    ax.set_xlabel(r'Variational parameter, $\alpha$',**label_size)
-    ax.set_ylabel(r'Variational parameter, $\beta$',**label_size)
-    ax.set_zlabel(r'Local energy, $E_{L2}$',**label_size)
-    ax.plot_surface(tom, brede, aksel)
-
-    fig2 = plt.figure()
-    ax = fig2.add_subplot(111, projection='3d') 
-    ax.set_xlabel(r'Variational parameter, $\alpha$',**label_size)
-    ax.set_ylabel(r'Variational parameter, $\beta$',**label_size)
-    ax.set_zlabel(r'Energy variance, $\sigma_E^2$',**label_size)
-    ax.plot_surface(tom, brede, tor)
+        fig = plt.figure()
+        ax = fig.add_subplot(111, projection='3d') 
+        ax.set_xlabel(r'Variational parameter, $\alpha$',**label_size)
+        ax.set_ylabel(r'Variational parameter, $\beta$',**label_size)
+        ax.set_zlabel(label_list[j],**label_size)
+        ax.plot_surface(meshgrid[0], meshgrid[1], meshgrid[j+2]) 
     plt.show()
     i += 1
