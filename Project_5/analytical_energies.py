@@ -5,12 +5,13 @@ from IPython.display import display
 
 r1, r2, alpha, beta, omega, C = symbols('r1 r2 alpha beta omega C')
 
-Psi_T2 = C*(-alpha*omega*r1)*exp(-alpha*omega*(r1**2+r2**2)/2.)*exp(sqrt(r1-r2)/(2.*(1+beta*sqrt(r1-r2))))
+Psi_T2 = C*(-alpha*omega*r1)*exp(-alpha*omega*(r1**2+r2**2)/2.)*exp(sqrt(r1**2-r2**2)/(2.*(1+beta*sqrt(r1**2-r2**2))))
 
 der1 = Psi_T2.diff(r1)
 der2 = der1.diff(r2)
 
-print simplify(der2)
+simple = simplify(der2)/Psi_T2
+print simplify(simple)
 
 #print latex(der2)
 
