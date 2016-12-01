@@ -17,7 +17,7 @@ int main(int argc, char *argv[])
         alpha = 0.95 + i*0.05;
         for (int j = 0; j < 5; j++){
             beta = 0.20 + j*0.05;
-            VariationalMethod(1.0, 1e5, 2, alpha, beta, filename);
+            VariationalMethod(1.0, 1e6, 1, alpha, beta, filename);
         }
     }
     //outfile_EL1.close();
