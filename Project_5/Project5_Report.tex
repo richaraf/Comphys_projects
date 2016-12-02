@@ -81,7 +81,7 @@ where the sum goes over all particles $i$, $\nabla_i^2$ is the Laplace operator 
 For the interacting case, the electrons notices a repulsion from the Coulomb interaction, and we have to include an additional term in the Hamiltonian:
 
 \begin{equation}
-    \hat{H}_{rep} = \sum_{i<j} \frac{e^2}{4\pi \epsilon_0 r_{ij}}
+    \hat{H_{rep}} = \sum_{i<j} \frac{e^2}{4\pi \epsilon_0 r_{ij}}
     \label{eq:H_interaction_unit}
 \end{equation}
 
@@ -93,7 +93,7 @@ where $r_{ij}$ is the distance between electron $i$ and $j$, $e$ is the elementa
 \end{equation}
 
 \begin{equation}
-    \hat{H}_{rep} = \sum_{i<j} \frac{1}{r_{ij}}
+    \hat{H_{rep}} = \sum_{i<j} \frac{1}{r_{ij}}
     \label{eq:H_interaction}
 \end{equation}
 
@@ -159,6 +159,7 @@ In our project, we will use Monte Carlo Integration. The brute-force way of doin
     \int_0^1 f(x) dx \approx  \frac{1}{N}\sum_{i=0}^N f(x_i) \quad x \in [0,1]
     \label{eq:MC_int_bruteforce}
 \end{equation}
+
 where $f(x)$ is the function we want to integrate and N is the number of integration points. 
 
 A smarter way of doing Monte Carlo integration, is writing the function $f(x)$ as a $g(x)\cdot PDF$ where $PDF$ is a probability distribution, and $g(x)$ is the remaining parts of $f(x)$. Instead of drawing the integration points $x_i$ entirely at random, we can draw them from the PDF, as presented in equation (\ref{MC_int_prob}):
@@ -196,12 +197,12 @@ The implementation is as follows:
 \end{lstlisting}
 
 \subsection{Metropolis Algorithm} \label{MetropolisAlgorithm}
-We wish to draw random numbers from a PDF, and in our program this PDF is $|\Psi_T|^2$. For this, we use the Metropolis algorithm. We know that the electrons are more likely to be found at higher probability density values, i e larger values of $|\Psi_T|^2$. If the factor $|\Psi_T|^2$ increases when randomly changing one of the electron's position, the algorithm should automatically accept this move. The move should also be accepted if $|\Psi_T|^2$ remains constant.
+We wish to draw random numbers from a PDF, and in our program this PDF is $|\Psi_T|^2$. For this, we use the Metropolis algorithm. We know that the electrons is more likely to be found at higher probability density values, i e larger values of $|\Psi_T|^2$. If the factor $|\Psi_T|^2$ increases when randomly changing one of the electron's position, the algorithm should automatically accept this move. The move should also be accepted if $|\Psi_T|^2$ remains constant.
 
 \par 
 \vspace{2mm}
 
-If the probability density decreases, however, this should be allowed, but not probable. Our program calculates the factors $|\Psi_{T,\text{old}}|^2$ and $|\Psi_{T_{new}}|^2$ for the old and new positions respectively, and their ratio $ m = \frac{|\Psi_{T_{new}}|^2}{|\Psi_{T_{old}}|^2}$, which is less than $1$. Thereafter, the program draws a random number $p$ in the interval $\in [0, 1]$, and compares the ratio $m$ with the random number $k$. If $m \geq k$, the move is accepted. If the $m < k$ the move of the electron is rejected, and the system is reset to the old position. 
+If the probability density decreases, however, this should be allowed, but not probable. Our program calculates the factors $|\Psi_T_{old}|^2$ and $|\Psi_T_{new}|^2$ for the old and new positions respectively, and their ratio $ m = \frac{|\Psi_T_{new}|^2}{|\Psi_T_{old}|^2}$, which is less than $1$. Thereafter, the program draws a random number $p$ in the interval $\in [0, 1]$, and compares the ratio $m$ with the random number $k$. If $m \geq k$, the move is accepted. If the $m < k$ the move of the electron is rejected, and the system is reset to the old position. 
 
 \par 
 \vspace{3mm}
@@ -234,6 +235,39 @@ The implementation would look like the following:
     
 \end{lstlisting}
 
+\section{Results}
+\subsection{$\Psi_{T1}$}
+
+We used the trial wave function $\Psi_{T1}$, given by equation (\ref{eq:PsiT1}), and plotted the energies and the variance in energy as a function of $\alpha$ for different values of $\omega$. The results are shown in Figure \ref{fig:E_L1_file_omega=1_0} - \ref{fig:E_L1_file_omega=0_01}.
+
+\begin{figure} [H]
+    \centering
+    \includegraphics[scale=0.65]{E_L1_variance_omega=1_0}
+    \caption{Local energy and variance plotted  for $\Psi_{T1}$ as a function of $\alpha$, for $\omega = 1.0$. We observe that $\alpha = 1.0$ gives the energy $E=3.0$ }
+    \label{fig:E_L1_file_omega=1_0}
+\end{figure}
+
+
+\begin{figure} [H]
+    \centering
+    \includegraphics[scale=0.65]{E_L1_variance_omega=0_01}
+    \caption{Local energy and variance plotted  for $\Psi_{T1}$ as a function of $\alpha$, for $\omega = 0.01$. We observe that $\alpha = 1.0$ gives the energy $E=3.0$, FEIL PLOTT, fiks på nytt }
+    \label{fig:E_L1_file_omega=0_01}
+\end{figure}
+
+We also calculated the average distance between the two electrons for the optimal value of $\alpha$, for different values of $\omega$. The results are presented in Table 
+
+\begin{table} [H]
+\centering
+\caption{The average distance between the two electrons for $\Psi_{T1}$, for different values og $\omega$.}
+
+\begin{tabularx}{\textwidth}{XXXX} \hline
+\label{2x2Lattice_Microstates}
+{\bf } & {\bf $\omega = 1.0$ } & {\bf $ \omega = 0.5 $ } & {\bf $\omega = 0.01$} \\ \hline
+{$r_{12}$} & & & &\\ \hline 
+\end{tabularx}
+\end{table}
+
 
 \section{Discussion}
 \section{Conclusion}
@@ -244,18 +278,13 @@ The implementation would look like the following:
 \renewcommand{\section}[2]{}
 \begin{thebibliography}{}
 \bibitem{Nature}
-  R C Asgoori.\newline 
-  Electrons in artificial atoms\newline
-  Nature Vol 379 1.February 1996\newline
+  R C Asgoori. 
+  Electrons in artificial atoms
+  Nature Vol 379 1.February 1996
   \url{http://www.nature.com/nature/journal/v379/n6564/pdf/379413a0.pdf}
 \bibitem{Griffiths}
-  D J Griffiths (2014)\newline
-  Introduction to Quantum Mechanics, Second Edition
-\bibitem{Taut}
-  M Taut \newline
-  Two electrons in an external oscillator potential\newline
-  Physical Review A Vol 48 1.November 1993\newline
-  \url{http://journals.aps.org/pra/pdf/10.1103/PhysRevA.48.3561}
+  D J Griffiths (2014)
+  Introdction to Quantum Mechanics, Second Edition
   
   
 
