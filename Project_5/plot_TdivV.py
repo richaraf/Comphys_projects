@@ -8,7 +8,7 @@ data1 = np.zeros([number_of_parameters, number_of_frequences])
 data2 = np.zeros([number_of_parameters, number_of_frequences])
 
 #---READ FILE---
-infile = open('E_L2_file_omegas.dat', 'r')
+infile = open('E_L1_file_omegas.dat', 'r')
 j = 0
 for line in infile:
     numbers = line.split()
@@ -16,7 +16,7 @@ for line in infile:
         data1[k,j] = numbers[k+4]
     j += 1
 
-infile = open('E_L1_file_omegas.dat', 'r')
+infile = open('E_L2_file_omegas.dat', 'r')
 j = 0
 for line in infile:
     numbers = line.split()
