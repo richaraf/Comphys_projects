@@ -126,7 +126,8 @@ void VariationalMethod(double omega, int N, int trialversion, double alpha, doub
 
     K_average = K_tot/((1-eq)*(N-1));
     V_average = V_tot/((1-eq)*(N-1));
-    outfile_EL2 << setprecision(15) << setw(5) << alpha  << ' ' << setw(5) << beta << ' ' << setw(30) << E_average << ' ' << setw(30) << E_sqrd_average - E_average*E_average << setw(30) << omega << setw(30) << r12_average << setw(30) << K_average << setw(30) << V_average << endl;
+    outfile_EL2 << setprecision(15) << setw(5) << alpha << ' ' << setw(5) << ' ' << setw(30) << E_average << endl;
+    //outfile_EL2 << setprecision(15) << setw(5) << alpha  << ' ' << setw(5) << beta << ' ' << setw(30) << E_average << ' ' << setw(30) << E_sqrd_average - E_average*E_average << setw(30) << omega << setw(30) << r12_average << setw(30) << K_average << setw(30) << V_average << endl;
     outfile_EL2.close();
     cout <<" alpha: " << alpha << " beta: " << beta << " E_average: " << E_average << " Variance E: " << E_sqrd_average - E_average*E_average << endl;
     cout <<" Acc ratio: " << accepted/((double)((1-eq)*N)) << " r12_average: " << r12_average << endl;

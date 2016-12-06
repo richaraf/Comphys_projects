@@ -1,13 +1,14 @@
 #include <iostream>
 #include <fstream>
 #include <variationalcalculation.h>
+#include <cmath>
 
 using namespace std;
 
 int main(int argc, char *argv[])
 {
     //VariationalMethod(omega, N, trialversion, alpha, beta);
-    string filename = "../E_L3_file_omegas.dat";
+    string filename = "../E_L1_file_MCs.dat";
     ofstream ofs;
     ofs.open(filename, ofstream::out | ofstream::trunc);
     ofs.close();
@@ -24,5 +25,6 @@ int main(int argc, char *argv[])
             }
         }
     }
+
     return 0;
 }
