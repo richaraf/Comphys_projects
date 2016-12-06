@@ -309,7 +309,19 @@ Finally we have been studying the ratio of kinetic and potential energy for both
     \caption{The ratio the kinetic and potential energy for $E_{L1}$ (blue line) and $E_{L2}$ (red line). The program was run for 100 frequencies in the interval [0.01, 1.00] and $10^7$ Monte Carlo simulations.}
     \label{fig:ratio}
 \end{figure}
-We also studied how the ratio evolved for increasingly narrower oscillators (increasing frequencies), and we observed that the ratio approached one. For instance the ratio $\langle T\rangle/\langle V\rangle\cong0.92$ when $\omega=100$ and $\langle T\rangle/\langle V\rangle\cong0.98$ when $\omega=1000$.
+From Figure (\ref{fig:ratio}) we can see that the ratio fluctuates around 1 for $E_{L1}$, and approaches 1 for $E_{L2}$.
+
+We also studied how the ratio evolved for increasingly narrower oscillators (increasing frequencies) for $E_{L2}$, and we observed that the ratio approached 1. For instance the ratio $\langle T\rangle/\langle V\rangle\cong0.92$ when $\omega=100$ and $\langle T\rangle/\langle V\rangle\cong0.98$ when $\omega=1000$.
+
+\subsection{Stability of calculations}
+We conducted stability analyses of the calculations for the local energy $E_{L1}$. This was done by finding the average energy for a fixed $\alpha$-value for a various number of Monte Carlo simulations ($N$). In Figure (\ref{fig:stability}) the average energy is plotted for $\alpha=0.95$ when $N$ ranges from $10^{0.5}$ to $10^{8.5}$.
+\begin{figure} [H]
+    \centering
+    \includegraphics[width=12cm]{E_L1_alpha=0_95_stability.png}
+    \caption{fjfj}
+    \label{fig:stability}
+\end{figure}
+The average energy is approaching a value near 3.004 when $N$ goes to infinity. The calculations are stable from $\sim10^6$. 
 
 \section{Discussion}
 \section{Conclusion}
