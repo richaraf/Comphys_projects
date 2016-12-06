@@ -391,13 +391,27 @@ For the second wave function, the optimal parameters were not constant, but chan
 
 Just as for the first wave function we see the distance between the electrons shrink as the well increases in strength, and again we see that the two cases become more alike when $\omega$ increases. \par \vspace{3mm}
 
+When testing the Virial Theorem, we plotted the ratio of kinetic and potential energy. From Figure (\ref{fig:ratio}), we see that for the pure HO wave function  $\Psi_{T1}$ the ratio $\frac{\langle T \rangle}{\langle V \rangle}$ is indeed 1, which is as expected from equation (\ref{eq:virial}). \par
+For $\Psi_{T2}$ the ratio is $< 1$ for low omegas, but it increases with higher omegas. We tested the ratio for $\Psi_{T2}$ for a very large omegas, and found the ratio approaches 1. This is also as expected: as explained above, larger $\omega$ makes the Coulomb interaction less prominent. When $\omega$ is very large, the Couloumb interaction is negligible, and $\Psi_{T2}$ approaches a pure HO. Thus the ratio $\frac{\langle T \rangle}{\langle V \rangle}$ should approach 1.
+\par 
+\vspace{3mm}
+
 When studying the stability of the calculations, we used $E_{L1}$ and assumed that the stability sustained for $E_{L2}$. $\alpha=1.00$ is the only parameter that we have the exact analytical value of, but since the numerical calculations give this value even when $N$ is low, we had to choose a nearby value to study the stability, and we ended up with $\alpha=0.95$. We expected the average energy to approach a value slightly higher than 3.00 when we increased $N$, because the exact value when $\alpha=1.00$ is $E_{L1}=3.00$.\par\vspace{3mm} 
 
 From Table \ref{tab:energies_comparing}, we observe that for $\Psi_{T1}$ we obtain the exact energy value in this project, whereas in Project 2 we got very close. We observe that in Project 2 we got an estimate of the ground state energy that is lower than the actual ground state energy. In Project 2, this was not problematic since we did not use the variational method. The variational method can never give values lower than the ground state energy. \par\vspace{3mm}
 For $\Psi_{T2}$ we did not calculate the energy for $\omega =1$ in Project 2. The value we obtain in this project is larger than the analytical energy. This is as expected, because as long as $\Psi_{T2}$ isn't the analytical ground state wave function, the variational method  will give energies that are higher than the analytical ground state energy. 
+\par 
+\vspace{3mm}
 
+In section \ref{Metode}, we explained our choice of step length for the system,  $\frac{1}{\sqrt{\omega}}$. After completing all results, we saw we were supposed to scale this length scale for each $\alpha$, giving us an acceptance rate of $50 \%$. Our acceptance rate is $\approx 70 \%$. We are aware that this might affect out results, but as our results are not unphysical and behave as expected, we chose not to change our program. We took samples of our program, changing the length scale until we had an acceptance rate of $50 \%$, and the results did not vary significantly. 
 
 \section{Conclusion} \label{Conclusion}
+
+In this project, we have found that our model for finding the ground state energy behaved as expected given different trial wave functions and potential strengths. This indicates that our program works as intended. \par 
+Coulomb interaction between the electron pair was prominent for weak HO potentials, but became negligible for strong potentials. This could be observed by studying the average distance between the electrons with and without Coulomb interaction. This is consistent with our expectations and results obtained from Project 2. The Virial Theorem held for the pure HO wave function, and also when the HO potential dominated the interaction potential. \par 
+We found that $\Psi_{T1}$ was the ground state wave function for the non-interacting Hamiltonian, as we obtained the ground state energy when using the Variational Method. $\Psi_{T2}$ was not the exact ground state wave function for the interacting Hamiltonian, and thus the Variational Method gave us an upper bound limit on the ground state energy. \par
+One improvement to our program would be scaling the length scale for each $\alpha$, until we had an acceptance rate of $50 \%$. Implementing this, we might have gotten a lower upper bound limit on the ground state energy. \par 
+Another way of improving our implementation, is the correlation between the positions of two subsequent Monte Carlo cycles. If we had proposed several moves between each time we calculated the energy, the correlation would have been smaller.
 
 \newpage
 \section{References}
