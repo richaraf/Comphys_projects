@@ -16,8 +16,10 @@ void VariationalMethod(double omega, int N, int trialversion, double alpha, doub
 
     WaveFunction Psi;
     Psi.setTrialWF(trialversion);
-    ofstream outfile_EL2;
-    outfile_EL2.open(fileName, ios::app);
+//    ofstream outfile_EL2;
+//    outfile_EL2.open(fileName, ios::app);
+    ofstream outfile_EL1;
+    outfile_EL1.open(fileName, ios::app);
 
     srand(time(NULL));
 
@@ -110,7 +112,9 @@ void VariationalMethod(double omega, int N, int trialversion, double alpha, doub
     E_average = E_tot/((1-eq)*(N-1));
     E_sqrd_average = E_sqrd_tot/((1-eq)*(N-1));
 
-    outfile_EL2 << setprecision(15) << setw(5) << alpha  << ' ' << setw(5) << beta << ' ' << setw(20) << E_average << ' ' << setw(20) << E_sqrd_average - E_average*E_average << endl;
-    outfile_EL2.close();
+//    outfile_EL2 << setprecision(15) << setw(5) << alpha  << ' ' << setw(5) << beta << ' ' << setw(20) << E_average << ' ' << setw(20) << E_sqrd_average - E_average*E_average << endl;
+//    outfile_EL2.close();
+    outfile_EL1 << setprecision(15) << setw(5) << alpha  << ' ' << setw(20) << E_average << ' ' << setw(20) << E_sqrd_average - E_average*E_average << endl;
+    outfile_EL1.close();
     cout <<"alpha: " << alpha << "beta: " << beta << " E_average: " << E_average << " Variance E: " << E_sqrd_average - E_average*E_average << " Acc ratio: " << accepted/((double)((1-eq)*N)) << endl;
 }

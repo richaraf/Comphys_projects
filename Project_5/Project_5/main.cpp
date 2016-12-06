@@ -7,17 +7,17 @@ using namespace std;
 int main(int argc, char *argv[])
 {
     //VariationalMethod(omega, N, trialversion, alpha, beta);
-    string filename = "../E_L2_file_omega=0_01.dat";
+    string filename = "../E_L1_file_omega=0_01.dat";
     ofstream ofs;
     ofs.open(filename, ofstream::out | ofstream::trunc);
     ofs.close();
 
     double alpha, beta;
-    for (int i = 0; i < 5; i++){
-        alpha = 0.95 + i*0.05;
-        for (int j = 0; j < 5; j++){
-            beta = 0.20 + j*0.05;
-            VariationalMethod(0.01, 1e7, 2, alpha, beta, filename);
+    for (int i = 0; i < 21; i++){
+        alpha = .8 + i*0.02;
+        for (int j = 0; j < 1; j++){
+            beta = 0.15 + j*0.02;
+            VariationalMethod(0.01, 1e8, 1, alpha, beta, filename);
         }
     }
     //outfile_EL1.close();
