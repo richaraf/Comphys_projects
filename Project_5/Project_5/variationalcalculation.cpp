@@ -16,14 +16,14 @@ void VariationalMethod(double omega, int N, int trialversion, double alpha, doub
 
     WaveFunction Psi;
     Psi.setTrialWF(trialversion);
-//    ofstream outfile_EL2;
-//    outfile_EL2.open(fileName, ios::app);
-    ofstream outfile_EL1;
-    outfile_EL1.open(fileName, ios::app);
+    ofstream outfile_EL2;
+    outfile_EL2.open(fileName, ios::app);
+//    ofstream outfile_EL1;
+//    outfile_EL1.open(fileName, ios::app);
 
     srand(time(NULL));
 
-    double steplength       = 1.0; //1.0/sqrt(omega);
+    double steplength       = 1.0/sqrt(omega);
     double K_tot            = 0.0;
     double K_average        = 0.0;
     double V_tot            = 0.0;
@@ -32,6 +32,8 @@ void VariationalMethod(double omega, int N, int trialversion, double alpha, doub
     double E_sqrd_tot       = 0.0;
     double E_average        = 0.0;
     double E_sqrd_average   = 0.0;
+    double r12_tot          = 0.0;
+    double r12_average      = 0.0;
     double K                = 0.0;
     double V                = 0.0;
     double E                = 0.0;
@@ -67,6 +69,9 @@ void VariationalMethod(double omega, int N, int trialversion, double alpha, doub
         if(Psi_squared_new >= Psi_squared_old){
             if(n > eq*N) {
                 accepted += 1;
+                K_tot += Psi.KineticE(r_1, r_2, alpha, omega, beta);
+                V_tot += Psi.PotentialE(r_1, r_2, alpha, omega, beta);
+                r12_tot += fabs(r_1.length()-r_2.length());
                 E_tot = E_tot + Psi.E_L(r_1, r_2, alpha, omega, beta);
                 E_sqrd_tot += Psi.E_L(r_1, r_2, alpha, omega, beta)*Psi.E_L(r_1, r_2, alpha, omega, beta);
 //              //cout << "#1 E_tot: " << E_tot << endl;
@@ -79,6 +84,9 @@ void VariationalMethod(double omega, int N, int trialversion, double alpha, doub
             if(random_number <= Psi_new_div_old_squared){
                 if(n > eq*N) {
                     accepted += 1;
+                    K_tot += Psi.KineticE(r_1, r_2, alpha, omega, beta);
+                    V_tot += Psi.PotentialE(r_1, r_2, alpha, omega, beta);
+                    r12_tot += fabs(r_1.length()-r_2.length());
                     E_tot = E_tot + Psi.E_L(r_1, r_2, alpha, omega, beta);
                     E_sqrd_tot += Psi.E_L(r_1, r_2, alpha, omega, beta)*Psi.E_L(r_1, r_2, alpha, omega, beta);
     //              //cout << "#1 E_tot: " << E_tot << endl;
@@ -95,6 +103,9 @@ void VariationalMethod(double omega, int N, int trialversion, double alpha, doub
 
                 if(n > eq*N) {
                     //accepted += 1;
+                    K_tot += Psi.KineticE(r_1, r_2, alpha, omega, beta);
+                    V_tot += Psi.PotentialE(r_1, r_2, alpha, omega, beta);
+                    r12_tot += fabs(r_1.length()-r_2.length());
                     E_tot = E_tot + Psi.E_L(r_1, r_2, alpha, omega, beta);
                     E_sqrd_tot += Psi.E_L(r_1, r_2, alpha, omega, beta)*Psi.E_L(r_1, r_2, alpha, omega, beta);
     //              //cout << "#1 E_tot: " << E_tot << endl;
@@ -109,12 +120,15 @@ void VariationalMethod(double omega, int N, int trialversion, double alpha, doub
     }
 
     //cout << E_tot << " " << E_sqrd_tot << endl;
+    r12_average = r12_tot/((1-eq)*(N-1));
     E_average = E_tot/((1-eq)*(N-1));
     E_sqrd_average = E_sqrd_tot/((1-eq)*(N-1));
 
-//    outfile_EL2 << setprecision(15) << setw(5) << alpha  << ' ' << setw(5) << beta << ' ' << setw(20) << E_average << ' ' << setw(20) << E_sqrd_average - E_average*E_average << endl;
-//    outfile_EL2.close();
-    outfile_EL1 << setprecision(15) << setw(5) << alpha  << ' ' << setw(20) << E_average << ' ' << setw(20) << E_sqrd_average - E_average*E_average << endl;
-    outfile_EL1.close();
-    cout <<"alpha: " << alpha << "beta: " << beta << " E_average: " << E_average << " Variance E: " << E_sqrd_average - E_average*E_average << " Acc ratio: " << accepted/((double)((1-eq)*N)) << endl;
+    K_average = K_tot/((1-eq)*(N-1));
+    V_average = V_tot/((1-eq)*(N-1));
+    outfile_EL2 << setprecision(15) << setw(5) << alpha  << ' ' << setw(5) << beta << ' ' << setw(20) << E_average << ' ' << setw(20) << E_sqrd_average - E_average*E_average << setw(20) << omega << setw(20) << r12_average << setw(20) << K_average << setw(20) << V_average << endl;
+    outfile_EL2.close();
+    cout <<" alpha: " << alpha << " beta: " << beta << " E_average: " << E_average << " Variance E: " << E_sqrd_average - E_average*E_average << endl;
+    cout <<" Acc ratio: " << accepted/((double)((1-eq)*N)) << " r12_average: " << r12_average << endl;
+    cout <<" omega: " << omega << " KineticE: " << K_average << " PotentialE: " << V_average << " K/V: " << K_average/V_average <<endl;
 }
