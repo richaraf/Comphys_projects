@@ -41,7 +41,11 @@
 
 \maketitle
 \begin{abstract}
-This project aims to simulate so-called quantum dots, electrons trapped in harmonic oscillator potentials, by
+This project aims to simulate so-called quantum dots, electrons trapped in harmonic oscillator (HO) potentials, by using the variational method with Monte Carlo integration. Using two trial wave functions, $\Psi_{T1}$, a pure harmonic oscillator, and $\Psi_{T2}$, which includes a Coulomb repulsion term, we calculate an upper bound ground state energy for different strengths of the HO potential, and the average distance between the two electrons. Furthermore, we test our results against the Virial Theorem.\par
+
+Using $\Psi_{T1}$, we get the exact ground state energy, while $\Psi_{T2}$ gives an upper bound ground state energy that is higher than the exact ground state energy. The average distance between the electrons are higher for $\Psi_{T2}$ compared to $\Psi_{T1}$, and repulsion becomes less important for stronger potentials. The system behaves as expected, and our results correspond to those of Project 2.
+\par 
+
 \end{abstract}
 
 
@@ -53,10 +57,12 @@ This project aims to simulate so-called quantum dots, electrons trapped in harmo
 \section{Introduction}
 In this project, we study the theory behind quantum dots, a highly relevant subject in modern physics. A quantum dot is one or two electrons trapped in an quantum well. These are often referred to as arificial atoms, as they, like natural atoms, have discrete energy levels \cite{Nature}.
 
-Our goal in this project is to simulate a quantum dot, modelled as one or two electrons bound in a three-dimensional harmonic oscillator well, both with and without Coulomb interaction.
+Our goal in this project is to simulate a quantum dot, modelled as one or two electrons bound in a three-dimensional harmonic oscillator well, both with and without Coulomb interaction. The model is descriped in section \ref{Theory}. \par
+
+Using the Variational Method with Monte Carlo integration, presented in section \ref{Theory} and \ref{Method}, we use two trial wave functions $\Psi_{T1}$ and $\Psi_{T2}$ to calculate an upper bound ground state energy and the mean distance between the two electrons. $\Psi_{T1}$ is a pure harmonic oscillator wave function, while $\Psi_{T2}$ also includes an electron-electron repulsion term. The results are presented in section \ref{Results}. In section \ref{Discussion} we discuss our results, and compare them to the results obtained from Project 2.
 
 
-\section{Theory}
+\section{Theory} \label{Theory}
 
 \subsection{Variational Method} \label{VariationalMethod}
 The variational method is a method in quantum mechanics for estimating an upper limit on the lowest energy state level for a given Hamiltonian \cite{Griffiths}. For any choice of wave function $\Psi$, the following expression holds:
@@ -71,7 +77,7 @@ Equation \ref{eq:VariationalMethod} states that given a wave function $\Psi$, th
 The variational method is particularly useful when the Hamiltonian has complicated eigenfunctions, or no analytical solution at all. A smart choice of a trial wave function $\Psi_T(\alpha)$ where $\alpha$ is the variational parameter, gives the trial energy $E_T(\alpha)$, which is an upper limit on the ground state energy as a function of $\alpha$. The trial energy can thereafter be minimized with respect til $\alpha$, giving an upper limit to $E_0$ that is as low as possible.
 
 \subsection{Quantum Dot Model}
-As stated in the introduction, we simulate a quantum dot as two electrons in a three dimensional harmonic oscillator well. We will both simulate the electrons when neglecting Coulomb interaction between the two electrons, and when including this repulsion. For the non-interacting case, the Hamiltonian $\hat{H}$ is:
+As stated in the introduction, we simulate a quantum dot as two electrons in a three dimensional harmonic oscillator well. We will simulate the electrons both with Coulomb interaction and without. For the non-interacting case, the Hamiltonian $\hat{H}$ is:
 
 \begin{equation}
     \hat{H} = \sum_{i=1}^{2} (-\frac{\hbar^2}{2 m_e}\nabla_i^2 + \frac{1}{2}\hbar \omega^2r_i^2) 
@@ -80,7 +86,7 @@ As stated in the introduction, we simulate a quantum dot as two electrons in a t
 
 where the sum goes over all particles $i$, $\nabla_i^2$ is the Laplace operator for particle $i$, $\omega$ is the harmonic well frequency and $r_i$ is the position vector of particle $i$. 
 
-For the interacting case, the electrons notices a repulsion from the Coulomb interaction, and we have to include an additional term in the Hamiltonian:
+For the interacting case the electrons repulse each other and we include the Coulumb potential in the Hamiltonian:
 
 \begin{equation}
     \hat{H}_{rep} = \sum_{i<j} \frac{e^2}{4\pi \epsilon_0 r_{ij}}
@@ -95,11 +101,12 @@ where $r_{ij}$ is the distance between electron $i$ and $j$, $e$ is the elementa
 \end{equation}
 
 \begin{equation}
-    \hat{H}_{rep} = \sum_{i<j} \frac{1}{r_{ij}}
+    \hat{H}_{rep} = \frac{1}{r_{12}},
     \label{eq:H_interaction}
 \end{equation}
+where $r_{12}$ is the distance between the two electrons.
 
-We wish to find estimates for the ground state energy using the variational method, presented in subsection \ref{VariationalMethod}. For this, we will use the trial wave functions presented in equation (\ref{eq:PsiT1}) and (\ref{eq:PsiT2}):
+We wish to find estimates for the ground state energy using the variational method, presented in subsection \ref{VariationalMethod}. For this, we will use the following trial wave functions:
 
 \begin{equation}
     \Psi_{T1} (r_1, r_2) = C\exp(-\alpha \omega (\frac{r_1^2 + r_2^2}{2}))
@@ -111,7 +118,15 @@ We wish to find estimates for the ground state energy using the variational meth
     \label{eq:PsiT2}
 \end{equation}
 
-where C is a normalization constant and $\beta$ is a variational parameter. We will use the variational method with $\Psi_{T1}$ on the non-interaction Hamiltonian in equation (\ref{eq:H_non_interaction}), and $\Psi_{T2}$ with the interaction Hamiltonian in equation (\ref{eq:H_non_interaction}) + (\ref{eq:H_interaction}).
+where C is a normalization constant and $\alpha$ and $\beta$ are a variational parameters. We will use the variational method with $\Psi_{T1}$ on the non-interaction Hamiltonian (\ref{eq:H_non_interaction}), and $\Psi_{T2}$ with the interaction Hamiltonian ((\ref{eq:H_non_interaction}) + (\ref{eq:H_interaction})).
+
+A reader familiar with quantum mechanics may frown upon our choice of trial wave functions, refer to the Pauli principle and say that the wave function of fermions, such as electrons, have to be anti-symmetrical under the interchange of particles. The wave functions presented in equation (\ref{eq:PsiT1}) and (\ref{eq:PsiT2}) are symmetrical, and hence, they cannot represent states of a two-electron system. We can omit this fault by stating that the total wave function $\Phi$ must me anti-symmetrical, and it consists of one spatial part $\Psi$ and one spin part $\chi$:
+
+\begin{equation}
+    \Phi = \Psi \cdot \chi 
+\end{equation}
+
+As long as the spin part $\chi$ is anti symmetrical, the total wave function $\Phi$ is anti symmetrical, and hence the Pauli principle is satisfied. The only anti symmetrical spin configuration is the spin singlet \cite{Griffiths}, giving that the electrons in our model must have spins pointing in opposite directions. Thus the total spin of the two electrons is 0. Since the spin wave function is known, we choose to only work with the spatial wave function in this project.
 
 \subsection{Energies} \label{Energies}
 In order to find the local energy $E_L$ for a given trial function $\Psi_T$ we can use the following expression
@@ -138,6 +153,8 @@ T_1 = 3\alpha \omega -\frac{1}{2}\omega^2\alpha^2\left(r_1^2 + r_2^2\right),
 V_1 = \frac{1}{2}\omega^2(r_1^2 + r_2^2).
 \end{equation}
 
+
+
 \subsection{Virial Theorem}
 The virial theorem provides a general relation between the kinetic and potential energy of a stable system consisting of a finite number of particles over time. For  a pure HO, the virial theorem states that the expectation value of the total kinetic energy $\langle T\rangle$ is equal to the total potential energy $\langle V\rangle$:
 \begin{equation}
@@ -146,7 +163,9 @@ The virial theorem provides a general relation between the kinetic and potential
 \end{equation}
 For more complex systems the relation is more complicated, but for a HO we can assume that the relation above holds if the HO potential dominates.
 
-\section{Method}
+
+\section{Method} \label{Method}
+
 
 \subsection{Implementation}
 
@@ -245,38 +264,49 @@ The implementation would look like the following:
     
 \end{lstlisting}
 
-\section{Results}
-\subsection{$\Psi_{T1}$}
+\section{Results} \label{Results}
+\subsection{Minimal local energy for $\Psi_{T1}$}
 
-We used the trial wave function $\Psi_{T1}$, given by equation (\ref{eq:PsiT1}), and plotted the energies and the variance in energy as a function of $\alpha$ for different values of $\omega$. The results are shown in Figure \ref{fig:E_L1_file_omega=1_0} - \ref{fig:E_L1_file_omega=0_01}.
+We used the trial wave function $\Psi_{T1}$, given by Equation (\ref{eq:PsiT1}), and plotted the energies and the variance in energy as a function of $\alpha$ for different values of $\omega$. The results are shown in Figure (\ref{fig:E_L1_file_omega=1_0}) and (\ref{fig:E_L1_file_omega=0_01}).
 
 \begin{figure} [H]
     \centering
     \includegraphics[scale=0.65]{E_L1_variance_omega=1_0}
-    \caption{Local energy and variance plotted  for $\Psi_{T1}$ as a function of $\alpha$, for $\omega = 1.0$. We observe that $\alpha = 1.0$ gives the energy $E=3.0$ }
+    \caption{Local energy and variance plotted  for $\Psi_{T1}$ as a function of $\alpha$, for $\omega = 1.0$.}
     \label{fig:E_L1_file_omega=1_0}
-\end{figure}
-The variance is exactly zero 
-
+\end{figure} 
+We observe that $\alpha = 1.0$ gives the energy $E=3.0$, and the variance is exactly zero.
 
 \begin{figure} [H]
     \centering
     \includegraphics[scale=0.65]{E_L1_variance_omega=0_01_1e8.png}
     \caption{Local energy and variance plotted  for $\Psi_{T1}$ as a function of $\alpha$, for $\omega = 0.01$. We observe that $\alpha = 1.0$ gives the energy $E=3.0$, which is the minimum.}
     \label{fig:E_L1_file_omega=0_01}
-\end{figure}
-The variance is close to, but not exact zero
+\end{figure} 
+The variance is close to, but not exactly equal to zero $\alpha$. Similarly, we found that the optimal value of $\alpha$ for $\omega = 0.5$ was $\alpha = 1.0$. We observe that the oscillator is much wider for $\omega=0.01$ than for $\omega=1.00$.
 
-
-\subsection{$\Psi_{T2}$ Minimized}
+\subsection{Minimal local energy of $\Psi_{T2}$}
+For $\omega = 1.0, 0.5, 0.01$ we found the optimal parameters and resulting energy and variance as shown in table \ref{tab:Psi2results}. Contour plots for $\omega = 1.0$ and $\omega =0.01$ is shown in Figure \ref{fig:E_L2_omega=1_0} and \ref{fig:E_L2_omega=0_01} respectively. For $\omega = 0.5$, the contour plot was very similar to Figure \ref{fig:E_L2_omega=1_0}. 
 \begin{figure} [H]
     \centering
     \includegraphics[width=12cm]{E_L2_contour_omega=1_0.png}
     \caption{$E_{L2}$ plotted for various $\alpha$- and $\beta$-values when the frequency is set to $\omega=1.0$. The minima was found numerically and is shown as a white dot.}
     \label{fig:E_L2_omega=1_0}
 \end{figure}
-When $\alpha=1.00$ and $\beta=0.25$ the local energy is minimal for $\omega=1.0$, and holds the value $E_{L2}\cong3.7303$.
-This energy value was $E_{L2}\cong2.000$ the contour plot was very similar, so we decided to omit it. 
+
+\begin{table} [H]
+\centering
+\caption{Optimal parameters $\alpha$ and $\beta$ and resulting energy $E_{L2}$ and variance $\sigma_{E_{L2}}$ for different $\omega$ for $\Psi_{T2}$.}
+\begin{tabularx}{\textwidth}{XXXXX} \hline
+\label{tab:Psi2results}
+$\omega$ & $\alpha$ & $\beta$ & $E_{L2}$ & $\sigma_{E_{L2}}$ \\ \hline
+1.0 & 1.0 & 0.25 & 3.7303 & $4.0\cdot 10^{-4}$ \\
+0.5 & 1.0 & 0.20 & 2.0001 & $2.0\cdot 10^{-4}$ \\
+0.01 & 0.9 & 0.05 & 0.0794 & $4.0\cdot 10^{-6}$ \\ \hline
+\end{tabularx}
+\end{table}
+
+
 
 \begin{figure} [H]
     \centering
@@ -286,17 +316,20 @@ This energy value was $E_{L2}\cong2.000$ the contour plot was very similar, so w
 \end{figure}
 When $\alpha=1.00$ and $\beta=0.25$ the local energy is minimal, and holds the value $E_{L2}\approx3.7303$.
 
+
+
 \subsection{Average distance between two particles}
 We also calculated the average distance between the two electrons for the optimal value of $\alpha$, for different values of $\omega$. The results are presented in Table 
 
 \begin{table} [H]
 \centering
-\caption{The average distance between the two electrons for $\Psi_{T1}$, for different values og $\omega$.}
+\caption{The average distance between the two electrons for $\Psi_{T1}$ and $\psi_{T2}$, for different values of $\omega$.}
 
 \begin{tabularx}{\textwidth}{XXXX} \hline
-\label{2x2Lattice_Microstates}
+\label{tab:average_r12}
 {\bf } & {\bf $\omega = 1.0$ } & {\bf $ \omega = 0.5 $ } & {\bf $\omega = 0.01$} \\ \hline
-{$r_{12}$} & & &\\ \hline 
+{$\Psi_{T1} \quad r_{12}$} & 0.534961 & 0.761391 & 1.70247\\ \hline 
+{$\Psi_{T2} \quad r_{12}$} & 0.582162 & 0.834164 & 7.2308\\ \hline 
 \end{tabularx}
 \end{table}
 
@@ -306,7 +339,7 @@ Finally we have been studying the ratio of kinetic and potential energy for both
 \begin{figure} [H]
     \centering
     \includegraphics[width=12cm]{energy_ratio_1e7.png}
-    \caption{The ratio the kinetic and potential energy for $E_{L1}$ (blue line) and $E_{L2}$ (red line). The program was run for 100 frequencies in the interval [0.01, 1.00] and $10^7$ Monte Carlo simulations.}
+    \caption{The ratio the kinetic and potential energy for $E_{L1}$ (blue line) and $E_{L2}$ (green line). The program was run for 100 frequencies in the interval [0.01, 1.00] and $10^7$ Monte Carlo simulations.}
     \label{fig:ratio}
 \end{figure}
 From Figure (\ref{fig:ratio}) we can see that the ratio fluctuates around 1 for $E_{L1}$, and approaches 1 for $E_{L2}$.
@@ -318,13 +351,50 @@ We conducted stability analyses of the calculations for the local energy $E_{L1}
 \begin{figure} [H]
     \centering
     \includegraphics[width=12cm]{E_L1_alpha=0_95_stability.png}
-    \caption{fjfj}
+    \caption{The average energy for $E_{L2}$ and $\alpha=0.95$ when $N$ ranges from $10^{0.5}$ to $10^{8.5}$.}
     \label{fig:stability}
 \end{figure}
 The average energy is approaching a value near 3.004 when $N$ goes to infinity. The calculations are stable from $\sim10^6$. 
 
-\section{Discussion}
-\section{Conclusion}
+We also studied how the ratio evolved for increasingly narrower oscillators (increasing frequencies), and we observed that the ratio approached one. 
+
+\subsection{Comparing results with Project 2}\par 
+
+We compared the values of the ground state energies for $\Psi_{T1}$ and $\Psi_{T2}$ with the ground state energies from Project 2. The result are presented in Table \ref{tab:energies_comparing}: 
+
+\begin{table} [H]
+\centering
+\caption{The ground state energies from Project 2 compared to the obtained values from Project 5 and the analytical value. Here we have used $\omega = 1.0$}
+
+\begin{tabularx}{\textwidth}{XXXX} \hline
+\label{tab:energies_comparing}
+{\bf } & {\bf Project 2 } & {\bf Project 5 } & {\bf Analytical} \\ \hline
+{$\Psi_{T1} $} & 2.99984 & 3.00000 & 3.00000\\ \hline
+{$\Psi_{T2} $} & ? & 3.730 & 3.558 \\ \hline
+\end{tabularx}
+\end{table}
+
+We did not run the two-electron interacting system for $\omega = 1.0$ in Project 2.
+
+\section{Discussion} \label{Discussion}
+Our results from Project 2 showed that for stronger potentials, the Coulomb interaction became negligible \cite{Project_2}. From table \ref{tab:average_r12} we observe that for weaker HO potentials, the average distance $r_{12}$ between the electrons for $\Psi_{T1}$ and $\Psi_{T2}$ are significantly different, while a strong potential gives nearly the same average distance for the two trial wave functions. This is consistent with our results from Project 2, and the explanation is that for weak fields, the electrons are very loosely bound. Because of the Coulomb interaction, they would therefore prefer to be as far away from each other as possible, and they are free to do so. When $\omega$ is large, however, the electrons are forced together.. In the limit when $\omega$ is very large, the average distance $r_{12}$ between the electrons approaches the same value for $\Psi_{T1}$ and $\Psi_{T2}$, because the Coulomb term in $\Psi_{T2}$ becomes negligible.\par 
+\vspace{3mm}
+
+For $\Psi_{T1}$ we found the optimal parameter to be $\alpha=1.0$ for all frequencies tested, and we got the exact result which is demonstrated by the variance being $0$. The reason we get the exact result is that the first part of the energy $E_{L1}$ in equation (\ref{eq:EL1}) becomes $0$, which means the energy is independent of the positions of the electrons and is then just $3\omega$. 
+
+We also observed that the distance between the electrons became smaller as the strength of the HO increased, as expected.
+\\* \\* \noindent
+For the second wave function, the optimal parameters were not constant, but changed depending on $\omega$. From table \ref{tab:Psi2results} we also see that the variance does not become zero as it did for the first wave function. The energies were larger than those from the first wave function, but we see that the ratio of the energies from $\Psi_{T1}$ and $\Psi_{T2}$ moves closer to unity as $\omega$ grows. Which is what one would expect since the repulsion becomes less important when the HO becomes stronger.
+
+Just as for the first wave function we see the distance between the electrons shrink as the well increases in strength, and again we see that the two cases become more alike when $\omega$ increases. \par \vspace{3mm}
+
+When studying the stability of the calculations, we used $E_{L1}$ and assumed that the stability sustained for $E_{L2}$. $\alpha=1.00$ is the only parameter that we have the exact analytical value of, but since the numerical calculations give this value even when $N$ is low, we had to choose a nearby value to study the stability, and we ended up with $\alpha=0.95$. We expected the average energy to approach a value slightly higher than 3.00 when we increased $N$, because the exact value when $\alpha=1.00$ is $E_{L1}=3.00$.\par\vspace{3mm} 
+
+From Table \ref{tab:energies_comparing}, we observe that for $\Psi_{T1}$ we obtain the exact energy value in this project, whereas in Project 2 we got very close. We observe that in Project 2 we got an estimate of the ground state energy that is lower than the actual ground state energy. In Project 2, this was not problematic since we did not use the variational method. The variational method can never give values lower than the ground state energy. \par\vspace{3mm}
+For $\Psi_{T2}$ we did not calculate the energy for $\omega =1$ in Project 2. The value we obtain in this project is larger than the analytical energy. This is as expected, because as long as $\Psi_{T2}$ isn't the analytical ground state wave function, the variational method  will give energies that are higher than the analytical ground state energy. 
+
+
+\section{Conclusion} \label{Conclusion}
 
 \newpage
 \section{References}
@@ -339,6 +409,13 @@ The average energy is approaching a value near 3.004 when $N$ goes to infinity. 
 \bibitem{Griffiths}
   D J Griffiths (2014)
   Introdction to Quantum Mechanics, Second Edition
+\bibitem{Project_2}
+  Fauli et. al. (2016)
+  Project 2
+\bibitem{Project_text}
+  Project Description: 					(October 21th 2016)\newline
+  \url{https://github.com/CompPhysics/ComputationalPhysics/blob/gh-pages/doc/Projects/2016/Project3/pdf/Project3.pdf}
+  
   
   
 
