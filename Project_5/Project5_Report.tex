@@ -73,7 +73,7 @@ The variational method is a method in quantum mechanics for estimating an upper 
 \end{equation}
 
 where $E_T$ is the trial energy. 
-Equation \ref{eq:VariationalMethod} states that given a wave function $\Psi$, the calculated expectation value for the energy $E_T$ will always be greater than or equal to the lowest energy, $E_0$. This is trivial to understand: if the chosen $\Psi$ indeed is the ground state $\Psi_0$, then the trial energy is $E_0$. For any other choice of $\psi$, the trial  energy must be higher than the energy of the ground state. \par 
+Equation \ref{eq:VariationalMethod} states that given a wave function $\Psi$, the calculated expectation value for the energy $E_T$ will always be greater than or equal to the lowest energy, $E_0$. This is trivial to understand: if the chosen $\Psi$ indeed is the ground state $\Psi_0$, then the trial energy is $E_0$. For any other choice of $\Psi$, the trial  energy must be higher than the energy of the ground state. \par 
 The variational method is particularly useful when the Hamiltonian has complicated eigenfunctions, or no analytical solution at all. A smart choice of a trial wave function $\Psi_T(\alpha)$ where $\alpha$ is the variational parameter, gives the trial energy $E_T(\alpha)$, which is an upper limit on the ground state energy as a function of $\alpha$. The trial energy can thereafter be minimized with respect til $\alpha$, giving an upper limit to $E_0$ that is as low as possible.
 
 \subsection{Quantum Dot Model}
@@ -86,7 +86,7 @@ As stated in the introduction, we simulate a quantum dot as two electrons in a t
 
 where the sum goes over all particles $i$, $\nabla_i^2$ is the Laplace operator for particle $i$, $\omega$ is the harmonic well frequency and $r_i$ is the position vector of particle $i$. 
 
-For the interacting case the electrons repulse each other and we include the Coulumb potential in the Hamiltonian:
+For the interacting case the electrons repulse each other and we include the Coulomb potential in the Hamiltonian:
 
 \begin{equation}
     \hat{H}_{rep} = \sum_{i<j} \frac{e^2}{4\pi \epsilon_0 r_{ij}}
@@ -96,7 +96,7 @@ For the interacting case the electrons repulse each other and we include the Cou
 where $r_{ij}$ is the distance between electron $i$ and $j$, $e$ is the elementary charge, $\epsilon_ 0$ is the permittivity of vacuum, and we sum over $i < j$ to avoid counting interactions twice, as the potential from electron $i$ acting on $j$ is the same as the potential from $j$ acting on $i$. Using natural units, that is scaling such that $\hbar = e = m_e = 1$ and $\epsilon_0 = \frac{1}{4\pi}$, we obtain the scaled Hamiltonians for the non-interacting and the interacting system presented in equation (\ref{eq:H_non_interaction}) and (\ref{eq:H_interaction}):
 
 \begin{equation}
-    \hat{H} = \sum_{i=1}^{2} (-\frac{1}{2}\nabla_i^2 + \frac{1}{2} \omega^2r_i^2) 
+    \hat{H} = \sum_{i=1}^{2} \bigg(-\frac{1}{2}\nabla_i^2 + \frac{1}{2} \omega^2r_i^2\bigg) 
     \label{eq:H_non_interaction}
 \end{equation}
 
@@ -109,16 +109,16 @@ where $r_{12}$ is the distance between the two electrons.
 We wish to find estimates for the ground state energy using the variational method, presented in subsection \ref{VariationalMethod}. For this, we will use the following trial wave functions:
 
 \begin{equation}
-    \Psi_{T1} (r_1, r_2) = C\exp(-\alpha \omega (\frac{r_1^2 + r_2^2}{2}))
+    \Psi_{T1} (r_1, r_2) = C\exp(-\alpha \omega \Big(\frac{r_1^2 + r_2^2}{2}\Big))
     \label{eq:PsiT1}
 \end{equation}
 
 \begin{equation}
-    \Psi_{T2}(r_1, r_2) = C\exp(-\alpha \omega (\frac{r_1^2 + r_2^2}{2}))\exp(\frac{r_{12}}{2(1+\beta r_{12})})
+    \Psi_{T2}(r_1, r_2) = C\exp(-\alpha \omega \Big(\frac{r_1^2 + r_2^2}{2}\Big))\exp(\frac{r_{12}}{2(1+\beta r_{12})})
     \label{eq:PsiT2}
 \end{equation}
 
-where C is a normalization constant and $\alpha$ and $\beta$ are a variational parameters. We will use the variational method with $\Psi_{T1}$ on the non-interaction Hamiltonian (\ref{eq:H_non_interaction}), and $\Psi_{T2}$ with the interaction Hamiltonian ((\ref{eq:H_non_interaction}) + (\ref{eq:H_interaction})).
+where C is a normalization constant and $\alpha$ and $\beta$ are the variational parameters. We will use the variational method with $\Psi_{T1}$ on the non-interaction Hamiltonian (\ref{eq:H_non_interaction}), and $\Psi_{T2}$ with the interaction Hamiltonian ((\ref{eq:H_non_interaction}) + (\ref{eq:H_interaction})). The part added to handle the interaction forces is called the Jastrow factor. \cite{MHJ15}
 
 A reader familiar with quantum mechanics may frown upon our choice of trial wave functions, refer to the Pauli principle and say that the wave function of fermions, such as electrons, have to be anti-symmetrical under the interchange of particles. The wave functions presented in equation (\ref{eq:PsiT1}) and (\ref{eq:PsiT2}) are symmetrical, and hence, they cannot represent states of a two-electron system. We can omit this fault by stating that the total wave function $\Phi$ must me anti-symmetrical, and it consists of one spatial part $\Psi$ and one spin part $\chi$:
 
@@ -162,7 +162,7 @@ which we can be expressed as the sum of kinetic energy $T_2$ and potential energ
 $$T_2 = T_1,$$
 $$V_2 = E_{L2} - T_2.$$
 \subsection{Virial Theorem}
-The Virial Theorem provides a general relation between the kinetic and potential energy of a stable system consisting of a finite number of particles over time. For  a pure HO, the virial theorem states that the expectation value of the total kinetic energy $\langle T\rangle$ is equal to the total potential energy $\langle V\rangle$:
+The Virial Theorem provides a general relation between the kinetic and potential energy of a stable system consisting of a finite number of particles over time. For  a pure HO, the Virial Theorem states that the expectation value of the total kinetic energy $\langle T\rangle$ is equal to the total potential energy $\langle V\rangle$:
 \begin{equation}
 \langle T\rangle=\langle V\rangle
 \label{eq:virial}
@@ -197,10 +197,10 @@ In our project, we will use Monte Carlo Integration. The brute-force way of doin
 
 where $f(x)$ is the function we want to integrate and N is the number of integration points. 
 
-A smarter way of doing Monte Carlo integration, is writing the function $f(x)$ as a $g(x)\cdot PDF$ where $PDF$ is a probability distribution, and $g(x)$ is the remaining parts of $f(x)$. Instead of drawing the integration points $x_i$ entirely at random, we can draw them from the PDF, as presented in equation (\ref{MC_int_prob}):
+A smarter way of doing Monte Carlo integration, is writing the function $f(x)$ as a $g(x)\cdot \text{PDF}$ where PDF is a probability distribution, and $g(x)$ is the remaining parts of $f(x)$. Instead of drawing the integration points $x_i$ entirely at random, we can draw them from the PDF, as presented in equation (\ref{MC_int_prob}):
 
 \begin{equation}
-    \frac{1}{N}\sum_{i=0}^N g(x_i) PDF \quad x_i \in [-\infty, \infty] \Rightarrow \frac{1}{N} \sum_{i=0}^N g(x_i) \quad x_i \sim PDF
+    \frac{1}{N}\sum_{i=0}^N g(x_i) PDF \quad x_i \in [-\infty, \infty] \Rightarrow \frac{1}{N} \sum_{i=0}^N g(x_i) \quad x_i \sim \text{PDF}
     \label{MC_int_prob}
 \end{equation}
 
@@ -237,7 +237,7 @@ We wish to draw random numbers from a PDF, and in our program this PDF is $|\Psi
 \par 
 \vspace{2mm}
 
-If the probability density decreases, the move is sometimes accepted and sometimes not. Our program calculates the factors $|\Psi_{T_{old}}|^2$ and $|\Psi_{T_{new}}|^2$ for the old and new positions respectively, and their ratio $ m = \frac{|\Psi_{T_{new}}|^2}{|\Psi_{T_{old}}|^2}$ which is less than $1$. Thereafter, the program draws a random number $k$ in the interval $\in [0, 1]$, and compares the ratio $m$ with the random number $k$. If $m \geq k$, the move is accepted. If the $m < k$ the move of the electron is rejected, and the system is reset to the old position. 
+If the probability density decreases, the move is sometimes accepted and sometimes not. Our program calculates the factors $|\Psi_{T,\text{old}}|^2$ and $|\Psi_{T, \text{new}}|^2$ for the old and new positions respectively, and their ratio $ m = |\Psi_{T,\text{new}}|^2/|\Psi_{T,\text{old}}|^2$ which is less than $1$. Thereafter, the program draws a random number $k$ in the interval $\in [0, 1]$, and compares the ratio $m$ with the random number $k$. If $m \geq k$, the move is accepted. If the $m < k$ the move of the electron is rejected, and the system is reset to the old position. 
 
 \par 
 \vspace{3mm}
@@ -273,7 +273,7 @@ The implementation would look like the following:
 \section{Results} \label{Results}
 \subsection{Minimal local energy for $\Psi_{T1}$}
 
-We used the trial wave function $\Psi_{T1}$, given by Equation (\ref{eq:PsiT1}), and plotted the energies and the variance in energy as a function of $\alpha$ for different values of $\omega$. The results are shown in Figure (\ref{fig:E_L1_file_omega=1_0}) and (\ref{fig:E_L1_file_omega=0_01}).
+We used the trial wave function $\Psi_{T1}$, given by Equation (\ref{eq:PsiT1}), and plotted the energies and the variance in energy as a function of $\alpha$ for different values of $\omega$. The results are shown in Figure (\ref{fig:E_L1_file_omega=1_0}) and (\ref{fig:E_L1_file_omega=0_01}), and is a result of $N=10^8$.
 
 \begin{figure} [H]
     \centering
@@ -281,18 +281,18 @@ We used the trial wave function $\Psi_{T1}$, given by Equation (\ref{eq:PsiT1}),
     \caption{Local energy and variance plotted  for $\Psi_{T1}$ as a function of $\alpha$, for $\omega = 1.0$.}
     \label{fig:E_L1_file_omega=1_0}
 \end{figure} 
-We observe that $\alpha = 1.0$ gives the energy $E=3.0$, and the variance is exactly zero.
+We observe that $\alpha = 1.0$ gives the energy $E=3.0$, and the variance is exactly zero when $\omega=1.00$.
 
 \begin{figure} [H]
     \centering
     \includegraphics[scale=0.65]{E_L1_variance_omega=0_01_1e8.png}
-    \caption{Local energy and variance plotted  for $\Psi_{T1}$ as a function of $\alpha$, for $\omega = 0.01$. We observe that $\alpha = 1.0$ gives the energy $E=3.0$, which is the minimum.}
+    \caption{Local energy and variance plotted  for $\Psi_{T1}$ as a function of $\alpha$, for $\omega = 0.01$.}
     \label{fig:E_L1_file_omega=0_01}
 \end{figure} 
-The variance is close to, but not exactly equal to zero $\alpha$. Similarly, we found that the optimal value of $\alpha$ for $\omega = 0.5$ was $\alpha = 1.0$. We observe that the oscillator is much wider for $\omega=0.01$ than for $\omega=1.00$.
+We observe that $\alpha = 1.0$ gives the energy 0.030, which is exactly $1\%$ is the minimal energy for $\omega=1.00$! The variance is close to, but not exactly zero. Similarly, we found that the optimal value of $\alpha$ for $\omega = 0.5$ was $\alpha = 1.0$. We observe that the oscillator is much wider for $\omega=0.01$ than for $\omega=1.00$.
 
 \subsection{Minimal local energy of $\Psi_{T2}$}
-For $\omega = 1.0, 0.5, 0.01$ we found the optimal parameters and resulting energy and variance as shown in table \ref{tab:Psi2results}. Contour plots for $\omega = 1.0$ and $\omega =0.01$ is shown in Figure \ref{fig:E_L2_omega=1_0} and \ref{fig:E_L2_omega=0_01} respectively. For $\omega = 0.5$, the contour plot was very similar to Figure \ref{fig:E_L2_omega=1_0}. 
+For $\omega = 1.0, 0.5, 0.01$ we found the optimal parameters and resulting energy and variance as shown in table \ref{tab:Psi2results}. Contour plots for $\omega = 1.0$ and $\omega =0.01$ is shown in Figure \ref{fig:E_L2_omega=1_0} and \ref{fig:E_L2_omega=0_01} respectively, with respectively $N=10^7$ and $N=10^8$. For $\omega = 0.5$, the contour plot was very similar to Figure \ref{fig:E_L2_omega=1_0}. 
 \begin{figure} [H]
     \centering
     \includegraphics[width=12cm]{E_L2_contour_omega=1_0.png}
@@ -320,12 +320,9 @@ $\omega$ & $\alpha$ & $\beta$ & $E_{L2}$ & $\sigma_{E_{L2}}$ \\ \hline
     \caption{$E_{L2}$ plotted for various $\alpha$- and $\beta$-values when the frequency is set to $\omega=0.01$. The minima was found numerically and is shown as a white dot.}
     \label{fig:E_L2_omega=0_01}
 \end{figure}
-When $\alpha=1.00$ and $\beta=0.25$ the local energy is minimal, and holds the value $E_{L2}\approx3.7303$.
-
-
 
 \subsection{Average distance between two particles}
-We also calculated the average distance between the two electrons for the optimal value of $\alpha$, for different values of $\omega$. The results are presented in Table 
+We also calculated the average distance between the two electrons for the optimal value of $\alpha$, for different values of $\omega$. The results are presented in Table (\ref{tab:average_r12}).
 
 \begin{table} [H]
 \centering
@@ -340,7 +337,7 @@ We also calculated the average distance between the two electrons for the optima
 \end{table}
 
 \subsection{Ratio of kinetic and potential energy}
-Finally we have been studying the ratio of kinetic and potential energy for both local energies. We were running the program with $10^7$ Monte Carlo simulation for 100 frequencies in the interval $\omega=[0.01,1.00]$ and got the result presented in Figure (\ref{fig:ratio}).
+Finally we have been studying the ratio of kinetic and potential energy for both local energies. We were running the program with $10^7$ Monte Carlo simulation for 100 frequencies in the interval $\omega\in[0.01,1.00]$ and got the result presented in Figure (\ref{fig:ratio}).
 
 \begin{figure} [H]
     \centering
@@ -363,7 +360,7 @@ We conducted stability analyses of the calculations for the local energy $E_{L1}
 The average energy approached a value near 3.004 when $N$ goes to infinity. The calculations are stable from $\sim10^6$. 
 \subsection{Comparing results with Project 2}\par 
 
-We compared the values of the ground state energies for $\Psi_{T1}$ and $\Psi_{T2}$ with the ground state energies from Project 2. The result are presented in Table \ref{tab:energies_comparing}: 
+We compared the values of the ground state energies for $\Psi_{T1}$ and $\Psi_{T2}$ with the ground state energies from Project 2. The results are presented in Table \ref{tab:energies_comparing}: 
 
 \begin{table} [H]
 \centering
@@ -380,7 +377,7 @@ We compared the values of the ground state energies for $\Psi_{T1}$ and $\Psi_{T
 We did not run the two-electron interacting system for $\omega = 1.0$ in Project 2.
 
 \section{Discussion} \label{Discussion}
-Our results from Project 2 showed that for stronger potentials, the Coulomb interaction became negligible \cite{Project_2}. From table \ref{tab:average_r12} we observe that for weaker HO potentials, the average distance $r_{12}$ between the electrons for $\Psi_{T1}$ and $\Psi_{T2}$ are significantly different, while a strong potential gives nearly the same average distance for the two trial wave functions. This is consistent with our results from Project 2, and the explanation is that for weak fields, the electrons are very loosely bound. Because of the Coulomb interaction, they would therefore prefer to be as far away from each other as possible, and they are free to do so. When $\omega$ is large, however, the electrons are forced together.. In the limit when $\omega$ is very large, the average distance $r_{12}$ between the electrons approaches the same value for $\Psi_{T1}$ and $\Psi_{T2}$, because the Coulomb term in $\Psi_{T2}$ becomes negligible.\par 
+Our results from Project 2 showed that for stronger potentials, the Coulomb interaction became negligible \cite{Project_2}. From table \ref{tab:average_r12} we observe that for weaker HO potentials, the average distance $r_{12}$ between the electrons for $\Psi_{T1}$ and $\Psi_{T2}$ are significantly different, while a strong potential gives nearly the same average distance for the two trial wave functions. This is consistent with our results from Project 2, and the explanation is that for weak fields, the electrons are very loosely bound. Because of the Coulomb interaction, they would therefore prefer to be as far away from each other as possible, and they are free to do so. When $\omega$ is large, however, the electrons are forced together. In the limit when $\omega$ is very large, the average distance $r_{12}$ between the electrons approaches the same value for $\Psi_{T1}$ and $\Psi_{T2}$, because the Coulomb term in $\Psi_{T2}$ becomes negligible.\par 
 \vspace{3mm}
 
 For $\Psi_{T1}$ we found the optimal parameter to be $\alpha=1.0$ for all frequencies tested, and we got the exact result which is demonstrated by the variance being $0$. The reason we get the exact result is that the first part of the energy $E_{L1}$ in equation (\ref{eq:EL1}) becomes $0$, which means the energy is independent of the positions of the electrons and is then just $3\omega$. 
@@ -391,8 +388,8 @@ For the second wave function, the optimal parameters were not constant, but chan
 
 Just as for the first wave function we see the distance between the electrons shrink as the well increases in strength, and again we see that the two cases become more alike when $\omega$ increases. \par \vspace{3mm}
 
-When testing the Virial Theorem, we plotted the ratio of kinetic and potential energy. From Figure (\ref{fig:ratio}), we see that for the pure HO wave function  $\Psi_{T1}$ the ratio $\frac{\langle T \rangle}{\langle V \rangle}$ is indeed 1, which is as expected from equation (\ref{eq:virial}). \par
-For $\Psi_{T2}$ the ratio is $< 1$ for low omegas, but it increases with higher omegas. We tested the ratio for $\Psi_{T2}$ for a very large omegas, and found the ratio approaches 1. This is also as expected: as explained above, larger $\omega$ makes the Coulomb interaction less prominent. When $\omega$ is very large, the Couloumb interaction is negligible, and $\Psi_{T2}$ approaches a pure HO. Thus the ratio $\frac{\langle T \rangle}{\langle V \rangle}$ should approach 1.
+When testing the Virial Theorem, we plotted the ratio of kinetic and potential energy. From Figure (\ref{fig:ratio}), we see that for the pure HO wave function  $\Psi_{T1}$ the ratio $\langle T \rangle/\langle V \rangle$ is indeed 1, which is as expected from equation (\ref{eq:virial}). \par
+For $\Psi_{T2}$ the ratio is $< 1$ for low omegas, but it increases with higher omegas. We tested the ratio for $\Psi_{T2}$ for a very large omegas, and found the ratio approaches 1. This is also as expected: as explained above, larger $\omega$ makes the Coulomb interaction less prominent. When $\omega$ is very large, the Coulomb interaction is negligible, and $\Psi_{T2}$ approaches a pure HO. Thus the ratio $\langle T \rangle/\langle V \rangle$ should approach 1.
 \par 
 \vspace{3mm}
 
@@ -403,12 +400,12 @@ For $\Psi_{T2}$ we did not calculate the energy for $\omega =1$ in Project 2. Th
 \par 
 \vspace{3mm}
 
-In section \ref{Metode}, we explained our choice of step length for the system,  $\frac{1}{\sqrt{\omega}}$. After completing all results, we saw we were supposed to scale this length scale for each $\alpha$, giving us an acceptance rate of $50 \%$. Our acceptance rate is $\approx 70 \%$. We are aware that this might affect out results, but as our results are not unphysical and behave as expected, we chose not to change our program. We took samples of our program, changing the length scale until we had an acceptance rate of $50 \%$, and the results did not vary significantly. 
+In section \ref{Metode}, we explained our choice of step length for the system,  $\omega^{-0.5}$. After completing all results, we saw we were supposed to scale this length scale for each $\alpha$, giving us an acceptance rate of $50 \%$. Our acceptance rate is $\approx 70 \%$. We are aware that this might affect out results, but as our results are not unphysical and behave as expected, we chose not to change our program. We took samples of our program, changing the length scale until we had an acceptance rate of $50 \%$, and the results did not vary significantly. 
 
 \section{Conclusion} \label{Conclusion}
 
 In this project, we have found that our model for finding the ground state energy behaved as expected given different trial wave functions and potential strengths. This indicates that our program works as intended. \par 
-Coulomb interaction between the electron pair was prominent for weak HO potentials, but became negligible for strong potentials. This could be observed by studying the average distance between the electrons with and without Coulomb interaction. This is consistent with our expectations and results obtained from Project 2. The Virial Theorem held for the pure HO wave function, and also when the HO potential dominated the interaction potential. \par 
+Coulomb interaction between the electron pair (the Jastrow factor) was prominent for weak HO potentials, but became negligible for strong potentials. This could be observed by studying the average distance between the electrons with and without Coulomb interaction. This is consistent with our expectations and results obtained from Project 2. The Virial Theorem held for the pure HO wave function, and also when the HO potential dominated the interaction potential. \par 
 We found that $\Psi_{T1}$ was the ground state wave function for the non-interacting Hamiltonian, as we obtained the ground state energy when using the Variational Method. $\Psi_{T2}$ was not the exact ground state wave function for the interacting Hamiltonian, and thus the Variational Method gave us an upper bound limit on the ground state energy. \par
 One improvement to our program would be scaling the length scale for each $\alpha$, until we had an acceptance rate of $50 \%$. Implementing this, we might have gotten a lower upper bound limit on the ground state energy. \par 
 Another way of improving our implementation, is the correlation between the positions of two subsequent Monte Carlo cycles. If we had proposed several moves between each time we calculated the energy, the correlation would have been smaller.
@@ -431,11 +428,12 @@ Another way of improving our implementation, is the correlation between the posi
   Project 2
 \bibitem{Project_text}
   Project Description: 					(December 6th 2016)\newline
-  \url{https://github.com/CompPhysics/ComputationalPhysics/blob/gh-pages/doc/Projects/2016/Project5/QuantumMonteCarlo/pdf/QuantumMonteCarlo.pdf}
-  
-  
-  
-
+  \url{https://github.com/CompPhysics/ComputationalPhysics/blob/gh-  pages/doc/Projects/2016/Project5/QuantumMonteCarlo/pdf/QuantumMonteCarlo.pdf}
+\bibitem{MHJ15}
+  Morten Hjorth-Jensen.
+  Computational Physics, Lecture Notes Fall 2015.
+  Department of Physics, University of Oslo.
+  August 2015.
 \end{thebibliography}
 
 \end{document}
