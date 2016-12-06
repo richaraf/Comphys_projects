@@ -253,7 +253,7 @@ The variance is exactly zero
 
 \begin{figure} [H]
     \centering
-    \includegraphics[scale=0.65]{E_L1_variance_omega=0_01_1e8.png}
+    \includegraphics[scale=0.65]{E_L1_variance_omega=0_01.png}
     \caption{Local energy and variance plotted  for $\Psi_{T1}$ as a function of $\alpha$, for $\omega = 0.01$. We observe that $\alpha = 1.0$ gives the energy $E=3.0$, which is the minimum.}
     \label{fig:E_L1_file_omega=0_01}
 \end{figure}
@@ -267,7 +267,20 @@ The variance is close to, but not exact zero
     \caption{$E_{L2}$ plotted for various $\alpha$- and $\beta$-values when the frequency is set to $\omega=1.0$. The minima was found numerically and is shown as a white dot.}
     \label{fig:E_L2_omega=1_0}
 \end{figure}
-When $\alpha=1.00$ and $\beta=0.25$ the local energy is minimal, and holds the value $E_{L2}\approx3.7303$
+For $\omega = 1.0, 0.5, 0.01$ we found the optimal parameters and resulting energy and variance as shown in table \ref{tab:Psi2results}.
+\begin{table} [H]
+\centering
+\caption{Optimal parameters $\alpha$ and $\beta$ and resulting energy $E_{L2}$ and variance $\sigma_{E_{L2}}$ for different $\omega$ for $\Psi_{T2}$.}
+\begin{tabularx}{\textwidth}{XXXXX} \hline
+\label{tab:Psi2results}
+$\omega$ & $\alpha$ & $\beta$ & $E_{L2}$ & $\sigma_{E_{L2}}$ \\ \hline
+1.0 & 1.0 & 0.25 & 3.7303 & $4.0\cdot 10^{-4}$ \\
+0.5 & 1.0 & 0.20 & 2.0001 & $2.0\cdot 10^{-4}$ \\
+0.01 & 0.9 & 0.05 & 0.0794 & $4.0\cdot 10^{-6}$ \\ \hline
+\end{tabularx}
+\end{table}
+
+
 
 \begin{figure} [H]
     \centering
@@ -292,6 +305,13 @@ We also calculated the average distance between the two electrons for the optima
 
 
 \section{Discussion}
+For $\Psi_{T1}$ we found the optimal parameter to be $\alpha=1.0$ for all frequencies tested, and we got the exact result which is demonstrated by the variance being $0$. The reason we get the exact result is that the first part of the energy $E_{L1}$ in equation (\ref{eq:EL1}) becomes $0$, which means the energy is independent of the positions of the electrons and is then just $3\omega$. 
+
+We also observed that the distance between the electrons became smaller  as the strength of the HO increased, as expected.
+\\* \\* \noindent
+For the second wave function, the optimal parameters were not constant, but changed depending on $\omega$. From table \ref{tab:Psi2results} we also see that the variance does not become zero as it did for the first wave function. The energies were larger than those from the first wave function, but we see that the ratio of the energies from $\Psi_{T1}$ and $\Psi_{T2}$ moves closer to unity as $\omega$ grows. Which is what one would expect since the repulsion becomes less important when the HO becomes stronger.
+
+Just as for the first wave function we see the distance between the electrons shrink as the well increases in strength, and again we see that the two cases become more alike when $\omega$ increases.
 \section{Conclusion}
 
 \newpage
