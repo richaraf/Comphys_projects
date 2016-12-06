@@ -10,6 +10,8 @@
 \usepackage{listings}
 \usepackage{physics}
 \usepackage{hyperref}
+\usepackage{subfig}
+
 \lstset{language=c++}
 \lstset{basicstyle=\small}
 \lstset{backgroundcolor=\color{white}}
@@ -81,7 +83,7 @@ where the sum goes over all particles $i$, $\nabla_i^2$ is the Laplace operator 
 For the interacting case, the electrons notices a repulsion from the Coulomb interaction, and we have to include an additional term in the Hamiltonian:
 
 \begin{equation}
-    \hat{H_{rep}} = \sum_{i<j} \frac{e^2}{4\pi \epsilon_0 r_{ij}}
+    \hat{H}_{rep} = \sum_{i<j} \frac{e^2}{4\pi \epsilon_0 r_{ij}}
     \label{eq:H_interaction_unit}
 \end{equation}
 
@@ -93,19 +95,19 @@ where $r_{ij}$ is the distance between electron $i$ and $j$, $e$ is the elementa
 \end{equation}
 
 \begin{equation}
-    \hat{H_{rep}} = \sum_{i<j} \frac{1}{r_{ij}}
+    \hat{H}_{rep} = \sum_{i<j} \frac{1}{r_{ij}}
     \label{eq:H_interaction}
 \end{equation}
 
 We wish to find estimates for the ground state energy using the variational method, presented in subsection \ref{VariationalMethod}. For this, we will use the trial wave functions presented in equation (\ref{eq:PsiT1}) and (\ref{eq:PsiT2}):
 
 \begin{equation}
-    \Psi_{T1} (r_1, r_2) = Ce^{-\alpha \omega (\frac{r_1^2 + r_2^2}{2})}
+    \Psi_{T1} (r_1, r_2) = C\exp(-\alpha \omega (\frac{r_1^2 + r_2^2}{2}))
     \label{eq:PsiT1}
 \end{equation}
 
 \begin{equation}
-    \Psi_{T2}(r_1, r_2) = Ce^{-\alpha \omega (\frac{r_1^2 + r_2^2}{2})}e^{\frac{r_{12}}{2(1+\beta r_{12})}}
+    \Psi_{T2}(r_1, r_2) = C\exp(-\alpha \omega (\frac{r_1^2 + r_2^2}{2}))\exp(\frac{r_{12}}{2(1+\beta r_{12})})
     \label{eq:PsiT2}
 \end{equation}
 
@@ -202,7 +204,7 @@ We wish to draw random numbers from a PDF, and in our program this PDF is $|\Psi
 \par 
 \vspace{2mm}
 
-If the probability density decreases, however, this should be allowed, but not probable. Our program calculates the factors $|\Psi_T_{old}|^2$ and $|\Psi_T_{new}|^2$ for the old and new positions respectively, and their ratio $ m = \frac{|\Psi_T_{new}|^2}{|\Psi_T_{old}|^2}$, which is less than $1$. Thereafter, the program draws a random number $p$ in the interval $\in [0, 1]$, and compares the ratio $m$ with the random number $k$. If $m \geq k$, the move is accepted. If the $m < k$ the move of the electron is rejected, and the system is reset to the old position. 
+If the probability density decreases, however, this should be allowed, but not probable. Our program calculates the factors $|\Psi_{T_{old}}|^2$ and $|\Psi_{T_{new}}|^2$ for the old and new positions respectively, and their ratio $ m = \frac{|\Psi_{T_{new}}|^2}{|\Psi_{T_{old}}|^2}$, which is less than $1$. Thereafter, the program draws a random number $p$ in the interval $\in [0, 1]$, and compares the ratio $m$ with the random number $k$. If $m \geq k$, the move is accepted. If the $m < k$ the move of the electron is rejected, and the system is reset to the old position. 
 
 \par 
 \vspace{3mm}
@@ -246,15 +248,35 @@ We used the trial wave function $\Psi_{T1}$, given by equation (\ref{eq:PsiT1}),
     \caption{Local energy and variance plotted  for $\Psi_{T1}$ as a function of $\alpha$, for $\omega = 1.0$. We observe that $\alpha = 1.0$ gives the energy $E=3.0$ }
     \label{fig:E_L1_file_omega=1_0}
 \end{figure}
+The variance is exactly zero 
 
 
 \begin{figure} [H]
     \centering
-    \includegraphics[scale=0.65]{E_L1_variance_omega=0_01}
-    \caption{Local energy and variance plotted  for $\Psi_{T1}$ as a function of $\alpha$, for $\omega = 0.01$. We observe that $\alpha = 1.0$ gives the energy $E=3.0$, FEIL PLOTT, fiks på nytt }
+    \includegraphics[scale=0.65]{E_L1_variance_omega=0_01_1e8.png}
+    \caption{Local energy and variance plotted  for $\Psi_{T1}$ as a function of $\alpha$, for $\omega = 0.01$. We observe that $\alpha = 1.0$ gives the energy $E=3.0$, which is the minimum.}
     \label{fig:E_L1_file_omega=0_01}
 \end{figure}
+The variance is close to, but not exact zero
 
+
+\subsection{$\Psi_{T2}$ Minimized}
+\begin{figure} [H]
+    \centering
+    \includegraphics[width=12cm]{E_L2_contour_omega=1_0.png}
+    \caption{$E_{L2}$ plotted for various $\alpha$- and $\beta$-values when the frequency is set to $\omega=1.0$. The minima was found numerically and is shown as a white dot.}
+    \label{fig:E_L2_omega=1_0}
+\end{figure}
+When $\alpha=1.00$ and $\beta=0.25$ the local energy is minimal, and holds the value $E_{L2}\approx3.7303$
+
+\begin{figure} [H]
+    \centering
+    \includegraphics[width=12cm]{E_L2_contour_omega=0_01.png}
+    \caption{$E_{L2}$ plotted for various $\alpha$- and $\beta$-values when the frequency is set to $\omega=0.01$. The minima was found numerically and is shown as a white dot.}
+    \label{fig:E_L2_omega=0_01}
+\end{figure}
+
+\subsection{Average distance between two particles}
 We also calculated the average distance between the two electrons for the optimal value of $\alpha$, for different values of $\omega$. The results are presented in Table 
 
 \begin{table} [H]
@@ -264,7 +286,7 @@ We also calculated the average distance between the two electrons for the optima
 \begin{tabularx}{\textwidth}{XXXX} \hline
 \label{2x2Lattice_Microstates}
 {\bf } & {\bf $\omega = 1.0$ } & {\bf $ \omega = 0.5 $ } & {\bf $\omega = 0.01$} \\ \hline
-{$r_{12}$} & & & &\\ \hline 
+{$r_{12}$} & & &\\ \hline 
 \end{tabularx}
 \end{table}
 
