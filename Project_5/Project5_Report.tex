@@ -271,28 +271,27 @@ The implementation would look like the following:
 \end{lstlisting}
 
 \section{Results} \label{Results}
-\subsection{$\Psi_{T1}$}
+\subsection{Minimal local energy for $\Psi_{T1}$}
 
-We used the trial wave function $\Psi_{T1}$, given by equation (\ref{eq:PsiT1}), and plotted the energies and the variance in energy as a function of $\alpha$ for different values of $\omega$. The results are shown in Figure \ref{fig:E_L1_file_omega=1_0} - \ref{fig:E_L1_file_omega=0_01}.
+We used the trial wave function $\Psi_{T1}$, given by Equation (\ref{eq:PsiT1}), and plotted the energies and the variance in energy as a function of $\alpha$ for different values of $\omega$. The results are shown in Figure (\ref{fig:E_L1_file_omega=1_0}) and (\ref{fig:E_L1_file_omega=0_01}).
 
 \begin{figure} [H]
     \centering
     \includegraphics[scale=0.65]{E_L1_variance_omega=1_0}
-    \caption{Local energy and variance plotted  for $\Psi_{T1}$ as a function of $\alpha$, for $\omega = 1.0$. We observe that $\alpha = 1.0$ gives the energy $E=3.0$, and the variance is exactly zero }
+    \caption{Local energy and variance plotted  for $\Psi_{T1}$ as a function of $\alpha$, for $\omega = 1.0$.}
     \label{fig:E_L1_file_omega=1_0}
 \end{figure} 
-
+We observe that $\alpha = 1.0$ gives the energy $E=3.0$, and the variance is exactly zero.
 
 \begin{figure} [H]
     \centering
     \includegraphics[scale=0.65]{E_L1_variance_omega=0_01_1e8.png}
-    \caption{Local energy and variance plotted  for $\Psi_{T1}$ as a function of $\alpha$, for $\omega = 0.01$. We observe that $\alpha = 1.0$ gives the energy $E=3.0$, which is the minimum. The variance is close to, but not exactly equal to zero $\alpha$.}
+    \caption{Local energy and variance plotted  for $\Psi_{T1}$ as a function of $\alpha$, for $\omega = 0.01$. We observe that $\alpha = 1.0$ gives the energy $E=3.0$, which is the minimum.}
     \label{fig:E_L1_file_omega=0_01}
 \end{figure} 
+The variance is close to, but not exactly equal to zero $\alpha$. Similarly, we found that the optimal value of $\alpha$ for $\omega = 0.5$ was $\alpha = 1.0$. We observe that the oscillator is much wider for $\omega=0.01$ than for $\omega=1.00$.
 
-Similarly, we found that the optimal value of $\alpha$ for $\omega = 0.5$ was $\alpha = 1.0$.
-
-\subsection{$\Psi_{T2}$ Minimized}
+\subsection{Minimal local energy of $\Psi_{T2}$}
 For $\omega = 1.0, 0.5, 0.01$ we found the optimal parameters and resulting energy and variance as shown in table \ref{tab:Psi2results}. Contour plots for $\omega = 1.0$ and $\omega =0.01$ is shown in Figure \ref{fig:E_L2_omega=1_0} and \ref{fig:E_L2_omega=0_01} respectively. For $\omega = 0.5$, the contour plot was very similar to Figure \ref{fig:E_L2_omega=1_0}. 
 \begin{figure} [H]
     \centering
@@ -349,6 +348,20 @@ Finally we have been studying the ratio of kinetic and potential energy for both
     \caption{The ratio the kinetic and potential energy for $E_{L1}$ (blue line) and $E_{L2}$ (green line). The program was run for 100 frequencies in the interval [0.01, 1.00] and $10^7$ Monte Carlo simulations.}
     \label{fig:ratio}
 \end{figure}
+From Figure (\ref{fig:ratio}) we can see that the ratio fluctuates around 1 for $E_{L1}$, and approaches 1 for $E_{L2}$.
+
+We also studied how the ratio evolved for increasingly narrower oscillators (increasing frequencies) for $E_{L2}$, and we observed that the ratio approached 1. For instance the ratio $\langle T\rangle/\langle V\rangle\cong0.92$ when $\omega=100$ and $\langle T\rangle/\langle V\rangle\cong0.98$ when $\omega=1000$.
+
+\subsection{Stability of calculations}
+We conducted stability analyses of the calculations for the local energy $E_{L1}$. This was done by finding the average energy for a fixed $\alpha$-value for a various number of Monte Carlo simulations ($N$). In Figure (\ref{fig:stability}) the average energy is plotted for $\alpha=0.95$ when $N$ ranges from $10^{0.5}$ to $10^{8.5}$.
+\begin{figure} [H]
+    \centering
+    \includegraphics[width=12cm]{E_L1_alpha=0_95_stability.png}
+    \caption{The average energy for $E_{L2}$ and $\alpha=0.95$ when $N$ ranges from $10^{0.5}$ to $10^{8.5}$.}
+    \label{fig:stability}
+\end{figure}
+The average energy is approaching a value near 3.004 when $N$ goes to infinity. The calculations are stable from $\sim10^6$. 
+
 We also studied how the ratio evolved for increasingly narrower oscillators (increasing frequencies), and we observed that the ratio approached one. 
 
 \subsection{Comparing results with Project 2}\par 
@@ -369,22 +382,21 @@ We compared the values of the ground state energies for $\Psi_{T1}$ and $\Psi_{T
 
 We did not run the two-electron interacting system for $\omega = 1.0$ in Project 2.
 
-
-
-
 \section{Discussion} \label{Discussion}
 Our results from Project 2 showed that for stronger potentials, the Coulomb interaction became negligible \cite{Project_2}. From table \ref{tab:average_r12} we observe that for weaker HO potentials, the average distance $r_{12}$ between the electrons for $\Psi_{T1}$ and $\Psi_{T2}$ are significantly different, while a strong potential gives nearly the same average distance for the two trial wave functions. This is consistent with our results from Project 2, and the explanation is that for weak fields, the electrons are very loosely bound. Because of the Coulomb interaction, they would therefore prefer to be as far away from each other as possible, and they are free to do so. When $\omega$ is large, however, the electrons are forced together.. In the limit when $\omega$ is very large, the average distance $r_{12}$ between the electrons approaches the same value for $\Psi_{T1}$ and $\Psi_{T2}$, because the Coulomb term in $\Psi_{T2}$ becomes negligible.\par 
 \vspace{3mm}
 
 For $\Psi_{T1}$ we found the optimal parameter to be $\alpha=1.0$ for all frequencies tested, and we got the exact result which is demonstrated by the variance being $0$. The reason we get the exact result is that the first part of the energy $E_{L1}$ in equation (\ref{eq:EL1}) becomes $0$, which means the energy is independent of the positions of the electrons and is then just $3\omega$. 
 
-We also observed that the distance between the electrons became smaller  as the strength of the HO increased, as expected.
+We also observed that the distance between the electrons became smaller as the strength of the HO increased, as expected.
 \\* \\* \noindent
 For the second wave function, the optimal parameters were not constant, but changed depending on $\omega$. From table \ref{tab:Psi2results} we also see that the variance does not become zero as it did for the first wave function. The energies were larger than those from the first wave function, but we see that the ratio of the energies from $\Psi_{T1}$ and $\Psi_{T2}$ moves closer to unity as $\omega$ grows. Which is what one would expect since the repulsion becomes less important when the HO becomes stronger.
 
 Just as for the first wave function we see the distance between the electrons shrink as the well increases in strength, and again we see that the two cases become more alike when $\omega$ increases. \par \vspace{3mm}
 
-From Table \ref{tab:energies_comparing}, we observe that for $\Psi_{T1}$ we obtain the exact energy value in this project, whereas in Project 2 we got very close. We observe that in Project 2 we got an estimate of the ground state energy that is lower than the actual ground state energy. In Project 2, this was not problematic since we did not use the variational method. The variational method can never give values lower than the ground state energy. \par 
+When studying the stability of the calculations, we used $E_{L1}$ and assumed that the stability sustained for $E_{L2}$. $\alpha=1.00$ is the only parameter that we have the exact analytical value of, but since the numerical calculations give this value even when $N$ is low, we had to choose a nearby value to study the stability, and we ended up with $\alpha=0.95$. We expected the average energy to approach a value slightly higher than 3.00 when we increased $N$, because the exact value when $\alpha=1.00$ is $E_{L1}=3.00$.\par\vspace{3mm} 
+
+From Table \ref{tab:energies_comparing}, we observe that for $\Psi_{T1}$ we obtain the exact energy value in this project, whereas in Project 2 we got very close. We observe that in Project 2 we got an estimate of the ground state energy that is lower than the actual ground state energy. In Project 2, this was not problematic since we did not use the variational method. The variational method can never give values lower than the ground state energy. \par\vspace{3mm}
 For $\Psi_{T2}$ we did not calculate the energy for $\omega =1$ in Project 2. The value we obtain in this project is larger than the analytical energy. This is as expected, because as long as $\Psi_{T2}$ isn't the analytical ground state wave function, the variational method  will give energies that are higher than the analytical ground state energy. 
 
 
