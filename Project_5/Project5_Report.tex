@@ -41,7 +41,11 @@
 
 \maketitle
 \begin{abstract}
-This project aims to simulate so-called quantum dots, electrons trapped in harmonic oscillator potentials, by
+This project aims to simulate so-called quantum dots, electrons trapped in harmonic oscillator (HO) potentials, by using the variational method with Monte Carlo integration. Using two trial wave functions, $\Psi_{T1}$, which is a pure harmonic oscillator, and $\Psi_{T2}$, which additionally includes a Coulomb repulsion term, we calculate an upper bound ground state energy for different strengths of the HO potential, and the average distance between the two electrons. Furthermore, we test our results against the Virial Theorem.\par
+
+Using $\Psi_{T1}$, we get the exact ground state energy, while $\Psi_{T2}$ gives an upper bound ground state energy that is higher than the exact ground state energy. The average distance between the electrons are higher for $\Psi_{T2}$ compared to $\Psi_{T1}$, and the Coulomb potential is less prominent for stronger potentials. The system behaves as expected, and our results correspond to those of Project 2.
+\par 
+
 \end{abstract}
 
 
@@ -53,10 +57,12 @@ This project aims to simulate so-called quantum dots, electrons trapped in harmo
 \section{Introduction}
 In this project, we study the theory behind quantum dots, a highly relevant subject in modern physics. A quantum dot is one or two electrons trapped in an quantum well. These are often referred to as arificial atoms, as they, like natural atoms, have discrete energy levels \cite{Nature}.
 
-Our goal in this project is to simulate a quantum dot, modelled as one or two electrons bound in a three-dimensional harmonic oscillator well, both with and without Coulomb interaction.
+Our goal in this project is to simulate a quantum dot, modelled as one or two electrons bound in a three-dimensional harmonic oscillator well, both with and without Coulomb interaction. The model is descriped in section \ref{Theory}. \par
+
+Using the Variational Method with Monte Carlo integration, presented in section \ref{Theory} and \ref{Method}, we use two trial wave functions $\Psi_{T1}$ and $\Psi_{T2}$ to calculate an upper bound ground state energy and the mean distance between the two electrons. $\Psi_{T1}$ is a pure harmonic oscillator wave function, while $\Psi_{T2}$ also includes a electron-electron repulsion term. The results are presented in section \ref{Results}. In section \ref{Discussion} we discuss our results, and compare them to the results obtained from Project 2.
 
 
-\section{Theory}
+\section{Theory} \label{Theory}
 
 \subsection{Variational Method} \label{VariationalMethod}
 The variational method is a method in quantum mechanics for estimating an upper limit on the lowest energy state level for a given Hamiltonian \cite{Griffiths}. For any choice of wave function $\Psi$, the following expression holds:
@@ -113,6 +119,14 @@ We wish to find estimates for the ground state energy using the variational meth
 
 where C is a normalization constant and $\beta$ is a variational parameter. We will use the variational method with $\Psi_{T1}$ on the non-interaction Hamiltonian in equation (\ref{eq:H_non_interaction}), and $\Psi_{T2}$ with the interaction Hamiltonian in equation (\ref{eq:H_non_interaction}) + (\ref{eq:H_interaction}).
 
+A reader familiar with quantum mechanics would maybe frown upon our choice of trial wave functions, refer to the Pauli principle and say that the wave function of fermions, such as electrons, have to be anti-symmetrical under the interchange of particles. The wave functions presented in equation (\ref{eq:PsiT1}) and (\ref{eq:PsiT2}) are symmetrical, and hence, they cannot represent states of a two-electron system. We can omit this fault by stating that the total wave function $\Phi$ must me anti-symmetrical, and it consists of one spatial part $\Psi$ and one spin part $\chi$:
+
+\begin{equation}
+    \Phi = \Psi \cdot \chi 
+\end{equation}
+
+As long as the spin part $\chi$ is anti symmetrical, the total wave function $\Phi$ is anti symmetrical, and hence the Pauli principle is satisfied. The only anti symmetrical spin configuration is the spin singlet \cite{Griffiths}, giving that the electrons in our model must have spins pointing in opposite directions. Thus the total spin of the two electrons is 0. As the spin wave unction is known, we choose to only work with the spatial wave function in this project.
+
 \subsection{Energies} \label{Energies}
 In order to find the local energy $E_L$ for a given trial function $\Psi_T$ we can use the following expression
 \begin{equation}
@@ -146,7 +160,9 @@ The virial theorem provides a general relation between the kinetic and potential
 \end{equation}
 For more complex systems the relation is more complicated, but for a HO we can assume that the relation above holds if the HO potential dominates.
 
-\section{Method}
+
+\section{Method} \label{Method}
+
 
 \subsection{Implementation}
 
@@ -245,7 +261,7 @@ The implementation would look like the following:
     
 \end{lstlisting}
 
-\section{Results}
+\section{Results} \label{Results}
 \subsection{$\Psi_{T1}$}
 
 We used the trial wave function $\Psi_{T1}$, given by equation (\ref{eq:PsiT1}), and plotted the energies and the variance in energy as a function of $\alpha$ for different values of $\omega$. The results are shown in Figure \ref{fig:E_L1_file_omega=1_0} - \ref{fig:E_L1_file_omega=0_01}.
@@ -253,23 +269,22 @@ We used the trial wave function $\Psi_{T1}$, given by equation (\ref{eq:PsiT1}),
 \begin{figure} [H]
     \centering
     \includegraphics[scale=0.65]{E_L1_variance_omega=1_0}
-    \caption{Local energy and variance plotted  for $\Psi_{T1}$ as a function of $\alpha$, for $\omega = 1.0$. We observe that $\alpha = 1.0$ gives the energy $E=3.0$ }
+    \caption{Local energy and variance plotted  for $\Psi_{T1}$ as a function of $\alpha$, for $\omega = 1.0$. We observe that $\alpha = 1.0$ gives the energy $E=3.0$, and the variance is exactly zero }
     \label{fig:E_L1_file_omega=1_0}
-\end{figure}
-The variance is exactly zero 
+\end{figure} 
 
 
 \begin{figure} [H]
     \centering
-    \includegraphics[scale=0.65]{E_L1_variance_omega=0_01.png}
-    \caption{Local energy and variance plotted  for $\Psi_{T1}$ as a function of $\alpha$, for $\omega = 0.01$. We observe that $\alpha = 1.0$ gives the energy $E=3.0$, which is the minimum.}
+    \includegraphics[scale=0.65]{E_L1_variance_omega=0_01_1e8.png}
+    \caption{Local energy and variance plotted  for $\Psi_{T1}$ as a function of $\alpha$, for $\omega = 0.01$. We observe that $\alpha = 1.0$ gives the energy $E=3.0$, which is the minimum. The variance is close to, but not exactly equal to zero $\alpha$.}
     \label{fig:E_L1_file_omega=0_01}
-\end{figure}
-The variance is close to, but not exact zero
+\end{figure} 
 
+Similarly, we found that the optimal value of $\alpha$ for $\omega = 0.5$ was $\alpha = 1.0$.
 
 \subsection{$\Psi_{T2}$ Minimized}
-For $\omega = 1.0, 0.5, 0.01$ we found the optimal parameters and resulting energy and variance as shown in table \ref{tab:Psi2results}. Contour plots for $\omega = 1.0$ and $\omega =0.01$ is shown in figure \ref{fig:E_L2_omega=1_0} and \ref{fig:E_L2_omega=0_01} respectively. For $\omega = 0.5$, the contour plot was very similar to figure \ref{fig:E_L2_omega=1_0}. 
+For $\omega = 1.0, 0.5, 0.01$ we found the optimal parameters and resulting energy and variance as shown in table \ref{tab:Psi2results}. Contour plots for $\omega = 1.0$ and $\omega =0.01$ is shown in Figure \ref{fig:E_L2_omega=1_0} and \ref{fig:E_L2_omega=0_01} respectively. For $\omega = 0.5$, the contour plot was very similar to Figure \ref{fig:E_L2_omega=1_0}. 
 \begin{figure} [H]
     \centering
     \includegraphics[width=12cm]{E_L2_contour_omega=1_0.png}
@@ -299,17 +314,20 @@ $\omega$ & $\alpha$ & $\beta$ & $E_{L2}$ & $\sigma_{E_{L2}}$ \\ \hline
 \end{figure}
 When $\alpha=1.00$ and $\beta=0.25$ the local energy is minimal, and holds the value $E_{L2}\approx3.7303$.
 
+
+
 \subsection{Average distance between two particles}
 We also calculated the average distance between the two electrons for the optimal value of $\alpha$, for different values of $\omega$. The results are presented in Table 
 
 \begin{table} [H]
 \centering
-\caption{The average distance between the two electrons for $\Psi_{T1}$, for different values og $\omega$.}
+\caption{The average distance between the two electrons for $\Psi_{T1}$ and $\psi_{T2}$, for different values of $\omega$.}
 
 \begin{tabularx}{\textwidth}{XXXX} \hline
-\label{2x2Lattice_Microstates}
+\label{tab:average_r12}
 {\bf } & {\bf $\omega = 1.0$ } & {\bf $ \omega = 0.5 $ } & {\bf $\omega = 0.01$} \\ \hline
-{$r_{12}$} & & &\\ \hline 
+{$\Psi_{T1} \quad r_{12}$} & 0.534961 & 0.761391 & 1.70247\\ \hline 
+{$\Psi_{T2} \quad r_{12}$} & 0.582162 & 0.834164 & 7.2308\\ \hline 
 \end{tabularx}
 \end{table}
 
@@ -319,12 +337,18 @@ Finally we have been studying the ratio of kinetic and potential energy for both
 \begin{figure} [H]
     \centering
     \includegraphics[width=12cm]{energy_ratio_1e7.png}
-    \caption{The ratio the kinetic and potential energy for $E_{L1}$ (blue line) and $E_{L2}$ (red line). The program was run for 100 frequencies in the interval [0.01, 1.00] and $10^7$ Monte Carlo simulations.}
+    \caption{The ratio the kinetic and potential energy for $E_{L1}$ (blue line) and $E_{L2}$ (green line). The program was run for 100 frequencies in the interval [0.01, 1.00] and $10^7$ Monte Carlo simulations.}
     \label{fig:ratio}
 \end{figure}
 We also studied how the ratio evolved for increasingly narrower oscillators (increasing frequencies), and we observed that the ratio approached one. 
 
-\section{Discussion}
+
+
+
+\section{Discussion} \label{Discussion}
+Our results from Project 2 showed that for stronger potentials, the Coulomb interaction became negligible \cite{Project_2}. From table \ref{tab:average_r12} we observe that for weaker HO potentials, the average distance $r_{12}$ between the electrons for $\Psi_{T1}$ and $\Psi_{T2}$ are significantly different, while a strong potential gives nearly the same average distance for the two trial wave functions. This is consistent with our results from Project 2, and the explanation is that for weak fields, the electrons are very loosely bound. Because of the Coulomb interaction, they would therefore prefer to be as far away from each other as possible, and they are free to do so. When $\omega$ is large, however, the electrons are forced together.. In the limit when $\omega$ is very large, the average distance $r_{12}$ between the electrons approaches the same value for $\Psi_{T1}$ and $\Psi_{T2}$, because the Coulomb term in $\Psi_{T2}$ becomes negligible.\par 
+\vspace{3mm}
+
 For $\Psi_{T1}$ we found the optimal parameter to be $\alpha=1.0$ for all frequencies tested, and we got the exact result which is demonstrated by the variance being $0$. The reason we get the exact result is that the first part of the energy $E_{L1}$ in equation (\ref{eq:EL1}) becomes $0$, which means the energy is independent of the positions of the electrons and is then just $3\omega$. 
 
 We also observed that the distance between the electrons became smaller  as the strength of the HO increased, as expected.
@@ -332,7 +356,9 @@ We also observed that the distance between the electrons became smaller  as the 
 For the second wave function, the optimal parameters were not constant, but changed depending on $\omega$. From table \ref{tab:Psi2results} we also see that the variance does not become zero as it did for the first wave function. The energies were larger than those from the first wave function, but we see that the ratio of the energies from $\Psi_{T1}$ and $\Psi_{T2}$ moves closer to unity as $\omega$ grows. Which is what one would expect since the repulsion becomes less important when the HO becomes stronger.
 
 Just as for the first wave function we see the distance between the electrons shrink as the well increases in strength, and again we see that the two cases become more alike when $\omega$ increases.
-\section{Conclusion}
+
+
+\section{Conclusion} \label{Conclusion}
 
 \newpage
 \section{References}
@@ -347,6 +373,10 @@ Just as for the first wave function we see the distance between the electrons sh
 \bibitem{Griffiths}
   D J Griffiths (2014)
   Introdction to Quantum Mechanics, Second Edition
+\bibitem{Project_2}
+  Fauli et. al. (2016)
+  Project 2
+  
   
   
 
