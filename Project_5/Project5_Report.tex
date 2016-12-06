@@ -41,9 +41,9 @@
 
 \maketitle
 \begin{abstract}
-This project aims to simulate so-called quantum dots, electrons trapped in harmonic oscillator (HO) potentials, by using the variational method with Monte Carlo integration. Using two trial wave functions, $\Psi_{T1}$, which is a pure harmonic oscillator, and $\Psi_{T2}$, which additionally includes a Coulomb repulsion term, we calculate an upper bound ground state energy for different strengths of the HO potential, and the average distance between the two electrons. Furthermore, we test our results against the Virial Theorem.\par
+This project aims to simulate so-called quantum dots, electrons trapped in harmonic oscillator (HO) potentials, by using the variational method with Monte Carlo integration. Using two trial wave functions, $\Psi_{T1}$, a pure harmonic oscillator, and $\Psi_{T2}$, which includes a Coulomb repulsion term, we calculate an upper bound ground state energy for different strengths of the HO potential, and the average distance between the two electrons. Furthermore, we test our results against the Virial Theorem.\par
 
-Using $\Psi_{T1}$, we get the exact ground state energy, while $\Psi_{T2}$ gives an upper bound ground state energy that is higher than the exact ground state energy. The average distance between the electrons are higher for $\Psi_{T2}$ compared to $\Psi_{T1}$, and the Coulomb potential is less prominent for stronger potentials. The system behaves as expected, and our results correspond to those of Project 2.
+Using $\Psi_{T1}$, we get the exact ground state energy, while $\Psi_{T2}$ gives an upper bound ground state energy that is higher than the exact ground state energy. The average distance between the electrons are higher for $\Psi_{T2}$ compared to $\Psi_{T1}$, and repulsion becomes less important for stronger potentials. The system behaves as expected, and our results correspond to those of Project 2.
 \par 
 
 \end{abstract}
@@ -59,7 +59,7 @@ In this project, we study the theory behind quantum dots, a highly relevant subj
 
 Our goal in this project is to simulate a quantum dot, modelled as one or two electrons bound in a three-dimensional harmonic oscillator well, both with and without Coulomb interaction. The model is descriped in section \ref{Theory}. \par
 
-Using the Variational Method with Monte Carlo integration, presented in section \ref{Theory} and \ref{Method}, we use two trial wave functions $\Psi_{T1}$ and $\Psi_{T2}$ to calculate an upper bound ground state energy and the mean distance between the two electrons. $\Psi_{T1}$ is a pure harmonic oscillator wave function, while $\Psi_{T2}$ also includes a electron-electron repulsion term. The results are presented in section \ref{Results}. In section \ref{Discussion} we discuss our results, and compare them to the results obtained from Project 2.
+Using the Variational Method with Monte Carlo integration, presented in section \ref{Theory} and \ref{Method}, we use two trial wave functions $\Psi_{T1}$ and $\Psi_{T2}$ to calculate an upper bound ground state energy and the mean distance between the two electrons. $\Psi_{T1}$ is a pure harmonic oscillator wave function, while $\Psi_{T2}$ also includes an electron-electron repulsion term. The results are presented in section \ref{Results}. In section \ref{Discussion} we discuss our results, and compare them to the results obtained from Project 2.
 
 
 \section{Theory} \label{Theory}
@@ -77,7 +77,7 @@ Equation \ref{eq:VariationalMethod} states that given a wave function $\Psi$, th
 The variational method is particularly useful when the Hamiltonian has complicated eigenfunctions, or no analytical solution at all. A smart choice of a trial wave function $\Psi_T(\alpha)$ where $\alpha$ is the variational parameter, gives the trial energy $E_T(\alpha)$, which is an upper limit on the ground state energy as a function of $\alpha$. The trial energy can thereafter be minimized with respect til $\alpha$, giving an upper limit to $E_0$ that is as low as possible.
 
 \subsection{Quantum Dot Model}
-As stated in the introduction, we simulate a quantum dot as two electrons in a three dimensional harmonic oscillator well. We will both simulate the electrons when neglecting Coulomb interaction between the two electrons, and when including this repulsion. For the non-interacting case, the Hamiltonian $\hat{H}$ is:
+As stated in the introduction, we simulate a quantum dot as two electrons in a three dimensional harmonic oscillator well. We will simulate the electrons both with Coulomb interaction and without. For the non-interacting case, the Hamiltonian $\hat{H}$ is:
 
 \begin{equation}
     \hat{H} = \sum_{i=1}^{2} (-\frac{\hbar^2}{2 m_e}\nabla_i^2 + \frac{1}{2}\hbar \omega^2r_i^2) 
@@ -86,7 +86,7 @@ As stated in the introduction, we simulate a quantum dot as two electrons in a t
 
 where the sum goes over all particles $i$, $\nabla_i^2$ is the Laplace operator for particle $i$, $\omega$ is the harmonic well frequency and $r_i$ is the position vector of particle $i$. 
 
-For the interacting case, the electrons notices a repulsion from the Coulomb interaction, and we have to include an additional term in the Hamiltonian:
+For the interacting case the electrons repulse each other and we include the Coulumb potential in the Hamiltonian:
 
 \begin{equation}
     \hat{H}_{rep} = \sum_{i<j} \frac{e^2}{4\pi \epsilon_0 r_{ij}}
@@ -101,11 +101,12 @@ where $r_{ij}$ is the distance between electron $i$ and $j$, $e$ is the elementa
 \end{equation}
 
 \begin{equation}
-    \hat{H}_{rep} = \sum_{i<j} \frac{1}{r_{ij}}
+    \hat{H}_{rep} = \frac{1}{r_{12}},
     \label{eq:H_interaction}
 \end{equation}
+where $r_{12}$ is the distance between the two electrons.
 
-We wish to find estimates for the ground state energy using the variational method, presented in subsection \ref{VariationalMethod}. For this, we will use the trial wave functions presented in equation (\ref{eq:PsiT1}) and (\ref{eq:PsiT2}):
+We wish to find estimates for the ground state energy using the variational method, presented in subsection \ref{VariationalMethod}. For this, we will use the following trial wave functions:
 
 \begin{equation}
     \Psi_{T1} (r_1, r_2) = C\exp(-\alpha \omega (\frac{r_1^2 + r_2^2}{2}))
@@ -117,15 +118,15 @@ We wish to find estimates for the ground state energy using the variational meth
     \label{eq:PsiT2}
 \end{equation}
 
-where C is a normalization constant and $\beta$ is a variational parameter. We will use the variational method with $\Psi_{T1}$ on the non-interaction Hamiltonian in equation (\ref{eq:H_non_interaction}), and $\Psi_{T2}$ with the interaction Hamiltonian in equation (\ref{eq:H_non_interaction}) + (\ref{eq:H_interaction}).
+where C is a normalization constant and $\alpha$ and $\beta$ are a variational parameters. We will use the variational method with $\Psi_{T1}$ on the non-interaction Hamiltonian (\ref{eq:H_non_interaction}), and $\Psi_{T2}$ with the interaction Hamiltonian ((\ref{eq:H_non_interaction}) + (\ref{eq:H_interaction})).
 
-A reader familiar with quantum mechanics would maybe frown upon our choice of trial wave functions, refer to the Pauli principle and say that the wave function of fermions, such as electrons, have to be anti-symmetrical under the interchange of particles. The wave functions presented in equation (\ref{eq:PsiT1}) and (\ref{eq:PsiT2}) are symmetrical, and hence, they cannot represent states of a two-electron system. We can omit this fault by stating that the total wave function $\Phi$ must me anti-symmetrical, and it consists of one spatial part $\Psi$ and one spin part $\chi$:
+A reader familiar with quantum mechanics may frown upon our choice of trial wave functions, refer to the Pauli principle and say that the wave function of fermions, such as electrons, have to be anti-symmetrical under the interchange of particles. The wave functions presented in equation (\ref{eq:PsiT1}) and (\ref{eq:PsiT2}) are symmetrical, and hence, they cannot represent states of a two-electron system. We can omit this fault by stating that the total wave function $\Phi$ must me anti-symmetrical, and it consists of one spatial part $\Psi$ and one spin part $\chi$:
 
 \begin{equation}
     \Phi = \Psi \cdot \chi 
 \end{equation}
 
-As long as the spin part $\chi$ is anti symmetrical, the total wave function $\Phi$ is anti symmetrical, and hence the Pauli principle is satisfied. The only anti symmetrical spin configuration is the spin singlet \cite{Griffiths}, giving that the electrons in our model must have spins pointing in opposite directions. Thus the total spin of the two electrons is 0. As the spin wave unction is known, we choose to only work with the spatial wave function in this project.
+As long as the spin part $\chi$ is anti symmetrical, the total wave function $\Phi$ is anti symmetrical, and hence the Pauli principle is satisfied. The only anti symmetrical spin configuration is the spin singlet \cite{Griffiths}, giving that the electrons in our model must have spins pointing in opposite directions. Thus the total spin of the two electrons is 0. Since the spin wave function is known, we choose to only work with the spatial wave function in this project.
 
 \subsection{Energies} \label{Energies}
 In order to find the local energy $E_L$ for a given trial function $\Psi_T$ we can use the following expression
@@ -151,6 +152,8 @@ T_1 = 3\alpha \omega -\frac{1}{2}\omega^2\alpha^2\left(r_1^2 + r_2^2\right),
 \begin{equation}
 V_1 = \frac{1}{2}\omega^2(r_1^2 + r_2^2).
 \end{equation}
+
+
 
 \subsection{Virial Theorem}
 The virial theorem provides a general relation between the kinetic and potential energy of a stable system consisting of a finite number of particles over time. For  a pure HO, the virial theorem states that the expectation value of the total kinetic energy $\langle T\rangle$ is equal to the total potential energy $\langle V\rangle$:

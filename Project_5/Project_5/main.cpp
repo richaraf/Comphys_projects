@@ -18,9 +18,9 @@ int main(int argc, char *argv[])
         for (int j = 0; j < 1; j++){
             beta = 0.25 + j*0.05;
 
-            for (int k = 0; k < 50; k++){
-                omega = 0.01 + 1000000*k;
-                VariationalMethod(omega, 1e6, 2, alpha, beta, filename);
+            for (int k = 1; k < 2; k++){
+
+                VariationalMethod(1, 1e6, 1, 1.0, 0.2, filename);
             }
         }
     }
