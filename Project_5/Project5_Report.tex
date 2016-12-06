@@ -138,6 +138,14 @@ T_1 = 3\alpha \omega -\frac{1}{2}\omega^2\alpha^2\left(r_1^2 + r_2^2\right),
 V_1 = \frac{1}{2}\omega^2(r_1^2 + r_2^2).
 \end{equation}
 
+\subsection{Virial Theorem}
+The virial theorem provides a general relation between the kinetic and potential energy of a stable system consisting of a finite number of particles over time. For  a pure HO, the virial theorem states that the expectation value of the total kinetic energy $\langle T\rangle$ is equal to the total potential energy $\langle V\rangle$:
+\begin{equation}
+\langle T\rangle=\langle K\rangle
+\label{eq:virial}
+\end{equation}
+For more complex systems the relation is more complicated, but for a HO we can assume that the relation above holds if the HO potential dominates.
+
 \section{Method}
 
 \subsection{Implementation}
@@ -261,13 +269,14 @@ The variance is close to, but not exact zero
 
 
 \subsection{$\Psi_{T2}$ Minimized}
+For $\omega = 1.0, 0.5, 0.01$ we found the optimal parameters and resulting energy and variance as shown in table \ref{tab:Psi2results}. Contour plots for $\omega = 1.0$ and $\omega =0.01$ is shown in figure \ref{fig:E_L2_omega=1_0} and \ref{fig:E_L2_omega=0_01} respectively. For $\omega = 0.5$, the contour plot was very similar to figure \ref{fig:E_L2_omega=1_0}. 
 \begin{figure} [H]
     \centering
     \includegraphics[width=12cm]{E_L2_contour_omega=1_0.png}
     \caption{$E_{L2}$ plotted for various $\alpha$- and $\beta$-values when the frequency is set to $\omega=1.0$. The minima was found numerically and is shown as a white dot.}
     \label{fig:E_L2_omega=1_0}
 \end{figure}
-For $\omega = 1.0, 0.5, 0.01$ we found the optimal parameters and resulting energy and variance as shown in table \ref{tab:Psi2results}.
+
 \begin{table} [H]
 \centering
 \caption{Optimal parameters $\alpha$ and $\beta$ and resulting energy $E_{L2}$ and variance $\sigma_{E_{L2}}$ for different $\omega$ for $\Psi_{T2}$.}
@@ -288,6 +297,7 @@ $\omega$ & $\alpha$ & $\beta$ & $E_{L2}$ & $\sigma_{E_{L2}}$ \\ \hline
     \caption{$E_{L2}$ plotted for various $\alpha$- and $\beta$-values when the frequency is set to $\omega=0.01$. The minima was found numerically and is shown as a white dot.}
     \label{fig:E_L2_omega=0_01}
 \end{figure}
+When $\alpha=1.00$ and $\beta=0.25$ the local energy is minimal, and holds the value $E_{L2}\approx3.7303$.
 
 \subsection{Average distance between two particles}
 We also calculated the average distance between the two electrons for the optimal value of $\alpha$, for different values of $\omega$. The results are presented in Table 
@@ -303,6 +313,16 @@ We also calculated the average distance between the two electrons for the optima
 \end{tabularx}
 \end{table}
 
+\subsection{Ratio of kinetic and potential energy}
+Finally we have been studying the ratio of kinetic and potential energy for both local energies. We were running the program with $10^7$ Monte Carlo simulation for 100 frequencies in the interval $\omega=[0.01,1.00]$ and got the result presented in Figure (\ref{fig:ratio}).
+
+\begin{figure} [H]
+    \centering
+    \includegraphics[width=12cm]{energy_ratio_1e7.png}
+    \caption{The ratio the kinetic and potential energy for $E_{L1}$ (blue line) and $E_{L2}$ (red line). The program was run for 100 frequencies in the interval [0.01, 1.00] and $10^7$ Monte Carlo simulations.}
+    \label{fig:ratio}
+\end{figure}
+We also studied how the ratio evolved for increasingly narrower oscillators (increasing frequencies), and we observed that the ratio approached one. 
 
 \section{Discussion}
 For $\Psi_{T1}$ we found the optimal parameter to be $\alpha=1.0$ for all frequencies tested, and we got the exact result which is demonstrated by the variance being $0$. The reason we get the exact result is that the first part of the energy $E_{L1}$ in equation (\ref{eq:EL1}) becomes $0$, which means the energy is independent of the positions of the electrons and is then just $3\omega$. 
