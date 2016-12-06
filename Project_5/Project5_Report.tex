@@ -153,33 +153,39 @@ T_1 = 3\alpha \omega -\frac{1}{2}\omega^2\alpha^2\left(r_1^2 + r_2^2\right),
 V_1 = \frac{1}{2}\omega^2(r_1^2 + r_2^2).
 \end{equation}
 
-
-
-\subsection{Virial Theorem}
-The virial theorem provides a general relation between the kinetic and potential energy of a stable system consisting of a finite number of particles over time. For  a pure HO, the virial theorem states that the expectation value of the total kinetic energy $\langle T\rangle$ is equal to the total potential energy $\langle V\rangle$:
+For the second trial wave function the local energy $E_{L2}$\cite{Project_text} is given as
 \begin{equation}
-\langle T\rangle=\langle K\rangle
+E_{L2} = E_{L1} + \frac{1}{r_{12}} + \frac{1}{2(1+\beta r_{12})^2}\left\{\alpha\omega r_{12}-\frac{1}{2(1+\beta r_{12})^2}-\frac{2}{r_{12}}+\frac{2\beta}{1+\beta r_{12}}\right\},
+\label{eq:EL2}
+\end{equation}
+which we can be expressed as the sum of kinetic energy $T_2$ and potential energy $V_2$ where
+$$T_2 = T_1,$$
+$$V_2 = E_{L2} - T_2.$$
+\subsection{Virial Theorem}
+The Virial Theorem provides a general relation between the kinetic and potential energy of a stable system consisting of a finite number of particles over time. For  a pure HO, the virial theorem states that the expectation value of the total kinetic energy $\langle T\rangle$ is equal to the total potential energy $\langle V\rangle$:
+\begin{equation}
+\langle T\rangle=\langle V\rangle
 \label{eq:virial}
 \end{equation}
-For more complex systems the relation is more complicated, but for a HO we can assume that the relation above holds if the HO potential dominates.
+For more complex systems the relation is more complicated, but for an HO we can assume that the relation above holds if the HO potential dominates.
 
 
 \section{Method} \label{Method}
 
 
 \subsection{Implementation}
-
-When implementing the code, we made separate classes for $\Psi_{T1}$ and $\Psi_{T2}$, with their respective analytical energies as member functions. \par 
+When implementing the code, we made a wave function class which allowed us to specify which wave function we were using, and return the wave function and energy values for specific electron positions.
+\par 
 \vspace{2mm}
 
-Our trial wave functions are functions of $\vec{r_1}$ and $\vec{r_2}$, and we give our system a random initial state. As both our trial wave functions are proportional to $e^{-\alpha \omega}$, a natural length scale for our system is $\frac{1}{\sqrt{\omega}}$, as the wave function dies out after $\pm \frac{1}{\sqrt{\omega}}$. We therefore choose a random initial position that is an random number $ random\_number \in [0,1]$, times the length scale for each of the three direction:
+Our trial wave functions are functions of $\vec{r_1}$ and $\vec{r_2}$, and we give our system a random initial state. As both our trial wave functions are proportional to $e^{-\alpha \omega}$, a natural length scale for our system is $\frac{1}{\sqrt{\omega}}$ (which is also our step length as instructed by Morten), as the wave function dies out after $\pm \frac{1}{\sqrt{\omega}}$. We therefore choose a random initial position that is a random number between 0 and 1 multiplied with the length scale for each of the three directions:
 
 \begin{equation}
     position =  random\_number \cdot length\_scale
     \label{random_steps}
 \end{equation}
 
-Thereafter, we loop over a number of Monte Carlo Cycles, for each cycle suggesting a random movement for one of the electrons. This random movement follows the same pattern as the generation of the initial position, from equation (\ref{random_steps}). This move is accepted or rejected through the Metropolis algorithm with the probability distribution $|\Psi_T|^2$, presented in subsection \ref{MetropolisAlgorithm}. This way, we can use Monte Carlo Integration for calculating the energy for integration points drawn from our PDF and after $N$ Monte Carlo cycles, we can calculate the trial energy $E_T$.
+Thereafter, we loop over a number of Monte Carlo Cycles, for each cycle suggesting a random movement for one of the electrons. This random movement follows the same pattern as the generation of the initial position, from equation (\ref{random_steps}). This move is accepted or rejected using the Metropolis algorithm with the probability distribution $|\Psi_T|^2$, presented in subsection \ref{MetropolisAlgorithm}. This way, we can use Monte Carlo Integration for calculating the energy for integration points drawn from our PDF and after $N$ Monte Carlo cycles, we can calculate the trial energy $E_T$.
 
 \subsection{Monte Carlo Integration}
 In our project, we will use Monte Carlo Integration. The brute-force way of doing Monte Carlo integration is approximating the integral as a sum, as presented in equation (\ref{eq:MC_int_bruteforce}):
@@ -203,7 +209,7 @@ This is a more efficient way of doing Monte Carlo integration, as the integratio
 In our project, we wish to calculate the trial energy, given by equation (\ref{eq:VariationalMethod}). If we rewrite the energy as the local energy $E_L$ from equation (\ref{eq:localenergy}), we can rewrite the inner product as the local energy multiplied with $|\Psi_T|^2$:
 
 \begin{equation}
-    \int \Psi_T^* H \Psi_T dV = \int E_L |\Psi_T|^2 dV \Rightarrow \frac{1}{N} \sum_{i=0}^N E_L(x_i) \quad x_i \sim |\Psi_T|^2  
+    \int \Psi_T^* \hat{H} \Psi_T dV = \int E_L |\Psi_T|^2 dV \Rightarrow \frac{1}{N} \sum_{i=0}^N E_L(x_i) \quad x_i \sim |\Psi_T|^2  
 \end{equation}
 
 From quantum mechanics, we know $|\Psi_T|^2$ is the probability density of finding a system in a given interval. 
@@ -226,12 +232,12 @@ The implementation is as follows:
 \end{lstlisting}
 
 \subsection{Metropolis Algorithm} \label{MetropolisAlgorithm}
-We wish to draw random numbers from a PDF, and in our program this PDF is $|\Psi_T|^2$. For this, we use the Metropolis algorithm. We know that the electrons is more likely to be found at higher probability density values, i e larger values of $|\Psi_T|^2$. If the factor $|\Psi_T|^2$ increases when randomly changing one of the electron's position, the algorithm should automatically accept this move. The move should also be accepted if $|\Psi_T|^2$ remains constant.
+We wish to draw random numbers from a PDF, and in our program this PDF is $|\Psi_T|^2$. For this, we use the Metropolis algorithm. We know that the electrons are more likely to be found at higher probability density values, i.e larger values of $|\Psi_T|^2$. If the factor $|\Psi_T|^2$ increases when randomly changing one of the electron's position, the algorithm should automatically accept this move. The move should also be accepted if $|\Psi_T|^2$ remains constant.
 
 \par 
 \vspace{2mm}
 
-If the probability density decreases, however, this should be allowed, but not probable. Our program calculates the factors $|\Psi_{T_{old}}|^2$ and $|\Psi_{T_{new}}|^2$ for the old and new positions respectively, and their ratio $ m = \frac{|\Psi_{T_{new}}|^2}{|\Psi_{T_{old}}|^2}$, which is less than $1$. Thereafter, the program draws a random number $p$ in the interval $\in [0, 1]$, and compares the ratio $m$ with the random number $k$. If $m \geq k$, the move is accepted. If the $m < k$ the move of the electron is rejected, and the system is reset to the old position. 
+If the probability density decreases, the move is sometimes accepted and sometimes not. Our program calculates the factors $|\Psi_{T_{old}}|^2$ and $|\Psi_{T_{new}}|^2$ for the old and new positions respectively, and their ratio $ m = \frac{|\Psi_{T_{new}}|^2}{|\Psi_{T_{old}}|^2}$ which is less than $1$. Thereafter, the program draws a random number $k$ in the interval $\in [0, 1]$, and compares the ratio $m$ with the random number $k$. If $m \geq k$, the move is accepted. If the $m < k$ the move of the electron is rejected, and the system is reset to the old position. 
 
 \par 
 \vspace{3mm}
@@ -246,7 +252,7 @@ The implementation would look like the following:
     
     Psi_T_new_squared #calculate from function
     
-    if(Psi_T_new_squared > Psi_T_old_squared):
+    if(Psi_T_new_squared >= Psi_T_old_squared):
         accept
     
     else:
@@ -401,8 +407,8 @@ For $\Psi_{T2}$ we did not calculate the energy for $\omega =1$ in Project 2. Th
   Fauli et. al. (2016)
   Project 2
 \bibitem{Project_text}
-  Project Description: 					(October 21th 2016)\newline
-  \url{https://github.com/CompPhysics/ComputationalPhysics/blob/gh-pages/doc/Projects/2016/Project3/pdf/Project3.pdf}
+  Project Description: 					(December 6th 2016)\newline
+  \url{https://github.com/CompPhysics/ComputationalPhysics/blob/gh-pages/doc/Projects/2016/Project5/QuantumMonteCarlo/pdf/QuantumMonteCarlo.pdf}
   
   
   
