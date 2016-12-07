@@ -120,6 +120,8 @@ We wish to find estimates for the ground state energy using the variational meth
 
 where C is a normalization constant and $\alpha$ and $\beta$ are the variational parameters. We will use the variational method with $\Psi_{T1}$ on the non-interaction Hamiltonian (\ref{eq:H_non_interaction}), and $\Psi_{T2}$ with the interaction Hamiltonian ((\ref{eq:H_non_interaction}) + (\ref{eq:H_interaction})). The part added to handle the interaction forces is called the Jastrow factor. \cite{MHJ15}
 
+It is important that our trial wave functions satisfy so-called ''cusp conditions'', meaning that they fulfil as many known properties of the exact wave function as possible. For example the trial wave function and its derivative should be well defined at origin and when the distance between the two electrons $r_{12}$ goes to zero. The energies should also be well defined. It is easy to see that these conditions are met for both wave functions (\ref{eq:PsiT1}) and (\ref{eq:PsiT2}) (shown in Appendix A).
+
 A reader familiar with quantum mechanics may frown upon our choice of trial wave functions, refer to the Pauli principle and say that the wave function of fermions, such as electrons, have to be anti-symmetrical under the interchange of particles. The wave functions presented in equation (\ref{eq:PsiT1}) and (\ref{eq:PsiT2}) are symmetrical, and hence, they cannot represent states of a two-electron system. We can omit this fault by stating that the total wave function $\Phi$ must me anti-symmetrical, and it consists of one spatial part $\Psi$ and one spin part $\chi$:
 
 \begin{equation}
@@ -135,7 +137,7 @@ E_L = \frac{1}{\Psi_T}\hat{H}\Psi_T,
 \label{eq:localenergy}
 \end{equation}
 
-where $\hat{H}$ is the Hamiltonian. Using equation (\ref{eq:localenergy}) and the first trial wave function (\ref{eq:PsiT1}) we get the local energy to be
+where $\hat{H}$ is the Hamiltonian. Using equation (\ref{eq:localenergy}) and the first trial wave function (\ref{eq:PsiT1}) (the calculations are shown in Appendix B) we get the local energy to be
 
 \begin{equation}
 E_{L1} = \frac{1}{2}\omega^2 (r_1^2 + r_2^2)(1-\alpha^2) + 3\alpha \omega,
