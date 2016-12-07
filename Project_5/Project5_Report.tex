@@ -439,12 +439,12 @@ Another way of improving our implementation, is the correlation between the posi
   Department of Physics, University of Oslo.
   August 2015.
 \end{thebibliography}
-
+\endgroup
 \newpage
 \section{Appendices}
 
 \subsection{A: CUSP condition is satisfied}
-As discussed above we need a wave function which is well-defined for all values for $r_{12}$, and the critical case is when the value is equal to zero. To satisfy the CUSP condition, the energy needs to be well-defined also when $r_{12}=0$. The local energy for the non-repulsive case it not a function of $r_{12}$, so this obviously follows the CUSP condition. $E_{L2}$ is on the other hand a function of $r_{12}$, where we are dividing on $r_{12}$ in two of the terms. We need to show that they are not infinity when $r_{12}\rightarrow0$:
+As discussed above we need a wave function which is well-defined for all values for $r_{12}$, and the critical case is when the value is equal to zero. To satisfy the CUSP condition, the energy needs to be well-defined also when $r_{12}\rightarrow 0$. The local energy for the non-repulsive case it not a function of $r_{12}$, so this obviously follows the CUSP condition. $E_{L2}$ is on the other hand a function of $r_{12}$, where we are dividing on $r_{12}$ in two of the terms. We need to show that they are not infinity when $r_{12}\rightarrow0$:
 \begin{equation}
 \lim_{r_{12}\rightarrow0}\bigg(\frac{1}{r_{12}}-\frac{2}{r_{12}2(1+\beta r_{12})^2}\bigg)=\lim_{r_{12}\rightarrow0}\frac{1}{r_{12}}\bigg(1-\frac{1}{(1+\beta r_{12})^2}\bigg)
 \end{equation}
@@ -452,7 +452,7 @@ When $r_{12}\rightarrow0$ we will get a $"0"/"0"$-fraction, which either can be 
 \begin{equation}
 \lim_{r_{12}\rightarrow0}\frac{1-(1+\beta r_{12})^{-2}}{r_{12}}=\lim_{r_{12}\rightarrow0}2(1+\beta r_{12})^{-3}\cdot \beta=2
 \end{equation}
-The energy is well=defined when $r_{12}$ approaches zero, and therefore the CUSP condition is satisfied.  
+The energy is well-defined when $r_{12}$ approaches zero, and therefore the CUSP condition is satisfied.  
 
 \subsection{B: Finding $E_{L1}$}
 To find the local energy $E_{L1}$ we use equations (\ref{eq:localenergy}), (\ref{eq:H_non_interaction}) and (\ref{eq:PsiT1}). We do this by first finding the second derivatives and then adding the potential.
