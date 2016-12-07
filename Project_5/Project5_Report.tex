@@ -452,7 +452,16 @@ When $r_{12}\rightarrow0$ we will get a $"0"/"0"$-fraction, which either can be 
 \end{equation}
 The energy is well=defined when $r_{12}$ approaches zero, and therefore the CUSP condition is satisfied.  
 
-\subsection{B}
+\subsection{B: Finding $E_{L1}$}
+To find the local energy $E_{L1}$ we use equations (\ref{eq:localenergy}), (\ref{eq:H_non_interaction}) and (\ref{eq:PsiT1}). We do this by first finding the second derivatives and then adding the potential.
+$$\nabla_1^2 \Psi_{T1} = \frac{1}{r_1^2}\frac{\partial}{\partial r_1}(r_1^2 \frac{\partial}{\partial r_1})Ce^{-\alpha \omega (r_1^2+r_2^2)/2} = -\alpha \omega C\frac{1}{r_1^2}\frac{\partial}{\partial r_1}(r_1^3e^{-\alpha\omega(r_1^2+r_2^2)/2})$$
+$$\nabla_1^2 \Psi_{T1} = -\alpha \omega C\frac{1}{r_1^2}e^{-\alpha \omega (r_1^2+r_2^2)/2}(3r_1^2 - \alpha \omega r_1^4)$$
+$$\underline{\nabla_1^2 \Psi_{T1} = \Psi_{T1}[\alpha ^2\omega ^2r_1^2 - 3\alpha \omega]}$$
+Similarly we get the second derivative for the other particle to be
+$$\underline{\nabla_2^2 \Psi_{T1} = \Psi_{T1}[\alpha ^2\omega ^2r_2^2 - 3\alpha \omega]}.$$
+We can then write local energy as
+$$E_{L1} = \frac{1}{\Psi_{T1}}\hat{H}\Psi_{T1} = \frac{1}{\Psi_{T1}}\left(-\frac{1}{2}\Psi_{T1}[\alpha ^2\omega ^2r_1^2 - 3\alpha \omega + \alpha ^2\omega ^2r_2^2 - 3\alpha \omega] + \Psi_{T1}\frac{1}{2} \omega^2(r_1^2+r_2^2)\right)$$
 
-
+$$E_{L1} = 3\alpha \omega +\frac{1}{2}\omega^2\left[(r_1^2+r_2^2) - (r_1^2\alpha^2 + r_2^2\alpha^2)\right]$$
+$$\underline{E_{L1} = 3\alpha \omega + \frac{1}{2}\omega^2(r_1^2+r_2^2)(1-\alpha^2).}$$
 \end{document}
