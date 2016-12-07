@@ -275,15 +275,15 @@ The implementation would look like the following:
 \section{Results} \label{Results}
 \subsection{Minimal local energy for $\Psi_{T1}$}
 
-We used the trial wave function $\Psi_{T1}$, given by Equation (\ref{eq:PsiT1}), and plotted the energies and the variance in energy as a function of $\alpha$ for different values of $\omega$. The results are shown in Figure (\ref{fig:E_L1_file_omega=1_0}) and (\ref{fig:E_L1_file_omega=0_01}), and is a result of $N=10^8$.
+We used the trial wave function $\Psi_{T1}$, given by Equation (\ref{eq:PsiT1}), and plotted the energies and the variance in energy as a function of $\alpha$ for different values of $\omega$. The results are shown in Figure (\ref{fig:E_L1_file_omega=1_0}) and (\ref{fig:E_L1_file_omega=0_01}), where we used $N=10^8$ MC-cycles.
 
 \begin{figure} [H]
     \centering
     \includegraphics[scale=0.65]{E_L1_variance_omega=1_0}
-    \caption{Local energy and variance plotted  for $\Psi_{T1}$ as a function of $\alpha$, for $\omega = 1.0$.}
+    \caption{Local energy and variance plotted  for $\Psi_{T1}$ as a function of $\alpha$, for $\omega = 1.0$ and $10^8$ MC-cycles.}
     \label{fig:E_L1_file_omega=1_0}
 \end{figure} 
-We observe that $\alpha = 1.0$ gives the energy $E=3.0$, and the variance is exactly zero when $\omega=1.00$.
+From Figure \ref{fig:E_L1_file_omega=1_0}) we see that $\alpha = 1.0$ gives the energy $E_{L1}=3.0$, and the variance is exactly zero when $\omega=1.00$.
 
 \begin{figure} [H]
     \centering
@@ -385,6 +385,8 @@ Our results from Project 2 showed that for stronger potentials, the Coulomb inte
 For $\Psi_{T1}$ we found the optimal parameter to be $\alpha=1.0$ for all frequencies tested, and we got the exact result which is demonstrated by the variance being $0$. The reason we get the exact result is that the first part of the energy $E_{L1}$ in equation (\ref{eq:EL1}) becomes $0$, which means the energy is independent of the positions of the electrons and is then just $3\omega$. 
 
 We also observed that the distance between the electrons became smaller as the strength of the HO increased, as expected.
+
+As noted in the results section the variance for $\omega=0.01$ was not exactly zero. The reason we did not get exactly zero is that the computer is unable to represent this value exactly because $0.01$ cannot be written as $2^{n}$ where $n$ can be any integer. This resulted in round off errors, which means the variance had nothing to do with the physical system we were studying.
 \\* \\* \noindent
 For the second wave function, the optimal parameters were not constant, but changed depending on $\omega$. From table \ref{tab:Psi2results} we also see that the variance does not become zero as it did for the first wave function. The energies were larger than those from the first wave function, but we see that the ratio of the energies from $\Psi_{T1}$ and $\Psi_{T2}$ moves closer to unity as $\omega$ grows. Which is what one would expect since the repulsion becomes less important when the HO becomes stronger.
 
