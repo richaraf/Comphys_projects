@@ -10,7 +10,6 @@
 \usepackage{listings}
 \usepackage{physics}
 \usepackage{hyperref}
-\usepackage{subfig}
 
 \lstset{language=c++}
 \lstset{basicstyle=\small}
@@ -286,8 +285,8 @@ We used the trial wave function $\Psi_{T1}$, given by Equation (\ref{eq:PsiT1}),
 From Figure \ref{fig:E_L1_file_omega=1_0}) we see that $\alpha = 1.0$ gives the energy $E_{L1}=3.0$, and the variance is exactly zero when $\omega=1.00$.
 
 \begin{figure} [H]
-    \centering
-    \includegraphics[scale=0.65]{E_L1_variance_omega=0_01_1e8.png}
+    %\centering
+    \includegraphics[scale=0.55]{E_L1_variance_omega=0_01_1e8.png}
     \caption{Local energy and variance plotted  for $\Psi_{T1}$ as a function of $\alpha$, for $\omega = 0.01$ and $10^8$ MC-cycles.}
     \label{fig:E_L1_file_omega=0_01}
 \end{figure} 
@@ -359,7 +358,7 @@ We conducted stability analyses of the calculations for the local energy $E_{L1}
     \caption{The average energy for $E_{L2}$ and $\alpha=0.95$ when $N$ ranges from $10^{0.5}$ to $10^{8.5}$.}
     \label{fig:stability}
 \end{figure}
-The average energy approached a value near 3.004 when $N$ goes to infinity. The calculations are stable from $\sim10^6$. 
+The average energy approaches a value near 3.004 when $N$ goes to infinity. The calculations are stable from $\sim10^6$. 
 \subsection{Comparing results with Project 2}\par 
 
 We compared the values of the ground state energies for $\Psi_{T1}$ and $\Psi_{T2}$ with the ground state energies from Project 2. The results are presented in Table \ref{tab:energies_comparing}: 
@@ -426,7 +425,7 @@ Another way of improving our implementation, is the correlation between the posi
   \url{http://www.nature.com/nature/journal/v379/n6564/pdf/379413a0.pdf}
 \bibitem{Griffiths}
   D J Griffiths (2014)
-  Introdction to Quantum Mechanics, Second Edition
+  Introduction to Quantum Mechanics, Second Edition
 \bibitem{Project_2}
   Fauli et. al. (2016)
   Project 2
@@ -443,16 +442,16 @@ Another way of improving our implementation, is the correlation between the posi
 \newpage
 \section{Appendices}
 
-\subsection{A: CUSP condition is satisfied}
-As discussed above we need a wave function which is well-defined for all values for $r_{12}$, and the critical case is when the value is equal to zero. To satisfy the CUSP condition, the energy needs to be well-defined also when $r_{12}\rightarrow 0$. The local energy for the non-repulsive case it not a function of $r_{12}$, so this obviously follows the CUSP condition. $E_{L2}$ is on the other hand a function of $r_{12}$, where we are dividing on $r_{12}$ in two of the terms. We need to show that they are not infinity when $r_{12}\rightarrow0$:
+\subsection{A: Local energy when $r_{12}\rightarrow0$}
+As discussed above we need a wave function which is well-defined for all values for $r_{12}$, and the critical case is when the value is equal to zero. To satisfy the cusp condition, the energy needs to be well-defined also when $r_{12}\rightarrow 0$. The local energy for the non-repulsive case it not a function of $r_{12}$, so this obviously follows the cusp condition. $E_{L2}$ is on the other hand a function of $r_{12}$, where we are dividing on $r_{12}$ in two of the terms. We need to show that they are not infinity when $r_{12}\rightarrow0$:
 \begin{equation}
 \lim_{r_{12}\rightarrow0}\bigg(\frac{1}{r_{12}}-\frac{2}{r_{12}2(1+\beta r_{12})^2}\bigg)=\lim_{r_{12}\rightarrow0}\frac{1}{r_{12}}\bigg(1-\frac{1}{(1+\beta r_{12})^2}\bigg)
 \end{equation}
-When $r_{12}\rightarrow0$ we will get a $"0"/"0"$-fraction, which either can be zero or infinity. By using L'H\^{o}pitals rule, we get
+When $r_{12}\rightarrow0$ we will get a $"0"/"0"$-fraction, which can either be zero or infinity. By using L'H\^{o}pitals rule, we get
 \begin{equation}
-\lim_{r_{12}\rightarrow0}\frac{1-(1+\beta r_{12})^{-2}}{r_{12}}=\lim_{r_{12}\rightarrow0}2(1+\beta r_{12})^{-3}\cdot \beta=2
+\lim_{r_{12}\rightarrow0}\frac{1-(1+\beta r_{12})^{-2}}{r_{12}}=\lim_{r_{12}\rightarrow0}2(1+\beta r_{12})^{-3}\cdot \beta=\underline{2}
 \end{equation}
-The energy is well-defined when $r_{12}$ approaches zero, and therefore the CUSP condition is satisfied.  
+The energy is well-defined when $r_{12}$ approaches zero, and therefore the cusp condition is satisfied.  
 
 \subsection{B: Finding $E_{L1}$}
 To find the local energy $E_{L1}$ we use equations (\ref{eq:localenergy}), (\ref{eq:H_non_interaction}) and (\ref{eq:PsiT1}). We do this by first finding the second derivatives and then adding the potential.
