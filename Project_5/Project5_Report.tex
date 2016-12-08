@@ -279,7 +279,7 @@ We used the trial wave function $\Psi_{T1}$, given by Equation (\ref{eq:PsiT1}),
 \begin{figure} [H]
     \centering
     \includegraphics[scale=0.65]{E_L1_variance_omega=1_0}
-    \caption{Local energy and variance plotted  for $\Psi_{T1}$ as a function of $\alpha$, for $\omega = 1.0$ and $10^8$ MC-cycles.}
+    \caption{Local energy and variance plotted  for $\Psi_{T1}$ as a function of $\alpha$, for $\omega = 1.0$ and $10^8$ MC-cycles. The energy has unit a.u.}
     \label{fig:E_L1_file_omega=1_0}
 \end{figure} 
 From Figure \ref{fig:E_L1_file_omega=1_0}) we see that $\alpha = 1.0$ gives the energy $E_{L1}=3.0$, and the variance is exactly zero when $\omega=1.00$.
@@ -287,17 +287,17 @@ From Figure \ref{fig:E_L1_file_omega=1_0}) we see that $\alpha = 1.0$ gives the 
 \begin{figure} [H]
     %\centering
     \includegraphics[scale=0.55]{E_L1_variance_omega=0_01_1e8.png}
-    \caption{Local energy and variance plotted  for $\Psi_{T1}$ as a function of $\alpha$, for $\omega = 0.01$ and $10^8$ MC-cycles.}
+    \caption{Local energy and variance plotted  for $\Psi_{T1}$ as a function of $\alpha$, for $\omega = 0.01$ and $10^8$ MC-cycles. The energy has unit a.u.}
     \label{fig:E_L1_file_omega=0_01}
 \end{figure} 
-We observe that for $\alpha = 1.0$ and $\omega = 0.01$ the energy is $0.030$, which is exactly $1\%$ of the minimal energy for $\omega=1.00$! The variance is close to, but not exactly zero. Similarly, we found that the optimal value of $\alpha$ for $\omega = 0.5$ was $\alpha = 1.0$, which gave energy $E_{L1} = 0.30$ and variance exactly zero. We also observed that the oscillator is much wider for $\omega=0.01$ than for $\omega=1.00$.
+We observe that for $\alpha = 1.0$ and $\omega = 0.01$ the energy is $0.030$ a.u., which is exactly $1\%$ of the minimal energy for $\omega=1.00$! The variance is close to, but not exactly zero. Similarly, we found that the optimal value of $\alpha$ for $\omega = 0.5$ was $\alpha = 1.0$, which gave energy $E_{L1} = 0.30$ and variance exactly zero. We also observed that the oscillator is much wider for $\omega=0.01$ than for $\omega=1.00$.
 
 \subsection{Minimal local energy of $\Psi_{T2}$}
 For $\omega = 1.0, 0.5, 0.01$ we found the optimal parameters and resulting energy and variance as shown in Table \ref{tab:Psi2results}. Contour plots for $\omega = 1.0$ and $\omega =0.01$ is shown in Figure \ref{fig:E_L2_omega=1_0} and \ref{fig:E_L2_omega=0_01} respectively, with respectively $N=10^7$ and $N=10^8$. For $\omega = 0.5$, the contour plot was very similar to Figure \ref{fig:E_L2_omega=1_0}. 
 \begin{figure} [H]
     \centering
     \includegraphics[width=12cm]{E_L2_contour_omega=1_0.png}
-    \caption{$E_{L2}$ plotted for various $\alpha$- and $\beta$-values when the frequency is set to $\omega=1.0$. The minima was found numerically and is shown as a white dot.}
+    \caption{$E_{L2}$ plotted for various $\alpha$- and $\beta$-values when the frequency is set to $\omega=1.0$. The minima was found numerically and is shown as a white dot, and the energy has unit a.u.}
     \label{fig:E_L2_omega=1_0}
 \end{figure}
 
@@ -306,7 +306,7 @@ For $\omega = 1.0, 0.5, 0.01$ we found the optimal parameters and resulting ener
 \caption{Optimal parameters $\alpha$ and $\beta$ and resulting energy $E_{L2}$ and variance $\sigma_{E_{L2}}$ for different $\omega$ for $\Psi_{T2}$.}
 \begin{tabularx}{\textwidth}{XXXXX} \hline
 \label{tab:Psi2results}
-$\omega$ & $\alpha$ & $\beta$ & $E_{L2}$ & $\sigma_{E_{L2}}$ \\ \hline
+$\omega$ & $\alpha$ & $\beta$ & $E_{L2}, [\text{a.u.}]$ & $\sigma_{E_{L2}}, [\text{a.u.}]$ \\ \hline
 1.0 & 1.0 & 0.25 & 3.7303 & $4.0\cdot 10^{-4}$ \\
 0.5 & 1.0 & 0.20 & 2.0001 & $2.0\cdot 10^{-4}$ \\
 0.01 & 0.9 & 0.05 & 0.0794 & $4.0\cdot 10^{-6}$ \\ \hline
@@ -318,7 +318,7 @@ $\omega$ & $\alpha$ & $\beta$ & $E_{L2}$ & $\sigma_{E_{L2}}$ \\ \hline
 \begin{figure} [H]
     \centering
     \includegraphics[width=12cm]{E_L2_contour_omega=0_01.png}
-    \caption{$E_{L2}$ plotted for various $\alpha$- and $\beta$-values when the frequency is set to $\omega=0.01$. The minima was found numerically and is shown as a white dot.}
+    \caption{$E_{L2}$ plotted for various $\alpha$- and $\beta$-values when the frequency is set to $\omega=0.01$. The minima was found numerically and is shown as a white dot, and the energy has unit a.u.}
     \label{fig:E_L2_omega=0_01}
 \end{figure}
 
@@ -343,7 +343,7 @@ Finally we have been studying the ratio of kinetic and potential energy for both
 \begin{figure} [H]
     \centering
     \includegraphics[width=12cm]{energy_ratio_1e7.png}
-    \caption{The ratio the kinetic and potential energy for $E_{L1}$ (blue line) and $E_{L2}$ (green line). The program was run for 100 frequencies in the interval [0.01, 1.00] and $10^7$ Monte Carlo simulations.}
+    \caption{The ratio the kinetic and potential energy for $E_{L1}$ (blue line) and $E_{L2}$ (green line). The program was run for 100 frequencies in the interval [0.01, 1.00] and $10^7$ Monte Carlo simulations. Both the kinetic and potential energy have unit a.u.}
     \label{fig:ratio}
 \end{figure}
 From Figure (\ref{fig:ratio}) we can see that the ratio fluctuates around 1 for $E_{L1}$, and approaches 1 for $E_{L2}$.
@@ -355,7 +355,7 @@ We conducted stability analyses of the calculations for the local energy $E_{L1}
 \begin{figure} [H]
     \centering
     \includegraphics[width=12cm]{E_L1_alpha=0_95_stability.png}
-    \caption{The average energy for $E_{L2}$ and $\alpha=0.95$ when $N$ ranges from $10^{0.5}$ to $10^{8.5}$.}
+    \caption{The average energy for $E_{L1}$ and $\alpha=0.95$ when $N$ ranges from $10^{0.5}$ to $10^{8.5}$. The energy has unit a.u.}
     \label{fig:stability}
 \end{figure}
 The average energy approaches a value near 3.004 when $N$ goes to infinity. The calculations are stable from $\sim10^6$. 
@@ -365,7 +365,7 @@ We compared the values of the ground state energies for $\Psi_{T1}$ and $\Psi_{T
 
 \begin{table} [H]
 \centering
-\caption{The ground state energies from Project 2 compared to the obtained values from Project 5 and the analytical value. Here we have used $\omega = 1.0$}
+\caption{The ground state energies from Project 2 compared to the obtained values from Project 5 and the analytical value. Here we have used $\omega = 1.0$, and the energy has unit a.u.}
 
 \begin{tabularx}{\textwidth}{XXXX} \hline
 \label{tab:energies_comparing}
@@ -378,18 +378,14 @@ We compared the values of the ground state energies for $\Psi_{T1}$ and $\Psi_{T
 We did not run the two-electron interacting system for $\omega = 1.0$ in Project 2.
 
 \section{Discussion} \label{Discussion}
-Our results from Project 2 showed that for stronger potentials, the Coulomb interaction became negligible \cite{Project_2}. From table \ref{tab:average_r12} we observe that for weaker HO potentials, the average distance $r_{12}$ between the electrons for $\Psi_{T1}$ and $\Psi_{T2}$ are significantly different, while a strong potential gives nearly the same average distance for the two trial wave functions. This is consistent with our results from Project 2, and the explanation is that for weak fields, the electrons are very loosely bound. Because of the Coulomb interaction, they would therefore prefer to be as far away from each other as possible, and they are free to do so. When $\omega$ is large, however, the electrons are forced together. In the limit when $\omega$ is very large, the average distance $r_{12}$ between the electrons approaches the same value for $\Psi_{T1}$ and $\Psi_{T2}$, because the Coulomb term in $\Psi_{T2}$ becomes negligible.\par 
+Our results from Project 2 showed that for stronger potentials, the Coulomb interaction became negligible \cite{Project_2}. From table \ref{tab:average_r12} we observe that for weaker HO potentials, the average distance $r_{12}$ between the electrons for $\Psi_{T1}$ and $\Psi_{T2}$ are significantly different, while a strong potential gives nearly the same average distance for the two trial wave functions. This is consistent with our results from Project 2, and the explanation is that for weak fields, the electrons are very loosely bound. Because of the Coulomb interaction, they would therefore prefer to be as far away from each other as possible, and they are free to do so. When $\omega$ is large, however, the distance between the electrons became smaller. In the limit when $\omega$ is very large, the average distance $r_{12}$ between the electrons approaches the same value for $\Psi_{T1}$ and $\Psi_{T2}$, because the Coulomb term in $\Psi_{T2}$ becomes negligible.\par 
 \vspace{3mm}
 
 For $\Psi_{T1}$ we found the optimal parameter to be $\alpha=1.0$ for all frequencies tested, and we got the exact result which is demonstrated by the variance being $0$. The reason we get the exact result is that the first part of the energy $E_{L1}$ in equation (\ref{eq:EL1}) becomes $0$, which means the energy is independent of the positions of the electrons and is then just $3\omega$. 
 
-We also observed that the distance between the electrons became smaller as the strength of the HO increased, as expected.
-
 As noted in the results section the variance for $\omega=0.01$ was not exactly zero. The reason we did not get exactly zero is that the computer is unable to represent this value exactly because $0.01$ cannot be written as $2^{n}$ where $n$ can be any integer. This resulted in round off errors, which means the variance had nothing to do with the physical system we were studying.
 \\* \\* \noindent
-For the second wave function, the optimal parameters were not constant, but changed depending on $\omega$. From table \ref{tab:Psi2results} we also see that the variance does not become zero as it did for the first wave function. The energies were larger than those from the first wave function, but we see that the ratio of the energies from $\Psi_{T1}$ and $\Psi_{T2}$ moves closer to unity as $\omega$ grows. Which is what one would expect since the repulsion becomes less important when the HO becomes stronger.
-
-Just as for the first wave function we see the distance between the electrons shrink as the well increases in strength, and again we see that the two cases become more alike when $\omega$ increases. \par \vspace{3mm}
+For the second wave function, the optimal parameters were not constant, but changed depending on $\omega$. From table \ref{tab:Psi2results} we also see that the variance does not become zero as it did for the first wave function. The energies were larger than those from the first wave function, but we see that the ratio of the energies from $\Psi_{T1}$ and $\Psi_{T2}$ moves closer to unity as $\omega$ grows. Which is what one would expect since the repulsion becomes less important when the HO becomes stronger.\par\vspace{3mm}
 
 When testing the Virial Theorem, we plotted the ratio of kinetic and potential energy. From Figure (\ref{fig:ratio}), we see that for the pure HO wave function  $\Psi_{T1}$ the ratio $\langle T \rangle/\langle V \rangle$ is indeed 1, which is as expected from equation (\ref{eq:virial}). \par
 For $\Psi_{T2}$ the ratio is $< 1$ for low omegas, but it increases with higher omegas. We tested the ratio for $\Psi_{T2}$ for a very large omegas, and found the ratio approaches 1. This is also as expected: as explained above, larger $\omega$ makes the Coulomb interaction less prominent. When $\omega$ is very large, the Coulomb interaction is negligible, and $\Psi_{T2}$ approaches a pure HO. Thus the ratio $\langle T \rangle/\langle V \rangle$ should approach 1.
@@ -403,7 +399,7 @@ For $\Psi_{T2}$ we did not calculate the energy for $\omega =1$ in Project 2. Th
 \par 
 \vspace{3mm}
 
-In section \ref{Metode}, we explained our choice of step length for the system,  $\omega^{-0.5}$. After completing all results, we saw we were supposed to scale this length scale for each $\alpha$, giving us an acceptance rate of $50 \%$. Our acceptance rate is $\approx 70 \%$. We are aware that this might affect out results, but as our results are not unphysical and behave as expected, we chose not to change our program. We took samples of our program, changing the length scale until we had an acceptance rate of $50 \%$, and the results did not vary significantly. 
+In section \ref{Method}, we explained our choice of step length for the system,  $\omega^{-0.5}$. After completing all results, we saw we were supposed to scale this length scale for each $\alpha$, giving us an acceptance rate of $50 \%$. Our acceptance rate is $\approx 70 \%$. We are aware that this might affect out results, but as our results are not unphysical and behave as expected, we chose not to change our program. We took samples of our program, changing the length scale until we had an acceptance rate of $50 \%$, and the results did not vary significantly. 
 
 \section{Conclusion} \label{Conclusion}
 
