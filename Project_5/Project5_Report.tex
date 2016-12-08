@@ -41,7 +41,7 @@
 
 \maketitle
 \begin{abstract}
-This project aims to simulate so-called quantum dots, electrons trapped in harmonic oscillator (HO) potentials, by using the variational method with Monte Carlo integration. Using two trial wave functions, $\Psi_{T1}$, a pure harmonic oscillator, and $\Psi_{T2}$, which includes a Coulomb repulsion term, we calculate an upper bound ground state energy for different strengths of the HO potential, and the average distance between the two electrons. Furthermore, we test our results against the Virial Theorem.\par
+This project aims to simulate so-called quantum dots, electrons trapped in harmonic oscillator (HO) potentials, by using the variational method with Monte Carlo integration. Using two trial wave functions, $\Psi_{T1}$, a pure harmonic oscillator, and $\Psi_{T2}$, which additionally includes a Coulomb repulsion term, we calculate an upper bound ground state energy for different strengths of the HO potential, and the average distance between the two electrons. Furthermore, we test our results against the Virial Theorem.\par
 
 Using $\Psi_{T1}$, we get the exact ground state energy, while $\Psi_{T2}$ gives an upper bound ground state energy that is higher than the exact ground state energy. The average distance between the electrons are higher for $\Psi_{T2}$ compared to $\Psi_{T1}$, and repulsion becomes less important for stronger potentials. The system behaves as expected, and our results correspond to those of Project 2.
 \par 
@@ -104,7 +104,7 @@ where $r_{ij}$ is the distance between electron $i$ and $j$, $e$ is the elementa
     \hat{H}_{rep} = \frac{1}{r_{12}},
     \label{eq:H_interaction}
 \end{equation}
-where $r_{12}$ is the distance between the two electrons.
+where $r_{12}$ is the distance between the two electrons. In natural units, the energy has the unit a.u.
 
 We wish to find estimates for the ground state energy using the variational method, presented in subsection \ref{VariationalMethod}. For this, we will use the following trial wave functions:
 
@@ -169,7 +169,7 @@ The Virial Theorem provides a general relation between the kinetic and potential
 \langle T\rangle=\langle V\rangle
 \label{eq:virial}
 \end{equation}
-For more complex systems the relation is more complicated, but for an HO we can assume that the relation above holds if the HO potential dominates.
+For more complex systems the relation is more complicated, but for an compound potential we can assume that the relation above holds if the HO potential dominates.
 
 
 \section{Method} \label{Method}
